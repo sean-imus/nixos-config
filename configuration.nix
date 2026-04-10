@@ -84,7 +84,7 @@
     ldns # drill
     nmap
     tldr
-    nixfmt-tree
+    nixfmt-tree # treefmt
   ];
 
   # Aliases
@@ -95,11 +95,11 @@
 
   # Special
   nix.settings = {
+    auto-optimise-store = true;
     experimental-features = [
       "nix-command"
       "flakes"
     ];
-    auto-optimise-store = true;
   };
 
   nix.gc = {
