@@ -12,6 +12,7 @@
     ripgrep
     eza
     fzf
+    libreoffice
   ];
 
   # Options
