@@ -57,12 +57,12 @@
   };
 
   programs.bash = {
-    enable = true
+    enable = true;
     shellAliases = {
-      rbs = "sudo nixos-rebuild switch"
-      n = "nvim"
-      lg = "lazygit"
-      lj = "lazyjournal"
+      rbs = "sudo nixos-rebuild switch";
+      n = "nvim";
+      lg = "lazygit";
+      lj = "lazyjournal";
     };
   };
 
