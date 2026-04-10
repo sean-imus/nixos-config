@@ -82,6 +82,7 @@
   ldns # drill
   nmap
   tldr
+  nixfmt
   ];
 
   # Aliases
