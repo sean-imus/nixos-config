@@ -1,13 +1,12 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader
-  boot.loader.systemd-boot = { 
+  boot.loader.systemd-boot = {
     enable = true;
     configurationLimit = 10;
   };
@@ -61,28 +60,31 @@
   users.users.sean = {
     isNormalUser = true;
     description = "Sean Tietz";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
 
   # System Packages
   environment.systemPackages = with pkgs; [
-  neovim
-  wget
-  bat
-  btop
-  lm_sensors # sensors
-  pciutils # lspci
-  usbutils # lsusb
-  which
-  chromium
-  ncdu
-  zip
-  unzip
-  dnsutils # dig, nslookup
-  ldns # drill
-  nmap
-  tldr
-  nixfmt
+    neovim
+    wget
+    bat
+    btop
+    lm_sensors # sensors
+    pciutils # lspci
+    usbutils # lsusb
+    which
+    chromium
+    ncdu
+    zip
+    unzip
+    dnsutils # dig, nslookup
+    ldns # drill
+    nmap
+    tldr
+    nixfmt-tree
   ];
 
   # Aliases
@@ -93,14 +95,17 @@
 
   # Special
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
   };
 
   nix.gc = {
-  automatic = true;
-  dates = "weekly";
-  options = "--delete-older-than 7d";
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
   };
 
   # Don't touch!
