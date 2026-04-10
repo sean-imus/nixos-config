@@ -32,14 +32,14 @@
       };
     };
   };
-  
+
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
     matchBlocks = {
       "github.com" = {
         user = "git";
-	identityFile = "~/.ssh/id_ed25519";
+        identityFile = "~/.ssh/id_ed25519";
       };
     };
   };
@@ -59,14 +59,14 @@
   programs.bash = {
     shellAliases = {
       lg = "lazygit";
-      lj = "lazyjournal"; 
+      lj = "lazyjournal";
     };
   };
 
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-  }; 
+  };
 
   # Don't touch!
   home.stateVersion = "25.11";
