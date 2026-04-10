@@ -57,6 +57,7 @@
   };
 
   programs.bash = {
+    enable = true;
     shellAliases = {
       lg = "lazygit";
       lj = "lazyjournal";
