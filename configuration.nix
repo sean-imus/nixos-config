@@ -90,6 +90,12 @@
     auto-optimise-store = true;
   };
 
+  nix.gc = {
+  automatic = true;
+  dates = "weekly";
+  options = "--delete-older-than 7d";
+  };
+
   # Don't touch!
   system.stateVersion = "25.11";
 }
