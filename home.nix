@@ -31,6 +31,16 @@
       };
     };
   };
+  
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "github.com" = {
+        user = "git";
+	identityFile = "~/.ssh/id_ed25519";
+      };
+    };
+  };
 
   programs.alacritty = {
     enable = true;
@@ -47,7 +57,7 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-  };
+  }; 
 
   # Don't touch!
   home.stateVersion = "25.11";
