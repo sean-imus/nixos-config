@@ -56,6 +56,16 @@
     };
   };
 
+  programs.bash = {
+    enable = true
+    shellAliases = {
+      rbs = "sudo nixos-rebuild switch"
+      n = "nvim"
+      lg = "lazygit"
+      lj = "lazyjournal"
+    };
+  };
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
