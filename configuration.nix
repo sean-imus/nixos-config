@@ -84,6 +84,12 @@
   tldr
   ];
 
+  # Aliases
+  environment.shellAliases = {
+    rbs = "sudo nixos-rebuild switch";
+    n = "nvim";
+  };
+
   # Special
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
