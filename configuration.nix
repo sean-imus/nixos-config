@@ -7,7 +7,10 @@
     ];
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot = { 
+    enable = true;
+    configurationLimit = 10;
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Networking
@@ -61,7 +64,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  # System Packages & Commands
+  # System Packages
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   environment.systemPackages = with pkgs; [
   neovim
@@ -81,6 +84,12 @@
   nmap
   tldr
   ];
+
+  # Special
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    auto-optimise-store = true;
+  };
 
   # Don't touch!
   system.stateVersion = "25.11";
