@@ -2,7 +2,12 @@
 # GIT MODULE - Git configuration
 # =============================================================================
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = { };

@@ -6,7 +6,12 @@
 # User-specific packages are in home/packages.nix
 # =============================================================================
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = { };
@@ -19,26 +24,26 @@
 
       # Utilities
       wget
-      bat           # Better cat
-      btop          # System monitor
-      ncdu          # Disk usage analyzer
+      bat # Better cat
+      btop # System monitor
+      ncdu # Disk usage analyzer
       zip
       unzip
 
       # Hardware tools
-      lm_sensors    # Temperature/volts (run: sensors)
-      pciutils     # PCI devices (run: lspci)
-      usbutils    # USB devices (run: lsusb)
+      lm_sensors # Temperature/volts (run: sensors)
+      pciutils # PCI devices (run: lspci)
+      usbutils # USB devices (run: lsusb)
       which
 
       # Network tools
-      dnsutils     # dig, nslookup
-      ldns        # drill
+      dnsutils # dig, nslookup
+      ldns # drill
       nmap
-      tldr        # TL;DR pages
+      tldr # TL;DR pages
 
       # Development
-      nixfmt-tree  # Code formatter (treefmt)
+      nixfmt-tree # Code formatter (treefmt)
 
       # Browser
       chromium

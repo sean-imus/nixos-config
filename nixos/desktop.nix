@@ -8,7 +8,12 @@
 # - GNOME desktop environment
 # =============================================================================
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = { };

@@ -29,7 +29,8 @@
   # =============================================================================
   # OUTPUTS
   # =============================================================================
-  outputs = inputs@{ nixpkgs, home-manager, ... }:
+  outputs =
+    inputs@{ nixpkgs, home-manager, ... }:
 
     {
       # Create NixOS configuration for "nixos" hostname

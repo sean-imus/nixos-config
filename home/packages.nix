@@ -6,7 +6,12 @@
 # System packages are in nixos/packages.nix
 # =============================================================================
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = { };
@@ -21,9 +26,9 @@
       lazyjournal
 
       # File tools
-      ripgrep    # Recursive grep
-      eza       # Modern ls
-      fzf       # Fuzzy finder
+      ripgrep # Recursive grep
+      eza # Modern ls
+      fzf # Fuzzy finder
 
       # Office
       libreoffice

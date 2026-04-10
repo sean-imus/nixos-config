@@ -11,7 +11,13 @@
 # 3. Copy the resulting hardware-configuration.nix here
 # =============================================================================
 
-{ config, lib, pkgs, modulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [ ];
@@ -36,7 +42,10 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/280D-4288";
     fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
   };
 
   swapDevices = [ ];

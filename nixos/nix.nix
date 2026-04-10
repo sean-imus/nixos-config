@@ -18,8 +18,8 @@
     nix.settings = {
       auto-optimise-store = true;
       experimental-features = [
-        "nix-command"  # Enable 'nix' command (instead of 'nix-env')
-        "flakes"       # Enable flake support
+        "nix-command" # Enable 'nix' command (instead of 'nix-env')
+        "flakes" # Enable flake support
       ];
     };
 

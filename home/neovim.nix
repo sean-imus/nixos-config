@@ -2,7 +2,12 @@
 # NEOVIM MODULE - Neovim editor configuration
 # =============================================================================
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = { };

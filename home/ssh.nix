@@ -2,7 +2,12 @@
 # SSH MODULE - SSH configuration
 # =============================================================================
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = { };

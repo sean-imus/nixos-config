@@ -17,11 +17,10 @@
     # Here we add groups and other user-specific settings
     users.users.sean = {
       extraGroups = [
-        "networkmanager"  # Allow NetworkManager control
-        "wheel"        # Allow sudo access
+        "networkmanager" # Allow NetworkManager control
+        "wheel" # Allow sudo access
       ];
     };
 
-    
   };
 }

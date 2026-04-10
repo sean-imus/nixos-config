@@ -2,7 +2,12 @@
 # CHROMIUM MODULE - Browser configuration
 # =============================================================================
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = { };

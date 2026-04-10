@@ -30,7 +30,10 @@
     users.users.sean = {
       isNormalUser = true;
       description = "Sean Tietz";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
     };
   };
 }

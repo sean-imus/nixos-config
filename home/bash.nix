@@ -2,7 +2,12 @@
 # BASH MODULE - Shell configuration
 # =============================================================================
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = { };

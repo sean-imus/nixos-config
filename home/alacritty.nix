@@ -2,7 +2,12 @@
 # ALACRITTY MODULE - Terminal emulator
 # =============================================================================
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = { };
