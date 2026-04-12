@@ -6,11 +6,14 @@
   ];
 
   # Bootloader
-  boot.loader.systemd-boot = {
-    enable = true;
-    configurationLimit = 10;
+  boot.loader = {
+    timeout = 1;
+    efi.canTouchEfiVariables = true;
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 10;
+    };
   };
-  boot.loader.efi.canTouchEfiVariables = true;
 
   # Networking
   networking.hostName = "nixos";
