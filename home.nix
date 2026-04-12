@@ -8,10 +8,6 @@
   home.packages = with pkgs; [
     fastfetch
     lazygit
-    lazyjournal
-    ripgrep
-    eza
-    fzf
     libreoffice
   ];
 
@@ -60,7 +56,6 @@
     enable = true;
     shellAliases = {
       lg = "lazygit";
-      lj = "lazyjournal";
     };
   };
 

@@ -80,14 +80,12 @@
     usbutils # lsusb
     which
     chromium
-    ncdu
     zip
     unzip
     dnsutils # dig, nslookup
     ldns # drill
     nmap
     tldr
-    nixfmt-tree # treefmt
   ];
 
   # Aliases
