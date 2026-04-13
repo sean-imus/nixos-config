@@ -90,7 +90,7 @@
 
   # Aliases
   environment.shellAliases = {
-    rbs = "sudo nixos-rebuild switch";
+    rbs = "nix flake update && sudo nixos-rebuild switch";
     n = "nvim";
   };
 
