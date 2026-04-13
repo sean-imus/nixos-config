@@ -41,9 +41,7 @@
     layout = "de";
     variant = "";
   };
-
   services.libinput.enable = true; # Touchpad Support
-
   console.keyMap = "de";
 
   # DM/WM
@@ -52,12 +50,12 @@
   services.desktopManager.gnome.enable = true;
 
   # Sound
-  security.rtkit.enable = true;
+  security.rtkit.enable = true; # For realtime audio processing
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+    alsa.enable = true; # compat
+    alsa.support32Bit = true; # compat
+    pulse.enable = true; # compat
   };
 
   # Users
