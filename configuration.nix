@@ -16,8 +16,10 @@
   };
 
   # Networking
-  networking.hostName = "nixos";
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "nixos";
+    networkmanager.enable = true;
+  };
 
   # Locale
   time.timeZone = "Europe/Berlin";
@@ -34,10 +36,13 @@
     LC_TIME = "de_DE.UTF-8";
   };
 
+  # Input
   services.xserver.xkb = {
     layout = "de";
     variant = "";
   };
+
+  services.libinput.enable = true; # Touchpad Support
 
   console.keyMap = "de";
 
@@ -47,7 +52,6 @@
   services.desktopManager.gnome.enable = true;
 
   # Sound
-  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -55,9 +59,6 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-
-  # Touchpad Support
-  services.libinput.enable = true;
 
   # Users
   users.users.sean = {
