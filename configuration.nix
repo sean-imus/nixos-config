@@ -22,6 +22,8 @@
     firewall.enable = true;
   };
 
+  hardware.bluetooth.enable = true;
+
   # Locale
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -42,7 +44,9 @@
     layout = "de";
     variant = "";
   };
+
   services.libinput.enable = true; # Touchpad Support
+
   console.keyMap = "de";
 
   # DM/WM
