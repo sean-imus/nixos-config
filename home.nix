@@ -9,6 +9,11 @@
     fastfetch
     lazygit
     libreoffice
+    sqlite
+    python314
+    python314Packages.requests
+    python314Packages.tkinter
+    python314Packages.matplotlib
   ];
 
   # Options
