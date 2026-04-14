@@ -1,4 +1,5 @@
 { pkgs, ... }:
+
 {
   programs.neovim = {
     enable = true;
@@ -17,7 +18,7 @@
       }
     ];
 
-    extraLuaConfig = ''
+    initLua = ''
       vim.lsp.config('nixd', {
         cmd = { "nixd" },
         filetypes = { "nix" },
