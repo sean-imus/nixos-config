@@ -5,8 +5,8 @@
     enable = true;
     settings = {
       user = {
-        Name = Sean Tietz;
-        Email = sean.tietz2@gmail.com;
+        Name = "Sean Tietz";
+        Email = "sean.tietz2@gmail.com";
       };
     };
   };

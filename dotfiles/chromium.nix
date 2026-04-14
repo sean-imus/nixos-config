@@ -4,7 +4,7 @@
   programs.chromium = {
     enable = true;
     extensions = [
-      ddkjiahejlhfcafbddmgiahcphecmpfh
+      "ddkjiahejlhfcafbddmgiahcphecmpfh" # uBlock Origin Lite
     ];
   };
 }

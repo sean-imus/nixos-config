@@ -11,9 +11,10 @@
     ./dotfiles/neovim.nix
   ];
 
-  home.username = "Sean";
-  home.homeDirectory = /home/sean;
+  home.username = "sean";
+  home.homeDirectory = "/home/sean";
 
+  # User Packages
   home.packages = with pkgs; [
     fastfetch
     lazygit
@@ -22,5 +23,6 @@
     nixfmt-tree
   ];
 
-  home.stateVersion = 25.11;
+  # Don't touch!
+  home.stateVersion = "25.11";
 }

@@ -4,8 +4,8 @@
   programs.bash = {
     enable = true;
     shellAliases = {
-      lg = lazygit;
-      c = opencode;
+      lg = "lazygit";
+      c = "opencode";
     };
   };
 }
