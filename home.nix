@@ -16,6 +16,7 @@
     lazygit
     libreoffice
     opencode
+    nixfmt-tree
   ];
 
   # Options
