@@ -20,7 +20,7 @@
     lazygit
     libreoffice
     opencode
-    nixfmt-tree
+    nixfmt-tree # treefmt
   ];
 
   # Don't touch!
