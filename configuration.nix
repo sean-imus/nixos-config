@@ -78,7 +78,6 @@
     neovim
     wget
     bat
-    btop
     lm_sensors # sensors
     pciutils # lspci
     usbutils # lsusb
