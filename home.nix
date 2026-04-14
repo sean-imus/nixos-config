@@ -1,6 +1,12 @@
 { config, pkgs, ... }:
 
 {
+
+  # Dotfile Import
+  imports = [
+    ./dotfiles/btop.nix
+  ];
+
   home.username = "sean";
   home.homeDirectory = "/home/sean";
 
