@@ -37,7 +37,7 @@
 
   programs.ssh = {
     enable = true;
-    enableDefaultConfig = false;
+    enableDefaultConfig = false; # Silence Warning
     matchBlocks = {
       "github.com" = {
         user = "git";
