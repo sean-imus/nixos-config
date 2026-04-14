@@ -75,7 +75,8 @@
 
   # System Packages
   environment.systemPackages = with pkgs; [
-    neovim
+    vim
+    btop
     wget
     bat
     lm_sensors # sensors
