@@ -75,7 +75,7 @@
 
   # System Packages
   environment.systemPackages = with pkgs; [
-    vim
+    neovim
     btop
     wget
     bat
