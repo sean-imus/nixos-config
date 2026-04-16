@@ -1,6 +1,11 @@
 { pkgs, config, ... }:
 
 {
+  # Setup opencode alias
+  home.shellAliases = {
+    c = "opencode";
+  };
+
   # Install NixOS MCP
   home.packages = [ pkgs.mcp-nixos ];
 

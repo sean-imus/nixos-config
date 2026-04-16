@@ -1,6 +1,16 @@
 { ... }:
 
 {
+
+  # Install Lazygit
+  programs.lazygit.enable = true;
+
+  # Setup Lazygit alias
+  home.shellAliases = {
+    lg = "lazygit";
+  };
+
+  # Install git
   programs.git = {
     enable = true;
     settings = {

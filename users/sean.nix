@@ -18,7 +18,6 @@
   # User Packages
   home.packages = with pkgs; [
     fastfetch
-    lazygit
     libreoffice
     bat
     nixfmt-tree # treefmt

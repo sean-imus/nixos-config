@@ -1,6 +1,12 @@
 { pkgs, ... }:
 
 {
+  # Setup neovim alias
+  home.shellAliases = {
+    n = "nvim";
+  };
+
+  # Install neovim
   programs.neovim = {
     enable = true;
     defaultEditor = true;
