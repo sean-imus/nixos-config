@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 echo "Backing up current configuration"
 sudo mv /etc/nixos /etc/nixos.bak
@@ -25,3 +25,4 @@ echo "Rebuilding NixOS configuration which will be applied on next boot. WARNING
 sudo nixos-rebuild boot
 
 echo "Finished! Reboot to use your configuration or continue exploring the base GNOME system"
+exit
