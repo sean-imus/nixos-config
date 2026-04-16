@@ -42,9 +42,8 @@
   # Input
   services.libinput.enable = true; # Touchpad Support
   environment.variables = {
-    # temp
-    XKB_DEFAULT_LAYOUT = "de"; # temporary for testing
-    XKB_DEFAULT_VARIANT = ""; # temp
+    XKB_DEFAULT_LAYOUT = "de";
+    XKB_DEFAULT_VARIANT = "";
   };
   console.keyMap = "de-latin1"; # tty Layout
 
@@ -52,6 +51,7 @@
   services.displayManager.gdm = {
     enable = true;
     wayland = true;
+    banner = '' WARNING: Using default english keyboard layout!'';
   };
   services.desktopManager.gnome.enable = true;
 
