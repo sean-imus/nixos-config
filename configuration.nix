@@ -40,18 +40,11 @@
   };
 
   # Input
-  
-  # services.xserver.xkb = {
-    # layout = "de";
-    # variant = "";
-  # };
-
   services.libinput.enable = true; # Touchpad Support
 
-  console.keyMap = "de";
+  console.keyMap = "de-latin1"; # tty Layout
 
   # DM/WM
-  # services.xserver.enable = true;
   services.displayManager.gdm = {
     enable = true;
     wayland = true;
