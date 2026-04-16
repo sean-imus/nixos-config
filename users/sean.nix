@@ -10,6 +10,7 @@
     ../dotfiles/bash.nix
     ../dotfiles/neovim.nix
     ../dotfiles/opencode.nix
+    ../dotfiles/network-tools.nix
   ];
 
   home.username = "sean";

@@ -88,16 +88,12 @@
 
   # System Packages
   environment.systemPackages = with pkgs; [
-    wget
     lm_sensors # sensors
     pciutils # lspci
     usbutils # lsusb
     which
     zip
     unzip
-    dnsutils # dig, nslookup
-    ldns # drill
-    nmap
     tldr
   ];
 
