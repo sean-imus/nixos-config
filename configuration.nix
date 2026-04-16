@@ -46,7 +46,7 @@
     XKB_DEFAULT_VARIANT = "";
   };
   console.keyMap = "de-latin1"; # tty Layout
-  services.xserver.xkb.layout = "de"; 
+  services.xserver.xkb.layout = "de";
 
   # DM/WM
   services.xserver.enable = true;
