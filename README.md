@@ -11,5 +11,5 @@ git clone https://github.com/sean-imus/nixos-config.git ~/nixos-config
 ```
 3. 
 ```
-./nixos-config/install.sh
+~/nixos-config/install.sh
 ```
