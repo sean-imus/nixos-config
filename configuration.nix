@@ -51,7 +51,7 @@
   services.displayManager.gdm = {
     enable = true;
     wayland = true;
-    banner = '' WARNING: Using default english keyboard layout!'';
+    banner = "WARNING: Using default english keyboard layout!";
   };
   services.desktopManager.gnome.enable = true;
 
