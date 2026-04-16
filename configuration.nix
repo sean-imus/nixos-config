@@ -46,18 +46,12 @@
     XKB_DEFAULT_VARIANT = "";
   };
   console.keyMap = "de-latin1"; # tty Layout
-  services.xserver.xkb.layout = "de";
-  services.xserver.displayManager.setupCommands = ''
-    setxkbmap -layout de
-  '';
+  services.xserver.xkb.layout = "de"; 
 
   # DM/WM
   services.xserver.enable = true;
-  services.displayManager.sddm = {
-    enable = true;
-    autoNumlock = true;
-  };
-  services.desktopManager.gnome.enable = true;
+  services.displayManager.plasma-login-manager.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   # Sound
   security.rtkit.enable = true; # For realtime audio processing
@@ -95,7 +89,6 @@
     lm_sensors # sensors
     pciutils # lspci
     usbutils # lsusb
-    which
     zip
     unzip
     tldr
