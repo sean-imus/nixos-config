@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../dotfiles/alacritty.nix
   ];
 
   home.username = "bella";
