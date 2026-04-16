@@ -46,12 +46,13 @@
     XKB_DEFAULT_VARIANT = "";
   };
   console.keyMap = "de-latin1"; # tty Layout
-
+  services.xserver.xkb.layout = "de";
+  
   # DM/WM
-  services.displayManager.gdm = {
+  services.xserver.enable = true;
+  services.displayManager.sddm = {
     enable = true;
-    wayland = true;
-    banner = "WARNING: Using default english keyboard layout!";
+    autoNumlock = true;
   };
   services.desktopManager.gnome.enable = true;
 
