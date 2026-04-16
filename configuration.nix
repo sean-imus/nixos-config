@@ -78,7 +78,6 @@
   environment.systemPackages = with pkgs; [
     neovim
     wget
-    bat
     lm_sensors # sensors
     pciutils # lspci
     usbutils # lsusb
