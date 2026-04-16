@@ -79,7 +79,6 @@
       description = "Bella Vaillant";
       extraGroups = [
         "networkmanager"
-        "wheel"
       ];
     };
   };
