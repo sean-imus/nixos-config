@@ -7,7 +7,7 @@ nix-shell -p git bash
 ```
 2. 
 ```
-git clone https://github.com/sean-imus/nixos-config.git ~/nixos-config"
+git clone https://github.com/sean-imus/nixos-config.git ~/nixos-config
 ```
 3. 
 ```
