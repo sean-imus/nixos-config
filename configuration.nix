@@ -47,7 +47,10 @@
   };
   console.keyMap = "de-latin1"; # tty Layout
   services.xserver.xkb.layout = "de";
-  
+  services.xserver.displayManager.setupCommands = ''
+    setxkbmap -layout de
+  '';
+
   # DM/WM
   services.xserver.enable = true;
   services.displayManager.sddm = {
