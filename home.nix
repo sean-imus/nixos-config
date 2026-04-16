@@ -9,6 +9,7 @@
     ./dotfiles/alacritty.nix
     ./dotfiles/bash.nix
     ./dotfiles/neovim.nix
+    ./dotfiles/podman.nix
   ];
 
   home.username = "sean";
