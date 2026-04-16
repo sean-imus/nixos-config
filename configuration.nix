@@ -88,7 +88,6 @@
 
   # System Packages
   environment.systemPackages = with pkgs; [
-    neovim
     wget
     lm_sensors # sensors
     pciutils # lspci
@@ -105,7 +104,6 @@
   # Aliases
   environment.shellAliases = {
     rbs = "sudo nixos-rebuild switch";
-    n = "nvim";
   };
 
   # Special
