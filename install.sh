@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "Backing up current configuration"
 sudo mv /etc/nixos /etc/nixos.bak
