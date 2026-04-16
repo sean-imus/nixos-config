@@ -41,7 +41,9 @@
 
   # Input
   services.libinput.enable = true; # Touchpad Support
-
+  environment.variables = {
+    XKB_DEFAULT_LAYOUT = "de";
+  };
   console.keyMap = "de-latin1"; # tty Layout
 
   # DM/WM
