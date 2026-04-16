@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo "Cloning config repo"
-nix-shell -p git --command "git clone https://github.com/sean-imus/nixos-config.git ~/nixos-config"
-
 echo "Backing up old configuration"
 sudo mv /etc/nixos /etc/nixos.bak
 
