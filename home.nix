@@ -9,7 +9,7 @@
     ./dotfiles/alacritty.nix
     ./dotfiles/bash.nix
     ./dotfiles/neovim.nix
-    ./dotfiles/podman.nix
+    ./dotfiles/opencode.nix
   ];
 
   home.username = "sean";
@@ -20,7 +20,7 @@
     fastfetch
     lazygit
     libreoffice
-    opencode
+    bat
     nixfmt-tree # treefmt
   ];
 
