@@ -11,11 +11,7 @@
       mcp = {
         "NixOS MCP" = {
           type = "local";
-          command = [
-            "opencode"
-            "x"
-            "mcp-nixos"
-          ];
+          command = [ "mcp-nixos" ];
         };
       };
     };
