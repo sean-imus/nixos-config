@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../dotfiles/alacritty.nix
+    ../dotfiles/alacritty.nix
   ];
 
   home.username = "bella";

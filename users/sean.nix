@@ -2,14 +2,14 @@
 
 {
   imports = [
-    ../../dotfiles/btop.nix
-    ../../dotfiles/chromium.nix
-    ../../dotfiles/git.nix
-    ../../dotfiles/ssh.nix
-    ../../dotfiles/alacritty.nix
-    ../../dotfiles/bash.nix
-    ../../dotfiles/neovim.nix
-    ../../dotfiles/opencode.nix
+    ../dotfiles/btop.nix
+    ../dotfiles/chromium.nix
+    ../dotfiles/git.nix
+    ../dotfiles/ssh.nix
+    ../dotfiles/alacritty.nix
+    ../dotfiles/bash.nix
+    ../dotfiles/neovim.nix
+    ../dotfiles/opencode.nix
   ];
 
   home.username = "sean";
