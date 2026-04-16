@@ -40,18 +40,22 @@
   };
 
   # Input
-  services.xserver.xkb = {
-    layout = "de";
-    variant = "";
-  };
+  
+  # services.xserver.xkb = {
+    # layout = "de";
+    # variant = "";
+  # };
 
   services.libinput.enable = true; # Touchpad Support
 
   console.keyMap = "de";
 
   # DM/WM
-  services.xserver.enable = true;
-  services.displayManager.gdm.enable = true;
+  # services.xserver.enable = true;
+  services.displayManager.gdm = {
+    enable = true;
+    wayland = true;
+  };
   services.desktopManager.gnome.enable = true;
 
   # Sound
@@ -101,7 +105,7 @@
   # Special
   nix.settings = {
     auto-optimise-store = true;
-    download-buffer-size = 536870912;
+    download-buffer-size = 536870912; # 512 MiB
     experimental-features = [
       "nix-command"
       "flakes"
