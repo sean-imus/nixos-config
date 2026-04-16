@@ -65,13 +65,23 @@
   };
 
   # Users
-  users.users.sean = {
-    isNormalUser = true;
-    description = "Sean Tietz";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
+  users.users = {
+    sean = {
+      isNormalUser = true;
+      description = "Sean Tietz";
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
+    };
+    bella = {
+      isNormalUser = true;
+      description = "Bella Vaillant";
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
+    };
   };
 
   # System Packages
