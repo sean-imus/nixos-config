@@ -94,7 +94,6 @@
     pciutils # lspci
     usbutils # lsusb
     which
-    chromium
     zip
     unzip
     dnsutils # dig, nslookup
