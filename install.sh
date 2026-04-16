@@ -21,4 +21,10 @@ git -C ~/nixos-config remote set-url origin git@github.com:sean-imus/nixos-confi
 echo "Printing public key for setting up ssh access to config repo"
 cat ~/.ssh/id_ed25519.pub
 
-echo "Dont forget to add github to known hosts via\n ssh -T git@github.com after you add the ssh public key to github!"
+echo "Press \"yes\" here to add github to your known host list to avoid future errors, it will fail if you havent added your public key to github but it will still add it to your known hosts list"
+ssh -T git@github.com
+
+echo "Rebuilding NixOS configuration which will be applied on next boot. WARNING: This takes some time and shouldnt be interrupted
+sudo nixos-rebuild boot
+
+echo "Finished! Reboot to use your configuration or explore this base gnome system further"
