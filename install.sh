@@ -10,7 +10,7 @@ echo "Copying hardware configuration from backup"
 sudo cp -f /etc/nixos.bak/hardware-configuration.nix ~/nixos-config/
 
 echo "Generating SSH key for GitHub access"
-ssh-keygen -t ed25519 -C "sean.tietz2@gmail.com"
+ssh-keygen -t ed25519 -C "sean.tietz2@gmail.com" -N "" -f ~/.ssh/id_ed25519 -q
 
 echo "Setting GitHub remote for pushing changes"
 git -C ~/nixos-config remote set-url origin git@github.com:sean-imus/nixos-config.git
@@ -18,8 +18,8 @@ git -C ~/nixos-config remote set-url origin git@github.com:sean-imus/nixos-confi
 echo "Displaying public SSH key for GitHub setup"
 cat ~/.ssh/id_ed25519.pub
 
-echo "Adding GitHub to known hosts (you may see a key mismatch error if the key isn't added to GitHub yet, this is normal)"
-ssh -T git@github.com
+echo "Adding GitHub to known hosts"
+ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 echo "Rebuilding NixOS configuration which will be applied on next boot. WARNING: This takes some time and shouldn't be interrupted"
 sudo nixos-rebuild boot
