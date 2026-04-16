@@ -65,6 +65,7 @@
   };
 
   # Users
+  users.mutableUsers = false;
   users.users = {
     sean = {
       isNormalUser = true;
