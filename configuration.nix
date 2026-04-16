@@ -41,7 +41,8 @@
 
   # Input
   services.libinput.enable = true; # Touchpad Support
-  environment.variables = { # temp
+  environment.variables = {
+    # temp
     XKB_DEFAULT_LAYOUT = "de"; # temporary for testing
     XKB_DEFAULT_VARIANT = ""; # temp
   };
