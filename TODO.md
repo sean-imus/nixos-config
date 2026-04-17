@@ -1,2 +1,1 @@
-1. setup remmina and custom network rule for rdp to work pc
-2. setup virtualbox for school
+1. make config support multiple machines and have everything modularized
