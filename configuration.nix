@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./dotfiles/virtualbox.nix
   ];
 
   # Bootloader
