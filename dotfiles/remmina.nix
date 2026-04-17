@@ -1,8 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   # Install remmina
   services.remmina.enable = true;
+
+  # Create marker file for NixOS to detect remmina presence
+  xdg.dataFile."nixos/remmina-active".text = "";
 
   # Setup Connections
   xdg.dataFile."remmina/work-notebook.remmina".text = ''

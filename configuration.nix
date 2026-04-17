@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ./dotfiles/virtualbox.nix
+    ./dotfiles/network-profiles.nix
   ];
 
   # Bootloader
