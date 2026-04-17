@@ -1,30 +1,21 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-
-let
-  username = "sean";
-  markerPath = "/home/${username}/.local/share/nixos/remmina-active";
-  useStatic = lib.pathExists markerPath;
-in
+{ pkgs, ... }:
 
 {
-  config = lib.mkIf useStatic {
-    networking.networkmanager.ensureProfiles.profiles = {
-      "ethernet-static" = {
-        interface = "enp44s0";
+  networking.networkmanager.ensureProfiles.profiles = {
+    "rdp-static-eth" = {
+      connection = {
+        id = "rdp-static-eth";
         type = "ethernet";
-        ipv4 = {
-          address = "192.168.200.2";
-          prefixLength = 24;
-          gateway = "192.168.200.1";
-          method = "manual";
-        };
-        ipv4.route-metric = 100;
-        ipv6.method = "ignore";
+        interface-name = "enp44s0";
+      };
+      ipv4 = {
+        address = "192.168.200.2/24";
+        gateway = "192.168.200.1";
+        method = "manual";
+        "route-metric" = 100;
+      };
+      ipv6 = {
+        method = "ignore";
       };
     };
   };

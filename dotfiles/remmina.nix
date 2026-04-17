@@ -1,11 +1,8 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   # Install remmina
   services.remmina.enable = true;
-
-  # Create marker file for NixOS to detect remmina presence
-  xdg.dataFile."nixos/remmina-active".text = "";
 
   # Setup Connections
   xdg.dataFile."remmina/work-notebook.remmina".text = ''
@@ -16,4 +13,9 @@
     username=stietz
     domain=ENTEX
   '';
+
+  # Shell alias to bring up static IP for work notebook rdp connection
+  home.shellAliases = {
+    rdpup = "nmcli con up rdp-static-eth";
+  };
 }
