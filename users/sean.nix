@@ -15,6 +15,9 @@
   home.username = "sean";
   home.homeDirectory = "/home/sean";
 
+  # Use bash
+  programs.bash.enable = true;
+
   # User Packages
   home.packages = with pkgs; [
     fastfetch
