@@ -41,5 +41,5 @@ reboot
 ```
 git clone https://github.com/sean-imus/nixos-config.git ~/nixos-config
 
-~/nixos-config/install.sh
+~/nixos-config/onetime_setup.sh
 ```
