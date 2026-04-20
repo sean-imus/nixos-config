@@ -3,13 +3,5 @@ Run the following the commands to use this configuration on a fresh NixOS system
 
 1.
 ```
-nix-shell -p git bash
-```
-2. 
-```
-git clone https://github.com/sean-imus/nixos-config.git ~/nixos-config
-```
-3. 
-```
-~/nixos-config/install.sh
+Setup Disks with boot label NIXBOOT and root label NIXROOT, run install command nixos-install --flake github:sean-imus/nixos-config#nixos
 ```
