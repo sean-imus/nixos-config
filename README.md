@@ -33,7 +33,7 @@ sudo mount /dev/disk/by-label/NIXBOOT /mnt/boot
 ## Install from GitHub
 ```
 cd /mnt
-nixos-install --flake github:sean-imus/nixos-config#nixos
+sudo nixos-install --flake github:sean-imus/nixos-config#nixos
 reboot
 ```
 
