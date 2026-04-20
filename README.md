@@ -34,4 +34,12 @@ sudo mount /dev/disk/by-label/NIXBOOT /mnt/boot
 ```
 cd /mnt
 nixos-install --flake github:sean-imus/nixos-config#nixos
+reboot
+```
+
+## Clone GitHub Repo and Symlink to Home
+```
+git clone https://github.com/sean-imus/nixos-config.git ~/nixos-config
+
+~/nixos-config/install.sh
 ```
