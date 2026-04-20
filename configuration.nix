@@ -76,15 +76,6 @@
         "wheel"
       ];
     };
-    bella = {
-      isNormalUser = true;
-      description = "Bella Vaillant";
-      hashedPassword = "$6$dh3l0uqQNgVcX3el$feKRJGs9Il5nTcLEbXNCZK58JQznn7W6JB/YRB4p9p8eiSFbVKp91qb7GB/8z5avdppHl3RSruBxVvADjb4dU1";
-      extraGroups = [
-        "networkmanager"
-      ];
-    };
-  };
 
   # System Packages
   environment.systemPackages = with pkgs; [

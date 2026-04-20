@@ -1,5 +1,5 @@
 {
-  description = "Main flake.nix";
+  description = "Entry Flake";
 
   inputs = {
     # Package Source
@@ -21,8 +21,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.sean = import ./users/sean.nix;
-              home-manager.users.bella = import ./users/bella.nix;
+              home-manager.users.sean = import ./home.nix;
             }
           ];
         };
