@@ -1,5 +1,5 @@
 # Usage
-Run the following the commands to install this configuration on a system from a live NixOS Image, no guarantee it works though, its pretty specific to me.
+Run the following commands to install this configuration from a live NixOS Image, no guarantee it works though, its pretty specific to me.
 
 ## Format Drive
 ```
