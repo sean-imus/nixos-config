@@ -21,7 +21,6 @@
 
   # User Packages
   home.packages = with pkgs; [
-    fastfetch
     libreoffice
     bat
     nixfmt-tree # treefmt
