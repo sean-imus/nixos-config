@@ -24,6 +24,7 @@
     firewall.enable = true;
   };
 
+  # Bluetooth
   hardware.bluetooth.enable = true;
 
   # Locale
@@ -88,8 +89,10 @@
     zip
     unzip
     tldr
+    brightnessctl
+    font-awesome
   ];
-
+  
   # Aliases
   environment.shellAliases = {
     rbs = "sudo nixos-rebuild switch";
