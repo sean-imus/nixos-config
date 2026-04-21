@@ -112,6 +112,8 @@
     options = "--delete-older-than 7d";
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   # Don't touch!
   system.stateVersion = "25.11";
 }
