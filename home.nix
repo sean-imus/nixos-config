@@ -25,6 +25,7 @@
     libreoffice
     bat
     nixfmt-tree # treefmt
+    veracrypt
   ];
 
   # Don't touch!
