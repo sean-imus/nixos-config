@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, modulesPath, ... }:
 
 {
   imports = [ ];
@@ -10,6 +10,8 @@
     "nvme"
     "usbhid"
     "sdhci_pci"
+    "sd_mod"
+    "usb_storage"
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
