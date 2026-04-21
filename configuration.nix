@@ -92,7 +92,7 @@
     brightnessctl
     font-awesome
   ];
-  
+
   # Aliases
   environment.shellAliases = {
     rbs = "sudo nixos-rebuild switch";
