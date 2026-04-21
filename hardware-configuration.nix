@@ -48,7 +48,7 @@
   };
 
   # Create Mount Directory for Samsung SSD
-  systemd.tmpfile.rules = [
+  systemd.tmpfiles.rules = [
     "d /run/media/sean/Sean 0755 sean sean -"
   ];
 
