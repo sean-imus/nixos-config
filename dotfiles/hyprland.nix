@@ -4,8 +4,10 @@
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
-      bindd = SHIFT, RETURN, Terminal, exec, alacritty
-      bindd = SHIFT, B, Browser, exec, chromium
+      $mainMod = RIGHTALT
+
+      bind = $mainMod, RETURN, exec, alacritty
+      bind = $mainMod SHIFT, B, exec, chromium
     '';
   };
 }
