@@ -50,9 +50,6 @@
   console.keyMap = "de-latin1"; # tty Layout
   services.xserver.xkb.layout = "de";
 
-  # DM/WM
-  services.xserver.enable = true;
-
   # Display Manager
   services.displayManager.ly.enable = true;
 
