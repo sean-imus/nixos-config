@@ -92,6 +92,7 @@
   # Aliases
   environment.shellAliases = {
     rbs = "sudo nixos-rebuild switch";
+    rbb = "sudo nixos-rebuild boot && reboot";
   };
 
   # Special
