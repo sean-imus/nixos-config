@@ -52,8 +52,12 @@
 
   # DM/WM
   services.xserver.enable = true;
-  services.displayManager.plasma-login-manager.enable = true;
-  services.desktopManager.plasma6.enable = true;
+
+  # Display Manager
+  services.displayManager.ly.enable = true;
+
+  # Window Managers
+  programs.hyprland.enable = true;
 
   # Sound
   security.rtkit.enable = true; # For realtime audio processing
