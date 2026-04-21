@@ -91,6 +91,7 @@
     tldr
     brightnessctl
     font-awesome
+    xwayland
   ];
 
   # Aliases
