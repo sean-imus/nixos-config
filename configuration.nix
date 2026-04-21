@@ -54,7 +54,7 @@
   services.displayManager.ly.enable = true;
 
   # Window Managers
-  programs.hyprland.enable = true;
+  programs.niri.enable = true;
   services.desktopManager.plasma6.enable = true;
 
   # Sound
