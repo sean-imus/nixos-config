@@ -11,6 +11,7 @@
     ./dotfiles/opencode.nix
     ./dotfiles/network-tools.nix
     ./dotfiles/remmina.nix
+    ./dotfiles/niri/niri.nix
   ];
 
   home.username = "sean";
