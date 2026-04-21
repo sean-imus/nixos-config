@@ -17,9 +17,4 @@
     scale=2
   '';
   xdg.dataFile."remmina/work-notebook.remmina".force = true;
-
-  # Shell alias to bring up static IP for work notebook rdp connection
-  home.shellAliases = {
-    rdpup = "nmcli con up rdp-static-eth";
-  };
 }

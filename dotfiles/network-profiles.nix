@@ -10,7 +10,6 @@
       };
       ipv4 = {
         address = "192.168.200.2/24";
-        gateway = "192.168.200.1";
         method = "manual";
         "route-metric" = 100;
       };
