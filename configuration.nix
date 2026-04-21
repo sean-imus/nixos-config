@@ -113,6 +113,7 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+  hardware.enableRedistributableFirmware = true;
 
   # Don't touch!
   system.stateVersion = "25.11";
