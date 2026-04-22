@@ -60,6 +60,7 @@
 
   # Sound
   security.rtkit.enable = true; # For realtime audio processing
+  hardware.alsa.enableBluetooth = true; # For Bluetooth Audio
   services.pipewire = {
     enable = true;
     alsa.enable = true; # compat
@@ -92,6 +93,7 @@
     brightnessctl
     font-awesome
     xwayland-satellite
+    bluetui
   ];
 
   # Aliases
