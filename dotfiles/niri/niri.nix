@@ -19,4 +19,14 @@
   programs.swaylock = {
     enable = true;
   };
+
+  # Notification Daemon
+  services.mako = {
+    enable = true;
+  };
+
+  # Wallpaper Daemon
+  services.awww = {
+    enable = true;
+  };
 }

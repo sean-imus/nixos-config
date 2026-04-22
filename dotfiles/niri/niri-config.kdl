@@ -54,12 +54,13 @@ layout {
     default-column-width { proportion 0.5; }
     focus-ring {
         width 4
-        active-color "#7fc8ff"
-        inactive-color "#505050"
+        active-color "green"
+        inactive-color "gray"
     }
 }
 
 spawn-at-startup "waybar"
+// spawn-at-startup "mako"
 
 hotkey-overlay {
     skip-at-startup
