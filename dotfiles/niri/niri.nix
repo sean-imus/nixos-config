@@ -29,4 +29,9 @@
   services.awww = {
     enable = true;
   };
+
+  # Audio Button Support
+  services.playerctld = {
+    enable = true;
+  };
 }
