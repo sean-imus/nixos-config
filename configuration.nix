@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+	{ pkgs, ... }:
 
 {
   imports = [
@@ -51,6 +51,7 @@
     XKB_DEFAULT_VARIANT = "";
   };
   console.keyMap = "de-latin1";
+  services.xserver.xkb.layout = "de";
 
   # Display Manager
   services.displayManager.ly.enable = true;
