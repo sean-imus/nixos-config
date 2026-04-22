@@ -53,15 +53,15 @@ layout {
 
     default-column-width { proportion 0.5; }
     focus-ring {
-        width 4
+        width 2
         active-color "green"
         inactive-color "gray"
     }
 }
 
 spawn-at-startup "waybar"
-spawn-sh-at-startup "awww-daemon"
-spawn-sh-at-startup "awww img /home/sean/nixos-config/dotfiles/niri/2-yuta-okkotsu.jpg"
+spawn-at-startup "awww-daemon"
+spawn-sh-at-startup "awww img /home/sean/nixos-config/dotfiles/niri/yuta-okkotsu.jpg"
 
 hotkey-overlay {
     skip-at-startup
@@ -171,15 +171,6 @@ binds {
     Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
     Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 
-    // Similarly, you can bind touchpad scroll "ticks".
-    // Touchpad scrolling is continuous, so for these binds it is split into
-    // discrete intervals.
-    // These binds are also affected by touchpad's natural-scroll, so these
-    // example binds are "inverted", since we have natural-scroll enabled for
-    // touchpads by default.
-    // Mod+TouchpadScrollDown { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02+"; }
-    // Mod+TouchpadScrollUp   { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02-"; }
-
     // You can refer to workspaces by index. However, keep in mind that
     // niri is a dynamic workspace system, so these commands are kind of
     // "best effort". Trying to refer to a workspace index bigger than
@@ -219,14 +210,10 @@ binds {
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
 
-    // Consume one window from the right to the bottom of the focused column.
     Mod+Comma  { consume-window-into-column; }
-    // Expel the bottom window from the focused column to the right.
     Mod+Period { expel-window-from-column; }
 
-    // Cycle through widths set in preset-column-widths.
     Mod+R { switch-preset-column-width; }
-    // Cycling through the presets in reverse order is also possible.
     Mod+Shift+R { switch-preset-column-width-back; }
 
     Mod+Ctrl+Shift+R { switch-preset-window-height; }
@@ -235,48 +222,18 @@ binds {
     Mod+F { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
 
-    // While maximize-column leaves gaps and borders around the window,
-    // maximize-window-to-edges doesn't: the window expands to the edges of the screen.
-    // This bind corresponds to normal window maximizing,
-    // e.g. by double-clicking on the titlebar.
     Mod+M { maximize-window-to-edges; }
 
-    // Expand the focused column to space not taken up by other fully visible columns.
-    // Makes the column "fill the rest of the space".
     Mod+Ctrl+F { expand-column-to-available-width; }
 
-
-    // Finer width adjustments.
-    // This command can also:
-    // * set width in pixels: "1000"
-    // * adjust width in pixels: "-5" or "+5"
-    // * set width as a percentage of screen width: "25%"
-    // * adjust width as a percentage of screen width: "-10%" or "+10%"
-    // Pixel sizes use logical, or scaled, pixels. I.e. on an output with scale 2.0,
-    // set-column-width "100" will make the column occupy 200 physical screen pixels.
     Mod+Minus { set-column-width "-10%"; }
     Mod+Plus { set-column-width "+10%"; }
 
-    // Finer height adjustments when in column with other windows.
     Mod+Shift+Minus { set-window-height "-10%"; }
     Mod+Shift+Plus { set-window-height "+10%"; }
 
-    // Move the focused window between the floating and the tiling layout.
     Mod+V       { toggle-window-floating; }
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
-
-    // Toggle tabbed column display mode.
-    // Windows in this column will appear as vertical tabs,
-    // rather than stacked on top of each other.
-    Mod+W { toggle-column-tabbed-display; }
-
-    // Actions to switch layouts.
-    // Note: if you uncomment these, make sure you do NOT have
-    // a matching layout switch hotkey configured in xkb options above.
-    // Having both at once on the same hotkey will break the switching,
-    // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
-    // Mod+Space       { switch-layout "next"; }
-    // Mod+Shift+Space { switch-layout "prev"; }
 
     Mod+C { screenshot; }
     Mod+Ctrl+C { screenshot-screen; }
