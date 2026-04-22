@@ -60,7 +60,8 @@ layout {
 }
 
 spawn-at-startup "waybar"
-spawn-sh-at-startup "awww img ./2-yuta-okkotsu.jpg"
+spawn-sh-at-startup "awww-daemon"
+spawn-sh-at-startup "awww img /home/sean/nixos-config/dotfiles/niri/2-yuta-okkotsu.jpg"
 
 hotkey-overlay {
     skip-at-startup
