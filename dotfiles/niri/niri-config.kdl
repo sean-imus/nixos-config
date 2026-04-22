@@ -60,7 +60,8 @@ layout {
 }
 
 spawn-at-startup "waybar"
-// spawn-at-startup "mako"
+spawn-at-startup "awww-daemon"
+spawn-sh-at-startup "awww img ./2-yuta-okkotsu.jpg"
 
 hotkey-overlay {
     skip-at-startup

@@ -41,29 +41,6 @@
     ];
   };
 
-  # Auto Mount Samsung SSD
-  fileSystems."/mnt/ssd" = {
-    device = "/dev/disk/by-uuid/A6FC-984F";
-    fsType = "exfat";
-    options = [
-      "rw"
-      "nosuid"
-      "nodev"
-      "relatime"
-      "fmask=0022"
-      "dmask=0022"
-      "x-systemd.device-timeout=5s"
-      "x-systemd.automount"
-      "uid=sean"
-      "gid=sean"
-    ];
-  };
-
-  # Create Mount Directory for Samsung SSD
-  systemd.tmpfiles.rules = [
-    "d /mnt/ssd 0755 sean sean -"
-  ];
-
   swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
