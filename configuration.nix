@@ -44,12 +44,13 @@
 
   # Input
   services.libinput.enable = true; # Touchpad Support
+  
+  # Keyboard Layout
   environment.variables = {
     XKB_DEFAULT_LAYOUT = "de";
     XKB_DEFAULT_VARIANT = "";
   };
-  console.keyMap = "de-latin1"; # tty Layout
-  services.xserver.xkb.layout = "de";
+  console.keyMap = "de-latin1";
 
   # Display Manager
   services.displayManager.ly.enable = true;
@@ -87,8 +88,6 @@
     lm_sensors # sensors
     pciutils # lspci
     usbutils # lsusb
-    zip
-    unzip
     tldr
     brightnessctl
     font-awesome
