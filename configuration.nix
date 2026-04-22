@@ -1,4 +1,4 @@
-	{ pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -44,7 +44,7 @@
 
   # Input
   services.libinput.enable = true; # Touchpad Support
-  
+
   # Keyboard Layout
   environment.variables = {
     XKB_DEFAULT_LAYOUT = "de";
