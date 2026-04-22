@@ -42,16 +42,16 @@
   };
 
   # Auto Mount Samsung SSD
-  fileSystems."/run/media/sean/Sean" = {
+  fileSystems."/mnt/ssd" = {
     device = "/dev/disk/by-uuid/A6FC-984F";
     fsType = "exfat";
     options = [
       "rw"
       "nosuid"
+      "nodev"
       "relatime"
       "fmask=0022"
       "dmask=0022"
-      "iocharset=utf8"
       "x-systemd.device-timeout=5s"
       "x-systemd.automount"
       "uid=sean"
@@ -61,7 +61,7 @@
 
   # Create Mount Directory for Samsung SSD
   systemd.tmpfiles.rules = [
-    "d /run/media/sean/Sean 0755 sean sean -"
+    "d /mnt/ssd 0755 sean sean -"
   ];
 
   swapDevices = [ ];
