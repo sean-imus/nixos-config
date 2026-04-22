@@ -2,12 +2,24 @@
 
 {
   # Niri Config File
-  home.file.".config/niri/config.kdl".source = ./niri-config.kdl;
-  home.file.".config/niri/config.kdl".force = true;
+  home.file.".config/niri/config.kdl" = {
+    source = ./niri-config.kdl;
+    force = true;
+  };
 
   # Waybar
   programs.waybar = {
     enable = true;
+  };
+
+  home.file.".config/waybar/config" = {
+    source = ./waybar-config.jsonc;
+    force = true;
+  };
+
+  home.file.".config/waybar/style.css" = {
+    source = ./waybar-style.css;
+    force = true;
   };
 
   # Application Launcher
