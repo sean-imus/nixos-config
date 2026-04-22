@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   # Niri Config File
@@ -26,9 +26,7 @@
   };
 
   # Wallpaper Daemon
-  services.awww = {
-    enable = true;
-  };
+  home.packages = [ pkgs.awww ];
 
   # Audio Button Support
   services.playerctld = {
