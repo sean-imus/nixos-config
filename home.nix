@@ -12,6 +12,7 @@
     ./dotfiles/opencode.nix
     ./dotfiles/network-tools.nix
     ./dotfiles/niri/niri.nix
+    ./dotfiles/rdp-to-work.nix
   ];
 
   home.username = "sean";
