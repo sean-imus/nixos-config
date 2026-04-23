@@ -3,8 +3,8 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./dotfiles/virtualbox.nix
-    ./dotfiles/network-profiles.nix
+    ./features/virtualbox.nix
+    ./features/network-profiles.nix
   ];
 
   # Bootloader

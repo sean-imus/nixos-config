@@ -2,17 +2,17 @@
 
 {
   imports = [
-    ./dotfiles/btop.nix
-    ./dotfiles/chromium.nix
-    ./dotfiles/firefox.nix
-    ./dotfiles/git.nix
-    ./dotfiles/ssh.nix
-    ./dotfiles/alacritty.nix
-    ./dotfiles/neovim.nix
-    ./dotfiles/opencode.nix
-    ./dotfiles/network-tools.nix
-    ./dotfiles/niri/niri.nix
-    ./dotfiles/rdp-to-work.nix
+    ./features/btop.nix
+    ./features/chromium.nix
+    ./features/firefox.nix
+    ./features/git.nix
+    ./features/ssh.nix
+    ./features/alacritty.nix
+    ./features/neovim.nix
+    ./features/opencode.nix
+    ./features/network-tools.nix
+    ./features/niri/niri.nix
+    ./features/rdp-to-work.nix
   ];
 
   home.username = "sean";
