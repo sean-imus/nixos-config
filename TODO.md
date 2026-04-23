@@ -1,6 +1,6 @@
 - sops for secrets
-- waybar config
 - declarative firefox setup
 - launch bluetui with a keybind and launch it floating
 - add waybar toggle command and not launch at boot
 - enable luks encryption
+- waybar config
