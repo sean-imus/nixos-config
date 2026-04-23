@@ -34,6 +34,8 @@ output "Iiyama North America PL2770H 0x00000124" {
 layout {
     gaps 8
     center-focused-column "never"
+    always-center-single-column
+    empty-workspace-above-first
     preset-column-widths {
         proportion 0.25
 	proportion 0.33333
