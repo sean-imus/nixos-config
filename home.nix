@@ -11,7 +11,7 @@
     (import ./features/neovim.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/opencode.nix { pkgs = pkgs; config = config; }).homeManagerModule
     (import ./features/network-tools.nix { pkgs = pkgs; }).homeManagerModule
-    ./features/niri/niri.nix
+    (import ./features/niri/niri.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/rdp-work.nix { pkgs = pkgs; }).homeManagerModule
   ];
 

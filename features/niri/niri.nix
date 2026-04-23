@@ -1,41 +1,45 @@
 { pkgs, ... }:
 
 {
-  # Niri Config File
-  home.file.".config/niri/config.kdl" = {
-    source = ./niri-config.kdl;
-    force = true;
-  };
+  nixosModule = {};
 
-  # Waybar
-  programs.waybar = {
-    enable = true;
-  };
+  homeManagerModule = {
+    # Niri Config File
+    home.file.".config/niri/config.kdl" = {
+      source = ./niri-config.kdl;
+      force = true;
+    };
 
-  xdg.configFile."waybar/config.jsonc".source = ./waybar-config.jsonc;
+    # Waybar
+    programs.waybar = {
+      enable = true;
+    };
 
-  xdg.configFile."waybar/style.css".source = ./waybar-style.css;
+    xdg.configFile."waybar/config.jsonc".source = ./waybar-config.jsonc;
 
-  # Application Launcher
-  programs.fuzzel = {
-    enable = true;
-  };
+    xdg.configFile."waybar/style.css".source = ./waybar-style.css;
 
-  # Lock Screen
-  programs.swaylock = {
-    enable = true;
-  };
+    # Application Launcher
+    programs.fuzzel = {
+      enable = true;
+    };
 
-  # Notification Daemon
-  services.mako = {
-    enable = true;
-  };
+    # Lock Screen
+    programs.swaylock = {
+      enable = true;
+    };
 
-  # Wallpaper Daemon
-  home.packages = [ pkgs.awww ];
+    # Notification Daemon
+    services.mako = {
+      enable = true;
+    };
 
-  # Audio Button Support
-  services.playerctld = {
-    enable = true;
+    # Wallpaper Daemon
+    home.packages = [ pkgs.awww ];
+
+    # Audio Button Support
+    services.playerctld = {
+      enable = true;
+    };
   };
 }
