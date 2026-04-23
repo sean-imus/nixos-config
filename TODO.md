@@ -1,4 +1,5 @@
 1. declarative remmina config to use client side keyboard layout
+- remodel dotfiles to be able to use hm options alongside regular nix options to clean up
 2. sops for secrets
 3. waybar config
 4. declarative firefox setup
