@@ -28,6 +28,7 @@ output "Iiyama North America PL2770H 0x0000011F" {
 output "Iiyama North America PL2770H 0x00000124" {
     mode "1920x1080@144"
     position x=-3840 y=0
+    focus-at-startup
 }
 
 layout {
