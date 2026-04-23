@@ -4,6 +4,7 @@
   imports = [
     ./dotfiles/btop.nix
     ./dotfiles/chromium.nix
+    ./dotfiles/firefox.nix
     ./dotfiles/git.nix
     ./dotfiles/ssh.nix
     ./dotfiles/alacritty.nix
