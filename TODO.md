@@ -1,6 +1,7 @@
-- declarative firefox setup
-- launch bluetui with a keybind and launch it floating
-- add waybar toggle command and not launch at boot
-- enable luks encryption
-- waybar config
-- sops
+- (nixos) declarative firefox setup
+- (nixos) add printing and scanning support via a feature
+- (niri) launch bluetui with a keybind and launch it floating
+- (niri) add waybar toggle command and not launch at boot
+- (nixos) enable luks encryption
+- (niri) waybar config
+- (nixos) sops
