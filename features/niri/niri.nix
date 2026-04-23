@@ -15,8 +15,8 @@
       enable = true;
     };
 
+    # Waybar Config
     xdg.configFile."waybar/config.jsonc".source = ./waybar-config.jsonc;
-
     xdg.configFile."waybar/style.css".source = ./waybar-style.css;
 
     # Application Launcher
@@ -34,12 +34,16 @@
       enable = true;
     };
 
-    # Wallpaper Daemon
-    home.packages = [ pkgs.awww ];
-
     # Audio Button Support
     services.playerctld = {
       enable = true;
     };
+
+    # Install Depends
+    home.packages = with pkgs; [
+      xwayland-satellite # Xwayland support
+      awww # wallpaper daemon
+      font-awesome # waybar font
+    ];
   };
 }

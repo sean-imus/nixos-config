@@ -91,8 +91,6 @@
     usbutils # lsusb
     tldr
     brightnessctl
-    font-awesome
-    xwayland-satellite
     bluetui
   ];
 
