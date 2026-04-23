@@ -11,7 +11,6 @@
     ./dotfiles/neovim.nix
     ./dotfiles/opencode.nix
     ./dotfiles/network-tools.nix
-    ./dotfiles/remmina.nix
     ./dotfiles/niri/niri.nix
   ];
 
@@ -27,6 +26,7 @@
     bat
     nixfmt-tree # treefmt
     veracrypt
+    freerdp # xfreerdp
   ];
 
   # Don't touch!
