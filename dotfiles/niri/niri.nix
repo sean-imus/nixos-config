@@ -12,15 +12,9 @@
     enable = true;
   };
 
-  home.file.".config/waybar/config" = {
-    source = ./waybar-config.jsonc;
-    force = true;
-  };
+  xdg.configFile."waybar/config.jsonc".source = ./waybar-config.jsonc;
 
-  home.file.".config/waybar/style.css" = {
-    source = ./waybar-style.css;
-    force = true;
-  };
+  xdg.configFile."waybar/style.css".source = ./waybar-style.css;
 
   # Application Launcher
   programs.fuzzel = {
