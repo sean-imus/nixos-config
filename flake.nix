@@ -8,10 +8,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-firefox-addons = {
+      url = "github:OsiPog/nix-firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    inputs@{ nixpkgs, home-manager, ... }:
+    inputs@{ nixpkgs, home-manager, nix-firefox-addons, ... }:
     {
       nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
@@ -23,6 +27,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.sean = import ./home.nix;
             }
+	    { nixpkgs.overlays = [ nix-firefox-addons.overlays.default ]; }
           ];
         };
       };

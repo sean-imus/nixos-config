@@ -1,9 +1,19 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   nixosModule = { };
 
   homeManagerModule = {
-    # Empty - firefox config placeholder
+    programs.firefox = {
+      enable = true;
+      profiles.sean = {
+        settings = {
+          "extensions.autoDisableScopes" = 0;
+        };
+        extensions.packages = with pkgs.firefoxAddons; [
+          ublock-origin
+        ];
+      };
+    };
   };
 }
