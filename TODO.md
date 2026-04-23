@@ -4,3 +4,4 @@
 4. declarative firefox setup
 5. launch bluetui with a keybind and launch it floating
 6. add waybar toggle command and not launch at boot
+7. enable luks encryption
