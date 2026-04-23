@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  nixosModule = {};
+  nixosModule = { };
 
   homeManagerModule = {
     programs.btop = {

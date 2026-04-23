@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  nixosModule = {};
+  nixosModule = { };
 
   homeManagerModule = {
     # Install network related tools

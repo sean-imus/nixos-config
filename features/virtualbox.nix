@@ -11,5 +11,5 @@
     users.users.sean.extraGroups = [ "vboxusers" ];
   };
 
-  homeManagerModule = {};
+  homeManagerModule = { };
 }

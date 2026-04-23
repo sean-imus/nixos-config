@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  nixosModule = {};
+  nixosModule = { };
 
   homeManagerModule = {
     # Setup neovim alias

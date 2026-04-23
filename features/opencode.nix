@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 
 {
-  nixosModule = {};
+  nixosModule = { };
 
   homeManagerModule = {
     # Setup opencode alias

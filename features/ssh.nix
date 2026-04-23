@@ -1,7 +1,7 @@
 { config, ... }:
 
 {
-  nixosModule = {};
+  nixosModule = { };
 
   homeManagerModule = {
     programs.ssh = {
