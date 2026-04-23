@@ -1,35 +1,39 @@
 { pkgs, ... }:
 
 {
-  # Setup neovim alias
-  home.shellAliases = {
-    n = "nvim";
-  };
+  nixosModule = {};
 
-  # Install neovim
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    withRuby = false;
-    withPython3 = false;
-    extraPackages = [ pkgs.nixd ];
+  homeManagerModule = {
+    # Setup neovim alias
+    home.shellAliases = {
+      n = "nvim";
+    };
 
-    plugins = with pkgs.vimPlugins; [
-      {
-        plugin = gitsigns-nvim;
-        type = "lua";
-        config = ''
-          require('gitsigns').setup {}
-        '';
-      }
-    ];
+    # Install neovim
+    programs.neovim = {
+      enable = true;
+      defaultEditor = true;
+      withRuby = false;
+      withPython3 = false;
+      extraPackages = [ pkgs.nixd ];
 
-    initLua = ''
-      vim.lsp.config('nixd', {
-        cmd = { "nixd" },
-        filetypes = { "nix" },
-      })
-      vim.lsp.enable('nixd')
-    '';
+      plugins = with pkgs.vimPlugins; [
+        {
+          plugin = gitsigns-nvim;
+          type = "lua";
+          config = ''
+            require('gitsigns').setup {}
+          '';
+        }
+      ];
+
+      initLua = ''
+        vim.lsp.config('nixd', {
+          cmd = { "nixd" },
+          filetypes = { "nix" },
+        })
+        vim.lsp.enable('nixd')
+      '';
+    };
   };
 }

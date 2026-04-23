@@ -1,10 +1,14 @@
 { ... }:
 
 {
-  programs.chromium = {
-    enable = true;
-    extensions = [
-      "ddkjiahejlhfcafbddmgiahcphecmpfh" # uBlock Origin Lite
-    ];
+  nixosModule = {};
+
+  homeManagerModule = {
+    programs.chromium = {
+      enable = true;
+      extensions = [
+        "ddkjiahejlhfcafbddmgiahcphecmpfh" # uBlock Origin Lite
+      ];
+    };
   };
 }

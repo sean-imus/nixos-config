@@ -1,22 +1,26 @@
 { pkgs, config, ... }:
 
 {
-  # Setup opencode alias
-  home.shellAliases = {
-    c = "opencode";
-  };
+  nixosModule = {};
 
-  # Install NixOS MCP
-  home.packages = [ pkgs.mcp-nixos ];
+  homeManagerModule = {
+    # Setup opencode alias
+    home.shellAliases = {
+      c = "opencode";
+    };
 
-  # Install Opencode & Setup MCP integration
-  programs.opencode = {
-    enable = true;
-    settings = {
-      mcp = {
-        "NixOS MCP" = {
-          type = "local";
-          command = [ "mcp-nixos" ];
+    # Install NixOS MCP
+    home.packages = [ pkgs.mcp-nixos ];
+
+    # Install Opencode & Setup MCP integration
+    programs.opencode = {
+      enable = true;
+      settings = {
+        mcp = {
+          "NixOS MCP" = {
+            type = "local";
+            command = [ "mcp-nixos" ];
+          };
         };
       };
     };

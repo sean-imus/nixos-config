@@ -1,10 +1,14 @@
 { ... }:
 
 {
-  programs.btop = {
-    enable = true;
-    settings = {
-      update_ms = 100;
+  nixosModule = {};
+
+  homeManagerModule = {
+    programs.btop = {
+      enable = true;
+      settings = {
+        update_ms = 100;
+      };
     };
   };
 }

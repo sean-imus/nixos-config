@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     (import ./features/rdp-work.nix { pkgs = pkgs; }).nixosModule
+    (import ./features/virtualbox.nix { pkgs = pkgs; }).nixosModule
   ];
 
   # Bootloader

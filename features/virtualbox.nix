@@ -1,11 +1,15 @@
 { pkgs, ... }:
 
 {
-  # Install Virtualbox
-  virtualisation.virtualbox.host = {
-    enable = true;
+  nixosModule = {
+    # Install Virtualbox
+    virtualisation.virtualbox.host = {
+      enable = true;
+    };
+
+    # Add users to virtualbox group to allow usage
+    users.users.sean.extraGroups = [ "vboxusers" ];
   };
 
-  # Add users to virtualbox group to allow usage
-  users.users.sean.extraGroups = [ "vboxusers" ];
+  homeManagerModule = {};
 }
