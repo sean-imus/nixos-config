@@ -27,7 +27,6 @@
     bat
     nixfmt-tree # treefmt
     veracrypt
-    freerdp # xfreerdp
   ];
 
   # Don't touch!
