@@ -3,8 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./features/virtualbox.nix
-    ./features/network-profiles.nix
+    (import ./features/rdp-work.nix { pkgs = pkgs; }).nixosModule
   ];
 
   # Bootloader

@@ -12,7 +12,7 @@
     ./features/opencode.nix
     ./features/network-tools.nix
     ./features/niri/niri.nix
-    ./features/rdp-to-work.nix
+    (import ./features/rdp-work.nix { pkgs = pkgs; }).homeManagerModule
   ];
 
   home.username = "sean";
