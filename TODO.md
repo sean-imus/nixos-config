@@ -1,4 +1,3 @@
-- remodel dotfiles to be able to use hm options alongside regular nix options to clean up
 - sops for secrets
 - waybar config
 - declarative firefox setup
