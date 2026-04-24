@@ -1,7 +1,7 @@
 // -*- mode: jsonc -*-
 {
-    "height": 30,
-    "spacing": 4,
+    "height": 20,
+    "spacing": 0,
     "modules-right": [
         "pulseaudio",
         "network",
@@ -12,7 +12,7 @@
     ],
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
+        "format-alt": "{:%d.%m.%Y}"
     },
     "cpu": {
         "format": "{usage}%  \uf2db",
@@ -56,6 +56,6 @@
             "car": "\uf3d9",
             "default": ["\uf027", "\uf028", "\uf026"]
         },
-        "on-click": "pavucontrol"
+        "on-click": "wiremix"
     }
 }
