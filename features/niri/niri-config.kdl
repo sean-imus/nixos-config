@@ -30,9 +30,14 @@ output "Iiyama North America PL2770H 0x0000011F" {
 }
 
 output "Iiyama North America PL2770H 0x00000124" {
-    mode "1920x1080@144"
+    mode "1920x1080@143.998"
     position x=-3840 y=0
     focus-at-startup
+}
+
+output "Iiyama North America PLX2783H 1128255001580" {
+    mode "1920x1080@60"
+    position x=-5760 y=0
 }
 
 layout {
@@ -46,7 +51,6 @@ layout {
         proportion 0.5
         proportion 0.66667
 	proportion 0.75
-	proportion 1.0
     }
 
     preset-window-heights { 
@@ -55,7 +59,6 @@ layout {
         proportion 0.5
         proportion 0.66667
 	proportion 0.75
-	proportion 1.0
     }
 
     default-column-width { proportion 0.5; }
@@ -66,8 +69,8 @@ layout {
     }
 }
 
-spawn-at-startup "awww-daemon"
-spawn-sh-at-startup "awww clear 919191"
+// spawn-at-startup "awww-daemon"
+// spawn-sh-at-startup "awww clear 919191"
 
 hotkey-overlay {
     skip-at-startup
