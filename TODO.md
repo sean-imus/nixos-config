@@ -1,7 +1,5 @@
+- (desk) conky dashboard for weather and maybe a status like busy or on break
 - (nixos) declarative firefox setup
-- (nixos) add printing and scanning support via a feature
-- (niri) launch bluetui with a keybind and launch it floating
-- (niri) add waybar toggle command and not launch at boot
 - (terminal) switch shell to nushell or fish and create a nice looking prompt, best if it would support showing if im in a nix shell
 - (nixos) enable luks encryption
 - (niri) waybar config
