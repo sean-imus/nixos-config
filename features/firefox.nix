@@ -16,23 +16,29 @@
             ublock-origin
           ];
         };
-	bookmarks = {
-	  force = true;
-	  settings = [
-	    {
-	      toolbar = true;
-	      bookmarks = [
-	        {
-	          name = "NixOS";
-	          bookmarks = [
-	            { name = "NixOS Search"; url = "https://search.nixos.org/packages"; }
-	            { name = "Home-Manager Search"; url = "https://home-manager-options.extranix.com/?query=&release=master"; }
-	          ];
-	        }
-	      ];
-	    }
-	  ];
-	};
+        bookmarks = {
+          force = true;
+          settings = [
+            {
+              toolbar = true;
+              bookmarks = [
+                {
+                  name = "NixOS";
+                  bookmarks = [
+                    {
+                      name = "NixOS Search";
+                      url = "https://search.nixos.org/packages";
+                    }
+                    {
+                      name = "Home-Manager Search";
+                      url = "https://home-manager-options.extranix.com/?query=&release=master";
+                    }
+                  ];
+                }
+              ];
+            }
+          ];
+        };
       };
     };
   };
