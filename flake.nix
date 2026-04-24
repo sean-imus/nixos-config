@@ -2,7 +2,6 @@
   description = "Entry Flake";
 
   inputs = {
-    # Package Source
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
