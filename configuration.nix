@@ -117,6 +117,9 @@
     options = "--delete-older-than 7d";
   };
 
+  # Firmware Updates
+  services.fwupd.enable = true;
+
   nixpkgs.config.allowUnfree = true;
   hardware.enableRedistributableFirmware = true;
 
