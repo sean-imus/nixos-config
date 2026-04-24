@@ -15,7 +15,12 @@
   };
 
   outputs =
-    inputs@{ nixpkgs, home-manager, nix-firefox-addons, ... }:
+    inputs@{
+      nixpkgs,
+      home-manager,
+      nix-firefox-addons,
+      ...
+    }:
     {
       nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
@@ -27,7 +32,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.sean = import ./home.nix;
             }
-	    { nixpkgs.overlays = [ nix-firefox-addons.overlays.default ]; }
+            { nixpkgs.overlays = [ nix-firefox-addons.overlays.default ]; }
           ];
         };
       };
