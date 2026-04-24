@@ -20,11 +20,15 @@
 	  force = true;
 	  settings = [
 	    {
-	      name = "NixOS";
 	      toolbar = true;
 	      bookmarks = [
-	        { name = "NixOS Search"; url = "https://search.nixos.org/packages"; }
-	        { name = "Home-Manager Search"; url = "https://home-manager-options.extranix.com/?query=&release=master"; }
+	        {
+	          name = "NixOS";
+	          bookmarks = [
+	            { name = "NixOS Search"; url = "https://search.nixos.org/packages"; }
+	            { name = "Home-Manager Search"; url = "https://home-manager-options.extranix.com/?query=&release=master"; }
+	          ];
+	        }
 	      ];
 	    }
 	  ];
