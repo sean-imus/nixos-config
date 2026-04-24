@@ -44,6 +44,7 @@
       xwayland-satellite # Xwayland support
       awww # wallpaper daemon
       font-awesome # waybar font
+      wiremix # audio TUI
     ];
   };
 }
