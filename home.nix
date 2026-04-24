@@ -9,7 +9,10 @@
   imports = [
     (import ./features/btop.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/chromium.nix { pkgs = pkgs; }).homeManagerModule
-    (import ./features/firefox.nix { pkgs = pkgs; }).homeManagerModule
+    (import ./features/firefox.nix {
+      pkgs = pkgs;
+      config = config;
+    }).homeManagerModule
     (import ./features/git.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/ssh.nix {
       pkgs = pkgs;
