@@ -1,7 +1,11 @@
 // -*- mode: jsonc -*-
 {
+    "reload_style_on_change": true,
     "height": 20,
     "spacing": 0,
+    "modules-left": [
+        "niri/workspaces"
+    ],
     "modules-right": [
         "pulseaudio",
         "network",
@@ -10,6 +14,17 @@
         "battery",
         "clock"
     ],
+    "niri/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "empty": "○",
+            "default": "●"
+        },
+        "workspace-taskbar": {
+            "enable": true,
+            "icon-size": 16
+        }
+    },
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%d.%m.%Y}"
