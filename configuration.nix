@@ -59,7 +59,7 @@
 
   # Window Managers
   programs.niri.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  # services.desktopManager.plasma6.enable = true;
 
   # Sound
   security.rtkit.enable = true; # For realtime audio processing
