@@ -56,6 +56,6 @@
             "car": "\uf3d9",
             "default": ["\uf027", "\uf028", "\uf026"]
         },
-        "on-click": "wiremix"
+        "on-click": "alacritty -e wiremix"
     }
 }
