@@ -18,7 +18,7 @@
     "usb_storage"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "vboxdrv" "vboxnetadp" "vboxnetflt" ];
   boot.extraModulePackages = [ ];
 
   boot.supportedFilesystems = {
@@ -48,6 +48,9 @@
       "x-systemd.automount"
       "x-systemd.device-timeout=5"
       "nofail"
+      "uid=1000"
+      "gid=100"
+      "umask=0022"
     ];
   };
 
