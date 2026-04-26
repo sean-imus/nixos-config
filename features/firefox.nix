@@ -10,8 +10,13 @@
       profiles.sean = {
         settings = {
           "extensions.autoDisableScopes" = 0;
+          "browser.startup.homepage" = "about:profiles";
+          "browser.bookmarks.addedImportButton" = false;
+          "browser.shell.checkDefaultBrowser" = false;
+          "browser.toolbars.bookmarks.visibility" = "always";
         };
         extensions = {
+          force = true;
           packages = with pkgs.firefoxAddons; [
             ublock-origin
           ];
@@ -32,6 +37,10 @@
                     {
                       name = "Home-Manager Search";
                       url = "https://home-manager-options.extranix.com/?query=&release=master";
+                    }
+                    {
+                      name = "Niri Wiki";
+                      url = "https://niri-wm.github.io/niri/";
                     }
                   ];
                 }
