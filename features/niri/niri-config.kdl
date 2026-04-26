@@ -81,6 +81,7 @@ layout {
 
 // spawn-at-startup "awww-daemon"
 // spawn-sh-at-startup "awww clear 919191"
+spawn-at-startup "alacritty"
 
 hotkey-overlay {
     skip-at-startup
