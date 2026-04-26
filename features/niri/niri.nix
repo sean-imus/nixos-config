@@ -35,5 +35,10 @@
       waybar # bar
       bluetui # bluetooth TUI
     ];
+
+    home.shellAliases = {
+      vmalias = ''printf 'input {\n    mod-key "Alt"\n}' > /home/sean/.config/niri/vmalias.kdl'';
+    };
+
   };
 }
