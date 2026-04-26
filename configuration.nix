@@ -100,7 +100,19 @@
     rbb = "sudo nixos-rebuild boot && reboot";
   };
 
-  # Special
+  # Systemd Services
+  systemd.services."set-vbox-machine-foler" = {
+    wantedBy = ["multi-user.target"];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      #!/bin/sh
+      VBoxManager setproperty machinefolder /mnt/vms
+    '';
+  };
+
+  # Nix Settings
+  nixpkgs.config.allowUnfree = true;
+  hardware.enableRedistributableFirmware = true;
   nix.settings = {
     auto-optimise-store = true;
     download-buffer-size = 536870912; # 512 MiB
@@ -110,6 +122,7 @@
     ];
   };
 
+  # Nix Cleanup
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -118,9 +131,6 @@
 
   # Firmware Updates
   services.fwupd.enable = true;
-
-  nixpkgs.config.allowUnfree = true;
-  hardware.enableRedistributableFirmware = true;
 
   # Don't touch!
   system.stateVersion = "25.11";
