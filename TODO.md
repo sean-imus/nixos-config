@@ -1,4 +1,4 @@
-- (desk) conky dashboard for weather and maybe a status like busy or on break
-- (nixos) finish declarative firefox setup for work and school profile + respective settings and bookmarks
+- (school) support ssd for virtualbox
+- (nixos) finish declarative firefox setup
 - (terminal) style a better prompt that shows if im in a nix shell
 - (nixos) luks encryption
