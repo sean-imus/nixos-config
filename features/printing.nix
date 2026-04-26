@@ -2,11 +2,11 @@
 
 {
   nixosModule = {
-    services.printing.enable = true;
-    hardware.sane.enable = true;
+    services.printing.enable = true; # CUPS Daemon
+    hardware.sane.enable = true; # Scanning Support
   };
 
   homeManagerModule = {
-    home.packages = with pkgs; [ simple-scan ];
+    home.packages = with pkgs; [ simple-scan ]; # Scanning GUI
   };
 }
