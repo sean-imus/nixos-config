@@ -101,7 +101,7 @@ binds {
 
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Mod+B hotkey-overlay-title="Open a Browser: chromium" { spawn "chromium"; }
+    Mod+B hotkey-overlay-title="Open a Browser: firefox" { spawn "firefox"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
     Mod+Ctrl+B hotkey-overlay-title="Launch Bluetooth Menu: bluetui" { spawn-sh "alacritty -e bluetui"; }
     Mod+Shift+Space hotkey-overlay-title="Enable Waybar" { spawn "waybar"; }
