@@ -6,6 +6,7 @@
     (import ./features/rdp-work.nix { pkgs = pkgs; }).nixosModule
     (import ./features/virtualbox.nix { pkgs = pkgs; }).nixosModule
     (import ./features/printing.nix { pkgs = pkgs; }).nixosModule
+    (import ./features/niri/niri.nix { pkgs = pkgs; }).nixosModule
   ];
 
   # Bootloader
@@ -98,16 +99,6 @@
   environment.shellAliases = {
     rbs = "sudo nixos-rebuild switch";
     rbb = "sudo nixos-rebuild boot && reboot";
-  };
-
-  # Systemd Services
-  systemd.services."set-vbox-machine-foler" = {
-    wantedBy = ["multi-user.target"];
-    serviceConfig.Type = "oneshot";
-    script = ''
-      #!/bin/sh
-      VBoxManager setproperty machinefolder /mnt/vms
-    '';
   };
 
   # Nix Settings
