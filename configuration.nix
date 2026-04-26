@@ -91,8 +91,7 @@
     pciutils # lspci
     usbutils # lsusb
     tldr
-    brightnessctl
-    bluetui
+    brightnessctl # Laptop Monitor Brightness
   ];
 
   # Aliases
