@@ -23,6 +23,7 @@
 
   boot.supportedFilesystems = {
     ntfs = true;
+    exfat = true;
   };
 
   fileSystems."/" = {
@@ -36,6 +37,17 @@
     options = [
       "fmask=0077"
       "dmask=0077"
+    ];
+  };
+
+  # Samsung SSD
+  fileSystems."/mnt/ssd" = {
+    device = "/dev/disk/by-uuid/A6FC-984F";
+    fsType = "exfat";
+    options = [
+      "x-systemd.automount"
+      "x-systemd.device-timeout=5"
+      "nofail"
     ];
   };
 
