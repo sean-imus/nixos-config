@@ -27,6 +27,7 @@
     (import ./features/niri/niri.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/rdp-work.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/printing.nix { pkgs = pkgs; }).homeManagerModule
+    (import ./features/vscode.nix { pkgs = pkgs; }).homeManagerModule
   ];
 
   home.username = "sean";
