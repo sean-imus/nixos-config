@@ -11,7 +11,7 @@
 
   # Bootloader
   boot.loader = {
-    timeout = 3;
+    timeout = 1;
     efi.canTouchEfiVariables = true;
     systemd-boot = {
       enable = true;
@@ -96,6 +96,9 @@
     rbs = "sudo nixos-rebuild switch";
     rbb = "sudo nixos-rebuild boot && reboot";
   };
+
+  # Optimizations
+  services.thermald.enable = true;
 
   # Nix Settings
   nixpkgs.config.allowUnfree = true; # Allow closed source Software
