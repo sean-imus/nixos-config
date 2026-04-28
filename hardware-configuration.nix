@@ -18,7 +18,12 @@
     "usb_storage"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "vboxdrv" "vboxnetadp" "vboxnetflt" ];
+  boot.kernelModules = [
+    "kvm-intel"
+    "vboxdrv"
+    "vboxnetadp"
+    "vboxnetflt"
+  ];
   boot.extraModulePackages = [ ];
 
   boot.supportedFilesystems = {
