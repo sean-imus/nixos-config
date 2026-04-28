@@ -55,21 +55,17 @@
   console.keyMap = "de-latin1";
   services.xserver.xkb.layout = "de";
 
-  # Display Manager
-  services.displayManager.ly.enable = true;
-
-  # Window Managers
+  # Window Manager
   programs.niri.enable = true;
-  # services.desktopManager.plasma6.enable = true;
 
   # Sound
-  security.rtkit.enable = true; # For realtime audio processing
+  security.rtkit.enable = true; # For realtime Audio processing
   hardware.alsa.enableBluetooth = true; # For Bluetooth Audio
   services.pipewire = {
     enable = true;
-    alsa.enable = true; # compat
-    alsa.support32Bit = true; # compat
-    pulse.enable = true; # compat
+    alsa.enable = true; # compatibility
+    alsa.support32Bit = true; # compatibility
+    pulse.enable = true; # compatibility
   };
 
   # Users
@@ -102,8 +98,8 @@
   };
 
   # Nix Settings
-  nixpkgs.config.allowUnfree = true;
-  hardware.enableRedistributableFirmware = true;
+  nixpkgs.config.allowUnfree = true; # Allow closed source Software
+  hardware.enableRedistributableFirmware = true; # Enable Hardware Firmware which allows redistribution
   nix.settings = {
     auto-optimise-store = true;
     download-buffer-size = 536870912; # 512 MiB
