@@ -32,7 +32,7 @@
                   bookmarks = [
                     {
                       name = "NixOS Search";
-                      url = "https://search.nixos.org/packages";
+                      url = "https://search.nixos.org/packages?channel=unstable&include_modular_service_options=1&include_nixos_options=1";
                     }
                     {
                       name = "Home-Manager Search";
