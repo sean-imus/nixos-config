@@ -98,7 +98,7 @@
   };
 
   # Optimizations
-  services.thermald.enable = true;
+  services.thermald.enable = true; # Thermal Management Daemon
 
   # Nix Settings
   nixpkgs.config.allowUnfree = true; # Allow closed source Software
