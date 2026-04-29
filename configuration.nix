@@ -19,6 +19,13 @@
     };
   };
 
+  boot.kernelParams = [
+    "quiet"
+    "intel_iommu=on" # Enable IOMMU for PCI passthrough
+    "i915.enable_fbc=1" # Intel GPU framebuffer compression for power saving
+    "i915.enable_guc=2" # Enable Intel GuC firmware for GPU decode and encoding
+  ];
+
   # Networking
   networking = {
     hostName = "nixos";
@@ -105,13 +112,23 @@
     settings = {
       battery = {
         governor = "powersave";
-	turbo = "never";
+        turbo = "never";
       };
       charger = {
         governor = "performance";
-	turbo = "auto";
+        turbo = "auto";
       };
     };
+  };
+
+  # Automatic SSD TRIM
+  services.fstrim.enable = true;
+
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 100;
+    "vm.vfs_cache_pressure" = 50;
+    "net.core.default_qdisc" = "fq";
+    "net.ipv4.tcp_congestion_control" = "bbr";
   };
 
   zramSwap = {
