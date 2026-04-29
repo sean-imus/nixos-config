@@ -135,8 +135,13 @@
   console.keyMap = "de-latin1";
   services.xserver.xkb.layout = "de";
 
+  # Display Manager
+  #services.displayManager.ly.enable = true;
+
   # Window Manager
   programs.niri.enable = true;
+  #services.desktopManager.gnome.enable = true;
+  #services.desktopManager.plasma6.enable = true;
 
   # --- Sound ---
   security.rtkit.enable = true; # For realtime audio processing
@@ -179,19 +184,7 @@
   # --- Optimizations ---
   services.thermald.enable = true; # Thermal management daemon
 
-  services.auto-cpufreq = {
-    enable = true;
-    settings = {
-      battery = {
-        governor = "powersave";
-        turbo = "never";
-      };
-      charger = {
-        governor = "performance";
-        turbo = "auto";
-      };
-    };
-  };
+  services.power-profiles-daemon.enable = true;
 
   services.fstrim.enable = true; # Automatic SSD TRIM
 
