@@ -74,10 +74,11 @@
   boot.supportedFilesystems = {
     ntfs = true;
     exfat = true;
+    vfat = true;
   };
 
   # Kernel Modules
-  boot.initrd.availableKernelModules = [ # Kernel Modules Available While Booting
+  boot.initrd.availableKernelModules = [ # Kernel Modules Available while Booting
     "ahci"
     "xhci_pci"
     "thunderbolt"
@@ -105,9 +106,9 @@
 
   boot.kernelParams = [
     "quiet" # Hide Boot / Shutdown Logs
-    "intel_iommu=on" # Enable IOMMU for PCI passthrough
-    "i915.enable_fbc=1" # Intel GPU framebuffer compression for power saving
-    "i915.enable_guc=2" # Enable Intel GuC firmware for GPU decode and encoding
+    "intel_iommu=on" # Enable IOMMU for PCI-Passthrough
+    "i915.enable_fbc=1" # Intel GPU Framebuffer Compression for Power Saving
+    "i915.enable_guc=2" # Enable Intel GuC Firmware for GPU Decode and Encoding
   ];
 
   boot.kernel.sysctl = {
@@ -118,7 +119,7 @@
   };
 
   # --- Input & Display ---
-  services.libinput.enable = true; # Touchpad support
+  services.libinput.enable = true; # Touchpad Support
 
   # Keyboard Layout
   environment.variables = {
@@ -137,8 +138,8 @@
   #services.desktopManager.plasma6.enable = true;
 
   # --- Sound ---
-  security.rtkit.enable = true; # For realtime audio processing
-  hardware.alsa.enableBluetooth = true; # For Bluetooth audio
+  security.rtkit.enable = true; # Realtime Audio Processing
+  hardware.alsa.enableBluetooth = true; # Bluetooth audio
   services.pipewire = {
     enable = true;
     alsa.enable = true; # Compatibility
@@ -166,7 +167,7 @@
     pciutils # lspci
     usbutils # lsusb
     tldr
-    brightnessctl # Laptop monitor brightness
+    brightnessctl # Laptop Monitor Brightness
   ];
 
   environment.shellAliases = {
@@ -175,7 +176,7 @@
   };
 
   # --- Optimizations ---
-  services.thermald.enable = true; # Thermal management daemon
+  services.thermald.enable = true; # Thermal Management Daemon
 
   services.power-profiles-daemon.enable = true;
 
@@ -188,7 +189,7 @@
   };
 
   # --- Nix Configuration ---
-  nixpkgs.config.allowUnfree = true; # Allow closed source software
+  nixpkgs.config.allowUnfree = true; # Allow Closed Source Software
 
   nix.settings = {
     auto-optimise-store = true;
@@ -212,5 +213,5 @@
   };
 
   # --- Services ---
-  services.fwupd.enable = true; # Firmware updates
+  services.fwupd.enable = true; # Firmware Updates
 }
