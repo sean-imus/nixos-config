@@ -33,8 +33,8 @@
 
   # --- Hardware ---
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  hardware.enableRedistributableFirmware = true; # Enable hardware firmware which allows redistribution
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware; # Microcode Updates
+  hardware.enableRedistributableFirmware = true; # Enable hardware firmware
   hardware.bluetooth.enable = true;
 
   # File Systems
