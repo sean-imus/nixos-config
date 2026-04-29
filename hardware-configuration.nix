@@ -27,6 +27,10 @@
   ];
   boot.extraModulePackages = [ ];
 
+  boot.kernelParams = [
+    "quiet"
+  ];
+
   boot.supportedFilesystems = {
     ntfs = true;
     exfat = true;
