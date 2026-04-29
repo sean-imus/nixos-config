@@ -23,7 +23,7 @@
     "vboxdrv"
     "vboxnetadp"
     "vboxnetflt"
-    "i915"
+    "i915"  # Enable Intel integrated graphics driver
   ];
   boot.extraModulePackages = [ ];
 
@@ -39,6 +39,10 @@
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXROOT";
     fsType = "ext4";
+    options = [
+      "noatime"
+      "nodiratime"
+    ]; # Reduce unnecessary writes
   };
 
   fileSystems."/boot" = {
@@ -47,6 +51,7 @@
     options = [
       "fmask=0077"
       "dmask=0077"
+      "noatime" # Reduce unnecessary writes
     ];
   };
 
@@ -61,6 +66,7 @@
       "uid=1000"
       "gid=100"
       "umask=0022"
+      "noatime" # Reduce unnecessary writes
     ];
   };
 
