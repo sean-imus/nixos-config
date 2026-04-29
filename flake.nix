@@ -30,6 +30,9 @@
             aiobotocore = python-super.aiobotocore.overridePythonAttrs (old: {
               doCheck = false;
             });
+            fastmcp = python-super.fastmcp.overridePythonAttrs (old: {
+              doCheck = false;
+            });
           };
         };
       };
