@@ -32,11 +32,7 @@
                   bookmarks = [
                     {
                       name = "NixOS Search";
-                      url = "https://search.nixos.org/packages?channel=unstable&include_modular_service_options=1&include_nixos_options=1";
-                    }
-                    {
-                      name = "Home-Manager Search";
-                      url = "https://home-manager-options.extranix.com/?query=&release=master";
+                      url = "https://search.nixos.org/options?channel=unstable&include_home_manager_options=1&include_modular_service_options=1&include_nixos_options=1";
                     }
                     {
                       name = "Niri Wiki";
