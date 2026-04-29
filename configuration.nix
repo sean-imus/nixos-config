@@ -100,6 +100,26 @@
   # Optimizations
   services.thermald.enable = true; # Thermal Management Daemon
 
+  services.auto-cpufreq = {
+    enable = true;
+    settings = {
+      battery = {
+        governor = "powersave";
+	turbo = "never";
+      };
+      charger = {
+        governor = "performance";
+	turbo = "auto";
+      };
+    };
+  };
+
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 25;
+  };
+
   # Nix Settings
   nixpkgs.config.allowUnfree = true; # Allow closed source Software
   hardware.enableRedistributableFirmware = true; # Enable Hardware Firmware which allows redistribution
