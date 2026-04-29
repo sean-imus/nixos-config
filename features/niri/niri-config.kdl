@@ -6,6 +6,8 @@ input {
     touchpad {
         tap
         natural-scroll
+	dwt
+	drag-lock
     }
 
     mouse {
@@ -282,4 +284,4 @@ binds {
     Mod+Shift+P { power-off-monitors; }
  }
 
- // include optional=true "vmalias.kdl"
+ include optional=true "vmalias.kdl"
