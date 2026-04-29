@@ -23,6 +23,7 @@
     "vboxdrv"
     "vboxnetadp"
     "vboxnetflt"
+    "i915"
   ];
   boot.extraModulePackages = [ ];
 
