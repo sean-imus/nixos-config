@@ -3,7 +3,7 @@
 {
   imports = [
     (import ./features/rdp-work.nix { pkgs = pkgs; }).nixosModule
-    (import ./features/virtualbox.nix { pkgs = pkgs; }).nixosModule
+    (import ./features/virtualbox.nix { }).nixosModule
     (import ./features/printing.nix { pkgs = pkgs; }).nixosModule
     (import ./features/niri/niri.nix { pkgs = pkgs; }).nixosModule
   ];
@@ -32,9 +32,9 @@
   };
 
   # --- Hardware ---
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux"; # Processor Architecture
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware; # Microcode Updates
-  hardware.enableRedistributableFirmware = true; # Enable hardware firmware
+  hardware.enableRedistributableFirmware = true; # Enable Hardware Firmware
   hardware.bluetooth.enable = true;
 
   # File Systems
@@ -44,7 +44,7 @@
     options = [
       "noatime"
       "nodiratime"
-    ]; # Reduce unnecessary writes
+    ];
   };
 
   fileSystems."/boot" = {
@@ -53,11 +53,10 @@
     options = [
       "fmask=0077"
       "dmask=0077"
-      "noatime" # Reduce unnecessary writes
+      "noatime"
     ];
   };
 
-  # Samsung SSD
   fileSystems."/mnt/ssd" = {
     device = "/dev/disk/by-uuid/A6FC-984F";
     fsType = "exfat";
@@ -68,11 +67,9 @@
       "uid=1000"
       "gid=100"
       "umask=0022"
-      "noatime" # Reduce unnecessary writes
+      "noatime"
     ];
   };
-
-  swapDevices = [ ];
 
   boot.supportedFilesystems = {
     ntfs = true;
@@ -80,7 +77,7 @@
   };
 
   # Kernel Modules
-  boot.initrd.availableKernelModules = [
+  boot.initrd.availableKernelModules = [ # Kernel Modules Available While Booting
     "ahci"
     "xhci_pci"
     "thunderbolt"
@@ -90,28 +87,24 @@
     "sd_mod"
     "usb_storage"
   ];
-  boot.initrd.kernelModules = [ ];
+
   boot.kernelModules = [
-    "kvm-intel"
-    "vboxdrv"
-    "vboxnetadp"
-    "vboxnetflt"
-    "i915"  # Enable Intel integrated graphics driver
+    "kvm-intel" # Enable Hardware Virtualization
+    "vboxdrv" # Virtualbox Dependency
+    "vboxnetadp" # Virtualbox Dependency
+    "vboxnetflt" # Virtualbox Dependency
+    "i915"  # Enable Intel Integrated Graphics Driver
   ];
-  boot.extraModulePackages = [ ];
 
   # --- Boot ---
   boot.loader = {
     timeout = 1;
     efi.canTouchEfiVariables = true;
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 10;
-    };
+    systemd-boot.enable = true;
   };
 
   boot.kernelParams = [
-    "quiet"
+    "quiet" # Hide Boot / Shutdown Logs
     "intel_iommu=on" # Enable IOMMU for PCI passthrough
     "i915.enable_fbc=1" # Intel GPU framebuffer compression for power saving
     "i915.enable_guc=2" # Enable Intel GuC firmware for GPU decode and encoding
@@ -132,7 +125,7 @@
     XKB_DEFAULT_LAYOUT = "de";
     XKB_DEFAULT_VARIANT = "";
   };
-  console.keyMap = "de-latin1";
+  console.keyMap = "de-latin1"; # TTY Keyboard Layout
   services.xserver.xkb.layout = "de";
 
   # Display Manager
