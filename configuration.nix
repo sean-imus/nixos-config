@@ -102,6 +102,7 @@
     timeout = 1;
     efi.canTouchEfiVariables = true;
     systemd-boot.enable = true;
+    systemd-boot.configurationLimit = 10;
   };
 
   boot.kernelParams = [
