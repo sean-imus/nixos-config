@@ -9,7 +9,7 @@
   ];
 
   # --- System Settings ---
-  system.stateVersion = "25.11"; # Don't touch!
+  system.stateVersion = "25.11"; # Don't Touch!
 
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
