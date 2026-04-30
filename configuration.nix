@@ -77,7 +77,7 @@
     vfat = true;
   };
 
-  # Kernel Modules
+  # Kernel
   boot.initrd.availableKernelModules = [ # Kernel Modules Available while Booting
     "ahci"
     "xhci_pci"
