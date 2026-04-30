@@ -1,4 +1,2 @@
-- (school) support ssd for virtualbox
-- (nixos) finish declarative firefox setup
-- (terminal) style a better prompt that shows if im in a nix shell
-- (nixos) luks encryption
+- (terminal) Better looking Shell Prompt with Nix-Shell Showcase
+- (nixos) LUKS Encryption
