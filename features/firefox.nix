@@ -58,6 +58,10 @@
                       name = "Teams";
                       url = "https://teams.cloud.microsoft/";
                     }
+		    {
+		      name = "Copilot";
+		      url = "https://m365.cloud.microsoft/chat";
+		    }
                     {
                       name = "Microsoft Admin Center";
                       url = "https://admin.cloud.microsoft/";
