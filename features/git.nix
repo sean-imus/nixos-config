@@ -7,12 +7,12 @@
     # Install Lazygit
     programs.lazygit.enable = true;
 
-    # Setup Lazygit alias
+    # Setup Lazygit Alias
     home.shellAliases = {
       lg = "lazygit";
     };
 
-    # Install git
+    # Install Git
     programs.git = {
       enable = true;
       settings = {

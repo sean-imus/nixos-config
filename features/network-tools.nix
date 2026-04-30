@@ -4,7 +4,7 @@
   nixosModule = { };
 
   homeManagerModule = {
-    # Install network related tools
+    # Install Network Related Tools
     home.packages = with pkgs; [
       wget
       dnsutils # dig, nslookup

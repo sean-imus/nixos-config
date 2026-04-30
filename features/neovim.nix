@@ -4,12 +4,12 @@
   nixosModule = { };
 
   homeManagerModule = {
-    # Setup neovim alias
+    # Setup Neovim Alias
     home.shellAliases = {
       n = "nvim";
     };
 
-    # Install neovim
+    # Install Neovim
     programs.neovim = {
       enable = true;
       defaultEditor = true;
@@ -27,6 +27,7 @@
         }
       ];
 
+      # Install Nix LSP
       initLua = ''
         vim.lsp.config('nixd', {
           cmd = { "nixd" },

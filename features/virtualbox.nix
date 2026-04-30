@@ -7,7 +7,7 @@
       enable = true;
     };
 
-    # Add users to virtualbox group to allow usage
+    # Add User to Virtualbox Group to Allow Usage
     users.users.sean.extraGroups = [ "vboxusers" ];
   };
 

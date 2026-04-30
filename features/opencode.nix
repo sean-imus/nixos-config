@@ -4,7 +4,7 @@
   nixosModule = { };
 
   homeManagerModule = {
-    # Setup opencode alias
+    # Setup Opencode Alias
     home.shellAliases = {
       c = "opencode";
     };
