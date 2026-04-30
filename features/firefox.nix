@@ -10,10 +10,17 @@
       profiles.sean = {
         settings = {
           "extensions.autoDisableScopes" = 0;
-          "browser.startup.homepage" = "about:profiles";
+          "browser.startup.homepage" = "about:newtab";
           "browser.bookmarks.addedImportButton" = false;
           "browser.shell.checkDefaultBrowser" = false;
           "browser.toolbars.bookmarks.visibility" = "always";
+          "signon.rememberSignons" = false; # Don't Ask to Save Passwords
+          "browser.newtabpage.activity-stream.feeds.topsites" = false; # No Shortcuts on New Page
+          "browser.newtabpage.activity-stream.showSponsoredCheckboxes" = false; # Don't Show Sponsored Shortcuts
+          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false; # Don't Show Sponsored Shortcuts
+          "sidebar.visibility" = "hide-sidebar";
+          "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false; # Don't Recommend Features
+          "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false; # Don't Recommend Addons
         };
         extensions = {
           force = true;
@@ -37,6 +44,35 @@
                     {
                       name = "Niri Wiki";
                       url = "https://niri-wm.github.io/niri/";
+                    }
+                  ];
+                }
+                {
+		              name = "Work";
+                  bookmarks = [
+                    {
+                      name = "Outlook";
+                      url = "https://outlook.cloud.microsoft/mail/";
+                    }
+                    {
+                      name = "Teams";
+                      url = "https://teams.cloud.microsoft/";
+                    }
+                    {
+                      name = "Microsoft Admin Center";
+                      url = "https://admin.cloud.microsoft/";
+                    }
+                    {
+                      name = "Sophos Admin Center";
+                      url = "https://central.sophos.com/manage/overview/dashboard";
+                    }
+                    {
+                      name = "Swyx Control Center";
+                      url = "https://www.swyxon.com/ControlCenter";
+                    }
+                    {
+                      name = "E-Mail Live Tracking";
+                      url = "https://ms.hees.de/email_security/email_livetracking";
                     }
                   ];
                 }
