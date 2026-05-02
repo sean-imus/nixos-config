@@ -80,6 +80,15 @@
                     }
                   ];
                 }
+                {
+                  name = "Tools";
+                  bookmarks = [
+                    {
+                      name = "Photo Editor";
+                      url = "https://www.photopea.com/";
+                    }
+                  ];
+                }
               ];
             }
           ];
