@@ -46,7 +46,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.sean = import ./home.nix;
+              home-manager.users.sean = import ./sean.nix;
             }
             {
               nixpkgs.overlays = [
