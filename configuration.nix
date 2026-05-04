@@ -3,7 +3,7 @@
 {
   imports = [
     (import ./features/rdp-work.nix { pkgs = pkgs; }).nixosModule
-    (import ./features/virtualbox.nix { }).nixosModule
+    (import ./features/qemu.nix { }).nixosModule
     (import ./features/printing.nix { pkgs = pkgs; }).nixosModule
     (import ./features/niri/niri.nix { pkgs = pkgs; }).nixosModule
   ];
@@ -91,9 +91,6 @@
 
   boot.kernelModules = [
     "kvm-intel" # Enable Hardware Virtualization
-    "vboxdrv" # Virtualbox Dependency
-    "vboxnetadp" # Virtualbox Dependency
-    "vboxnetflt" # Virtualbox Dependency
     "i915"  # Enable Intel Integrated Graphics Driver
   ];
 
@@ -106,7 +103,6 @@
   };
 
   boot.kernelParams = [
-    "quiet" # Hide Boot / Shutdown Logs
     "intel_iommu=on" # Enable IOMMU for PCI-Passthrough
     "i915.enable_fbc=1" # Intel GPU Framebuffer Compression for Power Saving
     "i915.enable_guc=2" # Enable Intel GuC Firmware for GPU Decode and Encoding
@@ -168,6 +164,7 @@
     pciutils # lspci
     usbutils # lsusb
     tldr
+    iotop
     brightnessctl # Laptop Monitor Brightness
   ];
 
