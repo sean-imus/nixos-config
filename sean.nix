@@ -33,9 +33,7 @@
   # User Packages
   home.packages = with pkgs; [
     libreoffice
-    bat
     nixfmt-tree # treefmt
-    veracrypt
   ];
 
   # Don't Touch!

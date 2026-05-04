@@ -171,6 +171,7 @@
     usbutils # lsusb
     tldr
     iotop
+    bat
     brightnessctl # Laptop Monitor Brightness
   ];
 
