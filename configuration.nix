@@ -1,9 +1,14 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   imports = [
     (import ./features/rdp-work.nix { pkgs = pkgs; }).nixosModule
-    (import ./features/qemu.nix { }).nixosModule
+    (import ./features/qemu.nix { pkgs = pkgs; }).nixosModule
     (import ./features/printing.nix { pkgs = pkgs; }).nixosModule
     (import ./features/niri/niri.nix { pkgs = pkgs; }).nixosModule
   ];
@@ -78,7 +83,8 @@
   };
 
   # Kernel
-  boot.initrd.availableKernelModules = [ # Kernel Modules Available while Booting
+  boot.initrd.availableKernelModules = [
+    # Kernel Modules Available while Booting
     "ahci"
     "xhci_pci"
     "thunderbolt"
@@ -91,7 +97,7 @@
 
   boot.kernelModules = [
     "kvm-intel" # Enable Hardware Virtualization
-    "i915"  # Enable Intel Integrated Graphics Driver
+    "i915" # Enable Intel Integrated Graphics Driver
   ];
 
   # --- Boot ---
