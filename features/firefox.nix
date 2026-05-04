@@ -48,7 +48,7 @@
                   ];
                 }
                 {
-		              name = "Work";
+                  name = "Work";
                   bookmarks = [
                     {
                       name = "Outlook";
@@ -58,10 +58,14 @@
                       name = "Teams";
                       url = "https://teams.cloud.microsoft/";
                     }
-		    {
-		      name = "Copilot";
-		      url = "https://m365.cloud.microsoft/chat";
-		    }
+                    {
+                      name = "To-Do";
+                      url = "https://app.fizzy.do/6172759/boards/03fqfadkang7940o21lqrzl2e/columns/stream";
+                    }
+                    {
+                      name = "Copilot";
+                      url = "https://m365.cloud.microsoft/chat";
+                    }
                     {
                       name = "Microsoft Admin Center";
                       url = "https://admin.cloud.microsoft/";
