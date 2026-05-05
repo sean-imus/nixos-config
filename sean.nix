@@ -22,6 +22,7 @@
     (import ./features/printing.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/vscode.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/mcp.nix { pkgs = pkgs; }).homeManagerModule
+    (import ./features/starship.nix { }).homeManagerModule
   ];
 
   home.username = "sean";
