@@ -89,9 +89,6 @@
             "headphone": "\uf025",
             "hands-free": "\uf130",
             "headset": "\uf130",
-            "phone": "\uf3df",
-            "portable": "\uf3df",
-            "car": "\uf3d9",
             "default": ["\uf027", "\uf6a8", "\uf028"]
         },
         "scroll-step": 5,
@@ -102,8 +99,8 @@
         "format-source": "{volume}%  \uf130",
         "format-source-muted": "\uf131",
         "scroll-step": 5,
-        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
-        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%+",
-        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%-"
+        "on-click": "alacritty -e wiremix",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
     }
 }
