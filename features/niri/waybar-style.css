@@ -8,7 +8,8 @@ window#waybar {
 
 }
 
-#clock,
+#clock.time,
+#clock.date,
 #battery,
 #cpu,
 #memory,
@@ -18,7 +19,11 @@ window#waybar {
     color: #ffffff;
 }
 
-#clock {
+#clock.time {
+    background-color: #64727D;
+}
+
+#clock.date {
     background-color: #64727D;
 }
 
@@ -83,7 +88,7 @@ window#waybar {
 }
 
 #workspaces button.focused {
-    background-color: #2980b9;
+    background-color: #1b7e00;
 }
 
 #workspaces button.urgent {
@@ -91,7 +96,7 @@ window#waybar {
 }
 
 #workspaces button.empty {
-    color: #90b1b1;
+    color: #ffffff;
 }
 
 #workspaces .taskbar-window {
@@ -100,5 +105,5 @@ window#waybar {
 }
 
 #workspaces .taskbar-window.focused {
-    background-color: #437306;
+    background-color: #ffffff;
 }

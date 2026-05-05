@@ -1,19 +1,23 @@
 // -*- mode: jsonc -*-
 {
     "reload_style_on_change": true,
-    "height": 20,
     "spacing": 0,
+
     "modules-left": [
         "niri/workspaces"
+    ],
+    "modules-center": [
+        "clock#time",
+        "clock#date"
     ],
     "modules-right": [
         "pulseaudio",
         "network",
         "cpu",
         "memory",
-        "battery",
-        "clock"
+        "battery"
     ],
+
     "niri/workspaces": {
         "format": "{icon}",
         "format-icons": {
@@ -25,13 +29,31 @@
             "icon-size": 16
         }
     },
-    "clock": {
+    "clock#time": {
+        "format": "{:%H:%M}"
+    },
+    "clock#date": {
+        "format": "{:%d.%m.%Y}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%d.%m.%Y}"
+        "calendar": {
+            "weeks-pos": "left",
+            "on-scroll": 1,
+            "format": {
+                "months":   "<span color='#ffead3'><b>{}</b></span>",
+                "days":     "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":    "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today":    "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_down",
+            "on-scroll-down": "shift_up"
+        }
     },
     "cpu": {
-        "format": "{usage}%  \uf2db",
-        "tooltip": false
+        "format": "{usage}%  \uf2db"
     },
     "memory": {
         "format": "{}%  \uf538"
