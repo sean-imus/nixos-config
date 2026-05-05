@@ -18,7 +18,7 @@
           pkgs.vscode-extensions.jnoortheen.nix-ide
         ];
         userSettings = {
-          "files.autoSave" = "afterDelay";
+          "files.autoSave" = "onFocusChange";
           "editor.minimap.enabled" = false;
           "editor.formatOnSave" = true;
           "nix.enableLanguageServer" = true;
@@ -26,14 +26,15 @@
           "nix.serverSettings" = {
             "nixd" = {
               "formatting" = {
-                "command" = ["nixfmt"];
+                "command" = [ "nixfmt" ];
               };
               "options" = {
                 "nixos" = {
                   "expr" = "(builtins.getFlake \"/home/sean/nixos-config\").nixosConfigurations.nixos.options";
                 };
                 "home-manager" = {
-                  "expr" = "(builtins.getFlake \"/home/sean/nixos-config\").nixosConfigurations.nixos.options.home-manager.users.type.getSubOptions []";
+                  "expr" =
+                    "(builtins.getFlake \"/home/sean/nixos-config\").nixosConfigurations.nixos.options.home-manager.users.type.getSubOptions []";
                 };
               };
             };
