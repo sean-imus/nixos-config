@@ -35,6 +35,7 @@
   home.packages = with pkgs; [
     libreoffice
     nixfmt-tree # treefmt
+    nixfmt
   ];
 
   # Don't Touch!
