@@ -21,6 +21,7 @@
           "files.autoSave" = "onFocusChange";
           "editor.minimap.enabled" = false;
           "editor.formatOnSave" = true;
+          "git.enableSmartCommit" = true;
           "nix.enableLanguageServer" = true;
           "nix.serverPath" = "nixd";
           "nix.serverSettings" = {
