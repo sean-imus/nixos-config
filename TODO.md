@@ -1,2 +1,3 @@
+- (nixos) use programs.mcp.servers and integrate with vscode and opencode
 - (terminal) Better looking Shell Prompt with Nix-Shell Showcase
 - (nixos) LUKS Encryption
