@@ -93,6 +93,8 @@
     "sdhci_pci"
     "sd_mod"
     "usb_storage"
+    "virtio_blk"
+    "virtio_pci"
   ];
 
   boot.kernelModules = [
