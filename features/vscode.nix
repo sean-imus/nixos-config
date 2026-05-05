@@ -22,6 +22,7 @@
           "editor.minimap.enabled" = false;
           "editor.formatOnSave" = true;
           "git.enableSmartCommit" = true;
+          "git.confirmSync" = false;
           "nix.enableLanguageServer" = true;
           "nix.serverPath" = "nixd";
           "nix.serverSettings" = {
