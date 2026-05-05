@@ -61,7 +61,6 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       enableCompletion = true;
-      autocd = true;
       history = {
         size = 10000;
         save = 10000;
