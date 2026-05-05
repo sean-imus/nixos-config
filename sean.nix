@@ -22,14 +22,11 @@
     (import ./features/printing.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/vscode.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/mcp.nix { pkgs = pkgs; }).homeManagerModule
-    (import ./features/starship.nix { }).homeManagerModule
+    (import ./features/shell.nix { }).homeManagerModule
   ];
 
   home.username = "sean";
   home.homeDirectory = "/home/sean";
-
-  # Use bash
-  programs.bash.enable = true;
 
   # User Packages
   home.packages = with pkgs; [
