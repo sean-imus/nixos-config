@@ -26,14 +26,14 @@
 
     # Install Dependencies
     home.packages = with pkgs; [
-      xwayland-satellite # Xwayland support
-      awww # wallpaper daemon
-      font-awesome # waybar font
-      wiremix # audio TUI
-      swaylock # lockscreen
-      fuzzel # application launcher
-      waybar # bar
-      bluetui # bluetooth TUI
+      xwayland-satellite # XWayland Support
+      awww # Wallpaper Daemon
+      font-awesome # Waybar Font
+      wiremix # Audio TUI
+      swaylock # Lockscreen
+      fuzzel # Application Launcher
+      waybar # Bar
+      bluetui # Bluetooth TUI
     ];
 
     home.shellAliases = {
