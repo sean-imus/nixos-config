@@ -39,6 +39,7 @@
           pure_msg = "pure";
           unknown_msg = "unknown";
           style = "bold cyan";
+          heuristic = true;
         };
       };
     };
