@@ -36,6 +36,7 @@
     libreoffice
     nixfmt-tree # treefmt
     nixfmt
+    nixd
   ];
 
   # Don't Touch!
