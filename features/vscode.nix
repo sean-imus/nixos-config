@@ -18,6 +18,7 @@
         ];
         userSettings = {
           "files.autoSave" = "afterDelay";
+          "editor.minimap.enabled" = "false";
         };
       };
     };
