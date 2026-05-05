@@ -10,7 +10,7 @@
 
       settings = {
         add_newline = false;
-        format = "$nix_shell$directory$git_branch$git_status$character";
+        format = "$nix_shell$nix_depth$directory$git_branch$git_status$character";
 
         directory = {
           truncation_length = 3;
@@ -34,10 +34,10 @@
 
         nix_shell = {
           format = "[$symbol$state]($style) ";
-          symbol = "Nix ";
-          impure_msg = "impure";
-          pure_msg = "pure";
-          unknown_msg = "unknown";
+          symbol = "nix-shell";
+          impure_msg = "";
+          pure_msg = "";
+          unknown_msg = "";
           style = "bold cyan";
           heuristic = true;
         };
