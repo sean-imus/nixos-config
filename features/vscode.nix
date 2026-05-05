@@ -20,6 +20,27 @@
         userSettings = {
           "files.autoSave" = "afterDelay";
           "editor.minimap.enabled" = false;
+          "editor.formatOnSave" = true;
+          "nix.enableLanguageServer" = true;
+          "nix.serverPath" = "nixd";
+          "nix.serverSettings" = {
+            "nixd" = {
+              "formatting" = {
+                "command" = ["nixfmt"];
+              };
+              "options" = {
+                "nixos" = {
+                  "expr" = "(builtins.getFlake \"/home/sean/nixos-config\").nixosConfigurations.nixos.options";
+                };
+                "home-manager" = {
+                  "expr" = "(builtins.getFlake \"/home/sean/nixos-config\").nixosConfigurations.nixos.options.home-manager.users.type.getSubOptions []";
+                };
+              };
+            };
+          };
+          "[nix]" = {
+            "editor.defaultFormatter" = "jnoortheen.nix-ide";
+          };
         };
       };
     };
