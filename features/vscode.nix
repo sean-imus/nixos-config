@@ -23,6 +23,7 @@
           "editor.formatOnSave" = true;
           "git.enableSmartCommit" = true;
           "git.confirmSync" = false;
+          "git.autofetch" = true;
           "nix.enableLanguageServer" = true;
           "nix.serverPath" = "nixd";
           "nix.serverSettings" = {
