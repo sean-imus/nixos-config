@@ -124,6 +124,7 @@
   };
 
   # --- Input & Display ---
+  programs.zsh.enable = true;
   services.libinput.enable = true; # Touchpad Support
 
   # Keyboard Layout
