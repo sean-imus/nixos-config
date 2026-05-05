@@ -36,6 +36,8 @@
         "format": "{:%d.%m.%Y}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "calendar": {
+            "mode": "year",
+            "mode-mon-col": 4,
             "weeks-pos": "left",
             "on-scroll": 1,
             "format": {
