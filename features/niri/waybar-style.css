@@ -1,5 +1,5 @@
 * {
-    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-family: Roboto, Helvetica, Arial, sans-serif, "Font Awesome 7 Free";
     font-size: 13px;
 }
 
@@ -70,11 +70,16 @@ window#waybar {
     background-color: #f53c3c;
 }
 
-#pulseaudio {
+#pulseaudio.sink,
+#pulseaudio.mic {
     background-color: #f1c40f;
 }
 
-#pulseaudio.muted {
+#pulseaudio.sink.muted {
+    background-color: #90b1b1;
+}
+
+#pulseaudio.mic.source-muted {
     background-color: #90b1b1;
 }
 

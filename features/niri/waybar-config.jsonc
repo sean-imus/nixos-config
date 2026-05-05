@@ -11,7 +11,8 @@
         "clock#date"
     ],
     "modules-right": [
-        "pulseaudio",
+        "pulseaudio#sink",
+        "pulseaudio#mic",
         "network",
         "cpu",
         "memory",
@@ -79,13 +80,11 @@
         "format-linked": "",
         "format-disconnected": "\uf072"
     },
-    "pulseaudio": {
+    "pulseaudio#sink": {
         "format": "{volume}% {icon}",
         "format-bluetooth": "{volume}%  \uf130",
-        "format-bluetooth-muted": "\uf131  \uf130",
-        "format-muted": "\uf131",
-        "format-source": "{volume}%  \uf130",
-        "format-source-muted": "\uf131",
+        "format-bluetooth-muted": "\uf6a9  \uf130",
+        "format-muted": "\uf6a9",
         "format-icons": {
             "headphone": "\uf025",
             "hands-free": "\uf130",
@@ -93,8 +92,18 @@
             "phone": "\uf3df",
             "portable": "\uf3df",
             "car": "\uf3d9",
-            "default": ["\uf027", "\uf028", "\uf026"]
+            "default": ["\uf027", "\uf6a8", "\uf028"]
         },
+        "scroll-step": 5,
         "on-click": "alacritty -e wiremix"
+    },
+    "pulseaudio#mic": {
+        "format": "{format_source}",
+        "format-source": "{volume}%  \uf130",
+        "format-source-muted": "\uf131",
+        "scroll-step": 5,
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%-"
     }
 }
