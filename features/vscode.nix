@@ -11,6 +11,7 @@
       profiles.default = {
         enableUpdateCheck = false;
         enableExtensionUpdateCheck = false;
+        enableMcpIntegration = true;
         extensions = [
           pkgs.vscode-extensions.shd101wyy.markdown-preview-enhanced
           pkgs.vscode-extensions.bbenoist.nix
