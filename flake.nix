@@ -20,23 +20,6 @@
       nix-firefox-addons,
       ...
     }:
-    let
-      overlay = final: prev: {
-        python3Packages = prev.python3Packages.override {
-          overrides = python-self: python-super: {
-            aioboto3 = python-super.aioboto3.overridePythonAttrs (old: {
-              doCheck = false;
-            });
-            aiobotocore = python-super.aiobotocore.overridePythonAttrs (old: {
-              doCheck = false;
-            });
-            fastmcp = python-super.fastmcp.overridePythonAttrs (old: {
-              doCheck = false;
-            });
-          };
-        };
-      };
-    in
     {
       nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
@@ -51,7 +34,6 @@
             {
               nixpkgs.overlays = [
                 nix-firefox-addons.overlays.default
-                overlay
               ];
             }
           ];
