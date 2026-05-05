@@ -10,11 +10,17 @@
 
       settings = {
         add_newline = false;
-        format = "$nix_shell$nix_depth$directory$git_branch$git_status$character";
+        format = "$nix_shell\${custom.cwd}$git_branch$git_status$character";
 
         directory = {
-          truncation_length = 3;
-          truncation_symbol = ".../";
+          disabled = true;
+        };
+
+        custom.cwd = {
+          command = "pwd | sed \"s#^$HOME#~#\"";
+          when = "true";
+          format = "[($output)]($style) ";
+          style = "bold cyan";
         };
 
         git_branch = {
