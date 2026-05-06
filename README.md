@@ -1,7 +1,7 @@
 # Information
 The entry point is `flake.nix`, which loads `configuration.nix` (base system config: disk setup, hardware, and kernel options) and `sean.nix` (all user-specific settings). I've modularized as much as possible, moving optional components into separate `.nix` files under the `features/` folder.
 
-Each feature (e.g., `firefox.nix`, `virtualbox.nix`) splits into two sections: one imported by the system-level `configuration.nix`, and another imported only for my user via `sean.nix`. This handles features like VirtualBox that need system-wide changes, while letting me set up user-facing options declaratively for all features.
+Each feature (e.g., `firefox.nix`, `qemu.nix`) splits into two sections: one imported by the system-level `configuration.nix`, and another imported only for my user via `sean.nix`. This handles features like VirtualBox that need system-wide changes, while letting me set up user-facing options declaratively for all features.
 
 # Usage
 Run the following commands to install this configuration from a live NixOS Image, no guarantee it works though, it's pretty specific to me.
