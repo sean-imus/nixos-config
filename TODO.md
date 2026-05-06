@@ -1,2 +1,1 @@
-- (terminal) Better looking Shell Prompt with Nix-Shell Showcase
-- (nixos) LUKS Encryption
+- (nixos) disko setup with LUKS Encryption
