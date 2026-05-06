@@ -37,7 +37,7 @@
     ];
 
     home.shellAliases = {
-      vmalias = ''printf 'input {\n    mod-key "Alt"\n}' > /home/sean/.config/niri/vmalias.kdl'';
+      vmalias = ''printf 'input {\n    mod-key "Alt"\n}' > "$HOME/.config/niri/vmalias.kdl"'';
     };
 
   };

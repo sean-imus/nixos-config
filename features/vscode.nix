@@ -1,9 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   nixosModule = { };
 
-  homeManagerModule = {
+  homeManagerModule = let
+    flakePath = config.home.homeDirectory + "/nixos-config";
+  in {
     # Install VScode
     programs.vscode = {
       enable = true;
@@ -33,11 +35,11 @@
               };
               "options" = {
                 "nixos" = {
-                  "expr" = "(builtins.getFlake \"/home/sean/nixos-config\").nixosConfigurations.nixos.options";
+                  "expr" = "(builtins.getFlake \"${flakePath}\").nixosConfigurations.nixos.options";
                 };
                 "home-manager" = {
                   "expr" =
-                    "(builtins.getFlake \"/home/sean/nixos-config\").nixosConfigurations.nixos.options.home-manager.users.type.getSubOptions []";
+                    "(builtins.getFlake \"${flakePath}\").nixosConfigurations.nixos.options.home-manager.users.type.getSubOptions []";
                 };
               };
             };

@@ -20,7 +20,10 @@
     (import ./features/niri/niri.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/rdp-work.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/printing.nix { pkgs = pkgs; }).homeManagerModule
-    (import ./features/vscode.nix { pkgs = pkgs; }).homeManagerModule
+    (import ./features/vscode.nix {
+      pkgs = pkgs;
+      config = config;
+    }).homeManagerModule
     (import ./features/mcp.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/shell.nix { }).homeManagerModule
   ];
