@@ -26,6 +26,7 @@
           force = true;
           packages = with pkgs.firefoxAddons; [
             ublock-origin
+            vimium-ff
           ];
         };
         bookmarks = {
