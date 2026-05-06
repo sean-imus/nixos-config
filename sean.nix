@@ -34,6 +34,7 @@
     nixfmt-tree # treefmt
     nixfmt
     nixd
+    chrome
   ];
 
   # Don't Touch!
