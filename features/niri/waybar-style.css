@@ -32,7 +32,8 @@ window#waybar {
     color: #000000;
 }
 
-#battery.charging, #battery.plugged {
+#battery.charging,
+#battery.plugged {
     color: #ffffff;
     background-color: #26A65B;
 }
@@ -70,9 +71,12 @@ window#waybar {
     background-color: #f53c3c;
 }
 
-#pulseaudio.sink,
+#pulseaudio.sink {
+    background-color: #a58504;
+}
+
 #pulseaudio.mic {
-    background-color: #f1c40f;
+    background-color: #a58504;
 }
 
 #pulseaudio.sink.muted {
