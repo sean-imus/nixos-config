@@ -14,7 +14,7 @@
   };
 
   outputs =
-    inputs@{
+    {
       nixpkgs,
       home-manager,
       nix-firefox-addons,
