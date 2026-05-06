@@ -37,6 +37,7 @@
     nixfmt-tree # treefmt
     nixfmt
     nixd
+    spotify
   ];
 
   # Don't Touch!
