@@ -2,7 +2,9 @@
   description = "Entry Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/nixos-unstable";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,7 +31,7 @@
     }:
     {
       nixosConfigurations = {
-        nixos = nixpkgs.lib.nixosSystem {
+        "nixos" = nixpkgs.lib.nixosSystem {
           modules = [
             ./configuration.nix
             home-manager.nixosModules.home-manager
