@@ -36,9 +36,12 @@
             ./hosts/notebook.nix
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.sean = import ./users/sean.nix;
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.sean = import ./users/sean.nix;
+                sharedModules = [ vimium-options.homeManagerModules.default ];
+              };
             }
             {
               nixpkgs.overlays = [
@@ -46,7 +49,7 @@
               ];
             }
             {
-              home-manager.sharedModules = [ vimium-options.homeManagerModules.default ];
+
             }
           ];
         };
