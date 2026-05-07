@@ -9,9 +9,9 @@
       enable = true;
       outputFilePath = ".config/vimium-options.json";
 
+      # Custom Settings
       grabBackFocus = true;
       linkHintCharacters = "asdqweyxcrfvtgb";
-
       keyMappings = {
         unmapAll = true;
         map = {
@@ -21,7 +21,13 @@
           gi = "focusInput";
         };
       };
+      nextPatterns = "";
+      previousPatterns = "";
+      searchEngines = { };
+      userDefinedLinkHintCss = "";
+      exclusionRules = [ ];
 
+      # Default Settings
       scrollStepSize = 60;
       smoothScroll = true;
       filterLinkHints = false;
@@ -29,15 +35,7 @@
       hideHud = false;
       regexFindMode = false;
       ignoreKeyboardLayout = false;
-      previousPatterns = "prev,previous,back,<,‹,←,«,≪,<<";
-      nextPatterns = "next,more,>,›,→,»,≫,>>";
       newTabUrl = "about:newtab";
-      exclusionRules = [
-        {
-          pattern = "https?://mail.google.com/*";
-          passKeys = "";
-        }
-      ];
     };
 
     programs.firefox = {
