@@ -155,8 +155,8 @@ binds {
     Mod+WheelScrollRight      { focus-column-right; }
     Mod+WheelScrollLeft       { focus-column-left; }
 
-    Mod+Shift+WheelScrollDown      { focus-column-right; }
-    Mod+Shift+WheelScrollUp        { focus-column-left; }
+    Mod+Shift+WheelScrollDown      { focus-column-left; }
+    Mod+Shift+WheelScrollUp        { focus-column-right; }
 
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
