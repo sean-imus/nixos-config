@@ -36,7 +36,6 @@
   };
 
   console.keyMap = "de-latin1"; # TTY Keyboard Layout
-
   services.xserver.xkb.layout = "de"; # X11 Keyboard Layout
 
   # --- Aliases ---
