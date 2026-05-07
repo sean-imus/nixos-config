@@ -43,6 +43,7 @@
       configPath = "${config.xdg.configHome}/mozilla/firefox";
       profiles.sean = {
         settings = {
+          # Open "about:config" to view all possible Firefox Settings
           "extensions.autoDisableScopes" = 0;
           "browser.startup.homepage" = "about:newtab";
           "browser.bookmarks.addedImportButton" = false;
