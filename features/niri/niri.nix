@@ -46,10 +46,19 @@ in
       fuzzel # Application Launcher
       waybar # Bar
       bluetui # Bluetooth TUI
+
+      (pkgs.writeShellScriptBin "mod-toggle" ''
+        KDL="$HOME/.config/niri/vmalias.kdl"
+        if [ -f "$KDL" ] && grep -q 'mod-key "Alt"' "$KDL" 2>/dev/null; then
+          rm -f "$KDL"
+        else
+          printf "input {\n    mod-key \"Alt\"\n}\n" > "$KDL"
+        fi
+      '')
     ];
 
     home.shellAliases = {
-      vmalias = ''printf 'input {\n    mod-key "Alt"\n}' > "$HOME/.config/niri/vmalias.kdl"'';
+      vmalias = "mod-toggle";
     };
 
   };
