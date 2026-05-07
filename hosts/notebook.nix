@@ -21,26 +21,7 @@
   hardware.enableRedistributableFirmware = true; # Enable Hardware Firmware
   hardware.bluetooth.enable = true;
 
-  # File Systems
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/NIXROOT";
-    fsType = "ext4";
-    options = [
-      "noatime"
-      "nodiratime"
-    ];
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/NIXBOOT";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-      "noatime"
-    ];
-  };
-
+  # --- Extra Disks ---
   fileSystems."/mnt/ssd" = {
     device = "/dev/disk/by-uuid/A6FC-984F";
     fsType = "exfat";
@@ -57,8 +38,6 @@
 
   boot.supportedFilesystems = {
     ntfs = true;
-    exfat = true;
-    vfat = true;
   };
 
   # Kernel
