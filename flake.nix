@@ -48,9 +48,6 @@
                 nix-firefox-addons.overlays.default
               ];
             }
-            {
-
-            }
           ];
         };
       };
