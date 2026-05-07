@@ -1,9 +1,3 @@
-# Information
-
-The entry point is `flake.nix`, which loads `configuration.nix` (system-level config: kernel, boot, networking, hardware, services) and `sean.nix` (Home Manager user config: packages, dotfiles, program settings).
-
-Feature modules live in `features/*.nix` and export `{ nixosModule = ...; homeManagerModule = ...; }`. System-level imports go in `configuration.nix`, user-level in `sean.nix`. Niri config is split across `features/niri/niri.nix` (both layers) with extra files (`.kdl`, `.jsonc`, `.css`) in that subdirectory.
-
 # Usage
 
 Run the following commands to install this configuration from a live NixOS image. No guarantee it works — this config is specific to one machine.
