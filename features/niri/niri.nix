@@ -5,7 +5,7 @@
 
   homeManagerModule = {
     # Niri Config File
-    home.file.".config/niri/config.kdl" = {
+    xdg.configFile."niri/config.kdl" = {
       source = config.lib.file.mkOutOfStoreSymlink ./niri-config.kdl;
       force = true;
     };
