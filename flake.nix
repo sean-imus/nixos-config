@@ -31,9 +31,9 @@
     }:
     {
       nixosConfigurations = {
-        "nixos" = nixpkgs.lib.nixosSystem {
+        "notebook" = nixpkgs.lib.nixosSystem {
           modules = [
-            ./configuration.nix
+            ./hosts/notebook.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
