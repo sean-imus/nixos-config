@@ -1,4 +1,6 @@
-{ pkgs, lib, config, ... }:
+{
+  ...
+}:
 
 {
   imports = [
@@ -6,5 +8,4 @@
   ];
 
   networking.hostName = "server";
-  system.stateVersion = "25.11";
 }

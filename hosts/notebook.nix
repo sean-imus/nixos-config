@@ -14,30 +14,9 @@
   ];
 
   # --- System Settings ---
-  system.stateVersion = "25.11"; # Don't Touch!
-
-  time.timeZone = "Europe/Berlin";
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "de_DE.UTF-8";
-    LC_IDENTIFICATION = "de_DE.UTF-8";
-    LC_MEASUREMENT = "de_DE.UTF-8";
-    LC_MONETARY = "de_DE.UTF-8";
-    LC_NAME = "de_DE.UTF-8";
-    LC_NUMERIC = "de_DE.UTF-8";
-    LC_PAPER = "de_DE.UTF-8";
-    LC_TELEPHONE = "de_DE.UTF-8";
-    LC_TIME = "de_DE.UTF-8";
-  };
-
-  networking = {
-    hostName = "notebook";
-    networkmanager.enable = true;
-    firewall.enable = true;
-  };
+  networking.hostName = "notebook";
 
   # --- Hardware ---
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux"; # Processor Architecture
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware; # Microcode Updates
   hardware.enableRedistributableFirmware = true; # Enable Hardware Firmware
   hardware.bluetooth.enable = true;
@@ -103,13 +82,6 @@
   ];
 
   # --- Boot ---
-  boot.loader = {
-    timeout = 1;
-    efi.canTouchEfiVariables = true;
-    systemd-boot.enable = true;
-    systemd-boot.configurationLimit = 10;
-  };
-
   boot.kernelParams = [
     "intel_iommu=on" # Enable IOMMU for PCI-Passthrough
     "i915.enable_fbc=1" # Intel GPU Framebuffer Compression for Power Saving
@@ -127,23 +99,10 @@
   programs.zsh.enable = true;
   services.libinput.enable = true; # Touchpad Support
 
-  # Keyboard Layout
-  environment.variables = {
-    XKB_DEFAULT_LAYOUT = "de";
-    XKB_DEFAULT_VARIANT = "";
-  };
-  console.keyMap = "de-latin1"; # TTY Keyboard Layout
-  services.xserver.xkb.layout = "de";
-
-  # Display Manager
-  #services.displayManager.ly.enable = true;
-
   # Window Manager
   programs.niri.enable = true;
-  #services.desktopManager.gnome.enable = true;
-  #services.desktopManager.plasma6.enable = true;
 
-  # --- Sound ---
+  # Sound
   security.rtkit.enable = true; # Realtime Audio Processing
   hardware.alsa.enableBluetooth = true; # Bluetooth audio
   services.pipewire = {
@@ -185,9 +144,6 @@
   };
 
   # --- Optimizations ---
-  services.thermald.enable = true; # Thermal Management Daemon
-
-  services.power-profiles-daemon.enable = true;
 
   services.fstrim.enable = true; # Automatic SSD TRIM
 
@@ -197,30 +153,8 @@
     memoryPercent = 25;
   };
 
-  # --- Nix Configuration ---
-  nixpkgs.config.allowUnfree = true; # Allow Closed Source Software
-
-  nix.settings = {
-    auto-optimise-store = true;
-    download-buffer-size = 536870912; # 512 MiB
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-  };
-
-  nix = {
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-    optimise = {
-      automatic = true;
-      dates = "weekly";
-    };
-  };
-
-  # --- Services ---
+  # --- Extras ---
   services.fwupd.enable = true; # Firmware Updates
+  services.thermald.enable = true; # Thermal Management Daemon
+  services.power-profiles-daemon.enable = true; # Battery Optimization
 }
