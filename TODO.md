@@ -1,1 +1,1 @@
-- (nixos) disko setup with LUKS Encryption
+- [ ] (nixos) disko setup with LUKS Encryption

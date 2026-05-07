@@ -46,7 +46,7 @@ mount /dev/disk/by-label/NIXBOOT /mnt/boot
 ## Install from Flake
 
 ```
-nixos-install --flake github:sean-imus/nixos-config#nixos
+nixos-install --flake github:sean-imus/nixos-config#[notebook/server]
 reboot
 ```
 
