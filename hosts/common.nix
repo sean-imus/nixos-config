@@ -1,0 +1,5 @@
+{ ... }:
+
+{
+  # Shared config goes here
+}

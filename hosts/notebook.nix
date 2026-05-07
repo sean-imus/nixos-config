@@ -7,6 +7,7 @@
 
 {
   imports = [
+    ./common.nix
     (import ../features/rdp-work.nix { inherit pkgs; }).nixosModule
     (import ../features/qemu.nix { inherit pkgs; }).nixosModule
     (import ../features/printing.nix { inherit pkgs; }).nixosModule
