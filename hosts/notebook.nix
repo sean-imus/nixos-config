@@ -127,7 +127,7 @@
     };
   };
 
-  # --- Packages & Aliases ---
+  # --- SystemPackages ---
   environment.systemPackages = with pkgs; [
     lm_sensors # Sensors
     pciutils # lspci
@@ -138,15 +138,7 @@
     brightnessctl # Laptop Monitor Brightness
   ];
 
-  environment.shellAliases = {
-    rbs = "sudo nixos-rebuild switch --flake .#${config.networking.hostName}";
-    rbb = "sudo nixos-rebuild boot --flake .#${config.networking.hostName} && reboot";
-  };
-
-  # --- Optimizations ---
-
-  services.fstrim.enable = true; # Automatic SSD TRIM
-
+  # --- Swap ---
   zramSwap = {
     enable = true;
     algorithm = "zstd";

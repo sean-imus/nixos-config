@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ config, lib, ... }:
 
 {
   # --- Networking ---
@@ -38,6 +38,12 @@
   console.keyMap = "de-latin1"; # TTY Keyboard Layout
 
   services.xserver.xkb.layout = "de"; # X11 Keyboard Layout
+
+  # --- Aliases ---
+  environment.shellAliases = {
+    rbs = "sudo nixos-rebuild switch --flake .#${config.networking.hostName}";
+    rbb = "sudo nixos-rebuild boot --flake .#${config.networking.hostName} && reboot";
+  };
 
   # --- Nix Configuration ---
   nixpkgs.config.allowUnfree = true; # Allow Closed Source Software
