@@ -7,9 +7,9 @@
 
 {
   imports = [
-    (import ./features/rdp-work.nix { inherit pkgs; }).nixosModule
-    (import ./features/qemu.nix { inherit pkgs; }).nixosModule
-    (import ./features/printing.nix { inherit pkgs; }).nixosModule
+    (import ../features/rdp-work.nix { inherit pkgs; }).nixosModule
+    (import ../features/qemu.nix { inherit pkgs; }).nixosModule
+    (import ../features/printing.nix { inherit pkgs; }).nixosModule
   ];
 
   # --- System Settings ---
@@ -179,8 +179,8 @@
   ];
 
   environment.shellAliases = {
-    rbs = "sudo nixos-rebuild switch";
-    rbb = "sudo nixos-rebuild boot && reboot";
+    rbs = "sudo nixos-rebuild switch --flake .#notebook";
+    rbb = "sudo nixos-rebuild boot --flake .#notebook && reboot";
   };
 
   # --- Optimizations ---
