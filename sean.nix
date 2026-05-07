@@ -24,6 +24,7 @@
       pkgs = pkgs;
       config = config;
     }).homeManagerModule
+    (import ./features/vesktop.nix { }).homeManagerModule
     (import ./features/mcp.nix { pkgs = pkgs; }).homeManagerModule
     (import ./features/shell.nix { }).homeManagerModule
   ];
