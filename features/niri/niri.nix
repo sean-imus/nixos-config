@@ -1,22 +1,28 @@
 { pkgs, config, ... }:
 
+let
+  niriPath = "${config.home.homeDirectory}/nixos-config/features/niri/niri-config.kdl";
+  waybarConfigPath = "${config.home.homeDirectory}/nixos-config/features/niri/waybar-config.jsonc";
+  waybarStylePath = "${config.home.homeDirectory}/nixos-config/features/niri/waybar-style.css";
+in
+
 {
   nixosModule = { };
 
   homeManagerModule = {
     # Niri Config File
     xdg.configFile."niri/config.kdl" = {
-      source = config.lib.file.mkOutOfStoreSymlink ./niri-config.kdl;
+      source = config.lib.file.mkOutOfStoreSymlink niriPath;
       force = true;
     };
 
     # Waybar Config
     xdg.configFile."waybar/config.jsonc" = {
-      source = config.lib.file.mkOutOfStoreSymlink ./waybar-config.jsonc;
+      source = config.lib.file.mkOutOfStoreSymlink waybarConfigPath;
       force = true;
     };
     xdg.configFile."waybar/style.css" = {
-      source = config.lib.file.mkOutOfStoreSymlink ./waybar-style.css;
+      source = config.lib.file.mkOutOfStoreSymlink waybarStylePath;
       force = true;
     };
 
