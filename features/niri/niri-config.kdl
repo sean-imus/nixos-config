@@ -106,7 +106,7 @@ binds {
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+B hotkey-overlay-title="Open a Browser: firefox" { spawn "firefox"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Super+Alt+L allow-when-locked=true hotkey-overlay-title="Lock the Screen" { spawn "sh" "-c" "niri msg action spawn -- swaylock && niri msg action power-off-monitors"; }
     Mod+Ctrl+B hotkey-overlay-title="Launch Bluetooth Menu: bluetui" { spawn-sh "alacritty -e bluetui"; }
     Mod+Shift+Space hotkey-overlay-title="Enable Waybar" { spawn "waybar"; }
     Mod+CTRL+Space hotkey-overlay-title="Disable Waybar" { spawn-sh "pkill waybar"; }
@@ -135,8 +135,8 @@ binds {
     Mod+Right { focus-column-right; }
 
     Mod+Ctrl+Left  { move-column-left; }
-    Mod+Ctrl+Down  { move-window-down; }
-    Mod+Ctrl+Up    { move-window-up; }
+    Mod+Ctrl+Down  { move-window-down-or-to-workspace-down; }
+    Mod+Ctrl+Up    { move-window-up-or-to-workspace-up; }
     Mod+Ctrl+Right { move-column-right; }
 
     Mod+Shift+Left  { focus-monitor-left; }
@@ -207,8 +207,6 @@ binds {
 
     Mod+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
-
-    Mod+Shift+P { power-off-monitors; }
  }
 
  include optional=true "vmalias.kdl"
