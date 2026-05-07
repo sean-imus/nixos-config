@@ -79,7 +79,8 @@
       "inputs": {
         "home-manager": "home-manager",
         "nix-firefox-addons": "nix-firefox-addons",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "vimium-options": "vimium-options"
       }
     },
     "systems": {
@@ -94,6 +95,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "vimium-options": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1746118178,
+        "narHash": "sha256-MtIuTMLMF/Cl3MEJwO56rVhtXUtRhZ/i2hG49jcosEE=",
+        "owner": "uimataso",
+        "repo": "vimium-nixos",
+        "rev": "a9e4b051cf944718fd3fbb638bc1c08057507c31",
+        "type": "github"
+      },
+      "original": {
+        "owner": "uimataso",
+        "repo": "vimium-nixos",
         "type": "github"
       }
     }

@@ -4,6 +4,42 @@
   nixosModule = { };
 
   homeManagerModule = {
+    # Declarative Vimium Settings
+    home.vimiumOptions = {
+      enable = true;
+      outputFilePath = ".config/vimium-options.json";
+
+      grabBackFocus = true;
+      linkHintCharacters = "asdqweyxcrfvtgb";
+
+      keyMappings = {
+        unmapAll = true;
+        map = {
+          f = "LinkHints.activateMode";
+          d = "scrollDown";
+          u = "scrollUp";
+          gi = "focusInput";
+        };
+      };
+
+      scrollStepSize = 60;
+      smoothScroll = true;
+      filterLinkHints = false;
+      waitForEnterForFilteredHints = true;
+      hideHud = false;
+      regexFindMode = false;
+      ignoreKeyboardLayout = false;
+      previousPatterns = "prev,previous,back,<,‹,←,«,≪,<<";
+      nextPatterns = "next,more,>,›,→,»,≫,>>";
+      newTabUrl = "about:newtab";
+      exclusionRules = [
+        {
+          pattern = "https?://mail.google.com/*";
+          passKeys = "";
+        }
+      ];
+    };
+
     programs.firefox = {
       enable = true;
       configPath = "${config.xdg.configHome}/mozilla/firefox";
