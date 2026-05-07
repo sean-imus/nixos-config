@@ -2,7 +2,6 @@
 {
     "reload_style_on_change": true,
     "spacing": 0,
-
     "modules-left": [
         "niri/workspaces"
     ],
@@ -18,7 +17,6 @@
         "memory",
         "battery"
     ],
-
     "niri/workspaces": {
         "format": "{icon}",
         "format-icons": {
@@ -42,11 +40,11 @@
             "weeks-pos": "left",
             "on-scroll": 1,
             "format": {
-                "months":   "<span color='#ffead3'><b>{}</b></span>",
-                "days":     "<span color='#ecc6d9'><b>{}</b></span>",
-                "weeks":    "<span color='#99ffdd'><b>W{}</b></span>",
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "days": "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
                 "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-                "today":    "<span color='#ff6699'><b><u>{}</u></b></span>"
+                "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
             }
         },
         "actions": {
@@ -71,7 +69,13 @@
         "format-charging": "{capacity}%  \uf0e7",
         "format-plugged": "{capacity}%  \uf0e7",
         "format-alt": "{time} {icon}",
-        "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"]
+        "format-icons": [
+            "\uf244",
+            "\uf243",
+            "\uf242",
+            "\uf241",
+            "\uf240"
+        ]
     },
     "network": {
         "format-wifi": "\uf1eb  {signalStrength}%",
@@ -89,7 +93,11 @@
             "headphone": "\uf025",
             "hands-free": "\uf130",
             "headset": "\uf130",
-            "default": ["\uf027", "\uf6a8", "\uf028"]
+            "default": [
+                "\uf027",
+                "\uf6a8",
+                "\uf028"
+            ]
         },
         "scroll-step": 5,
         "on-click": "alacritty -e wiremix"

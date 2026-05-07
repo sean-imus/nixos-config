@@ -108,7 +108,7 @@ binds {
     Mod+B hotkey-overlay-title="Open a Browser: firefox" { spawn "firefox"; }
     Super+Alt+L allow-when-locked=true hotkey-overlay-title="Lock the Screen" { spawn "sh" "-c" "niri msg action spawn -- swaylock && niri msg action power-off-monitors"; }
     Mod+Ctrl+B hotkey-overlay-title="Launch Bluetooth Menu: bluetui" { spawn-sh "alacritty -e bluetui"; }
-    Mod+Shift+Space hotkey-overlay-title="Enable Waybar" { spawn "waybar"; }
+    Mod+Shift+Space hotkey-overlay-title="Enable Waybar" { spawn-sh "pkill waybar && waybar"; }
     Mod+CTRL+Space hotkey-overlay-title="Disable Waybar" { spawn-sh "pkill waybar"; }
 
 
