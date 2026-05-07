@@ -40,7 +40,7 @@
     ntfs = true;
   };
 
-  # Kernel
+  # --- Kernel ---
   boot.initrd.availableKernelModules = [
     # Kernel Modules Available while Booting
     "ahci"
@@ -56,6 +56,7 @@
   ];
 
   boot.kernelModules = [
+    # Kernel Modules Available after Booting
     "kvm-intel" # Enable Hardware Virtualization
     "i915" # Enable Intel Integrated Graphics Driver
   ];
@@ -74,14 +75,13 @@
     "net.ipv4.tcp_congestion_control" = "bbr";
   };
 
-  # --- Input & Display ---
-  programs.zsh.enable = true;
+  # --- Input ---
   services.libinput.enable = true; # Touchpad Support
 
-  # Window Manager
+  # --- Window Manager ---
   programs.niri.enable = true;
 
-  # Sound
+  # --- Sound ---
   security.rtkit.enable = true; # Realtime Audio Processing
   hardware.alsa.enableBluetooth = true; # Bluetooth audio
   services.pipewire = {
@@ -93,6 +93,7 @@
 
   # --- Users ---
   users.mutableUsers = false;
+  programs.zsh.enable = true;
   users.users = {
     sean = {
       isNormalUser = true;
