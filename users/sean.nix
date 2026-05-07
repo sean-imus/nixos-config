@@ -26,13 +26,13 @@
   home.username = "sean";
   home.homeDirectory = "/home/sean";
 
-  # User Packages
+  # User Packages with no declarative configuration
   home.packages = with pkgs; [
     libreoffice
+    spotify
     nixfmt-tree # treefmt
     nixfmt
     nixd
-    spotify
   ];
 
   # Don't Touch!
