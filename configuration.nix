@@ -7,10 +7,10 @@
 
 {
   imports = [
-    (import ./features/rdp-work.nix { pkgs = pkgs; }).nixosModule
-    (import ./features/qemu.nix { pkgs = pkgs; }).nixosModule
-    (import ./features/printing.nix { pkgs = pkgs; }).nixosModule
-    (import ./features/niri/niri.nix { pkgs = pkgs; }).nixosModule
+    (import ./features/rdp-work.nix { inherit pkgs; }).nixosModule
+    (import ./features/qemu.nix { inherit pkgs; }).nixosModule
+    (import ./features/printing.nix { inherit pkgs; }).nixosModule
+    (import ./features/niri/niri.nix { inherit pkgs; }).nixosModule
   ];
 
   # --- System Settings ---
