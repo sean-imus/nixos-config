@@ -30,7 +30,7 @@
   };
 
   networking = {
-    hostName = "nixos";
+    hostName = "notebook";
     networkmanager.enable = true;
     firewall.enable = true;
   };
@@ -179,8 +179,8 @@
   ];
 
   environment.shellAliases = {
-    rbs = "sudo nixos-rebuild switch --flake .#notebook";
-    rbb = "sudo nixos-rebuild boot --flake .#notebook && reboot";
+    rbs = "sudo nixos-rebuild switch --flake .#${config.networking.hostName}";
+    rbb = "sudo nixos-rebuild boot --flake .#${config.networking.hostName} && reboot";
   };
 
   # --- Optimizations ---
