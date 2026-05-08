@@ -77,6 +77,7 @@ in
       bluetui # Bluetooth TUI
       brightnessctl # Laptop Monitor Brightness
       cava # Terminal Music Visualizer
+      mpv # Video Player
       wf-recorder # Screen Recorder
       slurp # Region Selector
 
@@ -102,7 +103,12 @@ in
         powerprofilesctl set "$next"
       '')
       (pkgs.writeShellScriptBin "screencap" ''
-        wf-recorder -g "$(slurp)" -r 30 -c libx264 -f "$HOME/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4"
+        if pgrep -x wf-recorder > /dev/null; then
+          pkill -x wf-recorder
+        else
+          geometry=$(slurp) || exit 1
+          wf-recorder -g "$geometry" -r 30 -c libx264 -f "$HOME/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4"
+        fi
       '')
     ];
 
