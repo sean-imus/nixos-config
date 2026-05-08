@@ -4,6 +4,7 @@
   nixosModule = { };
 
   homeManagerModule = {
+    # Install Global MCP for Editors (VSCode, Opencode)
     programs.mcp = {
       enable = true;
       servers = {
