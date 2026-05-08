@@ -10,7 +10,6 @@
 - [ ] flake.nix: add `formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt` so `nix fmt` works
 - [ ] flake.nix: add `nixConfig` block with `trusted-users = [ "root" "@wheel" ]` and `substituters` / `extra-trusted-public-keys`
 - [ ] server.nix is basically empty -- add SSH server, keep it minimal but functional
-- [ ] Remove `auto-optimise-store = true` from common.nix (Nix docs advise against it; can cause concurrent build issues)
 
 ## Priority 3 (Cleanup & consistency)
 
@@ -26,4 +25,3 @@
 - [ ] disko setup with LUKS encryption (from original TODO)
 - [ ] Use `specialisation` for different niri keybind profiles instead of the mod-toggle script
 - [ ] Add CI (e.g. `nix flake check` in GitHub Actions)
-- [ ] Consider splitting `common.nix` -- it mixes boot, locale, nix config, etc. (functional but fine for now)
