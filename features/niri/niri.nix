@@ -71,6 +71,9 @@ in
         fi
       '')
       libnotify
+      (pkgs.writeShellScriptBin "wiremix-term" ''
+        alacritty --class wiremix -e wiremix
+      '')
       (pkgs.writeShellScriptBin "power-toggle" ''
         current=$(powerprofilesctl get)
         case "$current" in

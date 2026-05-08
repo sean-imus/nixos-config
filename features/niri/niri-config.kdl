@@ -112,7 +112,7 @@ window-rule {
 }
 
 window-rule {
-    match title="wiremix"
+    match app-id="^wiremix$"
     open-floating true
     background-effect {
         blur true

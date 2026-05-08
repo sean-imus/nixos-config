@@ -87,14 +87,14 @@
         "format": "vol {volume}%",
         "format-muted": "<s>vol</s>",
         "scroll-step": 5,
-        "on-click": "alacritty -e wiremix"
+        "on-click": "wiremix-term"
     },
     "pulseaudio#mic": {
         "format": "{format_source}",
         "format-source": "mic {volume}%",
         "format-source-muted": "<s>mic</s>",
         "scroll-step": 5,
-        "on-click": "alacritty -e wiremix",
+        "on-click": "wiremix-term",
         "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
     }
