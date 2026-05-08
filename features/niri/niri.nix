@@ -61,6 +61,7 @@ in
       waybar # Bar
       bluetui # Bluetooth TUI
       brightnessctl # Laptop Monitor Brightness
+      cava # Terminal Music Visualizer
 
       (pkgs.writeShellScriptBin "mod-toggle" ''
         KDL="$HOME/.config/niri/vmalias.kdl"
