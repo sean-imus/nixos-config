@@ -2,16 +2,16 @@
 @define-color fg                #ffffff;
 @define-color clock-bg          rgba(0, 0, 0, 0);
 @define-color battery-fg        #000000;
-@define-color battery-bg        #ffffff;
-@define-color battery-charging  #26A65B;
-@define-color critical          #f53c3c;
-@define-color cpu-bg            #437306;
-@define-color memory-bg         #9b59b6;
-@define-color network-bg        #2980b9;
-@define-color audio-bg          #a58504;
-@define-color audio-muted-bg    #90b1b1;
-@define-color ws-bg             #db7b4c;
-@define-color ws-focused-bg     #d63733;
+@define-color battery-bg        rgba(255, 255, 255, 0.8);
+@define-color battery-charging  rgba(38, 166, 91, 0.8);
+@define-color critical          rgba(245, 60, 60, 0.8);
+@define-color cpu-bg            rgba(67, 115, 6, 0.8);
+@define-color memory-bg         rgba(155, 89, 182, 0.8);
+@define-color network-bg        rgba(41, 128, 185, 0.8);
+@define-color audio-bg          rgba(165, 133, 4, 0.8);
+@define-color audio-muted-bg    rgba(144, 177, 177, 0.8);
+@define-color ws-bg             rgba(219, 123, 76, 0.8);
+@define-color ws-focused-bg     rgba(214, 55, 51, 0.8);
 
 * {
     font-family: Arial, "Font Awesome 7 Free";
@@ -99,13 +99,13 @@ window#waybar {
     padding: 0 4px;
     margin: 4px 5px;
     border-radius: 15px;
-    background-color: @ws-bg;
+    background-color: rgba(255, 255, 255, 0.00);
     color: @fg;
 }
 
 #workspaces button {
     padding: 0 5px;
-    border-radius: 0px;
+    border-radius: 15px;
     color: @fg;
 }
 
@@ -119,7 +119,6 @@ window#waybar {
 
 #workspaces button.empty {
     color: @fg;
-    border-radius: 15px;
 }
 
 #workspaces .taskbar-window {
