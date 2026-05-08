@@ -78,7 +78,7 @@
         "format": "batt {capacity}%"
     },
     "network": {
-        "format-wifi": "wifi  {signalStrength}%",
+        "format-wifi": "wifi {signalStrength}%",
         "format-ethernet": "eth",
         "tooltip-format": "{ifname}",
         "format-disconnected": "<s>net</s>"
