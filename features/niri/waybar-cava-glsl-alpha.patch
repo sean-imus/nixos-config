@@ -1,0 +1,14 @@
+diff --git a/src/modules/cava/cavaGLSL.cpp b/src/modules/cava/cavaGLSL.cpp
+index 02438d4..e0e74a5 100644
+--- a/src/modules/cava/cavaGLSL.cpp
++++ b/src/modules/cava/cavaGLSL.cpp
+@@ -104,6 +104,9 @@ void waybar::modules::cava::CavaGLSL::initGLSL() {
+   }
+
+   glClearColor(0.f, 0.f, 0.f, 1.f);
++  glEnable(GL_BLEND);
++  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
++
+   GLfloat vertexData[]{-1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f};
+   GLint indexData[]{0, 1, 2, 3};
+ 

@@ -56,6 +56,7 @@
                 (final: prev: {
                   waybar = (prev.waybar.override { cavaSupport = true; }).overrideAttrs (oa: {
                     buildInputs = (oa.buildInputs or []) ++ [ prev.libepoxy ];
+                    patches = (oa.patches or []) ++ [ ./features/niri/waybar-cava-glsl-alpha.patch ];
                   });
                 })
               ];
