@@ -53,6 +53,9 @@
               nixpkgs.overlays = [
                 nix-vscode-extensions.overlays.default
                 nix-firefox-addons.overlays.default
+                (final: prev: {
+                  waybar = prev.waybar.override { cavaSupport = true; };
+                })
               ];
             }
           ];

@@ -11,6 +11,7 @@
         "clock#date"
     ],
     "modules-right": [
+        "cava",
         "pulseaudio#sink",
         "pulseaudio#mic",
         "network",
@@ -88,6 +89,14 @@
         "format-muted": "<s>vol</s>",
         "scroll-step": 5,
         "on-click": "wiremix-term"
+    },
+    "cava": {
+        "cava_config": "/home/sean/.config/cava/waybar.conf",
+        "input_delay": 2,
+        "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+        "actions": {
+            "on-click-right": "mode"
+        }
     },
     "pulseaudio#mic": {
         "format": "{format_source}",

@@ -99,6 +99,17 @@ window#waybar {
     background-color: @critical;
 }
 
+#cava {
+    padding: 0 4px;
+    margin: 6px 2px;
+    background-color: rgba(0, 0, 0, 0);
+    color: @fg;
+}
+
+#cava.silent {
+    color: @fg;
+}
+
 #pulseaudio.sink,
 #pulseaudio.mic {
     background-color: @audio-bg;

@@ -4,6 +4,7 @@ let
   niriPath = "${config.home.homeDirectory}/nixos-config/features/niri/niri-config.kdl";
   waybarConfigPath = "${config.home.homeDirectory}/nixos-config/features/niri/waybar-config.jsonc";
   waybarStylePath = "${config.home.homeDirectory}/nixos-config/features/niri/waybar-style.css";
+  cavaWaybarConfigPath = "${config.home.homeDirectory}/nixos-config/features/niri/cava-waybar.conf";
 in
 
 {
@@ -23,6 +24,10 @@ in
     };
     xdg.configFile."waybar/style.css" = {
       source = config.lib.file.mkOutOfStoreSymlink waybarStylePath;
+      force = true;
+    };
+    xdg.configFile."cava/waybar.conf" = {
+      source = config.lib.file.mkOutOfStoreSymlink cavaWaybarConfigPath;
       force = true;
     };
 
