@@ -4,7 +4,7 @@
 
 
 ## Priority 2 (Low effort, high impact)
-
+- [ ] configure swaylock to look better
 - [ ] configure mako and use it for some keybind feedback like when I change power profiles ctl setting
 - [ ] server.nix is basically empty -- add SSH server, keep it minimal but functional
 
