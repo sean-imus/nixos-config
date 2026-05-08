@@ -100,11 +100,13 @@ in
         esac
         powerprofilesctl set "$next"
       '')
+      (pkgs.writeShellScriptBin "screencap" ''
+        wf-recorder -g "$(slurp)" -r 30 -c libx264 -f "$HOME/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4"
+      '')
     ];
 
     home.shellAliases = {
       vmalias = "mod-toggle";
-      screencap = "wf-recorder -g \"$(slurp)\" -f ~/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4";
     };
 
   };

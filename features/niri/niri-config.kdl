@@ -137,7 +137,6 @@ binds {
     Mod+Shift+Space hotkey-overlay-title="Enable Waybar" { spawn-sh "pkill waybar || true && waybar"; }
     Mod+CTRL+Space hotkey-overlay-title="Disable Waybar" { spawn-sh "pkill waybar"; }
 
-
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
     XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
@@ -230,6 +229,7 @@ binds {
     Mod+C { screenshot; }
     Mod+Ctrl+C { screenshot-screen; }
     Mod+Alt+C { screenshot-window; }
+    Mod+Ctrl+Shift+C { spawn-sh "screencap"; }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
