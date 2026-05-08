@@ -79,7 +79,6 @@ in
           performance) next="power-saver" ;;
         esac
         powerprofilesctl set "$next"
-        notify-send -a "power-profiles-daemon" "Power Profile" "Switched to $next"
       '')
     ];
 
