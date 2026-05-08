@@ -92,10 +92,10 @@
         "on-click": "wiremix-term"
     },
     "custom/recording": {
-        "exec": "pgrep -x wf-recorder > /dev/null && echo '{\"text\": \"🔴\", \"tooltip\": \"Click to stop recording\"}' || echo '{\"text\": \"\"}'",
+        "exec": "pgrep -x wf-recorder > /dev/null && echo '{\"text\": \"●\", \"tooltip\": \"Click to stop recording\", \"class\": \"recording\"}' || echo '{\"text\": \"\"}'",
         "return-type": "json",
-        "interval": 1,
-        "on-click": "pkill -x wf-recorder"
+        "signal": 8,
+        "on-click": "pkill -x wf-recorder; sleep 0.2; pkill -RTMIN+8 waybar"
     },
     "cava": {
         "cava_config": "/home/sean/.config/cava/waybar-glsl.conf",

@@ -105,10 +105,18 @@ in
       (pkgs.writeShellScriptBin "screencap" ''
         if pgrep -x wf-recorder > /dev/null; then
           pkill -x wf-recorder
-        else
-          geometry=$(slurp) || exit 1
-          wf-recorder -g "$geometry" -r 30 -c libx264 -f "$HOME/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4"
+          sleep 0.2
+          pkill -RTMIN+8 waybar
+          exit 0
         fi
+        geometry=$(slurp)
+        if [ $? -ne 0 ]; then
+          pkill -RTMIN+8 waybar
+          exit 1
+        fi
+        wf-recorder -g "$geometry" -r 30 -c libx264 -f "$HOME/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4" &
+        pkill -RTMIN+8 waybar
+        wait
       '')
     ];
 

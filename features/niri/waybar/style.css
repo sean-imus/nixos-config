@@ -99,14 +99,18 @@ window#waybar {
     background-color: @critical;
 }
 
-#recording {
-    padding: 0 4px;
-    margin: 6px 2px;
-    font-size: 16px;
+#custom-recording {
+    padding: 0 5px;
+    margin: 4px 5px;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0);
+    color: #ff3333;
 }
 
-#recording {
-    background-color: rgba(0, 0, 0, 0);
+#custom-recording.recording {
+    background-color: rgba(214, 55, 51, 0.8);
+    color: #ffffff;
+    min-width: 20px;
 }
 
 #cava {
