@@ -76,13 +76,14 @@ layout {
 
     default-column-width { proportion 0.5; }
     focus-ring {
-        width 3
+        width 0
         active-color "green"
         inactive-color "gray"
     }
 }
 
 spawn-at-startup "awww-daemon"
+spawn-at-startup "waybar"
 spawn-sh-at-startup "awww img ~/nixos-config/assets/yuta_green.jpg"
 
 hotkey-overlay {
