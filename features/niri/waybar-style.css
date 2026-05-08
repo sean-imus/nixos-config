@@ -1,4 +1,4 @@
-@define-color bg                transparent;
+@define-color bg                #454545;
 @define-color fg                #ffffff;
 @define-color clock-bg          #64727D;
 @define-color battery-fg        #000000;
@@ -10,7 +10,8 @@
 @define-color network-bg        #2980b9;
 @define-color audio-bg          #a58504;
 @define-color audio-muted-bg    #90b1b1;
-@define-color ws-focused-bg     #1b7e00;
+@define-color ws-bg             #db7b4c;
+@define-color ws-focused-bg     #d63733;
 
 * {
     font-family: Arial, "Font Awesome 7 Free";
@@ -19,6 +20,7 @@
 
 window#waybar {
     background: @bg;
+    border-radius: 15px;
 }
 
 #clock.time,
@@ -29,7 +31,9 @@ window#waybar {
 #network,
 #pulseaudio {
     padding: 0 9px;
+    margin: 6px 2px;
     color: @fg;
+    border-radius: 15px;
 }
 
 #clock.time,
@@ -91,10 +95,17 @@ window#waybar {
     background-color: @audio-muted-bg;
 }
 
-#workspaces,
+#workspaces {
+    padding: 0 4px;
+    margin: 4px 5px;
+    border-radius: 15px;
+    background-color: @ws-bg;
+    color: @fg;
+}
 
 #workspaces button {
-    padding: 0 3px;
+    padding: 0 5px;
+    border-radius: 0px;
     color: @fg;
 }
 
@@ -108,6 +119,7 @@ window#waybar {
 
 #workspaces button.empty {
     color: @fg;
+    border-radius: 15px;
 }
 
 #workspaces .taskbar-window {
@@ -116,4 +128,8 @@ window#waybar {
 
 #workspaces .taskbar-window.focused {
     background-color: @battery-bg;
+}
+
+.modules-right {
+    margin-right: 5px;
 }

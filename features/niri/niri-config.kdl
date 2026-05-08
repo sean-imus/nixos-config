@@ -82,8 +82,8 @@ layout {
     }
 }
 
-// spawn-at-startup "awww-daemon"
-// spawn-sh-at-startup "awww clear 919191"
+spawn-at-startup "awww-daemon"
+spawn-sh-at-startup "awww img ~/nixos-config/assets/yuta_green.jpg"
 spawn-at-startup "alacritty"
 
 hotkey-overlay {
