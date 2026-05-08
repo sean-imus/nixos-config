@@ -76,6 +76,8 @@ in
       bluetui # Bluetooth TUI
       brightnessctl # Laptop Monitor Brightness
       cava # Terminal Music Visualizer
+      wf-recorder # Screen Recorder
+      slurp # Region Selector
 
       (pkgs.writeShellScriptBin "mod-toggle" ''
         KDL="$HOME/.config/niri/vmalias.kdl"
@@ -102,6 +104,7 @@ in
 
     home.shellAliases = {
       vmalias = "mod-toggle";
+      scrrecord = "wf-recorder -g \"$(slurp)\" -f ~/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4";
     };
 
   };

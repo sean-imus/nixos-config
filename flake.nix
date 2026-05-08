@@ -54,8 +54,8 @@
                 nix-vscode-extensions.overlays.default
                 nix-firefox-addons.overlays.default
                 (final: prev: {
-                  waybar = prev.waybar.override { cavaSupport = true; }.overrideAttrs (oldAttrs: {
-                    buildInputs = (oldAttrs.buildInputs or []) ++ [ final.libepoxy ];
+                  waybar = (prev.waybar.override { cavaSupport = true; }).overrideAttrs (oa: {
+                    buildInputs = (oa.buildInputs or []) ++ [ prev.libepoxy ];
                   });
                 })
               ];
