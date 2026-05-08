@@ -32,7 +32,7 @@ void main() {
 
     if (y > fragCoord.y) {
         if (x > (bar + 1) * (bar_size) - bar_spacing) {
-            fragColor = vec4(bg_color, 1.0);
+            fragColor = vec4(bg_color, 0.0);
         } else {
             if (gradient_count == 0) {
                 fragColor = vec4(fg_color, 1.0);
@@ -46,6 +46,6 @@ void main() {
             }
         }
     } else {
-        fragColor = vec4(bg_color, 1.0);
+        fragColor = vec4(bg_color, 0.0);
     }
 }
