@@ -10,7 +10,7 @@
 
       settings = {
         add_newline = false;
-        format = "$nix_shell$cmd_duration\${custom.cwd}$git_branch$git_status$character";
+        format = " $nix_shell$cmd_duration\${custom.cwd}$git_branch$git_status$character";
 
         cmd_duration = {
           min_time = 2000;
