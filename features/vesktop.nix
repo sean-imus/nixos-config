@@ -16,6 +16,7 @@
       };
       vencord.settings = {
         autoUpdate = false;
+        autoUpdateNotfication = false;
         plugins = {
           AnonymiseFileNames.enabled = true;
           CrashHandler.enabled = true;
