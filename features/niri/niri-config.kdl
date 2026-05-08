@@ -54,7 +54,7 @@ output "GIGA-BYTE TECHNOLOGY CO., LTD. M27U 23463B001145" {
 }
 
 layout {
-    gaps 4
+    gaps 6
     center-focused-column "never"
     always-center-single-column
     empty-workspace-above-first
@@ -76,7 +76,7 @@ layout {
 
     default-column-width { proportion 0.5; }
     focus-ring {
-        width 4
+        width 3
         active-color "green"
         inactive-color "gray"
     }
@@ -104,10 +104,17 @@ layer-rule {
     }
 }
 
+// Rounded corners for all windows
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
 window-rule {
     match app-id="^Alacritty$"
     background-effect {
         blur true
+        xray false
     }
 }
 
@@ -116,6 +123,7 @@ window-rule {
     open-floating true
     background-effect {
         blur true
+        xray false
     }
 }
 
