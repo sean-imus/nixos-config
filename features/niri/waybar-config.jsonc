@@ -1,7 +1,7 @@
-// -*- mode: jsonc -*-
 {
     "reload_style_on_change": true,
     "spacing": 0,
+
     "modules-left": [
         "niri/workspaces"
     ],
@@ -17,6 +17,7 @@
         "memory",
         "battery"
     ],
+
     "niri/workspaces": {
         "format": "{icon}",
         "format-icons": {
@@ -28,9 +29,11 @@
             "icon-size": 16
         }
     },
+
     "clock#time": {
         "format": "{:%H:%M}"
     },
+
     "clock#date": {
         "format": "{:%d.%m.%Y}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
@@ -40,75 +43,71 @@
             "weeks-pos": "left",
             "on-scroll": 1,
             "format": {
-                "months": "<span color='#ffead3'><b>{}</b></span>",
-                "days": "<span color='#ecc6d9'><b>{}</b></span>",
-                "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
-                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-                "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+                "months":    "<span color='#ffead3'><b>{}</b></span>",
+                "days":      "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":     "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":  "<span color='#ffcc66'><b>{}</b></span>",
+                "today":     "<span color='#ff6699'><b><u>{}</u></b></span>"
             }
         },
         "actions": {
-            "on-click-right": "mode",
-            "on-scroll-up": "shift_down",
-            "on-scroll-down": "shift_up"
+            "on-click-right":   "mode",
+            "on-scroll-up":     "shift_down",
+            "on-scroll-down":   "shift_up"
         }
     },
+
     "cpu": {
         "format": "{usage}%  \uf2db"
     },
+
     "memory": {
         "format": "{}%  \uf538"
     },
+
     "battery": {
         "states": {
-            "warning": 30,
+            "warning":  30,
             "critical": 15
         },
-        "format": "{capacity}% {icon}",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}%  \uf0e7",
-        "format-plugged": "{capacity}%  \uf0e7",
-        "format-alt": "{time} {icon}",
-        "format-icons": [
-            "\uf244",
-            "\uf243",
-            "\uf242",
-            "\uf241",
-            "\uf240"
-        ]
+        "format":           "{capacity}% {icon}",
+        "format-full":      "{capacity}% {icon}",
+        "format-charging":  "{capacity}%  \uf0e7",
+        "format-plugged":   "{capacity}%  \uf0e7",
+        "format-alt":       "{time} {icon}",
+        "format-icons":     ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"]
     },
+
     "network": {
-        "format-wifi": "\uf1eb  {signalStrength}%",
-        "format-ethernet": "\uf0ec",
-        "tooltip-format": "{ifname}",
-        "format-linked": "",
-        "format-disconnected": "\uf072"
+        "format-wifi":          "\uf1eb  {signalStrength}%",
+        "format-ethernet":      "\uf0ec",
+        "tooltip-format":       "{ifname}",
+        "format-linked":        "",
+        "format-disconnected":  "\uf072"
     },
+
     "pulseaudio#sink": {
-        "format": "{volume}% {icon}",
-        "format-bluetooth": "{volume}%  \uf130",
-        "format-bluetooth-muted": "\uf6a9  \uf130",
-        "format-muted": "\uf6a9",
+        "format":                   "{volume}% {icon}",
+        "format-bluetooth":         "{volume}%  \uf130",
+        "format-bluetooth-muted":   "\uf6a9  \uf130",
+        "format-muted":             "\uf6a9",
         "format-icons": {
-            "headphone": "\uf025",
-            "hands-free": "\uf130",
-            "headset": "\uf130",
-            "default": [
-                "\uf027",
-                "\uf6a8",
-                "\uf028"
-            ]
+            "headphone":    "\uf025",
+            "hands-free":   "\uf130",
+            "headset":      "\uf130",
+            "default":      ["\uf027", "\uf6a8", "\uf028"]
         },
-        "scroll-step": 5,
-        "on-click": "alacritty -e wiremix"
+        "scroll-step":      5,
+        "on-click":         "alacritty -e wiremix"
     },
+
     "pulseaudio#mic": {
-        "format": "{format_source}",
-        "format-source": "{volume}%  \uf130",
-        "format-source-muted": "\uf131",
-        "scroll-step": 5,
-        "on-click": "alacritty -e wiremix",
-        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",
-        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
+        "format":                   "{format_source}",
+        "format-source":            "{volume}%  \uf130",
+        "format-source-muted":      "\uf131",
+        "scroll-step":              5,
+        "on-click":                 "alacritty -e wiremix",
+        "on-scroll-up":             "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",
+        "on-scroll-down":           "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
     }
 }
