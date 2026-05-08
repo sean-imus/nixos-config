@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, ... }:
 
 {
   # --- Networking ---
@@ -91,5 +91,5 @@
 
   # --- Don't Touch These ---
   system.stateVersion = "25.11"; # When this config was initially created
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux"; # Processor Architecture
+  nixpkgs.hostPlatform = "x86_64-linux"; # Processor Architecture
 }
