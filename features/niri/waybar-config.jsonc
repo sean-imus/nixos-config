@@ -15,6 +15,7 @@
         "pulseaudio#mic",
         "network",
         "cpu",
+        "power-profiles-daemon",
         "memory",
         "battery"
     ],
@@ -56,6 +57,15 @@
     },
     "cpu": {
         "format": "cpu {usage}%"
+    },
+    "custom/power-profile": {
+        "exec": "bash -c 'case $(powerprofilesctl get) in power-saver) echo \"perf low\" ;; balanced) echo \"perf mid\" ;; performance) echo \"perf high\" ;; esac'",
+        "interval": 30,
+        "signal": 1
+    },
+    "power-profiles-daemon": {
+        "format": "perf {profile}",
+        "tooltip": false
     },
     "memory": {
         "format": "mem {}%"

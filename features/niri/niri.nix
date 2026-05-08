@@ -36,7 +36,6 @@ in
         border-color = "#437306";
         border-radius = 12;
         border-size = 2;
-        default-timeout = 5000;
         font = "Sans 11";
         height = 100;
         width = 400;
@@ -70,6 +69,17 @@ in
         else
           printf "input {\n    mod-key \"Alt\"\n}\n" > "$KDL"
         fi
+      '')
+      libnotify
+      (pkgs.writeShellScriptBin "power-toggle" ''
+        current=$(powerprofilesctl get)
+        case "$current" in
+          power-saver) next="balanced" ;;
+          balanced) next="performance" ;;
+          performance) next="power-saver" ;;
+        esac
+        powerprofilesctl set "$next"
+        notify-send -a "power-profiles-daemon" "Power Profile" "Switched to $next"
       '')
     ];
 

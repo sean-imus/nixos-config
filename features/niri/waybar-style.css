@@ -5,6 +5,7 @@
 @define-color battery-bg        rgba(255, 255, 255, 0.8);
 @define-color battery-charging  rgba(38, 166, 91, 0.8);
 @define-color critical          rgba(245, 60, 60, 0.8);
+@define-color perf-bg           rgba(230, 180, 50, 0.8);
 @define-color cpu-bg            rgba(67, 115, 6, 0.8);
 @define-color memory-bg         rgba(155, 89, 182, 0.8);
 @define-color network-bg        rgba(41, 128, 185, 0.8);
@@ -27,6 +28,7 @@ window#waybar {
 #clock.date,
 #battery,
 #cpu,
+#power-profiles-daemon,
 #memory,
 #network,
 #pulseaudio {
@@ -71,6 +73,18 @@ window#waybar {
 
 #cpu {
     background-color: @cpu-bg;
+}
+
+#power-profiles-daemon {
+    background-color: @perf-bg;
+}
+
+#power-profiles-daemon.power-saver {
+    background-color: rgba(41, 128, 185, 0.8);
+}
+
+#power-profiles-daemon.performance {
+    background-color: rgba(245, 60, 60, 0.8);
 }
 
 #memory {

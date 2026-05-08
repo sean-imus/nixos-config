@@ -203,6 +203,7 @@ binds {
     Mod+V       { toggle-window-floating; }
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
     Alt+Ctrl+V  { spawn "mod-toggle"; }
+    Mod+P hotkey-overlay-title="Toggle Power Profile" { spawn "power-toggle"; }
 
     Mod+C { screenshot; }
     Mod+Ctrl+C { screenshot-screen; }
