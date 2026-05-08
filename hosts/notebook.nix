@@ -91,6 +91,7 @@
         "networkmanager"
         "wheel"
       ];
+      shell = pkgs.zsh;
     };
   };
 
