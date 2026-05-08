@@ -1,7 +1,6 @@
 @define-color bg                rgba(0, 0, 0, 0.5);
-@define-color fg                #ffffff;
-@define-color clock-bg          rgba(0, 0, 0, 0);
-@define-color battery-fg        #000000;
+@define-color fg                rgba(255, 255, 255, 1);
+@define-color battery-fg        rgba(0, 0, 0, 1);
 @define-color battery-bg        rgba(255, 255, 255, 0.8);
 @define-color battery-charging  rgba(38, 166, 91, 0.8);
 @define-color critical          rgba(245, 60, 60, 0.8);
@@ -11,8 +10,9 @@
 @define-color network-bg        rgba(41, 128, 185, 0.8);
 @define-color audio-bg          rgba(165, 133, 4, 0.8);
 @define-color audio-muted-bg    rgba(144, 177, 177, 0.8);
-@define-color ws-bg             rgba(219, 123, 76, 0.8);
 @define-color ws-focused-bg     rgba(214, 55, 51, 0.8);
+@define-color recording-fg      rgba(255, 51, 51, 1);
+@define-color recording-bg      rgba(214, 55, 51, 0.8);
 
 * {
     font-family: Arial, "Font Awesome 7 Free";
@@ -24,23 +24,40 @@ window#waybar {
     border-radius: 15px;
 }
 
-#clock.time,
-#clock.date,
-#battery,
-#cpu,
-#power-profiles-daemon,
-#memory,
-#network,
-#pulseaudio {
-    padding: 0 9px;
+/* --- right modules --- */
+.modules-right label,
+.modules-right box {
+    padding: 0px 9px;
     margin: 6px 2px;
     color: @fg;
     border-radius: 15px;
 }
 
-#clock.time,
-#clock.date {
-    background-color: @clock-bg;
+/* --- center modules --- */
+.modules-center label,
+.modules-center box {
+    padding: 0px 9px;
+    margin: 6px 2px;
+    color: @fg;
+    border-radius: 15px;
+}
+
+/* --- left modules --- */
+.modules-left label,
+.modules-left box {
+    padding: 0px 4px;
+    margin: 4px 5px;
+    color: @fg;
+    border-radius: 15px;
+}
+
+/* --- right overrides --- */
+
+#cava {
+    padding: 0px 4px;
+    min-width: 200px;
+    min-height: 20px;
+    background-color: transparent;
 }
 
 #battery {
@@ -80,11 +97,11 @@ window#waybar {
 }
 
 #power-profiles-daemon.power-saver {
-    background-color: rgba(41, 128, 185, 0.8);
+    background-color: @network-bg;
 }
 
 #power-profiles-daemon.performance {
-    background-color: rgba(245, 60, 60, 0.8);
+    background-color: @critical;
 }
 
 #memory {
@@ -99,32 +116,6 @@ window#waybar {
     background-color: @critical;
 }
 
-#custom-recording {
-    padding: 0 5px;
-    margin: 4px 5px;
-    border-radius: 15px;
-    background-color: rgba(0, 0, 0, 0);
-    color: #ff3333;
-}
-
-#custom-recording.recording {
-    background-color: rgba(214, 55, 51, 0.8);
-    color: #ffffff;
-    min-width: 20px;
-}
-
-#cava {
-    padding: 0 4px;
-    margin: 6px 2px;
-    min-width: 200px;
-    min-height: 20px;
-    background-color: rgba(0, 0, 0, 0);
-}
-
-#cava.silent {
-    color: @fg;
-}
-
 #pulseaudio.sink,
 #pulseaudio.mic {
     background-color: @audio-bg;
@@ -135,18 +126,35 @@ window#waybar {
     background-color: @audio-muted-bg;
 }
 
-#workspaces {
-    padding: 0 4px;
+/* --- center overrides --- */
+
+#clock.time,
+#clock.date {
+    background-color: transparent;
+}
+
+#custom-recording {
+    padding: 0px 5px;
     margin: 4px 5px;
-    border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.00);
+    background-color: transparent;
+    color: @recording-fg;
+}
+
+#custom-recording.recording {
+    background-color: @recording-bg;
     color: @fg;
+    min-width: 20px;
+}
+
+/* --- left overrides --- */
+
+#workspaces {
+    background-color: transparent;
 }
 
 #workspaces button {
-    padding: 0 5px;
+    padding: 0px 2px;
     border-radius: 15px;
-    color: @fg;
 }
 
 #workspaces button.focused {
@@ -155,18 +163,6 @@ window#waybar {
 
 #workspaces button.urgent {
     background-color: @critical;
-}
-
-#workspaces button.empty {
-    color: @fg;
-}
-
-#workspaces .taskbar-window {
-    color: @fg;
-}
-
-#workspaces .taskbar-window.focused {
-    background-color: @battery-bg;
 }
 
 .modules-right {
