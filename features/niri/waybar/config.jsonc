@@ -8,7 +8,8 @@
     ],
     "modules-center": [
         "clock#time",
-        "clock#date"
+        "clock#date",
+        "custom/recording"
     ],
     "modules-right": [
         "cava",
@@ -89,6 +90,12 @@
         "format-muted": "<s>vol</s>",
         "scroll-step": 5,
         "on-click": "wiremix-term"
+    },
+    "custom/recording": {
+        "exec": "pgrep -x wf-recorder > /dev/null && echo '{\"text\": \"🔴\", \"tooltip\": \"Click to stop recording\"}' || echo '{\"text\": \"\"}'",
+        "return-type": "json",
+        "interval": 1,
+        "on-click": "pkill -x wf-recorder"
     },
     "cava": {
         "cava_config": "/home/sean/.config/cava/waybar-glsl.conf",
