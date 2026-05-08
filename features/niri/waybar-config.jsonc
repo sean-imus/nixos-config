@@ -93,7 +93,17 @@
     "cava": {
         "cava_config": "/home/sean/.config/cava/waybar.conf",
         "input_delay": 2,
-        "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+        "format-icons": [
+            " ",
+            "▁",
+            "▂",
+            "▃",
+            "▄",
+            "▅",
+            "▆",
+            "▇",
+            "█"
+        ],
         "actions": {
             "on-click-right": "mode"
         }
