@@ -76,7 +76,7 @@ layout {
 
     default-column-width { proportion 0.5; }
     focus-ring {
-        width 0
+        width 2
         active-color "green"
         inactive-color "gray"
     }
@@ -98,7 +98,6 @@ animations {
 
 layer-rule {
     match namespace="^waybar$"
-
     background-effect {
         blur true
     }
