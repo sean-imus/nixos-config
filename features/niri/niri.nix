@@ -104,7 +104,7 @@ in
 
     home.shellAliases = {
       vmalias = "mod-toggle";
-      scrrecord = "wf-recorder -g \"$(slurp)\" -f ~/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4";
+      screencap = "wf-recorder -g \"$(slurp)\" -f ~/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4";
     };
 
   };
