@@ -1,6 +1,7 @@
 {
     "reload_style_on_change": true,
     "spacing": 0,
+    "height": 5,
     "modules-left": [
         "niri/workspaces"
     ],
@@ -53,54 +54,34 @@
         }
     },
     "cpu": {
-        "format": "{usage}%  \uf2db"
+        "format": "cpu {usage}%"
     },
     "memory": {
-        "format": "{}%  \uf538"
+        "format": "mem {}%"
     },
     "battery": {
         "states": {
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% {icon}",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}%  \uf0e7",
-        "format-plugged": "{capacity}%  \uf0e7",
-        "format-alt": "{time} {icon}",
-        "format-icons": [
-            "\uf244",
-            "\uf243",
-            "\uf242",
-            "\uf241",
-            "\uf240"
-        ]
+        "format": "batt {capacity}%"
     },
     "network": {
-        "format-wifi": "\uf1eb  {signalStrength}%",
-        "format-ethernet": "\uf0ec",
+        "format-wifi": "wifi  {signalStrength}%",
+        "format-ethernet": "eth",
         "tooltip-format": "{ifname}",
-        "format-disconnected": "\uf072"
+        "format-disconnected": "<s>net</s>"
     },
     "pulseaudio#sink": {
-        "format": "{volume}% {icon}",
-        "format-bluetooth": "{volume}%  \uf130",
-        "format-bluetooth-muted": "\uf6a9  \uf130",
-        "format-muted": "\uf6a9",
-        "format-icons": {
-            "default": [
-                "\uf027",
-                "\uf6a8",
-                "\uf028"
-            ]
-        },
+        "format": "vol {volume}%",
+        "format-muted": "<s>vol</s>",
         "scroll-step": 5,
         "on-click": "alacritty -e wiremix"
     },
     "pulseaudio#mic": {
         "format": "{format_source}",
-        "format-source": "{volume}%  \uf130",
-        "format-source-muted": "\uf131",
+        "format-source": "mic {volume}%",
+        "format-source-muted": "<s>mic</s>",
         "scroll-step": 5,
         "on-click": "alacritty -e wiremix",
         "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",

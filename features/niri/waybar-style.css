@@ -28,7 +28,7 @@ window#waybar {
 #memory,
 #network,
 #pulseaudio {
-    padding: 0 10px;
+    padding: 0 9px;
     color: @fg;
 }
 
@@ -53,7 +53,7 @@ window#waybar {
     color: @fg;
     animation-name: blink;
     animation-duration: 0.5s;
-    animation-timing-function: steps(12);
+    animation-timing-function: steps(30);
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
@@ -91,9 +91,7 @@ window#waybar {
     background-color: @audio-muted-bg;
 }
 
-#workspaces {
-    padding: 0 5px;
-}
+#workspaces,
 
 #workspaces button {
     padding: 0 3px;
@@ -113,7 +111,6 @@ window#waybar {
 }
 
 #workspaces .taskbar-window {
-    padding: 0 2px;
     color: @fg;
 }
 
