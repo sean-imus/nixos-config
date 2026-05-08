@@ -15,7 +15,7 @@
     systemd-boot.configurationLimit = 10;
   };
 
-  # --- SystemPackages ---
+  # --- System Packages ---
   environment.systemPackages = with pkgs; [
     lm_sensors # Sensors
     pciutils # lspci
