@@ -83,7 +83,6 @@ layout {
 }
 
 spawn-at-startup "awww-daemon"
-spawn-at-startup "waybar"
 spawn-sh-at-startup "awww img ~/nixos-config/assets/yuta_green.jpg"
 
 hotkey-overlay {
