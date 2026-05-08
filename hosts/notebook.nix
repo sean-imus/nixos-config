@@ -17,9 +17,11 @@
   networking.hostName = "notebook";
 
   # --- Hardware ---
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware; # Microcode Updates
-  hardware.enableRedistributableFirmware = true; # Enable Hardware Firmware
-  hardware.bluetooth.enable = true;
+  hardware = {
+    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware; # Microcode Updates
+    enableRedistributableFirmware = true; # Enable Hardware Firmware
+    bluetooth.enable = true;
+  };
 
   # --- Extra Disks ---
   fileSystems."/mnt/ssd" = {
@@ -36,13 +38,8 @@
     ];
   };
 
-  boot.supportedFilesystems = {
-    ntfs = true;
-  };
-
   # --- Kernel ---
   boot.initrd.availableKernelModules = [
-    # Kernel Modules Available while Booting
     "ahci"
     "xhci_pci"
     "thunderbolt"
@@ -56,24 +53,15 @@
   ];
 
   boot.kernelModules = [
-    # Kernel Modules Available after Booting
     "kvm-intel" # Enable Hardware Virtualization
     "i915" # Enable Intel Integrated Graphics Driver
   ];
 
   # --- Boot ---
   boot.kernelParams = [
-    "intel_iommu=on" # Enable IOMMU for PCI-Passthrough
     "i915.enable_fbc=1" # Intel GPU Framebuffer Compression for Power Saving
     "i915.enable_guc=2" # Enable Intel GuC Firmware for GPU Decode and Encoding
   ];
-
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 100;
-    "vm.vfs_cache_pressure" = 50;
-    "net.core.default_qdisc" = "fq";
-    "net.ipv4.tcp_congestion_control" = "bbr";
-  };
 
   # --- Input ---
   services.libinput.enable = true; # Touchpad Support
@@ -83,7 +71,7 @@
 
   # --- Sound ---
   security.rtkit.enable = true; # Realtime Audio Processing
-  hardware.alsa.enableBluetooth = true; # Bluetooth audio
+  hardware.alsa.enableBluetooth = true; # Bluetooth Audio
   services.pipewire = {
     enable = true;
     alsa.enable = true; # Compatibility
