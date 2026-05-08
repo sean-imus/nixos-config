@@ -104,6 +104,21 @@ layer-rule {
     }
 }
 
+window-rule {
+    match app-id="^Alacritty$"
+    background-effect {
+        blur true
+    }
+}
+
+window-rule {
+    match title="wiremix"
+    open-floating true
+    background-effect {
+        blur true
+    }
+}
+
 binds {
     Mod+numbersign { show-hotkey-overlay; }
 
