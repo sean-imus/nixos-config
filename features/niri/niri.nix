@@ -2,10 +2,11 @@
 
 let
   niriPath = "${config.home.homeDirectory}/nixos-config/features/niri/niri-config.kdl";
-  waybarConfigPath = "${config.home.homeDirectory}/nixos-config/features/niri/waybar-config.jsonc";
-  waybarStylePath = "${config.home.homeDirectory}/nixos-config/features/niri/waybar-style.css";
-  cavaWaybarConfigPath = "${config.home.homeDirectory}/nixos-config/features/niri/cava-waybar-glsl.conf";
-  cavaShaderDir = "${config.home.homeDirectory}/nixos-config/features/niri/cava-shaders";
+  waybarDir = "${config.home.homeDirectory}/nixos-config/features/niri/waybar";
+  waybarConfigPath = "${waybarDir}/config.jsonc";
+  waybarStylePath = "${waybarDir}/style.css";
+  cavaWaybarConfigPath = "${waybarDir}/cava-waybar-glsl.conf";
+  cavaShaderDir = "${waybarDir}/cava-shaders";
 in
 
 {
