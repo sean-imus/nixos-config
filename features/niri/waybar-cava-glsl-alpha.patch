@@ -1,14 +1,30 @@
-diff --git a/src/modules/cava/cavaGLSL.cpp b/src/modules/cava/cavaGLSL.cpp
-index 02438d4..e0e74a5 100644
 --- a/src/modules/cava/cavaGLSL.cpp
 +++ b/src/modules/cava/cavaGLSL.cpp
-@@ -104,6 +104,9 @@ void waybar::modules::cava::CavaGLSL::initGLSL() {
+@@ -15,6 +15,7 @@
+   get_style_context()->add_class(MODULE_CLASS);
+ 
+   set_use_es(true);
++  set_has_alpha(true);
+   //  set_auto_render(true);
+   signal_realize().connect(sigc::mem_fun(*this, &CavaGLSL::onRealize));
+   signal_render().connect(sigc::mem_fun(*this, &CavaGLSL::onRender), false);
+@@ -63,7 +64,7 @@
+       silence_ = true;
+       get_style_context()->add_class("silent");
+       // Set clear color to black
+-      glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
++      glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+       queue_render();
+     }
+   });
+@@ -118,7 +119,9 @@
+     spdlog::error("{0}. Could not find vertex position shader variable", name_);
    }
-
-   glClearColor(0.f, 0.f, 0.f, 1.f);
+ 
+-  glClearColor(0.f, 0.f, 0.f, 1.f);
++  glClearColor(0.f, 0.f, 0.f, 0.f);
 +  glEnable(GL_BLEND);
 +  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-+
+ 
    GLfloat vertexData[]{-1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f};
    GLint indexData[]{0, 1, 2, 3};
- 
