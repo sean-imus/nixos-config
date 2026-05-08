@@ -1,6 +1,6 @@
-@define-color bg                #454545;
+@define-color bg                rgba(0, 0, 0, 0.5);
 @define-color fg                #ffffff;
-@define-color clock-bg          #64727D;
+@define-color clock-bg          rgba(0, 0, 0, 0);
 @define-color battery-fg        #000000;
 @define-color battery-bg        #ffffff;
 @define-color battery-charging  #26A65B;

@@ -84,7 +84,6 @@ layout {
 
 spawn-at-startup "awww-daemon"
 spawn-sh-at-startup "awww img ~/nixos-config/assets/yuta_green.jpg"
-spawn-at-startup "alacritty"
 
 hotkey-overlay {
     skip-at-startup
@@ -97,7 +96,12 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 animations {
 }
 
-window-rule { 
+layer-rule {
+    match namespace="^waybar$"
+
+    background-effect {
+        blur true
+    }
 }
 
 binds {
