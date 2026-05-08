@@ -91,19 +91,8 @@
         "on-click": "wiremix-term"
     },
     "cava": {
-        "cava_config": "/home/sean/.config/cava/waybar.conf",
+        "cava_config": "/home/sean/.config/cava/waybar-glsl.conf",
         "input_delay": 2,
-        "format-icons": [
-            " ",
-            "▁",
-            "▂",
-            "▃",
-            "▄",
-            "▅",
-            "▆",
-            "▇",
-            "█"
-        ],
         "actions": {
             "on-click-right": "mode"
         }

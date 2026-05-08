@@ -4,7 +4,8 @@ let
   niriPath = "${config.home.homeDirectory}/nixos-config/features/niri/niri-config.kdl";
   waybarConfigPath = "${config.home.homeDirectory}/nixos-config/features/niri/waybar-config.jsonc";
   waybarStylePath = "${config.home.homeDirectory}/nixos-config/features/niri/waybar-style.css";
-  cavaWaybarConfigPath = "${config.home.homeDirectory}/nixos-config/features/niri/cava-waybar.conf";
+  cavaWaybarConfigPath = "${config.home.homeDirectory}/nixos-config/features/niri/cava-waybar-glsl.conf";
+  cavaShaderDir = "${config.home.homeDirectory}/nixos-config/features/niri/cava-shaders";
 in
 
 {
@@ -26,8 +27,16 @@ in
       source = config.lib.file.mkOutOfStoreSymlink waybarStylePath;
       force = true;
     };
-    xdg.configFile."cava/waybar.conf" = {
+    xdg.configFile."cava/waybar-glsl.conf" = {
       source = config.lib.file.mkOutOfStoreSymlink cavaWaybarConfigPath;
+      force = true;
+    };
+    xdg.configFile."cava/shaders/pass_through.vert" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${cavaShaderDir}/pass_through.vert";
+      force = true;
+    };
+    xdg.configFile."cava/shaders/bar_spectrum.frag" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${cavaShaderDir}/bar_spectrum.frag";
       force = true;
     };
 

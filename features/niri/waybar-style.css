@@ -102,12 +102,9 @@ window#waybar {
 #cava {
     padding: 0 4px;
     margin: 6px 2px;
-    min-width: 80px;
+    min-width: 200px;
     min-height: 20px;
     background-color: rgba(0, 0, 0, 0);
-    color: @fg;
-    font-size: 15px;
-    letter-spacing: 0px;
 }
 
 #cava.silent {
