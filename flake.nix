@@ -9,6 +9,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Extra VSCode Extensions not in nixpkgs
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Declarative Firefox Extensions
     nix-firefox-addons = {
       url = "github:OsiPog/nix-firefox-addons";
@@ -25,6 +30,7 @@
     {
       nixpkgs,
       home-manager,
+      nix-vscode-extensions,
       nix-firefox-addons,
       vimium-options,
       ...
@@ -45,6 +51,7 @@
             }
             {
               nixpkgs.overlays = [
+                nix-vscode-extensions.overlays.default
                 nix-firefox-addons.overlays.default
               ];
             }

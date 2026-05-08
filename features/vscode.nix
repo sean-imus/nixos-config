@@ -21,6 +21,7 @@
             pkgs.vscode-extensions.bbenoist.nix
             pkgs.vscode-extensions.jnoortheen.nix-ide
             pkgs.vscode-extensions.leonardssh.vscord
+            pkgs.nix-vscode-extensions.vscode-marketplace.mpmischitelli.gtk-css
           ];
           userSettings = {
             "files.autoSave" = "onFocusChange";
@@ -29,6 +30,9 @@
             "git.enableSmartCommit" = true;
             "git.confirmSync" = false;
             "git.autofetch" = true;
+            "files.associations" = {
+              "*.css" = "gtk-css";
+            };
             "nix.enableLanguageServer" = true;
             "nix.serverPath" = "nixd";
             "nix.serverSettings" = {
