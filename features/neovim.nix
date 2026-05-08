@@ -15,7 +15,6 @@
       defaultEditor = true;
       withRuby = false;
       withPython3 = false;
-      extraPackages = [ pkgs.nixd ];
 
       plugins = with pkgs.vimPlugins; [
         {
