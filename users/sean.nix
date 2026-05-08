@@ -12,7 +12,6 @@
     (import ../features/git.nix { }).homeManagerModule
     (import ../features/mcp.nix { inherit pkgs; }).homeManagerModule
     (import ../features/neovim.nix { inherit pkgs; }).homeManagerModule
-    (import ../features/network-tools.nix { inherit pkgs; }).homeManagerModule
     (import ../features/niri/niri.nix { inherit pkgs config; }).homeManagerModule
     (import ../features/opencode.nix { inherit pkgs; }).homeManagerModule
     (import ../features/printing.nix { inherit pkgs; }).homeManagerModule

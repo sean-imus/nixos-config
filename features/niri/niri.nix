@@ -46,6 +46,7 @@ in
       fuzzel # Application Launcher
       waybar # Bar
       bluetui # Bluetooth TUI
+      brightnessctl # Laptop Monitor Brightness
 
       (pkgs.writeShellScriptBin "mod-toggle" ''
         KDL="$HOME/.config/niri/vmalias.kdl"

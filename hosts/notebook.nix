@@ -107,17 +107,6 @@
     };
   };
 
-  # --- SystemPackages ---
-  environment.systemPackages = with pkgs; [
-    lm_sensors # Sensors
-    pciutils # lspci
-    usbutils # lsusb
-    tldr
-    iotop
-    bat
-    brightnessctl # Laptop Monitor Brightness
-  ];
-
   # --- Swap ---
   zramSwap = {
     enable = true;

@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, config, ... }:
 
 {
   # --- Networking ---
@@ -14,6 +14,17 @@
     systemd-boot.enable = true;
     systemd-boot.configurationLimit = 10;
   };
+
+  # --- SystemPackages ---
+  environment.systemPackages = with pkgs; [
+    lm_sensors # Sensors
+    pciutils # lspci
+    usbutils # lsusb
+    iotop
+    wget
+    tldr
+    bat
+  ];
 
   # --- Localization ---
   time.timeZone = "Europe/Berlin";
