@@ -126,6 +126,15 @@ window-rule {
     }
 }
 
+window-rule {
+    match app-id="^bluetui$"
+    open-floating true
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
 binds {
     Mod+numbersign { show-hotkey-overlay; }
 
@@ -133,7 +142,8 @@ binds {
     Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+B hotkey-overlay-title="Open a Browser: firefox" { spawn "firefox"; }
     Super+Alt+L allow-when-locked=true hotkey-overlay-title="Lock the Screen" { spawn "sh" "-c" "niri msg action spawn -- swaylock && niri msg action power-off-monitors"; }
-    Mod+Ctrl+B hotkey-overlay-title="Launch Bluetooth Menu: bluetui" { spawn-sh "alacritty -e bluetui"; }
+    Mod+Ctrl+B hotkey-overlay-title="Launch Bluetooth Menu: bluetui" { spawn-sh "alacritty --class bluetui -e bluetui"; }
+    Mod+Ctrl+A hotkey-overlay-title="Launch Audio TUI: wiremix" { spawn-sh "alacritty --class wiremix -e wiremix"; }
     Mod+Shift+Space hotkey-overlay-title="Enable Waybar" { spawn-sh "pkill waybar || true && waybar"; }
     Mod+CTRL+Space hotkey-overlay-title="Disable Waybar" { spawn-sh "pkill waybar"; }
 
