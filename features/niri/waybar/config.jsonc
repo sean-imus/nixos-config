@@ -89,7 +89,7 @@
         "format": "vol {volume}%",
         "format-muted": "<s>vol</s>",
         "scroll-step": 5,
-        "on-click": "sh -c 'alacritty --class wiremix -e wiremix'"
+        "on-click": "alacritty --class wiremix -e wiremix -v output"
     },
     "custom/recording": {
         "exec": "cat /tmp/waybar-recording 2>/dev/null || echo '{\"text\": \"\"}'",
@@ -110,7 +110,7 @@
         "format-source": "mic {volume}%",
         "format-source-muted": "<s>mic</s>",
         "scroll-step": 5,
-        "on-click": "sh -c 'alacritty --class wiremix -e wiremix'",
+        "on-click": "alacritty --class wiremix -e wiremix -v input",
         "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
     }
