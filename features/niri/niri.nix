@@ -103,20 +103,31 @@ in
         powerprofilesctl set "$next"
       '')
       (pkgs.writeShellScriptBin "screencap" ''
-        if pgrep -x wf-recorder > /dev/null; then
-          pkill -x wf-recorder
+        STATE=/tmp/waybar-recording
+        PIDFILE=/tmp/screencap-pid
+        show() { echo '{"text": "●", "class": "recording", "tooltip": "Click to stop"}' > "$STATE"; pkill -RTMIN+8 waybar; }
+        hide() { rm -f "$STATE"; pkill -RTMIN+8 waybar; }
+        if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+          kill "$(cat "$PIDFILE")"
           sleep 0.2
-          pkill -RTMIN+8 waybar
+          hide
+          rm -f "$PIDFILE"
           exit 0
         fi
-        geometry=$(slurp)
-        if [ $? -ne 0 ]; then
-          pkill -RTMIN+8 waybar
+        if pgrep -x slurp > /dev/null; then
           exit 1
         fi
+        geometry=$(slurp) || { hide; exit 1; }
+        if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+          hide
+          exit 1
+        fi
+        show
         wf-recorder -g "$geometry" -r 30 -c libx264 -f "$HOME/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4" &
-        pkill -RTMIN+8 waybar
-        wait
+        echo $! > "$PIDFILE"
+        wait $!
+        hide
+        rm -f "$PIDFILE"
       '')
     ];
 
