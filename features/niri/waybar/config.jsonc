@@ -55,7 +55,8 @@
         }
     },
     "cpu": {
-        "format": "cpu {usage}%"
+        "format": "cpu {usage}%",
+        "on-click": "alacritty --class btop -e btop"
     },
     "power-profiles-daemon": {
         "format": "{icon}",

@@ -136,6 +136,15 @@ window-rule {
     }
 }
 
+window-rule {
+    match app-id="^btop$"
+    open-floating true
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
 binds {
     Mod+numbersign { show-hotkey-overlay; }
 
