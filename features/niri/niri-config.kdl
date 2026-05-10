@@ -95,6 +95,47 @@ prefer-no-csd
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 animations {
+    // Window open: expanding circle reveal
+    window-open {
+        duration-ms 250
+        curve "linear"
+        custom-shader r"
+            vec4 expanding_circle(vec3 coords_geo, vec3 size_geo) {
+                vec3 coords_tex = niri_geo_to_tex * coords_geo;
+                vec4 color = texture2D(niri_tex, coords_tex.st);
+                vec2 coords = (coords_geo.xy - vec2(0.5, 0.5)) * size_geo.xy * 2.0;
+                coords = coords / length(size_geo.xy);
+                float p = niri_clamped_progress;
+                if (p * p <= dot(coords, coords))
+                    color = vec4(0.0);
+                return color;
+            }
+            vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+                return expanding_circle(coords_geo, size_geo);
+            }
+        "
+    }
+
+    // Window close: reverse of expanding circle — circle closes inward
+    window-close {
+        duration-ms 250
+        curve "linear"
+        custom-shader r"
+            vec4 closing_circle(vec3 coords_geo, vec3 size_geo) {
+                vec3 coords_tex = niri_geo_to_tex * coords_geo;
+                vec4 color = texture2D(niri_tex, coords_tex.st);
+                vec2 coords = (coords_geo.xy - vec2(0.5, 0.5)) * size_geo.xy * 2.0;
+                coords = coords / length(size_geo.xy);
+                float p = 1.0 - niri_clamped_progress;
+                if (p * p <= dot(coords, coords))
+                    color = vec4(0.0);
+                return color;
+            }
+            vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+                return closing_circle(coords_geo, size_geo);
+            }
+        "
+    }
 }
 
 layer-rule {
