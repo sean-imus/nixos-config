@@ -53,6 +53,10 @@ window#waybar {
 
 /* --- right overrides --- */
 
+#custom-player {
+    background-color: @audio-bg;
+}
+
 #cava {
     padding: 0px 4px;
     min-width: 200px;
