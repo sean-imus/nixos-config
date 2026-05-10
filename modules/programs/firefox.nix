@@ -1,4 +1,5 @@
-{ inputs, ... }: {
+{ inputs, ... }:
+{
   flake.modules.nixos.firefox = {
     nixpkgs.overlays = [ inputs.nix-firefox-addons.overlays.default ];
   };

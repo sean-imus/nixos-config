@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   flake.modules.homeManager.git = {
     programs.lazygit.enable = true;
 

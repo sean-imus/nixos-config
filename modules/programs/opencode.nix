@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   flake.modules.homeManager.opencode = {
     home.shellAliases = {
       c = "opencode";
