@@ -1,8 +1,5 @@
-{ pkgs, ... }:
-
-{
-  nixosModule = {
-    # Network Profile for RDP Connection to Work Laptop
+{ ... }: {
+  flake.modules.nixos.rdp-work = {
     networking.networkmanager.ensureProfiles.profiles = {
       "rdp-static-eth" = {
         connection = {
@@ -22,11 +19,9 @@
     };
   };
 
-  homeManagerModule = {
-    # Install Freerdp
+  flake.modules.homeManager.rdp-work = { pkgs, ... }: {
     home.packages = [ pkgs.freerdp ];
 
-    # Desktop Entry to connect to Work Laptop
     xdg.desktopEntries.rdp-to-work = {
       name = "Connect to Work Laptop";
       exec = "xfreerdp /v:192.168.200.1 /u:stietz /p: /d:ENTEX /f /dynamic-resolution /kbd:layout:0x0407,lang:0x0407";

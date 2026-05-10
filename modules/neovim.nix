@@ -1,15 +1,9 @@
-{ pkgs, ... }:
-
-{
-  nixosModule = { };
-
-  homeManagerModule = {
-    # Setup Neovim Alias
+{ ... }: {
+  flake.modules.homeManager.neovim = { pkgs, ... }: {
     home.shellAliases = {
       n = "nvim";
     };
 
-    # Install Neovim
     programs.neovim = {
       enable = true;
       defaultEditor = true;
@@ -26,7 +20,6 @@
         }
       ];
 
-      # Install Nix LSP
       initLua = ''
         vim.lsp.config('nixd', {
           cmd = { "nixd" },

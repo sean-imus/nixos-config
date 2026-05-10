@@ -1,12 +1,9 @@
-{ ... }:
-
-{
-  nixosModule = { };
-
-  homeManagerModule = {
+{ ... }: {
+  flake.modules.homeManager.ssh = {
     programs.ssh = {
       enable = true;
-      enableDefaultConfig = false; # Silence Warning
+      enableDefaultConfig = false;
+
       matchBlocks = {
         "github.com" = {
           user = "git";

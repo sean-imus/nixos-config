@@ -1,15 +1,9 @@
-{ ... }:
-
-{
-  nixosModule = { };
-
-  homeManagerModule = {
-    # Setup Opencode Alias
+{ ... }: {
+  flake.modules.homeManager.opencode = {
     home.shellAliases = {
       c = "opencode";
     };
 
-    # Install Opencode & Setup MCP integration
     programs.opencode = {
       enable = true;
       enableMcpIntegration = true;

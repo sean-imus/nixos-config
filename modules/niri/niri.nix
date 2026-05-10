@@ -1,25 +1,18 @@
-{ pkgs, config, ... }:
-
-let
-  niriPath = "${config.home.homeDirectory}/nixos-config/features/niri/niri-config.kdl";
-  waybarDir = "${config.home.homeDirectory}/nixos-config/features/niri/waybar";
-  waybarConfigPath = "${waybarDir}/config.jsonc";
-  waybarStylePath = "${waybarDir}/style.css";
-  cavaWaybarConfigPath = "${waybarDir}/cava-waybar-glsl.conf";
-  cavaShaderDir = "${waybarDir}/cava-shaders";
-in
-
-{
-  nixosModule = { };
-
-  homeManagerModule = {
-    # Niri Config File
+{ ... }: {
+  flake.modules.homeManager.niri = { pkgs, config, ... }: let
+    flakePath = config.home.homeDirectory + "/nixos-config";
+    niriPath = "${flakePath}/modules/niri/niri-config.kdl";
+    waybarDir = "${flakePath}/modules/niri/waybar";
+    waybarConfigPath = "${waybarDir}/config.jsonc";
+    waybarStylePath = "${waybarDir}/style.css";
+    cavaWaybarConfigPath = "${waybarDir}/cava-waybar-glsl.conf";
+    cavaShaderDir = "${waybarDir}/cava-shaders";
+  in {
     xdg.configFile."niri/config.kdl" = {
       source = config.lib.file.mkOutOfStoreSymlink niriPath;
       force = true;
     };
 
-    # Waybar Config
     xdg.configFile."waybar/config.jsonc" = {
       source = config.lib.file.mkOutOfStoreSymlink waybarConfigPath;
       force = true;
@@ -41,7 +34,6 @@ in
       force = true;
     };
 
-    # Notification Daemon
     services.mako = {
       enable = true;
       settings = {
@@ -60,26 +52,24 @@ in
       };
     };
 
-    # Keyboard Audio Button Daemon
     services.playerctld = {
       enable = true;
     };
 
-    # Install Dependencies
     home.packages = with pkgs; [
-      xwayland-satellite # XWayland Support
-      awww # Wallpaper Daemon
-      font-awesome # Waybar Font
-      wiremix # Audio TUI
-      swaylock # Lockscreen
-      fuzzel # Application Launcher
-      waybar # Bar
-      bluetui # Bluetooth TUI
-      brightnessctl # Laptop Monitor Brightness
-      cava # Terminal Music Visualizer
-      mpv # Video Player
-      wf-recorder # Screen Recorder
-      slurp # Region Selector
+      xwayland-satellite
+      awww
+      font-awesome
+      wiremix
+      swaylock
+      fuzzel
+      waybar
+      bluetui
+      brightnessctl
+      cava
+      mpv
+      wf-recorder
+      slurp
 
       (pkgs.writeShellScriptBin "mod-toggle" ''
         KDL="$HOME/.config/niri/vmalias.kdl"
@@ -131,6 +121,5 @@ in
     home.shellAliases = {
       vmalias = "mod-toggle";
     };
-
   };
 }

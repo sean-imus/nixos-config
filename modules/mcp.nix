@@ -1,10 +1,5 @@
-{ pkgs, ... }:
-
-{
-  nixosModule = { };
-
-  homeManagerModule = {
-    # Install Global MCP for Editors (VSCode, Opencode)
+{ ... }: {
+  flake.modules.homeManager.mcp = { pkgs, ... }: {
     programs.mcp = {
       enable = true;
       servers = {

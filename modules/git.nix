@@ -1,18 +1,11 @@
-{ ... }:
-
-{
-  nixosModule = { };
-
-  homeManagerModule = {
-    # Install Lazygit
+{ ... }: {
+  flake.modules.homeManager.git = {
     programs.lazygit.enable = true;
 
-    # Setup Lazygit Alias
     home.shellAliases = {
       lg = "lazygit";
     };
 
-    # Install Git
     programs.git = {
       enable = true;
       settings = {
