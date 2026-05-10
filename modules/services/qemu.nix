@@ -14,8 +14,6 @@
         enable = true;
       };
 
-      users.users.sean.extraGroups = [ "libvirtd" ];
-
       systemd.services.libvirtd.postStart = ''
         ${pkgs.libvirt}/bin/virsh net-info default >/dev/null 2>&1 || \
         ${pkgs.libvirt}/bin/virsh net-define ${pkgs.libvirt}/var/lib/libvirt/qemu/networks/default.xml 2>/dev/null || true

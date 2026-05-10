@@ -53,7 +53,7 @@
       programs.firefox = {
         enable = true;
         configPath = "${config.xdg.configHome}/mozilla/firefox";
-        profiles.sean = {
+        profiles.${config.home.username} = {
           settings = {
             "extensions.autoDisableScopes" = 0;
             "browser.startup.homepage" = "about:newtab";

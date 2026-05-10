@@ -22,6 +22,13 @@
 
       home.username = "sean";
       home.homeDirectory = "/home/sean";
+
+      programs.git = {
+        settings.user = {
+          name = "sean tietz";
+          email = "sean.tietz2@gmail.com";
+        };
+      };
       home.packages = with pkgs; [
         libreoffice
         spotify
