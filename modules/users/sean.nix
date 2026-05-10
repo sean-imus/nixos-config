@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.modules.homeManager.sean =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       imports = with inputs.self.modules.homeManager; [
         alacritty
@@ -21,7 +21,7 @@
       ];
 
       home.username = "sean";
-      home.homeDirectory = "/home/sean";
+      home.homeDirectory = "/home/${config.home.username}";
 
       programs.git = {
         settings.user = {
@@ -29,6 +29,7 @@
           email = "sean.tietz2@gmail.com";
         };
       };
+
       home.packages = with pkgs; [
         libreoffice
         spotify
@@ -36,6 +37,7 @@
         nixfmt
         nixd
       ];
+
       home.stateVersion = "25.11";
     };
 }

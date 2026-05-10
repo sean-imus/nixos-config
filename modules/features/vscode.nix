@@ -15,6 +15,7 @@
     { pkgs, config, ... }:
     let
       flakePath = config.home.homeDirectory + "/nixos-config";
+      hostName = builtins.head (builtins.attrNames inputs.self.nixosConfigurations);
     in
     {
       programs.vscode = {
@@ -50,11 +51,11 @@
                 };
                 "options" = {
                   "nixos" = {
-                    "expr" = "(builtins.getFlake \"${flakePath}\").nixosConfigurations.nixos.options";
+                    "expr" = "(builtins.getFlake \"${flakePath}\").nixosConfigurations.${hostName}.options";
                   };
                   "home-manager" = {
-                    "expr" =
-                      "(builtins.getFlake \"${flakePath}\").nixosConfigurations.nixos.options.home-manager.users.type.getSubOptions []";
+"expr" =
+  "(builtins.getFlake \"${flakePath}\").nixosConfigurations.${hostName}.options.home-manager.users.type.getSubOptions []";
                   };
                 };
               };
