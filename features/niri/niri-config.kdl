@@ -95,7 +95,6 @@ prefer-no-csd
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 animations {
-    // Window open: expanding circle reveal
     window-open {
         duration-ms 250
         curve "linear"
@@ -116,7 +115,6 @@ animations {
         "
     }
 
-    // Window close: reverse of expanding circle — circle closes inward
     window-close {
         duration-ms 250
         curve "linear"
