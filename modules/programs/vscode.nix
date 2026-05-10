@@ -1,4 +1,8 @@
-{ ... }: {
+{ inputs, ... }: {
+  flake.modules.nixos.vscode = {
+    nixpkgs.overlays = [ inputs.nix-vscode-extensions.overlays.default ];
+  };
+
   flake.modules.homeManager.vscode = { pkgs, config, ... }: let
     flakePath = config.home.homeDirectory + "/nixos-config";
   in {
