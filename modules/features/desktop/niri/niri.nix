@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ ... }:
 {
   flake.modules.nixos.niri =
     { ... }:
@@ -7,7 +7,7 @@
         (final: prev: {
           waybar = (prev.waybar.override { cavaSupport = true; }).overrideAttrs (oa: {
             buildInputs = (oa.buildInputs or [ ]) ++ [ prev.libepoxy ];
-            patches = (oa.patches or [ ]) ++ [ ./waybar/cava-glsl-alpha.patch ];
+            patches = (oa.patches or [ ]) ++ [ ../waybar/cava-glsl-alpha.patch ];
           });
         })
       ];
@@ -17,8 +17,8 @@
     { pkgs, config, ... }:
     let
       flakePath = config.home.homeDirectory + "/nixos-config";
-      niriPath = "${flakePath}/modules/programs/niri/niri-config.kdl";
-      waybarDir = "${flakePath}/modules/programs/niri/waybar";
+      niriPath = "${flakePath}/modules/features/desktop/niri/niri-config.kdl";
+      waybarDir = "${flakePath}/modules/features/desktop/waybar";
       waybarConfigPath = "${waybarDir}/config.jsonc";
       waybarStylePath = "${waybarDir}/style.css";
       cavaWaybarConfigPath = "${waybarDir}/cava-waybar-glsl.conf";
