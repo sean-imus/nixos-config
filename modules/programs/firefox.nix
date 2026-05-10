@@ -1,5 +1,17 @@
 { inputs, ... }:
 {
+  flake-file.inputs = {
+    nix-firefox-addons = {
+      url = "github:OsiPog/nix-firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    vimium-options = {
+      url = "github:uimataso/vimium-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
   flake.modules.nixos.firefox = {
     nixpkgs.overlays = [ inputs.nix-firefox-addons.overlays.default ];
   };

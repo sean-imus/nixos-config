@@ -1,6 +1,20 @@
 { inputs, ... }:
 {
-  imports = [ inputs.flake-parts.flakeModules.modules ];
+  imports = [
+    inputs.flake-parts.flakeModules.modules
+    inputs.flake-file.flakeModules.dendritic
+  ];
+
+  flake-file.description = "Entry Flake";
+
+  flake-file.inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
   systems = [ "x86_64-linux" ];
 
