@@ -1,7 +1,5 @@
 {
   pkgs,
-  lib,
-  config,
   ...
 }:
 
@@ -18,7 +16,7 @@
 
   # --- Hardware ---
   hardware = {
-    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware; # Microcode Updates
+    cpu.intel.updateMicrocode = true; # Microcode Updates
     enableRedistributableFirmware = true; # Enable Hardware Firmware
     bluetooth.enable = true;
   };
@@ -31,10 +29,10 @@
       "x-systemd.automount"
       "x-systemd.device-timeout=5"
       "nofail"
+      "noatime"
       "uid=1000"
       "gid=100"
       "umask=0022"
-      "noatime"
     ];
   };
 
@@ -62,9 +60,6 @@
     "i915.enable_fbc=1" # Intel GPU Framebuffer Compression for Power Saving
     "i915.enable_guc=2" # Enable Intel GuC Firmware for GPU Decode and Encoding
   ];
-
-  # --- Input ---
-  services.libinput.enable = true; # Touchpad Support
 
   # --- Window Manager ---
   programs.niri.enable = true;

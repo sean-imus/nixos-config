@@ -18,4 +18,3 @@
 
 - [ ] disko setup with LUKS encryption (from original TODO)
 - [ ] Use `specialisation` for different niri keybind profiles instead of the mod-toggle script
-- [ ] Add CI (e.g. `nix flake check` in GitHub Actions)
