@@ -53,7 +53,7 @@ window#waybar {
 
 /* --- right overrides --- */
 
-#custom-player {
+#mpris {
     background-color: @audio-bg;
 }
 
@@ -132,8 +132,7 @@ window#waybar {
 
 /* --- center overrides --- */
 
-#clock.time,
-#clock.date {
+#clock {
     background-color: transparent;
 }
 

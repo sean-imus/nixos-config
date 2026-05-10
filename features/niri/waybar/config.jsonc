@@ -4,16 +4,15 @@
     "height": 0,
     "margin": 5,
     "modules-left": [
-        "niri/workspaces"
+        "niri/workspaces",
+        "cava",
+        "custom/recording"
     ],
     "modules-center": [
-        "cava",
-        "clock#time",
-        "clock#date",
-        "custom/recording",
-        "custom/player"
+        "clock"
     ],
     "modules-right": [
+        "mpris",
         "pulseaudio#sink",
         "pulseaudio#mic",
         "network",
@@ -33,11 +32,8 @@
             "icon-size": 16
         }
     },
-    "clock#time": {
-        "format": "{:%H:%M}"
-    },
-    "clock#date": {
-        "format": "{:%d.%m.%Y}",
+    "clock": {
+        "format": "{:%H:%M  %d.%m.%Y}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "year",
@@ -98,15 +94,19 @@
         "signal": 8,
         "on-click": "rm -f /tmp/waybar-recording /tmp/screencap-pid; kill $(cat /tmp/screencap-pid 2>/dev/null) 2>/dev/null; pkill -x wf-recorder; pkill -RTMIN+8 waybar"
     },
-    "custom/player": {
-        "exec": "playerctl metadata --format '{\"text\": \"♫ {{title}} - {{artist}}\", \"class\": \"{{status}}\"}' 2>/dev/null || echo '{\"text\": \"\"}'",
-        "exec-if": "playerctl status 2>/dev/null | grep -q Playing",
-        "return-type": "json",
-        "interval": 5,
-        "max-length": 45,
-        "on-click": "playerctl play-pause",
-        "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous"
+    "mpris": {
+        "format": "{status_icon} {dynamic}",
+        "format-stopped": "Nothing playing!",
+        "status-icons": {
+            //"playing": "♫",
+            "paused": "⏸"
+        },
+        "dynamic-order": [
+            "title",
+            "artist"
+        ],
+        "dynamic-separator": " - ",
+        "max-length": 50
     },
     "cava": {
         "cava_config": "/home/sean/.config/cava/waybar-glsl.conf",
