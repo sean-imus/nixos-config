@@ -67,8 +67,8 @@
           extensions = {
             force = true;
             packages = [
-              inputs.nix-firefox-addons.addons.${pkgs.system}.ublock-origin
-              inputs.nix-firefox-addons.addons.${pkgs.system}.vimium-ff
+              inputs.nix-firefox-addons.addons.${pkgs.stdenv.hostPlatform.system}.ublock-origin
+              inputs.nix-firefox-addons.addons.${pkgs.stdenv.hostPlatform.system}.vimium-ff
             ];
           };
         };

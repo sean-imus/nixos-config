@@ -26,7 +26,7 @@
             pkgs.vscode-extensions.bbenoist.nix
             pkgs.vscode-extensions.jnoortheen.nix-ide
             pkgs.vscode-extensions.leonardssh.vscord
-            inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace.mpmischitelli.gtk-css
+            inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system}.vscode-marketplace.mpmischitelli.gtk-css
           ];
           userSettings = {
             "files.autoSave" = "onFocusChange";
