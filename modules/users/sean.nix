@@ -132,7 +132,7 @@
         nixfmt-tree
         nixfmt
         nixd
-        dnslookup
+        dnsutils
 
       ];
 
