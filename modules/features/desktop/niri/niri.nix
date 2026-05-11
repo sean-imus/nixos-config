@@ -20,6 +20,7 @@
     let
       flakePath = config.home.homeDirectory + "/nixos-config";
       niriPath = "${flakePath}/modules/features/desktop/niri/niri-config.kdl";
+      fuzzelPath = "${flakePath}/modules/features/desktop/fuzzel/fuzzel.ini";
       waybarDir = "${flakePath}/modules/features/desktop/waybar";
       waybarConfigPath = "${waybarDir}/config.jsonc";
       waybarStylePath = "${waybarDir}/style.css";
@@ -29,6 +30,11 @@
     {
       xdg.configFile."niri/config.kdl" = {
         source = config.lib.file.mkOutOfStoreSymlink niriPath;
+        force = true;
+      };
+
+      xdg.configFile."fuzzel/fuzzel.ini" = {
+        source = config.lib.file.mkOutOfStoreSymlink fuzzelPath;
         force = true;
       };
 
