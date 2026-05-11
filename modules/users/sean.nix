@@ -132,6 +132,8 @@
         nixfmt-tree
         nixfmt
         nixd
+        dnslookup
+
       ];
 
       home.stateVersion = "25.11";
