@@ -33,7 +33,7 @@
         rbb = "sudo nixos-rebuild boot --flake .#${config.networking.hostName} && reboot";
       };
 
-      users.users.mutableUsers = false;
+      users.mutableUsers = false;
 
       fileSystems."/" = {
         device = "/dev/disk/by-label/NIXROOT";
