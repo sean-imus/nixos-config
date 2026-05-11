@@ -20,7 +20,6 @@
     let
       flakePath = config.home.homeDirectory + "/nixos-config";
       niriPath = "${flakePath}/modules/features/desktop/niri/niri-config.kdl";
-      fuzzelPath = "${flakePath}/modules/features/desktop/fuzzel/fuzzel.ini";
       waybarDir = "${flakePath}/modules/features/desktop/waybar";
       waybarConfigPath = "${waybarDir}/config.jsonc";
       waybarStylePath = "${waybarDir}/style.css";
@@ -30,11 +29,6 @@
     {
       xdg.configFile."niri/config.kdl" = {
         source = config.lib.file.mkOutOfStoreSymlink niriPath;
-        force = true;
-      };
-
-      xdg.configFile."fuzzel/fuzzel.ini" = {
-        source = config.lib.file.mkOutOfStoreSymlink fuzzelPath;
         force = true;
       };
 
@@ -57,6 +51,15 @@
       xdg.configFile."cava/shaders/bar_spectrum.frag" = {
         source = config.lib.file.mkOutOfStoreSymlink "${cavaShaderDir}/bar_spectrum.frag";
         force = true;
+      };
+
+      programs.fuzzel = {
+        enable = true;
+        settings = {
+          main = {
+            dpi-aware = false;
+          };
+        };
       };
 
       services.mako = {
@@ -87,7 +90,6 @@
         font-awesome
         wiremix
         swaylock
-        fuzzel
         waybar
         bluetui
         brightnessctl
