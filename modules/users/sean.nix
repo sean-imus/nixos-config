@@ -1,5 +1,25 @@
 { inputs, ... }:
 {
+  flake.modules.nixos.sean =
+    { pkgs, ... }:
+    {
+      users.users.sean = {
+        isNormalUser = true;
+        description = "Sean Tietz";
+        hashedPassword = "$6$T3H3jI/bBMNzxJHi$wmROphZMsgAahqu2dP/H6pquwXvAoKqJ7BIzvuHpI3BaBj7GSjY6EXaDxTZv21OfRKuE0WriJgdm4hyxMoWC8.";
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+          "libvirtd"
+        ];
+        shell = pkgs.zsh;
+      };
+
+      home-manager.users.sean = {
+        imports = [ inputs.self.modules.homeManager.sean ];
+      };
+    };
+
   flake.modules.homeManager.sean =
     { pkgs, config, ... }:
     {

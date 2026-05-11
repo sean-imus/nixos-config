@@ -11,6 +11,7 @@
         niri
         firefox
         vscode
+        sean
       ];
 
       networking.hostName = "notebook";
@@ -71,19 +72,6 @@
 
       users.mutableUsers = false;
       programs.zsh.enable = true;
-      users.users = {
-        sean = {
-          isNormalUser = true;
-          description = "Sean Tietz";
-          hashedPassword = "$6$T3H3jI/bBMNzxJHi$wmROphZMsgAahqu2dP/H6pquwXvAoKqJ7BIzvuHpI3BaBj7GSjY6EXaDxTZv21OfRKuE0WriJgdm4hyxMoWC8.";
-          extraGroups = [
-            "networkmanager"
-            "wheel"
-            "libvirtd"
-          ];
-          shell = pkgs.zsh;
-        };
-      };
 
       zramSwap = {
         enable = true;
@@ -98,9 +86,6 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        users.sean = {
-          imports = [ inputs.self.modules.homeManager.sean ];
-        };
         sharedModules = [ inputs.vimium-options.homeManagerModules.default ];
       };
     };
