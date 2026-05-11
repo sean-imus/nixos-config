@@ -143,6 +143,14 @@ layer-rule {
     }
 }
 
+layer-rule {
+    match namespace="^fuzzel$"
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
 // Rounded corners for all windows
 window-rule {
     geometry-corner-radius 12
