@@ -59,7 +59,7 @@
           main = {
             dpi-aware = false;
             namespace = "fuzzel";
-            icons-enabled = false;
+            icons-enabled = true;
           };
           colors = {
             background = "00000066";
