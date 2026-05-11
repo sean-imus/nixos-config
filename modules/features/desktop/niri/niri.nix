@@ -11,6 +11,8 @@
           });
         })
       ];
+
+      programs.niri.enable = true;
     };
 
   flake.modules.homeManager.niri =

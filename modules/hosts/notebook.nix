@@ -57,8 +57,6 @@
         "i915.enable_guc=2"
       ];
 
-      programs.niri.enable = true;
-
       security.rtkit.enable = true;
       hardware.alsa.enableBluetooth = true;
       services.pipewire = {
