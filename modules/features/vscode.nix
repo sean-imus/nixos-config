@@ -7,10 +7,6 @@
     };
   };
 
-  flake.modules.nixos.vscode = {
-    nixpkgs.overlays = [ inputs.nix-vscode-extensions.overlays.default ];
-  };
-
   flake.modules.homeManager.vscode =
     { pkgs, config, ... }:
     let
@@ -30,7 +26,7 @@
             pkgs.vscode-extensions.bbenoist.nix
             pkgs.vscode-extensions.jnoortheen.nix-ide
             pkgs.vscode-extensions.leonardssh.vscord
-            pkgs.nix-vscode-extensions.vscode-marketplace.mpmischitelli.gtk-css
+            inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace.mpmischitelli.gtk-css
           ];
           userSettings = {
             "files.autoSave" = "onFocusChange";

@@ -12,10 +12,6 @@
     };
   };
 
-  flake.modules.nixos.firefox = {
-    nixpkgs.overlays = [ inputs.nix-firefox-addons.overlays.default ];
-  };
-
   flake.modules.homeManager.firefox =
     { pkgs, config, ... }:
     {
@@ -70,9 +66,9 @@
           };
           extensions = {
             force = true;
-            packages = with pkgs.firefoxAddons; [
-              ublock-origin
-              vimium-ff
+            packages = [
+              inputs.nix-firefox-addons.addons.${pkgs.system}.ublock-origin
+              inputs.nix-firefox-addons.addons.${pkgs.system}.vimium-ff
             ];
           };
         };

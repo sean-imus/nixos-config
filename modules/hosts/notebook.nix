@@ -9,16 +9,14 @@
         qemu
         rdp-work
         niri
-        firefox
-        vscode
         sean
       ];
 
       networking.hostName = "notebook";
 
       hardware = {
-        cpu.intel.updateMicrocode = true;
         enableRedistributableFirmware = true;
+        cpu.intel.updateMicrocode = true;
         bluetooth.enable = true;
       };
 
@@ -26,13 +24,13 @@
         device = "/dev/disk/by-uuid/A6FC-984F";
         fsType = "exfat";
         options = [
-          "x-systemd.automount"
           "x-systemd.device-timeout=5"
-          "nofail"
+          "x-systemd.automount"
           "noatime"
+          "nofail"
+          "umask=0022"
           "uid=1000"
           "gid=100"
-          "umask=0022"
         ];
       };
 
