@@ -66,8 +66,6 @@
         pulse.enable = true;
       };
 
-      programs.zsh.enable = true;
-
       zramSwap = {
         enable = true;
         algorithm = "zstd";

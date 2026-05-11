@@ -15,6 +15,8 @@
         shell = pkgs.zsh;
       };
 
+      programs.zsh.enable = true;
+
       home-manager.users.sean = {
         imports = [ inputs.self.modules.homeManager.sean ];
       };
