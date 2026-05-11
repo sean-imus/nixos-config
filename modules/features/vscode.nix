@@ -54,8 +54,8 @@
                     "expr" = "(builtins.getFlake \"${flakePath}\").nixosConfigurations.${hostName}.options";
                   };
                   "home-manager" = {
-"expr" =
-  "(builtins.getFlake \"${flakePath}\").nixosConfigurations.${hostName}.options.home-manager.users.type.getSubOptions []";
+                    "expr" =
+                      "(builtins.getFlake \"${flakePath}\").nixosConfigurations.${hostName}.options.home-manager.users.type.getSubOptions []";
                   };
                 };
               };
