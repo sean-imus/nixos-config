@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.modules.nixos.notebook =
-    { pkgs, ... }:
+    { ... }:
     {
       imports = with inputs.self.modules.nixos; [
         systemEssential
@@ -70,7 +70,6 @@
         pulse.enable = true;
       };
 
-      users.mutableUsers = false;
       programs.zsh.enable = true;
 
       zramSwap = {
