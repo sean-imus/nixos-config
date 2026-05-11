@@ -56,9 +56,11 @@ User-specific data (git identity, bookmarks, extra packages) goes in `users/<use
 
 | Command | Purpose |
 |---------|---------|
-| `nix flake check --no-build` | Validate evaluation without building |
-| `nix flake check --no-build --no-eval-cache` | Force fresh eval |
-| `nix build '.#nixosConfigurations.notebook.config.system.build.toplevel' --dry-run` | Dry build |
+| `nix flake check --no-build` | Quick eval check (fine for small changes) |
+| `nix flake check --no-build --no-eval-cache` | Force fresh eval (cache busting) |
+| `nix build '.#nixosConfigurations.notebook.config.system.build.toplevel' --dry-run` | Dry build — **always verify big changes** with this |
+
+Rule of thumb: `nix flake check` catches eval errors but misses option type mismatches and other deep issues. Any non-trivial change (restructuring, moving config, adding modules) needs a dry build.
 | `nix run .#write-flake` | Regenerate `flake.nix` |
 | `nix run .#write-lock` | Regenerate `flake.lock` |
 | `nix run .#write-inputs` | Regenerate input pin file |
