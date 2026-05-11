@@ -190,7 +190,7 @@ binds {
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+B hotkey-overlay-title="Open a Browser: firefox" { spawn "firefox"; }
-    Super+Alt+L allow-when-locked=true hotkey-overlay-title="Lock the Screen" { spawn "sh" "-c" "niri msg action spawn -- swaylock && niri msg action power-off-monitors"; }
+    Super+Alt+L allow-when-locked=true hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
     Mod+Ctrl+B hotkey-overlay-title="Launch Bluetooth Menu: bluetui" { spawn-sh "alacritty --class bluetui -e bluetui"; }
     Mod+Ctrl+A hotkey-overlay-title="Launch Audio TUI: wiremix" { spawn-sh "alacritty --class wiremix -e wiremix -v playback"; }
     Mod+Shift+Space hotkey-overlay-title="Enable Waybar" { spawn-sh "pkill waybar || true && waybar"; }
