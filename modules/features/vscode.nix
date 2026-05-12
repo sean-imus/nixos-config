@@ -17,6 +17,15 @@
       programs.vscode = {
         enable = true;
         mutableExtensionsDir = false;
+        package = pkgs.vscode.overrideAttrs (old: {
+          postInstall = (old.postInstall or "") + ''
+            for size in 16 24 32 48 64 96 128 256 512; do
+              mkdir -p $out/share/icons/hicolor/''${size}x''${size}/apps
+              ln -sf $out/share/icons/hicolor/1024x1024/apps/vscode.png \
+                $out/share/icons/hicolor/''${size}x''${size}/apps/vscode.png
+            done
+          '';
+        });
         profiles.default = {
           enableUpdateCheck = false;
           enableExtensionUpdateCheck = false;
