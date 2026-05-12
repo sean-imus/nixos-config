@@ -71,3 +71,4 @@ Rule of thumb: `nix flake check` catches eval errors but misses option type mism
 - **`home.homeDirectory` has no default** for `stateVersion ≥ 20.09`. Must be set explicitly. Use `config.home.username` not `home.username` (the latter is not a variable in scope).
 - **`inputs` is available via closure**: The outer `{ inputs, ... }` function scope is accessible from inner HM module `let` blocks without passing it again.
 - **New file gotcha**: Always `git add` new `.nix` files before testing — Nix reads from the git tree and ignores untracked files.
+- **Ephemeral programs**: Use `nix run nixpkgs#<program> -- [args]` to run a program not currently installed (e.g. `nix run nixpkgs#jq -- '.key' file.json`). No config change needed.
