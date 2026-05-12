@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ ... }:
 {
   flake-file.inputs = {
     nixvim = {
@@ -8,7 +8,7 @@
   };
 
   flake.modules.homeManager.nixvim =
-    { pkgs, ... }:
+    { ... }:
     {
       home.shellAliases = {
         n = "nvim";
