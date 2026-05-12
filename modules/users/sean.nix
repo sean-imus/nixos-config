@@ -18,7 +18,10 @@
       programs.zsh.enable = true;
 
       home-manager.users.sean = {
-        imports = [ inputs.self.modules.homeManager.sean ];
+        imports = [
+          inputs.self.modules.homeManager.sean
+          inputs.nixvim.homeModules.nixvim
+        ];
       };
     };
 
@@ -31,7 +34,7 @@
         firefox
         git
         mcp
-        neovim
+        nixvim
         niri
         opencode
         printing
@@ -131,7 +134,6 @@
         spotify
         nixfmt-tree
         nixfmt
-        nixd
         dnsutils
 
       ];
