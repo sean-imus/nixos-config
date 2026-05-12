@@ -60,6 +60,7 @@
             dpi-aware = false;
             namespace = "fuzzel";
             icons-enabled = true;
+            sort-result = false;
           };
           colors = {
             background = "00000066";
@@ -99,6 +100,29 @@
 
       services.playerctld = {
         enable = true;
+      };
+
+      xdg.dataFile = {
+        "applications/cups.desktop".text = ''
+          [Desktop Entry]
+          Hidden=true
+        '';
+        "applications/nixos-manual.desktop".text = ''
+          [Desktop Entry]
+          Hidden=true
+        '';
+        "applications/btop.desktop".text = ''
+          [Desktop Entry]
+          Hidden=true
+        '';
+        "applications/nvim.desktop".text = ''
+          [Desktop Entry]
+          Hidden=true
+        '';
+        "applications/mpv.desktop".text = ''
+          [Desktop Entry]
+          Hidden=true
+        '';
       };
 
       home.packages = with pkgs; [
