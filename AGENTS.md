@@ -31,7 +31,7 @@ import-tree ./modules
           → system/system-default.nix  (timezone, locale, nix settings)
       → features/*             (NixOS aspects: printing, qemu, rdp-work, niri, firefox, vscode)
       → home-manager.users.sean → users/sean.nix  (user feature)
-          → features/*         (HM aspects: alacritty, btop, firefox, git, mcp, neovim,
+          → features/*         (HM aspects: alacritty, btop, firefox, git, mcp, nixvim,
                                 niri, opencode, printing, rdp-work, shell, ssh, vesktop, vscode)
           + user-specific: git identity, firefox bookmarks, packages
 ```
@@ -72,3 +72,45 @@ Rule of thumb: `nix flake check` catches eval errors but misses option type mism
 - **`inputs` is available via closure**: The outer `{ inputs, ... }` function scope is accessible from inner HM module `let` blocks without passing it again.
 - **New file gotcha**: Always `git add` new `.nix` files before testing — Nix reads from the git tree and ignores untracked files.
 - **Ephemeral programs**: Use `nix run nixpkgs#<program> -- [args]` to run a program not currently installed (e.g. `nix run nixpkgs#jq -- '.key' file.json`). No config change needed.
+
+## Adding flake inputs
+
+Feature modules can declare their own flake inputs using `flake-file.inputs`:
+```nix
+{ inputs, ... }: {
+  flake-file.inputs = {
+    my-input = {
+      url = "github:owner/repo";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+}
+```
+
+After adding a `flake-file.inputs` declaration, **you must run `nix run .#write-flake`** to regenerate `flake.nix` before the new input is available in evaluation.
+
+## nixvim (Neovim)
+
+Neovim is configured via **[nixvim](https://nix-community.github.io/nixvim)** (github:nix-community/nixvim), a fully declarative Neovim module system. The config lives in `modules/features/nixvim.nix`.
+
+### Adding nixvim to a new host/user
+
+1. **Declare the input**: `nixvim.nix` already declares `flake-file.inputs` for nixvim. If starting from scratch, add a similar block.
+2. **Import the HM module**: In `users/<user>.nix`, add `inputs.nixvim.homeModules.nixvim` to `home-manager.users.<name>.imports` (after `inputs.self.modules.homeManager.<name>`).
+3. **Regenerate flake.nix**: `nix run .#write-flake` and `git add` the result.
+
+### Key nixvim options
+
+- LSP servers are at `plugins.lsp.servers.<name>`. Dedicated nixvim modules exist for `pylsp` (very comprehensive — Jedi, pycodestyle, pyflakes, autopep8, yapf, flake8, pylint, mypy, black, ruff, etc.), `ccls`, `hls`, `rust-analyzer`, `svelte`. Every server from nvim-lspconfig is auto-generated.
+- `nixd` settings are wrapped as `nixd = cfg;`. Configure formatting with `plugins.lsp.servers.nixd.settings.formatting.command = [ "nixpkgs-fmt" ]`.
+- `plugins.lsp.keymaps.lspBuf` and `plugins.lsp.keymaps.diagnostic` take `{ key = "action" }` attrsets (e.g. `{ K = "hover"; gd = "definition"; }`).
+- Plugins with nixvim modules: `gitsigns`, `neo-tree` (file explorer), `telescope`, `lualine`, `nvim-cmp`, `treesitter`, etc.
+- Falling back to raw Lua: use `extraConfigLua`, `extraConfigLuaPre`, or `extraConfigLuaPost`.
+- `programs.nixvim.enable = true` replaces `programs.neovim`. Set `home.sessionVariables.EDITOR = "nvim"` for default editor behavior.
+
+### Verification
+
+After changes to nixvim config:
+1. `nix flake check --no-build --no-eval-cache` — catches eval errors
+2. `nix build '.#nixosConfigurations.notebook.config.system.build.toplevel' --dry-run` — catches option type mismatches and missing packages (LSP servers, plugins)
+3. nixvim's pylsp module auto-wraps `python-lsp-server` with enabled plugin dependencies (autopep8, pycodestyle, etc.). The resulting package can be large due to Python dependency closure.
