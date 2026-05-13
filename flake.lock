@@ -130,26 +130,6 @@
         "type": "github"
       }
     },
-    "nix-vscode-extensions": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1778557443,
-        "narHash": "sha256-qEuXvPhodUbNuPr+KMxLHZce2WyyWJ5jRAycj3QFgKk=",
-        "owner": "nix-community",
-        "repo": "nix-vscode-extensions",
-        "rev": "e72d00151cdb46021f9c7a189c83d1582b0572c9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nix-vscode-extensions",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1777954456,
@@ -195,7 +175,6 @@
         "home-manager": "home-manager",
         "import-tree": "import-tree",
         "nix-firefox-addons": "nix-firefox-addons",
-        "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "vimium-options": "vimium-options"

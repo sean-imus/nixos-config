@@ -42,7 +42,6 @@
         shell
         ssh
         vesktop
-        vscode
       ];
 
       home.username = "sean";

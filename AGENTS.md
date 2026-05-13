@@ -29,10 +29,10 @@ import-tree ./modules
   → hosts/notebook.nix         (NixOS host config)
       → system/system-essential.nix  (boot, networking, pkgs)
           → system/system-default.nix  (timezone, locale, nix settings)
-      → features/*             (NixOS aspects: printing, qemu, rdp-work, niri, firefox, vscode)
+      → features/*             (NixOS aspects: printing, qemu, rdp-work, niri, firefox)
       → home-manager.users.sean → users/sean.nix  (user feature)
           → features/*         (HM aspects: alacritty, btop, firefox, git, mcp, nixvim,
-                                niri, opencode, printing, rdp-work, shell, ssh, vesktop, vscode)
+                                niri, opencode, printing, rdp-work, shell, ssh, vesktop)
           + user-specific: git identity, firefox bookmarks, packages
 ```
 
