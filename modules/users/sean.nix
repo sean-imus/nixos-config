@@ -117,10 +117,10 @@
                     name = "Photo Editor";
                     url = "https://www.photopea.com/";
                   }
-		  {
-		    name = "Background Remover";
-		    url = "https://www.remove.bg/";
-		  }
+                  {
+                    name = "Background Remover";
+                    url = "https://www.remove.bg/";
+                  }
                   {
                     name = "Graph Maker";
                     url = "https://app.diagrams.net/";
@@ -138,7 +138,7 @@
         nixfmt-tree
         nixfmt
         dnsutils
-	fastfetch
+        fastfetch
       ];
 
       home.stateVersion = "25.11";
