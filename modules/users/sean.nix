@@ -118,6 +118,10 @@
                     name = "Photo Editor";
                     url = "https://www.photopea.com/";
                   }
+		  {
+		    name = "Background Remover";
+		    url = "https://www.remove.bg/";
+		  }
                   {
                     name = "Graph Maker";
                     url = "https://app.diagrams.net/";
