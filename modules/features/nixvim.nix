@@ -28,6 +28,11 @@
 
         plugins.gitsigns.enable = true;
         plugins.lazygit.enable = true;
+        plugins.nvim-autopairs.enable = true;
+        plugins.which-key.enable = true;
+        plugins.treesitter.enable = true;
+        plugins.lualine.enable = true;
+        plugins.noice.enable = true;
 
         plugins.lsp = {
           enable = true;
