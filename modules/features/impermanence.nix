@@ -23,15 +23,30 @@
             "/var/log" # logs so journalctl can provide info after reboot
           ];
           files = [
-            { file = "/etc/machine-id"; inInitrd = true; }
-            { file = "/etc/ssh/ssh_host_rsa_key"; how = "symlink"; configureParent = true; }
-            { file = "/etc/ssh/ssh_host_ed25519_key"; how = "symlink"; configureParent = true; }
+            {
+              file = "/etc/machine-id";
+              inInitrd = true;
+            }
+            {
+              file = "/etc/ssh/ssh_host_rsa_key";
+              how = "symlink";
+              configureParent = true;
+            }
+            {
+              file = "/etc/ssh/ssh_host_ed25519_key";
+              how = "symlink";
+              configureParent = true;
+            }
           ];
           users.sean = {
             directories = [
-              { directory = ".ssh"; mode = "0700"; }
+              {
+                directory = ".ssh";
+                mode = "0700";
+              }
               ".local/state/wireplumber" # audio configuration
               "persist"
+              "nixos-config"
             ];
           };
         };
