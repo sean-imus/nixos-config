@@ -6,6 +6,7 @@
       imports = with inputs.self.modules.nixos; [
         systemEssential
         disko
+        preservation
         printing
         qemu
         rdp-work
