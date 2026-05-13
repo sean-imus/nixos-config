@@ -5,12 +5,15 @@
     {
       imports = with inputs.self.modules.nixos; [
         systemEssential
+        disko
         printing
         qemu
         rdp-work
         niri
         sean
       ];
+
+      diskoConfigDevice = "/dev/disk/by-id/nvme-SAMSUNG_MZALQ512HALU-000L2_S4UKNF0R457642";
 
       networking.hostName = "notebook";
 
