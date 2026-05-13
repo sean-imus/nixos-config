@@ -114,3 +114,75 @@ After changes to nixvim config:
 1. `nix flake check --no-build --no-eval-cache` — catches eval errors
 2. `nix build '.#nixosConfigurations.notebook.config.system.build.toplevel' --dry-run` — catches option type mismatches and missing packages (LSP servers, plugins)
 3. nixvim's pylsp module auto-wraps `python-lsp-server` with enabled plugin dependencies (autopep8, pycodestyle, etc.). The resulting package can be large due to Python dependency closure.
+
+## Impermanence & Disko
+
+This system uses **impermanent root** (tmpfs) with persistent state on a LUKS-encrypted BTRFS partition.
+
+### Architecture
+
+```
+Disk (NVMe by-id)
+├─ ESP (vfat, 512M, /boot)
+└─ LUKS (cryptroot, 100%)
+   └─ BTRFS
+      ├─ @nix (/nix)     ← compress=zstd, noatime
+      └─ @persist (/persist) ← compress=zstd, noatime
+```
+
+- **`/`** → tmpfs (`size=8G`), everything ephemeral
+- **Preservation** (nix-community/preservation) bind-mounts selected paths from `/persist` into the tmpfs root (system dirs) and home (user dirs)
+- **No `hardware-configuration.nix`** — disko generates all `fileSystems`, `boot.initrd.luks`, and mount config. You never need UUIDs or filesystem entries.
+
+### Relevant Files
+
+| File | Purpose |
+|------|---------|
+| `modules/features/disko.nix` | GPT + LUKS + BTRFS subvols + tmpfs root; parameterized `diskoConfigDevice` option |
+| `modules/features/impermanence.nix` | Preservation config: /var/lib/fwupd, /var/lib/bluetooth, SSH keys, machine-id, NM connections, /var/log, user ~/.ssh, ~/persist, wireplumber |
+| `modules/hosts/notebook.nix` | Sets `diskoConfigDevice` to by-id NVMe path, imports disko + impermanence |
+
+### Fresh Install (disko-install)
+
+One command handles partitioning, formatting, mounting, and installation:
+
+```bash
+sudo nix run 'github:nix-community/disko/latest#disko-install' -- \
+  --flake github:<user>/nixos-config#notebook \
+  --disk main /dev/disk/by-id/<nvme-by-id> \
+  --write-efi-boot-entries
+```
+
+**Flag explanations:**
+- `--disk main <device>` — **required** by `install-cli.nix` (throws if missing). `main` is the disk attr name from `disko.nix`. Overrides the flake's device via `lib.mkVMOverride`.
+- `--write-efi-boot-entries` — without this, disko-install forcibly sets `canTouchEfiVariables = false` (overriding your config), so systemd-boot won't write NVRAM entries and the system might not boot.
+- Flake URL can be `github:` for remote or a local path.
+
+**Install flow:**
+1. Prompts for LUKS password (interactive, `cryptsetup` during disko format)
+2. Partitions, formats, mounts everything
+3. Runs `nixos-install --no-root-password --no-channel-copy`
+4. Writes systemd-boot entry to NVRAM
+
+### Post-Install Workflow
+
+```bash
+# After first boot, clone config to persisted home dir
+git clone <repo> ~/persist/nixos-config
+
+# Edit as user (no sudo needed for editing), then rebuild:
+cd ~/persist/nixos-config
+sudo nixos-rebuild switch --flake .#notebook    # or `rbs` alias
+```
+
+No `/etc/nixos` symlink needed — `--flake` accepts any path. `rbs` alias (defined in `system-essential.nix`) runs from current directory.
+
+### Gotchas
+
+- **LUKS password entered twice**: once during `disko-install` (format), and at every boot (initrd prompt). No keyfile — fully interactive.
+- **Disko handles ALL filesystem config** on every rebuild — `fileSystems`, `boot.initrd.luks`, mount ordering. UUIDs not needed. The by-id path is stable across reboots.
+- **`/var/lib/nixos` not persisted** — nixos-rebuild generates a fresh profile chain each boot. Doesn't affect function, just means `list-generations` only shows current session.
+- **First boot timing**: Preservation runs before SSH via systemd ordering. SSH host keys are generated fresh into the `/persist` symlinks on first boot, then persist across reboots.
+- **`~/persist/nixos-config` survives reboots** because `~/persist` is a bind-mount into `/persist/home/sean/persist`.
+- **Commit before testing**: Nix reads from git tree. `git add` new `.nix` files, commit changes before `disko-install` or remote evaluation.
+- **Private repo**: set `NIX_CONFIG="access-tokens = github.com=<token>"` on live USB.
