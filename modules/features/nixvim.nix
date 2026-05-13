@@ -27,6 +27,7 @@
         };
 
         plugins.gitsigns.enable = true;
+        plugins.lazygit.enable = true;
 
         plugins.lsp = {
           enable = true;
@@ -65,6 +66,11 @@
             key = "<leader>e";
             action = "<cmd>Neotree toggle<CR>";
             options.desc = "Toggle file explorer";
+          }
+          {
+            key = "<leader>lg";
+            action = "<cmd>LazyGit<CR>";
+            options.desc = "Open lazygit";
           }
         ];
 
