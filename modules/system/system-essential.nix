@@ -34,24 +34,5 @@
       };
 
       users.mutableUsers = false;
-
-      fileSystems."/" = {
-        device = "/dev/disk/by-label/NIXROOT";
-        fsType = "ext4";
-        options = [
-          "noatime"
-          "nodiratime"
-        ];
-      };
-
-      fileSystems."/boot" = {
-        device = "/dev/disk/by-label/NIXBOOT";
-        fsType = "vfat";
-        options = [
-          "fmask=0077"
-          "dmask=0077"
-          "noatime"
-        ];
-      };
     };
 }
