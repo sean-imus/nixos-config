@@ -23,6 +23,8 @@
       modules = [
         inputs.self.modules.nixos.${name}
         inputs.home-manager.nixosModules.home-manager
+	inputs.disko.nixosModules.disko
+	inputs.preservation.nixosModules.default
         { nixpkgs.hostPlatform = system; }
       ];
     };
