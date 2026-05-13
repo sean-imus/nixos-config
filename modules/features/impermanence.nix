@@ -46,7 +46,6 @@
               }
               ".local/state/wireplumber" # audio configuration
               "persist"
-              "nixos-config"
             ];
           };
         };
