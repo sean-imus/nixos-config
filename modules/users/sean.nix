@@ -135,7 +135,7 @@
         nixfmt-tree
         nixfmt
         dnsutils
-
+	fastfetch
       ];
 
       home.stateVersion = "25.11";
