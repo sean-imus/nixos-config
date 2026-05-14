@@ -84,7 +84,7 @@ layout {
 
 spawn-at-startup "waybar"
 spawn-at-startup "awww-daemon"
-spawn-sh-at-startup "awww img ~/nixos-config/assets/yuta_green.jpg"
+spawn-sh-at-startup "awww img ~/persist/nixos-config/assets/yuta_green.jpg"
 
 hotkey-overlay {
     skip-at-startup
