@@ -3,15 +3,6 @@
   flake.modules.nixos.niri =
     { ... }:
     {
-      nixpkgs.overlays = [
-        (final: prev: {
-          waybar = (prev.waybar.override { cavaSupport = true; }).overrideAttrs (oa: {
-            buildInputs = (oa.buildInputs or [ ]) ++ [ prev.libepoxy ];
-            patches = (oa.patches or [ ]) ++ [ ../waybar/cava-glsl-alpha.patch ];
-          });
-        })
-      ];
-
       programs.niri.enable = true;
     };
 
