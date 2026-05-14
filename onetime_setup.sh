@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-echo "Cloning Github Repo"
-git pull https://github.com/sean-imus/nixos-config.git ~/persist/nixos-config
-
 echo "Generating SSH key for GitHub Access"
 ssh-keygen -t ed25519 -C "sean.tietz2@gmail.com" -N "" -f ~/.ssh/id_ed25519 -q
 
