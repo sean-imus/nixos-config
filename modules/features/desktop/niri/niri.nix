@@ -18,7 +18,7 @@
   flake.modules.homeManager.niri =
     { pkgs, config, ... }:
     let
-      flakePath = config.home.homeDirectory + "/nixos-config";
+      flakePath = config.home.homeDirectory + "/persist/nixos-config";
       niriPath = "${flakePath}/modules/features/desktop/niri/niri-config.kdl";
       waybarDir = "${flakePath}/modules/features/desktop/waybar";
       waybarConfigPath = "${waybarDir}/config.jsonc";
