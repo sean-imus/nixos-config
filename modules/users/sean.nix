@@ -34,7 +34,6 @@
         firefox
         git
         mcp
-        nixvim
         niri
         opencode
         printing
