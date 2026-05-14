@@ -29,7 +29,7 @@ One command. **This wipes the entire target disk.**
 
 ```bash
 sudo nix run 'github:nix-community/disko/latest#disko-install' -- \
-  --flake github:sean-tietz/nixos-config#notebook \
+  --flake github:sean-imus/nixos-config#notebook \
   --disk main /dev/disk/by-id/REPLACE_WITH_YOUR_DISK \
   --write-efi-boot-entries
 ```
