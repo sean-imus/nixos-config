@@ -10,7 +10,7 @@ This repo takes the opposite approach. My entire operating system — disk layou
 
 **Nothing sticks unless you opt in.** The system root is wiped on every reboot. That means no orphaned config files, no dependency rot, no accumulated junk. Only what you explicitly declare gets preserved: SSH keys, Wi-Fi passwords, audio settings, firmware state, and anything you put in `~/persist`. Browser profiles, downloads, desktop clutter — all gone. A factory reset every time you turn it on, but your actual important stuff is still there.
 
-**Total peace of mind.** Every system change creates a new immutable "generation" that sits next to all previous ones in your boot menu. Upgrade broken something? Reboot and pick the last working one. Experiment backfired? Same thing. You can't hose your system — there's always a working entry to fall back to. And if your drive dies or you get a new laptop, one command rebuilds the *exact* same system from scratch. No manual reinstallation, no "I forgot what I had installed," no drift from what worked before.
+**Total peace of mind.** Every system change creates a new immutable "generation" that sits next to all previous ones in your boot menu. Upgrade broken something? Reboot and pick the last working one. Experiment backfired? Same thing. You can't hose your system — there's always a working entry to fall back to. And if your drive dies or you get a new laptop, two commands rebuild the *exact* same system from scratch. No manual reinstallation, no "I forgot what I had installed," no drift from what worked before.
 
 **What's in this config:**
 
@@ -25,13 +25,19 @@ This repo takes the opposite approach. My entire operating system — disk layou
 
 ## Install from a live USB
 
-One command. **This wipes the entire target disk.**
+**This wipes the entire target disk.** You'll be prompted for a LUKS encryption password during step 1, and again at every boot.
 
 ```bash
-sudo nix --extra-experimental-features 'nix-command flakes' run 'github:nix-community/disko/latest#disko-install' -- \
-  --flake github:sean-imus/nixos-config#notebook \
-  --disk main /dev/disk/by-id/REPLACE_WITH_YOUR_DISK \
-  --write-efi-boot-entries
-```
+# 1. Partition, format, mount
+sudo nix --extra-experimental-features 'nix-command flakes' run 'github:nix-community/disko/latest' -- \
+  --mode destroy,format,mount \
+  --flake github:sean-imus/nixos-config#notebook
 
-You'll be prompted for a LUKS encryption password during the install, and again at every boot.
+# 2. Mount target /nix so the full system build has space
+sudo mount --bind /mnt/nix /nix
+
+# 3. Install the system
+sudo nixos-install --flake github:sean-imus/nixos-config#notebook \
+  --root /mnt \
+  --no-root-password
+```
