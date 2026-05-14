@@ -28,7 +28,7 @@ This repo takes the opposite approach. My entire operating system — disk layou
 One command. **This wipes the entire target disk.**
 
 ```bash
-sudo nix run 'github:nix-community/disko/latest#disko-install' -- \
+sudo nix --extra-experimental-features 'nix-command flakes' run 'github:nix-community/disko/latest#disko-install' -- \
   --flake github:sean-imus/nixos-config#notebook \
   --disk main /dev/disk/by-id/REPLACE_WITH_YOUR_DISK \
   --write-efi-boot-entries
