@@ -1,6 +1,6 @@
 # nixos-config
 
-My personal NixOS configuration for a single laptop.
+My personal NixOS configuration for a single laptop (planning to add a server config aswell, ground framework is already set for that).
 
 ## What is this? (for non-Nix people)
 
