@@ -35,6 +35,7 @@
         git
         mcp
         niri
+        nixvim
         opencode
         printing
         rdp-work
