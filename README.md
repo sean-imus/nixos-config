@@ -1,54 +1,37 @@
-# Usage
+# nixos-config
 
-Run the following commands to install this configuration from a live NixOS image. No guarantee it works — this config is specific to one machine.
+My personal NixOS configuration for a single laptop.
 
-## Format Drive
+## What is this? (for non-Nix people)
 
-Replace `/dev/sda` with your actual disk (check with `lsblk`):
+Most operating systems work like a backpack: you keep throwing things in, and over months or years it gets heavier, messier, and you're never quite sure what's in there. If something breaks, good luck figuring out what changed.
 
-```
-sudo -i
+This repo takes the opposite approach. My entire operating system — disk layout, installed programs, desktop environment, settings, everything — is defined as code in a single Git repository.
 
-fdisk /dev/sda
+**Nothing sticks unless you opt in.** The system root is wiped on every reboot. That means no orphaned config files, no dependency rot, no accumulated junk. Only what you explicitly declare gets preserved: SSH keys, Wi-Fi passwords, audio settings, firmware state, and anything you put in `~/persist`. Browser profiles, downloads, desktop clutter — all gone. A factory reset every time you turn it on, but your actual important stuff is still there.
 
-g (gpt disk label)
-n
-1 (partition number)
-2048 (first sector)
-+500M (EFI partition)
-t
-1 (EFI System)
-n
-2
-(default)
-(default)
-w (write)
+**Total peace of mind.** Every system change creates a new immutable "generation" that sits next to all previous ones in your boot menu. Upgrade broken something? Reboot and pick the last working one. Experiment backfired? Same thing. You can't hose your system — there's always a working entry to fall back to. And if your drive dies or you get a new laptop, one command rebuilds the *exact* same system from scratch. No manual reinstallation, no "I forgot what I had installed," no drift from what worked before.
 
-mkfs.fat -F 32 /dev/sda1
-fatlabel /dev/sda1 NIXBOOT
-mkfs.ext4 /dev/sda2 -L NIXROOT
-```
+**What's in this config:**
 
-## Mount Drive
+| Layer | What it does |
+|-------|-------------|
+| Disk | GPT + LUKS encryption + Btrfs + tmpfs root (ephemeral `/`) |
+| System | bootloader, networking, firewall, kernel, drivers |
+| Desktop | Niri (tiling Wayland compositor), Waybar, Alacritty, Neovim, Firefox, Vesktop |
+| User | shell, git identity, SSH, Neovim plugins, Firefox bookmarks |
+| Services | printing, QEMU VMs, remote desktop via xrdp, PipeWire audio, Bluetooth |
+| Persistence | opt-in only: SSH keys, Wi-Fi passwords, audio config, firmware metadata, logs, and `~/persist` |
 
-```
-mount /dev/disk/by-label/NIXROOT /mnt
-mkdir -p /mnt/boot
-mount /dev/disk/by-label/NIXBOOT /mnt/boot
+## Install from a live USB
+
+One command. **This wipes the entire target disk.**
+
+```bash
+sudo nix run 'github:nix-community/disko/latest#disko-install' -- \
+  --flake github:sean-tietz/nixos-config#notebook \
+  --disk main /dev/disk/by-id/REPLACE_WITH_YOUR_DISK \
+  --write-efi-boot-entries
 ```
 
-## Install from Flake
-
-```
-nixos-install --flake github:sean-imus/nixos-config#[notebook/server]
-reboot
-```
-
-## Clone Repo and Symlink
-
-After rebooting into the new system:
-
-```
-git clone https://github.com/sean-imus/nixos-config.git ~/nixos-config
-~/nixos-config/onetime_setup.sh
-```
+You'll be prompted for a LUKS encryption password during the install, and again at every boot.
