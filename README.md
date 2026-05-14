@@ -28,16 +28,9 @@ This repo takes the opposite approach. My entire operating system — disk layou
 **This wipes the entire target disk.** You'll be prompted for a LUKS encryption password during step 1, and again at every boot.
 
 ```bash
-# 1. Partition, format, mount
-sudo nix --extra-experimental-features 'nix-command flakes' run 'github:nix-community/disko/latest' -- \
-  --mode destroy,format,mount \
-  --flake github:sean-imus/nixos-config#notebook
+# 1. Format Drive
+nix-shell -p disko && sudo disko --mode disko --flake github:sean-imus/nixos-config#[host, notebook, server, etc.]
 
-# 2. Mount target /nix so the full system build has space
-sudo mount --bind /mnt/nix /nix
-
-# 3. Install the system
-sudo nixos-install --flake github:sean-imus/nixos-config#notebook \
-  --root /mnt \
-  --no-root-password
+# 2. Install System
+sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#[host, notebook, server, etc.]
 ```
