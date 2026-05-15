@@ -29,8 +29,9 @@ This repo takes the opposite approach. My entire operating system — disk layou
 
 ```bash
 # 1. Format Drive
-nix-shell -p disko && sudo disko --mode disko --flake github:sean-imus/nixos-config#[host, notebook, server, etc.]
+nix-shell -p disko
+sudo disko --mode disko --flake github:sean-imus/nixos-config#[notebook/vm]
 
 # 2. Install System
-sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#[host, notebook, server, etc.]
+sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#[notebook/vm]
 ```
