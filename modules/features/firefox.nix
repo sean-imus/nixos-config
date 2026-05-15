@@ -8,8 +8,23 @@
   };
 
   flake.modules.homeManager.firefox =
-    { pkgs, config, ... }:
     {
+      pkgs,
+      config,
+      lib,
+      ...
+    }:
+    {
+      home.packages = with pkgs; [
+        hunspellDicts.en_US
+        hunspellDicts.de_DE
+      ];
+
+      home.sessionVariables.DICPATH = lib.makeSearchPath "share/hunspell" [
+        pkgs.hunspellDicts.en_US
+        pkgs.hunspellDicts.de_DE
+      ];
+
       programs.firefox = {
         enable = true;
         configPath = "${config.xdg.configHome}/mozilla/firefox";
@@ -75,7 +90,6 @@
             packages = [
               inputs.nix-firefox-addons.addons.${pkgs.stdenv.hostPlatform.system}.ublock-origin
               inputs.nix-firefox-addons.addons.${pkgs.stdenv.hostPlatform.system}.vimium-ff
-              inputs.nix-firefox-addons.addons.${pkgs.stdenv.hostPlatform.system}.dictionary-german
             ];
           };
         };
