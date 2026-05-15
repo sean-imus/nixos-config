@@ -11,7 +11,7 @@
         sean
       ];
 
-      diskoConfigDevice = "/dev/disk/by-id/ata-QEMU_DVD-ROM_QM00001";
+      diskoConfigDevice = "/dev/disk/by-id/virtio-ROOT";
 
       networking.hostName = "vm";
 
