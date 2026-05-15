@@ -19,7 +19,7 @@
             "/var/lib/bluetooth" # Bluetooth Connections
             "/var/lib/fwupd" # Firmware Update Metadata
             "/var/lib/systemd/coredump" # Crash Logs
-	    "/var/lib/nixos" # NixOS Generation Metadata
+            "/var/lib/nixos" # NixOS Generation Metadata
             "/var/lib/systemd/timers" # Systemd Timer Information
             "/var/log" # logs so journalctl can provide info after reboot
           ];

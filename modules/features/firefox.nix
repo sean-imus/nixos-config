@@ -15,10 +15,10 @@
         configPath = "${config.xdg.configHome}/mozilla/firefox";
         profiles.${config.home.username} = {
           settings = {
-	    "app.normandy.first_run" = false;
+            "app.normandy.first_run" = false;
             "extensions.autoDisableScopes" = 0;
             "browser.startup.homepage" = "about:newtab";
-	    "browser.aboutConfig.showWarning" = false;
+            "browser.aboutConfig.showWarning" = false;
             "browser.bookmarks.addedImportButton" = false;
             "browser.shell.checkDefaultBrowser" = false;
             "browser.toolbars.bookmarks.visibility" = "always";
@@ -26,7 +26,7 @@
             "browser.newtabpage.activity-stream.feeds.topsites" = false;
             "browser.newtabpage.activity-stream.showSponsoredCheckboxes" = false;
             "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-	    "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+            "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
             "sidebar.visibility" = "hide-sidebar";
             "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
             "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
