@@ -13,12 +13,42 @@
       programs.firefox = {
         enable = true;
         configPath = "${config.xdg.configHome}/mozilla/firefox";
+
+        policies = {
+          DisableProfileImport = true;
+          OverrideFirstRunPage = "";
+          OverridePostUpdatePage = "";
+          SkipTermsOfUse = true;
+          DontCheckDefaultBrowser = true;
+          DisableTelemetry = true;
+          DisableFirefoxStudies = true;
+          DisablePocket = true;
+          UserMessaging = {
+            ExtensionRecommendations = false;
+            FeatureRecommendations = false;
+            UrlbarInterventions = false;
+            SkipOnboarding = true;
+            MoreFromMozilla = false;
+            FirefoxLabs = false;
+          };
+          FirefoxHome = {
+            Search = true;
+            TopSites = false;
+            SponsoredTopSites = false;
+            Highlights = false;
+            Snippets = false;
+          };
+        };
+
         profiles.${config.home.username} = {
           settings = {
             "app.normandy.first_run" = false;
             "extensions.autoDisableScopes" = 0;
             "browser.startup.homepage" = "about:newtab";
             "browser.aboutConfig.showWarning" = false;
+            "browser.aboutwelcome.didSeeFinalScreen" = true;
+            "trailhead.firstrun.didSeeAboutWelcome" = true;
+            "doh-rollout.doneFirstRun" = true;
             "browser.bookmarks.addedImportButton" = false;
             "browser.shell.checkDefaultBrowser" = false;
             "browser.toolbars.bookmarks.visibility" = "always";
@@ -31,6 +61,14 @@
             "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
             "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
             "spellchecker.dictionary" = "en-US,de-DE";
+            "datareporting.policy.dataSubmissionPolicyBypassNotification" = true;
+            "datareporting.policy.dataSubmissionPolicyNotifiedTime" = 9999999999999;
+            "browser.migration.didMigrate" = true;
+            "startup.homepage_welcome_url" = "";
+            "startup.homepage_welcome_url.additional" = "";
+            "browser.uitour.enabled" = false;
+            "browser.disableResetPrompt" = true;
+            "browser.laterrun.enabled" = false;
           };
           extensions = {
             force = true;
