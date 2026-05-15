@@ -30,9 +30,5 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     preservation.url = "github:nix-community/preservation";
-    vimium-options = {
-      url = "github:uimataso/vimium-nixos";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 }

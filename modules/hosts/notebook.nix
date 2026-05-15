@@ -83,7 +83,6 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        sharedModules = [ inputs.vimium-options.homeManagerModules.default ];
       };
     };
 }
