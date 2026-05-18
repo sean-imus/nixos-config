@@ -59,7 +59,7 @@ window#waybar {
 
 #cava {
     padding: 0px 4px;
-    min-width: 200px;
+    min-width: 100px;
     min-height: 20px;
     background-color: transparent;
 }

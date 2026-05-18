@@ -16,8 +16,7 @@
       waybarDir = "${flakePath}/modules/features/desktop/waybar";
       waybarConfigPath = "${waybarDir}/config.jsonc";
       waybarStylePath = "${waybarDir}/style.css";
-      cavaWaybarConfigPath = "${waybarDir}/cava-waybar-glsl.conf";
-      cavaShaderDir = "${waybarDir}/cava-shaders";
+      cavaWaybarConfigPath = "${waybarDir}/cava-waybar.conf";
     in
     {
       xdg.configFile."niri/config.kdl" = {
@@ -33,16 +32,8 @@
         source = config.lib.file.mkOutOfStoreSymlink waybarStylePath;
         force = true;
       };
-      xdg.configFile."cava/waybar-glsl.conf" = {
+      xdg.configFile."cava/waybar.conf" = {
         source = config.lib.file.mkOutOfStoreSymlink cavaWaybarConfigPath;
-        force = true;
-      };
-      xdg.configFile."cava/shaders/pass_through.vert" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${cavaShaderDir}/pass_through.vert";
-        force = true;
-      };
-      xdg.configFile."cava/shaders/bar_spectrum.frag" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${cavaShaderDir}/bar_spectrum.frag";
         force = true;
       };
 
