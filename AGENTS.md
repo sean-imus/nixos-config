@@ -25,14 +25,14 @@ modules/
 
 ```
 import-tree ./modules
-  → nix/flake-parts.nix        (flake-parts + flake-file)
-  → hosts/notebook.nix         (NixOS host config)
+  → nix/flake-parts.nix        (flake-parts + flake-file, mkNixos helper)
+  → hosts/<host>.nix           (NixOS host config; notebook or vm)
       → system/system-essential.nix  (boot, networking, pkgs)
           → system/system-default.nix  (timezone, locale, nix settings)
-      → features/*             (NixOS aspects: printing, qemu, rdp-work, niri, firefox)
-      → home-manager.users.sean → users/sean.nix  (user feature)
-          → features/*         (HM aspects: alacritty, btop, firefox, git, mcp, nixvim,
-                                niri, opencode, printing, rdp-work, shell, ssh, vesktop)
+      → features/*             (NixOS aspects: disko, impermanence, printing, qemu, rdp-work, niri)
+      → users/sean.nix         (user feature, NixOS-level: user account + HM bridge)
+          → features/*         (HM aspects: alacritty, btop, firefox, git, mcp, niri, nixvim,
+                                opencode, printing, rdp-work, shell, ssh, vesktop)
           + user-specific: git identity, firefox bookmarks, packages
 ```
 
@@ -104,7 +104,7 @@ Neovim is configured via **[nixvim](https://nix-community.github.io/nixvim)** (g
 - LSP servers are at `plugins.lsp.servers.<name>`. Dedicated nixvim modules exist for `pylsp` (very comprehensive — Jedi, pycodestyle, pyflakes, autopep8, yapf, flake8, pylint, mypy, black, ruff, etc.), `ccls`, `hls`, `rust-analyzer`, `svelte`. Every server from nvim-lspconfig is auto-generated.
 - `nixd` settings are wrapped as `nixd = cfg;`. Configure formatting with `plugins.lsp.servers.nixd.settings.formatting.command = [ "nixpkgs-fmt" ]`.
 - `plugins.lsp.keymaps.lspBuf` and `plugins.lsp.keymaps.diagnostic` take `{ key = "action" }` attrsets (e.g. `{ K = "hover"; gd = "definition"; }`).
-- Plugins with nixvim modules: `gitsigns`, `neo-tree` (file explorer), `telescope`, `lualine`, `nvim-cmp`, `treesitter`, etc.
+- Plugins with nixvim modules: `gitsigns`, `neo-tree` (file explorer), `lazygit`, `nvim-autopairs`, `which-key`, `lualine`, `treesitter`, `noice`, etc.
 - Falling back to raw Lua: use `extraConfigLua`, `extraConfigLuaPre`, or `extraConfigLuaPost`.
 - `programs.nixvim.enable = true` replaces `programs.neovim`. Set `home.sessionVariables.EDITOR = "nvim"` for default editor behavior.
 
@@ -132,7 +132,7 @@ Disk (NVMe by-id)
          └─ @persist (/persist) ← compress=zstd, noatime
 ```
 
-- **`/`** → tmpfs (`size=8G`), everything ephemeral
+- **`/`** → tmpfs (`size=4G`), everything ephemeral
 - **Preservation** (nix-community/preservation) bind-mounts selected paths from `/persist` into the tmpfs root (system dirs) and home (user dirs)
 - **No `hardware-configuration.nix`** — disko generates all `fileSystems`, `boot.initrd.luks`, and mount config. You never need UUIDs or filesystem entries.
 
@@ -141,7 +141,7 @@ Disk (NVMe by-id)
 | File | Purpose |
 |------|---------|
 | `modules/features/disko.nix` | GPT + LUKS + nested GPT (swap + BTRFS subvols) + tmpfs root; parameterized `diskoConfigDevice` option |
-| `modules/features/impermanence.nix` | Preservation config: /var/lib/fwupd, /var/lib/bluetooth, SSH keys, machine-id, NM connections, /var/log, user ~/.ssh, ~/persist, wireplumber |
+| `modules/features/impermanence.nix` | Preservation config: /etc/NetworkManager/system-connections, /var/lib/bluetooth, /var/lib/systemd/timers, machine-id, SSH host keys, user ~/.ssh, ~/persist, wireplumber |
 | `modules/hosts/notebook.nix` | Sets `diskoConfigDevice` to by-id NVMe path, imports disko + impermanence |
 
 ### Fresh Install (disko-install)
