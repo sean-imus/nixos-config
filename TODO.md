@@ -1,4 +1,5 @@
 - switch to ext4 as no btrfs features are being used
+- check if thermald and power-profiles-daemon can actually clash and check if thermald even makes an impact on my system, otherwise remove
 - clean up repo, go through everything
 - ssh key declarative with sops-nix
 - try to have nvim hotreload files and have the neotree be more active to changes
