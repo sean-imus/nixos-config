@@ -36,11 +36,13 @@
             }
           ];
           users.sean = {
-            directories = [
+            files = [
               {
-                directory = ".ssh";
-                mode = "0700";
+                file = ".ssh/sops_age_key";
+                configureParent = true;
               }
+            ];
+            directories = [
               ".local/state/wireplumber" # audio configuration
               "persist"
             ];
