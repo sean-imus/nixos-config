@@ -70,12 +70,6 @@
         pulse.enable = true;
       };
 
-      zramSwap = {
-        enable = true;
-        algorithm = "zstd";
-        memoryPercent = 50;
-      };
-
       services.fwupd.enable = true;
       services.thermald.enable = true;
       services.power-profiles-daemon.enable = true;
