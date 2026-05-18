@@ -1,4 +1,3 @@
-- ssh key declarative with sops-nix and make github known host declarative
 - try to have nvim hotreload files and have the neotree be more active to changes
 - migrate to quickshell IF it has a better music visualizer
 - vm config
