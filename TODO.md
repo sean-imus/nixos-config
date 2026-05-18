@@ -1,3 +1,9 @@
-- clean up config
-- luks encryption + disko setup
-- server config with podman containers
+- switch to ext4 as no btrfs features are being used
+- clean up repo, go through everything
+- ssh key declarative with sops-nix
+- try to have nvim hotreload files and have the neotree be more active to changes
+- migrate to quickshell IF it has a better music visualizer
+- vm config
+- password manager, maybe synced via selfhost? keypassXC or a real self hosted password manager
+- make neovim more beautful, start with installing fonts for proper symbols
+- server config with declarative podman containers
