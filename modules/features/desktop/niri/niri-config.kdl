@@ -198,6 +198,7 @@ binds {
     Super+Alt+L allow-when-locked=true hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
     Mod+Ctrl+B hotkey-overlay-title="Launch Bluetooth Menu: bluetui" { spawn-sh "alacritty --class bluetui -e bluetui"; }
     Mod+Ctrl+A hotkey-overlay-title="Launch Audio TUI: wiremix" { spawn-sh "alacritty --class wiremix -e wiremix -v playback"; }
+    Mod+Ctrl+W hotkey-overlay-title="Launch Network TUI: nmtui" { spawn-sh "alacritty --class nmtui -e nmtui"; }
     Mod+Shift+Space hotkey-overlay-title="Enable Waybar" { spawn-sh "pkill waybar || true && waybar"; }
     Mod+CTRL+Space hotkey-overlay-title="Disable Waybar" { spawn-sh "pkill waybar"; }
 
