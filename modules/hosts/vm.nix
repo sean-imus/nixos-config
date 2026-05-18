@@ -35,12 +35,6 @@
 
       boot.kernelModules = [
         "kvm-intel"
-        "i915"
-      ];
-
-      boot.kernelParams = [
-        "i915.enable_fbc=1"
-        "i915.enable_guc=2"
       ];
 
       security.rtkit.enable = true;
