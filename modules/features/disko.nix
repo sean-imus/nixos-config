@@ -38,7 +38,7 @@
                 };
 
                 luks = {
-                  size = "100%";
+                  end = "-26G";
                   content = {
                     type = "luks";
                     name = "cryptroot";
@@ -65,6 +65,19 @@
                           ];
                         };
                       };
+                    };
+                  };
+                };
+
+                cryptswap = {
+                  size = "26G";
+                  content = {
+                    type = "luks";
+                    name = "cryptswap";
+                    settings.allowDiscards = true;
+                    content = {
+                      type = "swap";
+                      resumeDevice = true;
                     };
                   };
                 };
