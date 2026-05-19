@@ -1,4 +1,3 @@
-- fix hardcoded path in waybar config
 - try to have nvim hotreload files and have the neotree be more active to changes
 - use firefox containers for different profiles on the same pages
 - migrate to quickshell IF it has a better music visualizer
