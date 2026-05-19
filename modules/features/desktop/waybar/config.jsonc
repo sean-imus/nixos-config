@@ -112,7 +112,8 @@
     "cava": {
         "bars": 14,
         "method": "pipewire",
-        "input_delay": 2,
+	"sleep_timer": 5,
+	"bar_delimiter": 0,
         "hide_on_silence": true,
         "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
         "actions": {
