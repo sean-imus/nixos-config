@@ -7,11 +7,10 @@
         enable = true;
         enableDefaultConfig = false;
 
-        matchBlocks = {
-          "github.com" = {
-            user = "git";
-            identityFile = "~/.ssh/id_ed25519";
-          };
+        settings."github.com" = {
+          HostName = "github.com";
+          User = "git";
+          IdentityFile = "~/.ssh/id_ed25519";
         };
       };
 
