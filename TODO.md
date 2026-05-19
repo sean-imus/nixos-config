@@ -1,4 +1,3 @@
-- add 24GB swap somehow withouth breaking boot
 - fix hardcoded path in waybar config
 - try to have nvim hotreload files and have the neotree be more active to changes
 - use firefox containers for different profiles on the same pages
