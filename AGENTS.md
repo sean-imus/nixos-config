@@ -223,8 +223,8 @@ sudo nix run 'github:nix-community/disko/latest#disko-install' -- \
 ### Post-Install Workflow
 
 ```bash
-# After first boot, clone config to persisted home dir
-git clone <repo> ~/persist/nixos-config
+# Clone config repo to persist dir (survives reboots via ~/persist bind-mount)
+git clone git@github.com:sean-imus/nixos-config.git ~/persist/nixos-config
 
 # Edit as user (no sudo needed for editing), then rebuild:
 cd ~/persist/nixos-config
@@ -239,6 +239,7 @@ No `/etc/nixos` symlink needed — `--flake` accepts any path. `rbs` alias (defi
 - **Disko handles ALL filesystem config** on every rebuild — `fileSystems`, `boot.initrd.luks`, mount ordering. UUIDs not needed. The by-id path is stable across reboots.
 - **`/var/lib/nixos` not persisted** — nixos-rebuild generates a fresh profile chain each boot. Doesn't affect function, just means `list-generations` only shows current session.
 - **First boot timing**: Preservation runs before SSH via systemd ordering. SSH host keys are generated fresh into the `/persist` symlinks on first boot, then persist across reboots.
+- **Configs no longer depend on repo clone**: All file references use nix store paths (relative `./` paths in modules). Desktop configs work on first boot out of the box without cloning.
 - **`~/persist/nixos-config` survives reboots** because `~/persist` is a bind-mount into `/persist/home/sean/persist`.
 - **Commit before testing**: Nix reads from git tree. `git add` new `.nix` files, commit changes before `disko-install` or remote evaluation.
 - **Private repo**: set `NIX_CONFIG="access-tokens = github.com=<token>"` on live USB.

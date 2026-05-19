@@ -9,31 +9,27 @@
 
   flake.modules.homeManager.niri =
     { pkgs, config, ... }:
-    let
-      flakePath = config.home.homeDirectory + "/persist/nixos-config";
-      niriPath = "${flakePath}/modules/features/desktop/niri/niri-config.kdl";
-      waybarDir = "${flakePath}/modules/features/desktop/waybar";
-      waybarConfigPath = "${waybarDir}/config.jsonc";
-      waybarStylePath = "${waybarDir}/style.css";
-      cavaWaybarConfigPath = "${waybarDir}/cava-waybar.conf";
-    in
     {
       xdg.configFile."niri/config.kdl" = {
-        source = config.lib.file.mkOutOfStoreSymlink niriPath;
+        source = ./niri-config.kdl;
         force = true;
       };
 
       xdg.configFile."waybar/config.jsonc" = {
-        source = config.lib.file.mkOutOfStoreSymlink waybarConfigPath;
+        source = ../waybar/config.jsonc;
         force = true;
       };
       xdg.configFile."waybar/style.css" = {
-        source = config.lib.file.mkOutOfStoreSymlink waybarStylePath;
+        source = ../waybar/style.css;
         force = true;
       };
       xdg.configFile."cava/waybar.conf" = {
-        source = config.lib.file.mkOutOfStoreSymlink cavaWaybarConfigPath;
+        source = ../waybar/cava-waybar.conf;
         force = true;
+      };
+
+      home.file.".local/share/wallpapers/yuta_green.jpg" = {
+        source = ../../../../assets/yuta_green.jpg;
       };
 
       programs.fuzzel = {
