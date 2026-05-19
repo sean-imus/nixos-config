@@ -81,7 +81,8 @@
         "format-wifi": "wifi {signalStrength}%",
         "format-ethernet": "eth",
         "tooltip-format": "{ifname}",
-        "format-disconnected": "<s>net</s>"
+        "format-disconnected": "<s>net</s>",
+	"on-click": "alacritty --class nmtui -e nmtui"
     },
     "pulseaudio#sink": {
         "format": "vol {volume}%",
