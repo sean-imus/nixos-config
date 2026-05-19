@@ -9,9 +9,9 @@
   flake.modules.nixos.cachyos-kernel =
     { pkgs, ... }:
     {
-      nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.default ];
+      # nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.default ];
 
-      boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v4;
+      # boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v4;
 
       nix.settings = {
         substituters = [
