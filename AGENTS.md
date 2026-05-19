@@ -89,6 +89,21 @@ Feature modules can declare their own flake inputs using `flake-file.inputs`:
 
 After adding a `flake-file.inputs` declaration, **you must run `nix run .#write-flake`** to regenerate `flake.nix` before the new input is available in evaluation.
 
+## Flake-level binary caches (`nixConfig`)
+
+Binary caches needed during flake evaluation (e.g. for CachyOS kernel on fresh install) must be declared as `flake-file.nixConfig` in `modules/nix/flake-parts.nix`. This gets emitted as `nixConfig` in `flake.nix`, making the cache available before any NixOS module config is applied:
+
+```nix
+flake-file.nixConfig = {
+  extra-substituters = [ "https://attic.xuyh0120.win/lantian" ];
+  extra-trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
+};
+```
+
+The cache URL/key are **duplicated** in the NixOS feature module (`nix.settings`) — that copy persists the config for the running system's nix daemon. The flake-level config handles evaluation-time access (fresh installs), the module-level config handles runtime use (rebuilds from the running system).
+
+Pass `--accept-flake-config` on first run to trust a newly-added `nixConfig`.
+
 ## SOPS secrets
 
 SSH private key and other secrets managed via **sops-nix** (HM module, `modules/features/sops.nix`).
