@@ -7,19 +7,19 @@
   };
 
   flake.modules.nixos.cachyos-kernel =
-  { pkgs, ... }:
-  {
-    nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.default ];
+    { pkgs, ... }:
+    {
+      nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.default ];
 
-    boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v4;
+      boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v4;
 
-    nix.settings = {
-      substituters = [
-        "https://attic.xuyh0120.win/lantian"
-      ];
-      trusted-public-keys = [
-        "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
-      ];
+      nix.settings = {
+        substituters = [
+          "https://attic.xuyh0120.win/lantian"
+        ];
+        trusted-public-keys = [
+          "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+        ];
+      };
     };
-  };
 }

@@ -7,7 +7,7 @@
         systemEssential
         disko
         impermanence
-	cachyos-kernel
+        cachyos-kernel
         printing
         qemu
         rdp-work

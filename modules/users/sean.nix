@@ -19,7 +19,7 @@
 
       programs.localsend = {
         enable = true;
-	openFirewall = true;
+        openFirewall = true;
       };
 
       home-manager.users.sean = {
