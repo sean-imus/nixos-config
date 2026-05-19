@@ -23,11 +23,6 @@
         source = ../waybar/style.css;
         force = true;
       };
-      xdg.configFile."cava/waybar.conf" = {
-        source = ../waybar/cava-waybar.conf;
-        force = true;
-      };
-
       home.file.".local/share/wallpapers/yuta_green.jpg" = {
         source = ../../../../assets/yuta_green.jpg;
       };

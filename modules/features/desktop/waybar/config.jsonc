@@ -110,7 +110,8 @@
         "max-length": 50
     },
     "cava": {
-        "cava_config": "/home/sean/.config/cava/waybar.conf",
+        "bars": 14,
+        "method": "pipewire",
         "input_delay": 2,
         "hide_on_silence": true,
         "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
