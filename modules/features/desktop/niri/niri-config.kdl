@@ -198,6 +198,15 @@ window-rule {
     }
 }
 
+window-rule {
+    match app-id="^localsend_app$"
+    open-floating true
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
 binds {
     Mod+numbersign { show-hotkey-overlay; }
 
