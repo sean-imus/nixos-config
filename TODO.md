@@ -1,4 +1,3 @@
-- figure how to use cachyos kernel on reinstall with manual compilation as substitutors arent set up in the iso
 - try to have nvim hotreload files and have the neotree be more active to changes
 - declarative wifi passwords, maybe put bluetooth connections into the repo or if sensible also make it declarative
 - use firefox containers for different profiles on the same pages
