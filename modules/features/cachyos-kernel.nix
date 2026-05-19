@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, ... }:
 {
   flake-file.inputs = {
     nix-cachyos-kernel = {
@@ -7,7 +7,7 @@
   };
 
   flake.modules.nixos.cachyos-kernel =
-  { pkgs, inputs, ... }:
+  { pkgs, ... }:
   {
     nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.default ];
 
