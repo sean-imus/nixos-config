@@ -147,6 +147,8 @@
         nixfmt
         dnsutils
         fastfetch
+        ripgrep
+        tree-sitter
       ];
 
       home.stateVersion = "25.11";
