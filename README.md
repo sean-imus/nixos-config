@@ -21,7 +21,7 @@ This repo takes the opposite approach. My entire operating system: disk layout, 
 | Desktop | Niri (tiling Wayland compositor), Waybar, Alacritty, Neovim, Firefox, Vesktop |
 | User | shell, git identity, SSH, Neovim plugins, Firefox bookmarks |
 | Services | printing, QEMU VMs, remote desktop via xrdp, PipeWire audio, Bluetooth |
-| Persistence | opt-in only: SSH keys, Wi-Fi passwords, audio config, firmware metadata, logs, and `~/persist` |
+| Persistence | opt-in only: SSH keys, Wi-Fi passwords, audio config, and `~/persist` |
 
 ## Install from a live USB
 
