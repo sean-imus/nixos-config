@@ -10,7 +10,7 @@ This repo takes the opposite approach. My entire operating system: disk layout, 
 
 **Nothing sticks unless you opt in.** The system root is wiped on every reboot. That means no orphaned config files, no dependency rot, no accumulated junk. Only what you explicitly declare gets preserved: SSH keys, Wi-Fi passwords, audio settings, firmware state, and anything you put in `~/persist`. Browser profiles, downloads, those screenshots you forgot, all gone. A factory reset every time you turn it on, but your actual important stuff is still there.
 
-**Total peace of mind.** Every system change creates a new immutable "generation" that sits next to all previous ones in your boot menu. Upgrade broken something? Reboot and pick the last working one. Experiment backfired? Same thing. You can't hose your system there's always a working entry to fall back to. And if your drive dies or you get a new laptop, two commands rebuild the *exact* same system from scratch. No manual reinstallation, no "I forgot what I had installed," no drift from what worked before.
+**Total peace of mind.** Every system change creates a new immutable "generation" that sits next to all previous ones in your boot menu. Upgrade broken something? Reboot and pick the last working one. Experiment backfired? Same thing. You can't lose your system there's always a working entry to fall back to. And if your drive dies or you get a new laptop, two commands rebuild the *exact* same system from scratch. No manual reinstallation, no "I forgot what I had installed," no drift from what worked before.
 
 **What's in this config:**
 
