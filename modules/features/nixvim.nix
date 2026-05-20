@@ -19,13 +19,17 @@
       programs.nixvim = {
         enable = true;
 
+        colorscheme = "everforest";
+
         globals.mapleader = " ";
 
         opts = {
           number = true;
           relativenumber = true;
+          autoread = true;
         };
 
+        plugins.web-devicons.enable = true;
         plugins.gitsigns.enable = true;
         plugins.lazygit.enable = true;
         plugins.nvim-autopairs.enable = true;
@@ -62,8 +66,16 @@
           enable = true;
           settings = {
             close_if_last_window = true;
-            filesystem.follow_current_file.enabled = true;
+            filesystem = {
+              follow_current_file.enabled = true;
+              use_libuv_file_watcher = true;
+            };
           };
+        };
+
+        colorschemes.everforest = {
+          enable = true;
+          settings.transparent_background = 2;
         };
 
         keymaps = [
@@ -80,12 +92,10 @@
         ];
 
         extraConfigLua = ''
-          vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE', ctermbg = 'NONE' })
-          vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'NONE', ctermbg = 'NONE' })
-          vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'NONE', ctermbg = 'NONE' })
-          vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'NONE', ctermbg = 'NONE' })
-          vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'NONE', ctermbg = 'NONE' })
-          vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'NONE', ctermbg = 'NONE' })
+          vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+            pattern = "*",
+            command = "checktime",
+          })
         '';
       };
     };
