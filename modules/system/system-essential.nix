@@ -17,6 +17,10 @@
         systemd-boot.configurationLimit = 10;
       };
 
+      fonts.packages = with pkgs; [
+        nerd-fonts.jetbrains-mono
+      ];
+
       environment.systemPackages = with pkgs; [
         lm_sensors
         pciutils

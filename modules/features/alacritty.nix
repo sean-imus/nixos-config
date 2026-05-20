@@ -6,6 +6,7 @@
       settings = {
         env.TERM = "xterm-256color";
         font = {
+          family = "JetBrainsMono Nerd Font";
           size = 9;
         };
         scrolling.multiplier = 5;
