@@ -1,26 +1,19 @@
 { ... }:
 {
-  flake-file.inputs = {
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+  flake-file.inputs.nixvim = {
+    url = "github:nix-community/nixvim";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   flake.modules.homeManager.nixvim =
     { ... }:
     {
-      home.shellAliases = {
-        n = "nvim";
-      };
-
+      home.shellAliases.n = "nvim";
       home.sessionVariables.EDITOR = "nvim";
 
       programs.nixvim = {
         enable = true;
-
         colorscheme = "everforest";
-
         globals.mapleader = " ";
 
         opts = {
@@ -29,63 +22,63 @@
           autoread = true;
         };
 
-        plugins.web-devicons.enable = true;
-        plugins.gitsigns.enable = true;
-        plugins.lazygit.enable = true;
-        plugins.nvim-autopairs.enable = true;
-        plugins.which-key.enable = true;
-        plugins.treesitter.enable = true;
-        plugins.lualine.enable = true;
-        plugins.noice.enable = true;
+        plugins = {
+          web-devicons.enable = true;
+          gitsigns.enable = true;
+          lazygit.enable = true;
+          nvim-autopairs.enable = true;
+          which-key.enable = true;
+          treesitter.enable = true;
+          lualine.enable = true;
+          noice.enable = true;
 
-        plugins.lsp = {
-          enable = true;
-          inlayHints = true;
-          keymaps = {
-            lspBuf = {
-              K = "hover";
-              gd = "definition";
-              gi = "implementation";
-              gr = "references";
+          lsp = {
+            enable = true;
+            inlayHints = true;
+            keymaps = {
+              lspBuf = {
+                K = "hover";
+                gd = "definition";
+                gi = "implementation";
+                gr = "references";
+              };
+              diagnostic = {
+                "<leader>j" = "goto_next";
+                "<leader>k" = "goto_prev";
+              };
             };
-            diagnostic = {
-              "<leader>j" = "goto_next";
-              "<leader>k" = "goto_prev";
+            servers = {
+              nixd = {
+                enable = true;
+                settings.formatting.command = [ "nixpkgs-fmt" ];
+              };
+              pylsp.enable = true;
             };
           };
-          servers = {
-            nixd = {
-              enable = true;
-              settings.formatting.command = [ "nixpkgs-fmt" ];
-            };
-            pylsp.enable = true;
-          };
-        };
 
-        plugins.conform-nvim = {
-          enable = true;
-          settings = {
-            format_on_save = {
-              lsp_format = "fallback";
-              timeout_ms = 500;
-            };
-            formatters_by_ft = {
-              nix = [ "nixpkgs-fmt" ];
-              python = [
-                "isort"
-                "black"
-              ];
+          conform-nvim = {
+            enable = true;
+            autoInstall.enable = true;
+            settings = {
+              format_on_save = {
+                lsp_format = "fallback";
+                timeout_ms = 500;
+              };
+              formatters_by_ft = {
+                nix = [ "nixpkgs_fmt" ];
+                python = [ "isort" "black" ];
+              };
             };
           };
-        };
 
-        plugins.neo-tree = {
-          enable = true;
-          settings = {
-            close_if_last_window = true;
-            filesystem = {
-              follow_current_file.enabled = true;
-              use_libuv_file_watcher = true;
+          neo-tree = {
+            enable = true;
+            settings = {
+              close_if_last_window = true;
+              filesystem = {
+                follow_current_file.enabled = true;
+                use_libuv_file_watcher = true;
+              };
             };
           };
         };
