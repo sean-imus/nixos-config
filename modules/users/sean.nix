@@ -1,9 +1,15 @@
-{ inputs, ... }: {
+{ inputs, ... }:
+{
   flake.modules.nixos.sean =
-    { pkgs, ... }: {
-      users.users.sean = {
-        isNormalUser = true;
-        description = "Sean Tietz";
+    { pkgs, config, ... }:
+    {
+      imports = with inputs.self.modules.nixos; [
+        userDefault
+      ];
+
+      userCfg = {
+        userName = "sean";
+        fullName = "Sean Tietz";
         hashedPassword = "$6$T3H3jI/bBMNzxJHi$wmROphZMsgAahqu2dP/H6pquwXvAoKqJ7BIzvuHpI3BaBj7GSjY6EXaDxTZv21OfRKuE0WriJgdm4hyxMoWC8.";
         extraGroups = [
           "networkmanager"
@@ -13,26 +19,21 @@
         shell = pkgs.zsh;
       };
 
-      programs.zsh.enable = true;
-
       programs.localsend = {
         enable = true;
         openFirewall = true;
       };
 
-      nix.settings.trusted-users = [ "sean" ];
-
-      home-manager.users.sean = {
-        imports = [
-          inputs.self.modules.homeManager.sean
-          inputs.nixvim.homeModules.nixvim
-        ];
-      };
+      home-manager.users.${config.userCfg.userName}.imports = [
+        inputs.nixvim.homeModules.nixvim
+      ];
     };
 
   flake.modules.homeManager.sean =
-    { pkgs, config, ... }: {
+    { pkgs, config, ... }:
+    {
       imports = with inputs.self.modules.homeManager; [
+        default
         alacritty
         btop
         firefox
@@ -49,14 +50,22 @@
         vesktop
       ];
 
-      home.username = "sean";
-      home.homeDirectory = "/home/${config.home.username}";
-
-      programs.git = {
-        settings.user = {
+      userCfg = {
+        userName = "sean";
+        gitIdentity = {
           name = "sean tietz";
           email = "sean.tietz2@gmail.com";
         };
+        extraPackages = with pkgs; [
+          libreoffice
+          spotify
+          nixfmt-tree
+          nixfmt
+          dnsutils
+          fastfetch
+          ripgrep
+          tree-sitter
+        ];
       };
 
       programs.firefox.profiles.${config.home.username}.bookmarks = {
@@ -136,18 +145,5 @@
           }
         ];
       };
-
-      home.packages = with pkgs; [
-        libreoffice
-        spotify
-        nixfmt-tree
-        nixfmt
-        dnsutils
-        fastfetch
-        ripgrep
-        tree-sitter
-      ];
-
-      home.stateVersion = "25.11";
     };
 }
