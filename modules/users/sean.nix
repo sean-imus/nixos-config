@@ -5,6 +5,7 @@
     {
       imports = with inputs.self.modules.nixos; [
         userDefault
+        localsend
       ];
 
       userCfg = {
@@ -17,11 +18,6 @@
           "libvirtd"
         ];
         shell = pkgs.zsh;
-      };
-
-      programs.localsend = {
-        enable = true;
-        openFirewall = true;
       };
 
       home-manager.users.${config.userCfg.userName}.imports = [

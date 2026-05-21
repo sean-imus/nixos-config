@@ -48,7 +48,7 @@ in
     };
 
   flake.modules.homeManager.default =
-    { pkgs, config, ... }:
+    { config, ... }:
     let
       cfg = config.userCfg;
     in
