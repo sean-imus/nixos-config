@@ -19,8 +19,8 @@ modules/
 │   ├── notebook.nix        ← notebook host config
 │   └── vm.nix              ← VM host config
 ├── users/
-│   ├── default.nix         ← user template (userDefault NixOS + default HM, with userCfg options)
-│   └── sean.nix            ← sean's user config (imports userDefault, sets userCfg)
+│   ├── default.nix         ← user template (userDefault NixOS + default HM, with home.stateVersion)
+│   └── sean.nix            ← sean's user config (imports userDefault, handles all user config directly)
 ├── features/               ← self-contained, user-independent feature modules
 └── features/desktop/       ← nested feature directory (niri + waybar)
 ```
@@ -61,33 +61,10 @@ User-specific data (git identity, bookmarks, extra packages) goes in `users/<use
 
 `modules/users/default.nix` provides a reusable user template with two modules:
 
-- **`flake.modules.nixos.userDefault`** — NixOS-side: declares `userCfg` options, creates the user account, sets `trusted-users`, bridges to HM via `home-manager.users.<name>.imports`.
-- **`flake.modules.homeManager.default`** — HM-side: sets `home.username`, `home.homeDirectory`, `home.stateVersion`, git identity, extra packages.
+- **`flake.modules.nixos.userDefault`** — NixOS-side: placeholder for future common user NixOS config.
+- **`flake.modules.homeManager.default`** — HM-side: sets `home.stateVersion` as a project-wide default.
 
-### userCfg options (NixOS side)
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `userName` | `str` | required | Username |
-| `fullName` | `str` | required | Full name / description |
-| `hashedPassword` | `str` | required | Hashed password string |
-| `extraGroups` | `listOf str` | `["networkmanager" "wheel"]` | Extra groups |
-
-### userCfg options (HM side)
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `userName` | `str` | required | Username (set again in HM scope) |
-| `gitIdentity` | `nullOr submodule {name, email}` | `null` | Git user identity |
-| `extraPackages` | `listOf package` | `[]` | Extra home packages |
-
-### What stays in the user's `<user>.nix`
-
-- Feature imports (`imports = [ alacritty btop ... ]`)
-- Firefox bookmarks (user-specific data)
-- External HM modules (e.g., `inputs.nixvim.homeModules.nixvim`)
-- System-level feature imports (e.g., `localsend`)
-- Per-user inline config that doesn't fit template options
+Individual user configs (e.g., `users/sean.nix`) import the template and handle all user-specific config directly — account creation, features, git identity, packages, bookmarks.
 
 ## Key Commands
 
