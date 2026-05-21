@@ -13,30 +13,35 @@ Single-machine NixOS config using the **Dendritic Design** pattern with **flake-
 
 ```
 modules/
-├── nix/flake-parts.nix  ← framework entrypoint, mkNixos helper, nixosConfigurations
-├── hosts/<host>.nix     ← host feature (imports NixOS features, wires up HM users)
-├── users/<user>.nix     ← user feature (imports HM features, owns user-specific data)
-├── features/            ← self-contained, user-independent feature modules
-├── system/              ← system-level types (system-default, system-essential)
-└── features/desktop/    ← nested feature directory (niri + waybar)
+├── nix/flake-parts.nix     ← framework entrypoint, mkNixos helper, nixosConfigurations
+├── hosts/
+│   ├── default.nix         ← merged host defaults (hostDefault — timezone, locale, boot, networking)
+│   ├── notebook.nix        ← notebook host config
+│   └── vm.nix              ← VM host config
+├── users/
+│   ├── default.nix         ← user template (userDefault NixOS + default HM, with userCfg options)
+│   └── sean.nix            ← sean's user config (imports userDefault, sets userCfg)
+├── features/               ← self-contained, user-independent feature modules
+└── features/desktop/       ← nested feature directory (niri + waybar)
 ```
 
 ## Import Chain
 
 ```
 import-tree ./modules
-  → nix/flake-parts.nix        (flake-parts + flake-file, mkNixos helper)
-  → hosts/<host>.nix           (NixOS host config; notebook or vm)
-      → system/system-essential.nix  (boot, networking, pkgs)
-          → system/system-default.nix  (timezone, locale, nix settings)
-      → features/*             (NixOS aspects: disko, impermanence, printing, qemu, rdp-work, niri)
-      → users/sean.nix         (user feature, NixOS-level: user account + HM bridge)
-          → features/*         (HM aspects: alacritty, btop, firefox, git, mcp, niri, nixvim,
-                                opencode, printing, rdp-work, shell, ssh, vesktop)
+  → nix/flake-parts.nix          (flake-parts + flake-file, mkNixos helper)
+  → hosts/default.nix            (merged host defaults: timezone, locale, boot, networking, pkgs)
+  → hosts/<host>.nix             (NixOS host config; notebook or vm)
+      → features/*               (NixOS aspects: disko, impermanence, printing, qemu, rdp-work, niri)
+      → users/sean.nix           (user feature, NixOS-level: user account + HM bridge)
+          → users/default.nix    (user template: userDefault — creates user via userCfg options)
+          → features/*           (NixOS aspects: localsend)
+          → features/*           (HM aspects: alacritty, btop, firefox, git, mcp, niri, nixvim,
+                                  opencode, printing, rdp-work, shell, sops, ssh, vesktop)
           + user-specific: git identity, firefox bookmarks, packages
 ```
 
-Host and user are **parallel** — the host's `home-manager.users.<name>.imports` bridges to the user module, but each independently selects its own features.
+Host and user are **parallel** — the host selects system features, the user module imports the user template (`userDefault`) and selects HM features. The user template bridges NixOS to HM via `home-manager.users.<name>.imports`.
 
 ## Feature Module Pattern
 
@@ -51,6 +56,38 @@ Each feature file declares aspects under `flake.modules.<class>.<name>`:
 Features must be **user-independent** — no hardcoded usernames, bookmarks, etc.
 Exception: `rdp-work.nix` may contain user-specific data.
 User-specific data (git identity, bookmarks, extra packages) goes in `users/<user>.nix`.
+
+## User Template Pattern
+
+`modules/users/default.nix` provides a reusable user template with two modules:
+
+- **`flake.modules.nixos.userDefault`** — NixOS-side: declares `userCfg` options, creates the user account, sets `trusted-users`, bridges to HM via `home-manager.users.<name>.imports`.
+- **`flake.modules.homeManager.default`** — HM-side: sets `home.username`, `home.homeDirectory`, `home.stateVersion`, git identity, extra packages.
+
+### userCfg options (NixOS side)
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `userName` | `str` | required | Username |
+| `fullName` | `str` | required | Full name / description |
+| `hashedPassword` | `str` | required | Hashed password string |
+| `extraGroups` | `listOf str` | `["networkmanager" "wheel"]` | Extra groups |
+
+### userCfg options (HM side)
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `userName` | `str` | required | Username (set again in HM scope) |
+| `gitIdentity` | `nullOr submodule {name, email}` | `null` | Git user identity |
+| `extraPackages` | `listOf package` | `[]` | Extra home packages |
+
+### What stays in the user's `<user>.nix`
+
+- Feature imports (`imports = [ alacritty btop ... ]`)
+- Firefox bookmarks (user-specific data)
+- External HM modules (e.g., `inputs.nixvim.homeModules.nixvim`)
+- System-level feature imports (e.g., `localsend`)
+- Per-user inline config that doesn't fit template options
 
 ## Key Commands
 
@@ -231,7 +268,7 @@ cd ~/persist/nixos-config
 sudo nixos-rebuild switch --flake .#notebook    # or `rbs` alias
 ```
 
-No `/etc/nixos` symlink needed — `--flake` accepts any path. `rbs` alias (defined in `system-essential.nix`) runs from current directory.
+No `/etc/nixos` symlink needed — `--flake` accepts any path. `rbs` alias (defined in `hosts/default.nix`) runs from current directory.
 
 ### Gotchas
 
