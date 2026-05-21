@@ -1,9 +1,6 @@
-- try to have nvim hotreload files and have the neotree be more active to changes
 - declarative wifi passwords, maybe put bluetooth connections into the repo or if sensible also make it declarative
-- use firefox containers for different profiles on the same pages
 - migrate to quickshell IF it has a better music visualizer
 - vm config
 - password manager, maybe synced via selfhost? keypassXC or a real self hosted password manager
-- make neovim more beautful, start with installing fonts for proper symbols
-- tpm based luks decryption
+- use firefox containers for different profiles on the same pages
 - server config with declarative podman containers
