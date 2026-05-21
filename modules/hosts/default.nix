@@ -3,7 +3,6 @@
   flake.modules.nixos.hostDefault =
     { pkgs, config, ... }:
     {
-      # --- System Defaults ---
       time.timeZone = "Europe/Berlin";
       i18n.defaultLocale = "en_US.UTF-8";
       i18n.extraLocaleSettings = {
@@ -57,7 +56,6 @@
       system.stateVersion = "25.11";
       nixpkgs.hostPlatform = "x86_64-linux";
 
-      # --- System Essential ---
       networking = {
         networkmanager.enable = true;
         firewall.enable = true;

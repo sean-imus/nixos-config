@@ -12,12 +12,12 @@
         userName = "sean";
         fullName = "Sean Tietz";
         hashedPassword = "$6$T3H3jI/bBMNzxJHi$wmROphZMsgAahqu2dP/H6pquwXvAoKqJ7BIzvuHpI3BaBj7GSjY6EXaDxTZv21OfRKuE0WriJgdm4hyxMoWC8.";
+        shell = pkgs.zsh;
         extraGroups = [
           "networkmanager"
           "wheel"
           "libvirtd"
         ];
-        shell = pkgs.zsh;
       };
 
       home-manager.users.${config.userCfg.userName}.imports = [
