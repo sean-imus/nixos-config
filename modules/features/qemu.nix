@@ -1,8 +1,6 @@
-{ ... }:
-{
+{ ... }: {
   flake.modules.nixos.qemu =
-    { pkgs, ... }:
-    {
+    { pkgs, ... }: {
       virtualisation.libvirtd = {
         enable = true;
         qemu = {

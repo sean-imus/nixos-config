@@ -1,8 +1,6 @@
-{ inputs, ... }:
-{
+{ inputs, ... }: {
   flake.modules.nixos.sean =
-    { pkgs, ... }:
-    {
+    { pkgs, ... }: {
       users.users.sean = {
         isNormalUser = true;
         description = "Sean Tietz";
@@ -33,8 +31,7 @@
     };
 
   flake.modules.homeManager.sean =
-    { pkgs, config, ... }:
-    {
+    { pkgs, config, ... }: {
       imports = with inputs.self.modules.homeManager; [
         alacritty
         btop

@@ -1,8 +1,6 @@
-{ ... }:
-{
+{ ... }: {
   flake.modules.nixos.default =
-    { pkgs, config, ... }:
-    {
+    { pkgs, config, ... }: {
       # --- System Defaults ---
       time.timeZone = "Europe/Berlin";
       i18n.defaultLocale = "en_US.UTF-8";

@@ -1,5 +1,4 @@
-{ inputs, lib, ... }:
-{
+{ inputs, lib, ... }: {
   flake-file.inputs = {
     disko = {
       url = "github:nix-community/disko";
@@ -8,8 +7,7 @@
   };
 
   flake.modules.nixos.disko =
-    { config, ... }:
-    {
+    { config, ... }: {
       imports = [ inputs.disko.nixosModules.disko ];
 
       options.diskoConfigDevice = lib.mkOption {
