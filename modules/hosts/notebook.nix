@@ -2,7 +2,7 @@
   flake.modules.nixos.notebook =
     { ... }: {
       imports = with inputs.self.modules.nixos; [
-        default
+        hostDefault
         disko
         impermanence
         printing

@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.nixos.default =
+  flake.modules.nixos.hostDefault =
     { pkgs, config, ... }: {
       # --- System Defaults ---
       time.timeZone = "Europe/Berlin";
