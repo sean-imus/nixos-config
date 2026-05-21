@@ -1,3 +1,5 @@
+- clean up repo, move everything into modules, create a default user template just like with hosts, use mkOption and such to declare sane defaults while letting user specific overrides still work
+- stop warning on rebuild because of trusted users issue
 - declarative wifi passwords, maybe put bluetooth connections into the repo or if sensible also make it declarative
 - migrate to quickshell IF it has a better music visualizer
 - vm config
