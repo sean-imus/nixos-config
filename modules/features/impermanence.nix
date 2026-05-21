@@ -15,9 +15,9 @@
         enable = true;
         preserveAt."/persist" = {
           directories = [
-            "/etc/NetworkManager/system-connections" # WiFi Password
-            "/var/lib/bluetooth" # Bluetooth Connections
-            "/var/lib/systemd/timers" # Systemd Timer Information
+            "/etc/NetworkManager/system-connections"
+            "/var/lib/bluetooth"
+            "/var/lib/systemd/timers"
           ];
           files = [
             {
@@ -43,7 +43,7 @@
               }
             ];
             directories = [
-              ".local/state/wireplumber" # audio configuration
+              ".local/state/wireplumber"
               "persist"
             ];
           };
