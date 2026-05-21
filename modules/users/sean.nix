@@ -34,6 +34,7 @@
         btop
         firefox
         git
+        libreoffice
         mcp
         niri
         nixvim
@@ -135,7 +136,6 @@
       };
 
       home.packages = with pkgs; [
-        libreoffice
         spotify
         nixfmt-tree
         nixfmt
