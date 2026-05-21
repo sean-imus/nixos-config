@@ -25,9 +25,6 @@
 
       home.packages = with pkgs; [
         nixd
-        pyright
-        ruff
-        uv
       ];
     };
 }
