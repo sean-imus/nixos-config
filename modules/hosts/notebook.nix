@@ -14,6 +14,11 @@
         sean
       ];
 
+      hostCfg = {
+        hm.enable = true;
+        audio.enable = true;
+      };
+
       diskoConfigDevice = "/dev/disk/by-id/nvme-SAMSUNG_MZALQ512HALU-000L2_S4UKNF0R457642";
 
       networking.hostName = "notebook";
@@ -56,27 +61,8 @@
         "i915"
       ];
 
-      boot.kernelParams = [
-        "i915.enable_fbc=1"
-        "i915.enable_guc=2"
-      ];
-
-      security.rtkit.enable = true;
-      hardware.alsa.enableBluetooth = true;
-      services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-      };
-
       services.fwupd.enable = true;
       services.thermald.enable = true;
       services.power-profiles-daemon.enable = true;
-
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-      };
     };
 }

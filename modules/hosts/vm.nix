@@ -32,18 +32,8 @@
         "kvm-intel"
       ];
 
-      security.rtkit.enable = true;
-      hardware.alsa.enableBluetooth = true;
-      services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-      };
+      hostCfg.audio.enable = true;
 
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-      };
+      hostCfg.hm.enable = true;
     };
 }
