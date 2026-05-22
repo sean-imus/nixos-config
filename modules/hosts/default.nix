@@ -1,11 +1,10 @@
 { ... }:
 {
   flake.modules.nixos.hostDefault =
-    {
-      pkgs,
-      config,
-      lib,
-      ...
+    { pkgs
+    , config
+    , lib
+    , ...
     }:
     {
       options.hostCfg.audio.enable = lib.mkEnableOption "Audio Support";
@@ -112,6 +111,9 @@
             rbs = "sudo nixos-rebuild switch --flake .#${config.networking.hostName}";
             rbb = "sudo nixos-rebuild boot --flake .#${config.networking.hostName} && reboot";
           };
+
+          services.fwupd.enable = true;
+          services.thermald.enable = true;
 
           users.mutableUsers = false;
         }

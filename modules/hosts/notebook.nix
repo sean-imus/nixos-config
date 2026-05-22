@@ -47,8 +47,7 @@
         "i915"
       ];
 
-      services.fwupd.enable = true;
-      services.thermald.enable = true;
+
       services.power-profiles-daemon.enable = true;
     };
 }
