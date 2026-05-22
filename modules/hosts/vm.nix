@@ -16,6 +16,8 @@
         hm.enable = true;
       };
 
+      home-manager.users.sean.niri.config.modKey = "Alt";
+
       diskoConfigDevice = "/dev/disk/by-id/virtio-ROOT";
 
       networking.hostName = "vm";

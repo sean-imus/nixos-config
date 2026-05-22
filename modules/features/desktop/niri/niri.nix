@@ -8,159 +8,165 @@
     };
 
   flake.modules.homeManager.niri =
-    { pkgs, ... }:
     {
-      xdg.configFile."niri/config.kdl" = {
-        source = ./niri-config.kdl;
-        force = true;
+      pkgs,
+      config,
+      lib,
+      ...
+    }:
+    let
+      cfg = config.niri.config;
+    in
+    {
+      options.niri.config.modKey = lib.mkOption {
+        type = lib.types.enum [
+          "Super"
+          "Alt"
+        ];
+        default = "Super";
+        description = "Niri mod key for keybindings";
       };
 
-      xdg.configFile."waybar/config.jsonc" = {
-        source = ../waybar/config.jsonc;
-        force = true;
-      };
-      xdg.configFile."waybar/style.css" = {
-        source = ../waybar/style.css;
-        force = true;
-      };
-      home.file.".local/share/wallpapers/yuta_green.jpg" = {
-        source = ../../../../assets/yuta_green.jpg;
-      };
+      config = {
+        xdg.configFile."niri/config.kdl" = {
+          text = lib.replaceStrings [ "@MOD_KEY@" ] [ cfg.modKey ] (builtins.readFile ./niri-config.kdl);
+          force = true;
+        };
 
-      programs.fuzzel = {
-        enable = true;
-        settings = {
-          main = {
-            dpi-aware = false;
-            namespace = "fuzzel";
-            icons-enabled = true;
-            sort-result = false;
-          };
-          colors = {
-            background = "00000066";
-            text = "ffffffff";
-            prompt = "ccccccff";
-            input = "ffffffff";
-            match = "84c906ff";
-            selection = "84c90644";
-            selection-text = "ffffffff";
-            selection-match = "84c906ff";
-            border = "84c90655";
-          };
-          border = {
-            width = 2;
-            radius = 12;
+        xdg.configFile."waybar/config.jsonc" = {
+          source = ../waybar/config.jsonc;
+          force = true;
+        };
+        xdg.configFile."waybar/style.css" = {
+          source = ../waybar/style.css;
+          force = true;
+        };
+        home.file.".local/share/wallpapers/yuta_green.jpg" = {
+          source = ../../../../assets/yuta_green.jpg;
+        };
+
+        programs.fuzzel = {
+          enable = true;
+          settings = {
+            main = {
+              dpi-aware = false;
+              namespace = "fuzzel";
+              icons-enabled = true;
+              sort-result = false;
+            };
+            colors = {
+              background = "00000066";
+              text = "ffffffff";
+              prompt = "ccccccff";
+              input = "ffffffff";
+              match = "84c906ff";
+              selection = "84c90644";
+              selection-text = "ffffffff";
+              selection-match = "84c906ff";
+              border = "84c90655";
+            };
+            border = {
+              width = 2;
+              radius = 12;
+            };
           };
         };
-      };
 
-      services.mako = {
-        enable = true;
-        settings = {
-          anchor = "top-right";
-          background-color = "#00000088";
-          text-color = "#ffffff";
-          border-color = "#437306";
-          border-radius = 12;
-          border-size = 2;
-          font = "Sans 11";
-          height = 100;
-          width = 400;
-          margin = "15";
-          padding = "5,15";
-          max-visible = 5;
+        services.mako = {
+          enable = true;
+          settings = {
+            anchor = "top-right";
+            background-color = "#00000088";
+            text-color = "#ffffff";
+            border-color = "#437306";
+            border-radius = 12;
+            border-size = 2;
+            font = "Sans 11";
+            height = 100;
+            width = 400;
+            margin = "15";
+            padding = "5,15";
+            max-visible = 5;
+          };
         };
-      };
 
-      services.playerctld = {
-        enable = true;
-      };
+        services.playerctld = {
+          enable = true;
+        };
 
-      xdg.dataFile = {
-        "applications/cups.desktop".text = ''
-          [Desktop Entry]
-          Hidden=true
-        '';
-        "applications/nixos-manual.desktop".text = ''
-          [Desktop Entry]
-          Hidden=true
-        '';
-        "applications/btop.desktop".text = ''
-          [Desktop Entry]
-          Hidden=true
-        '';
-        "applications/nvim.desktop".text = ''
-          [Desktop Entry]
-          Hidden=true
-        '';
-        "applications/mpv.desktop".text = ''
-          [Desktop Entry]
-          Hidden=true
-        '';
-      };
+        xdg.dataFile = {
+          "applications/cups.desktop".text = ''
+            [Desktop Entry]
+            Hidden=true
+          '';
+          "applications/nixos-manual.desktop".text = ''
+            [Desktop Entry]
+            Hidden=true
+          '';
+          "applications/btop.desktop".text = ''
+            [Desktop Entry]
+            Hidden=true
+          '';
+          "applications/nvim.desktop".text = ''
+            [Desktop Entry]
+            Hidden=true
+          '';
+          "applications/mpv.desktop".text = ''
+            [Desktop Entry]
+            Hidden=true
+          '';
+        };
 
-      home.packages = with pkgs; [
-        awww
-        font-awesome
-        wiremix
-        swaylock
-        waybar
-        bluetui
-        brightnessctl
-        cava
-        mpv
-        wf-recorder
-        slurp
-
-        (pkgs.writeShellScriptBin "mod-toggle" ''
-          KDL="$HOME/.config/niri/vmalias.kdl"
-          if [ -f "$KDL" ] && grep -q 'mod-key "Alt"' "$KDL" 2>/dev/null; then
-            rm -f "$KDL"
-          else
-            printf "input {\n    mod-key \"Alt\"\n}\n" > "$KDL"
-          fi
-        '')
-        libnotify
-        (pkgs.writeShellScriptBin "power-toggle" ''
-          current=$(powerprofilesctl get)
-          case "$current" in
-            power-saver) next="balanced" ;;
-            balanced) next="performance" ;;
-            performance) next="power-saver" ;;
-          esac
-          powerprofilesctl set "$next"
-        '')
-        (pkgs.writeShellScriptBin "screencap" ''
-          STATE=/tmp/waybar-recording
-          PIDFILE=/tmp/screencap-pid
-          show() { echo '{"text": "●", "class": "recording", "tooltip": "Click to stop"}' > "$STATE"; pkill -RTMIN+8 waybar; }
-          hide() { rm -f "$STATE"; pkill -RTMIN+8 waybar; }
-          if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
-            kill "$(cat "$PIDFILE")"
-            sleep 0.2
+        home.packages = with pkgs; [
+          awww
+          font-awesome
+          wiremix
+          swaylock
+          waybar
+          bluetui
+          brightnessctl
+          cava
+          mpv
+          wf-recorder
+          slurp
+          libnotify
+          (pkgs.writeShellScriptBin "power-toggle" ''
+            current=$(powerprofilesctl get)
+            case "$current" in
+              power-saver) next="balanced" ;;
+              balanced) next="performance" ;;
+              performance) next="power-saver" ;;
+            esac
+            powerprofilesctl set "$next"
+          '')
+          (pkgs.writeShellScriptBin "screencap" ''
+            STATE=/tmp/waybar-recording
+            PIDFILE=/tmp/screencap-pid
+            show() { echo '{"text": "●", "class": "recording", "tooltip": "Click to stop"}' > "$STATE"; pkill -RTMIN+8 waybar; }
+            hide() { rm -f "$STATE"; pkill -RTMIN+8 waybar; }
+            if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+              kill "$(cat "$PIDFILE")"
+              sleep 0.2
+              hide
+              rm -f "$PIDFILE"
+              exit 0
+            fi
+            if pgrep -x slurp > /dev/null; then
+              exit 1
+            fi
+            geometry=$(slurp) || { hide; exit 1; }
+            if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+              hide
+              exit 1
+            fi
+            show
+            wf-recorder -g "$geometry" -r 30 -c libx264 -f "$HOME/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4" &
+            echo $! > "$PIDFILE"
+            wait $!
             hide
             rm -f "$PIDFILE"
-            exit 0
-          fi
-          if pgrep -x slurp > /dev/null; then
-            exit 1
-          fi
-          geometry=$(slurp) || { hide; exit 1; }
-          if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
-            hide
-            exit 1
-          fi
-          show
-          wf-recorder -g "$geometry" -r 30 -c libx264 -f "$HOME/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4" &
-          echo $! > "$PIDFILE"
-          wait $!
-          hide
-          rm -f "$PIDFILE"
-        '')
-      ];
-
-      home.shellAliases = {
-        vmalias = "mod-toggle";
+          '')
+        ];
       };
     };
 }

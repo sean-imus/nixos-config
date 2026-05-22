@@ -1,4 +1,5 @@
 input {
+    mod-key "@MOD_KEY@"
     keyboard {
         numlock
     }
@@ -305,7 +306,6 @@ binds {
 
     Mod+V       { toggle-window-floating; }
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
-    Alt+Ctrl+V  { spawn "mod-toggle"; }
     Mod+P hotkey-overlay-title="Toggle Power Profile" { spawn "power-toggle"; }
 
     Mod+C { screenshot; }
@@ -318,5 +318,3 @@ binds {
     Mod+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
  }
-
- include optional=true "vmalias.kdl"
