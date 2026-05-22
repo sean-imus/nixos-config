@@ -30,14 +30,9 @@
       };
 
       boot.initrd.availableKernelModules = [
-        "ahci"
-        "xhci_pci"
-        "thunderbolt"
         "nvme"
+        "xhci_pci"
         "usbhid"
-        "sdhci_pci"
-        "sd_mod"
-        "usb_storage"
       ];
 
       boot.kernelModules = [
