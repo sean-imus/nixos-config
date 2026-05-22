@@ -58,6 +58,9 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       enableCompletion = true;
+      shellAliases = {
+        cl = "clear";
+      };
       history = {
         size = 10000;
         save = 10000;
