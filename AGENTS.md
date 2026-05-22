@@ -19,8 +19,8 @@ modules/
 │   ├── notebook.nix        ← notebook host config
 │   └── vm.nix              ← VM host config
 ├── users/
-│   ├── default.nix         ← user template (userDefault NixOS + default HM, with home.stateVersion)
-│   └── sean.nix            ← sean's user config (imports userDefault, handles all user config directly)
+│   ├── default.nix         ← user template (default HM, with home.stateVersion)
+│   └── sean.nix            ← sean's user config (imports modules, handles all user config directly)
 ├── features/               ← self-contained, user-independent feature modules
 └── features/desktop/       ← nested feature directory (niri + waybar)
 ```
@@ -77,15 +77,14 @@ Individual user configs (e.g., `users/sean.nix`) import the template and handle 
 Rule of thumb: `nix flake check` catches eval errors but misses option type mismatches and other deep issues. Any non-trivial change (restructuring, moving config, adding modules) needs a dry build.
 | `nix run .#write-flake` | Regenerate `flake.nix` |
 | `nix run .#write-lock` | Regenerate `flake.lock` |
-| `nix run .#write-inputs` | Regenerate input pin file |
 
 ## Gotchas
 
 - **HM `config` ≠ NixOS `config`**: HM module function args (`{ pkgs, config, ... }`) give HM-scoped config. NixOS options like `networking.hostName` are NOT available there. Use `inputs` via closure from the outer flake-parts module scope instead.
-- **`home.homeDirectory` has no default** for `stateVersion ≥ 20.09`. Must be set explicitly. Use `config.home.username` not `home.username` (the latter is not a variable in scope).
+- **`home.homeDirectory` has no default**: Must be set explicitly. Use `config.home.username` not `home.username` (the latter is not a variable in scope).
 - **`inputs` is available via closure**: The outer `{ inputs, ... }` function scope is accessible from inner HM module `let` blocks without passing it again.
-- **New file gotcha**: Always `git add` new `.nix` files before testing — Nix reads from the git tree and ignores untracked files.
-- **Ephemeral programs**: Use `nix run nixpkgs#<program> -- [args]` to run a program not currently installed (e.g. `nix run nixpkgs#jq -- '.key' file.json`). No config change needed.
+- **New file gotcha**: Always `git add` new `.nix` files before testing — Nix reads from the git tree and ignores untracked files. This is only needed when a technically fresh file is added. Files that have existed before do not need to be added since git already sees them. Only freshly created files or files that got renamed / moved need this treatment.
+- **Ephemeral programs**: Use `nix run nixpkgs#<program> -- [args]` to run a program not currently installed (e.g. `nix run nixpkgs#jq -- '.key' file.json`). No config change needed. This is useful when debugging needs to happen and certain debugging tools that would be helpful arent installed currently. Prefer running useful programs like this instead of finding inefficient solutions or solutions that wouldn't provide as much helpful information. nix run makes a program exist for only one execution. nix shell makes them available as long as the shell session exists.
 
 ## Adding flake inputs
 
@@ -124,14 +123,14 @@ SSH private key and other secrets managed via **sops-nix** (HM module, `modules/
    ```
 2. Edit the encrypted file to add the key-value pair:
    ```bash
-   sops modules/secrets/secrets.yaml
+   nix run nixpkgs#sops -- modules/secrets/secrets.yaml
    ```
 3. Rebuild.
 
 ### Updating a secret
 
 ```bash
-sops modules/secrets/secrets.yaml
+nix run nixpkgs#sops -- modules/secrets/secrets.yaml
 ```
 Edit the value, save — sops re-encrypts automatically. Rebuild to deploy.
 
@@ -257,3 +256,4 @@ No `/etc/nixos` symlink needed — `--flake` accepts any path. `rbs` alias (defi
 - **`~/persist/nixos-config` survives reboots** because `~/persist` is a bind-mount into `/persist/home/sean/persist`.
 - **Commit before testing**: Nix reads from git tree. `git add` new `.nix` files, commit changes before `disko-install` or remote evaluation.
 - **Private repo**: set `NIX_CONFIG="access-tokens = github.com=<token>"` on live USB.
+- **Format after all .nix changes**: run `treefmt` to format all files after any `.nix` file changes.
