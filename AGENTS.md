@@ -256,4 +256,4 @@ No `/etc/nixos` symlink needed — `--flake` accepts any path. `rbs` alias (defi
 - **`~/persist/nixos-config` survives reboots** because `~/persist` is a bind-mount into `/persist/home/sean/persist`.
 - **Commit before testing**: Nix reads from git tree. `git add` new `.nix` files, commit changes before `disko-install` or remote evaluation.
 - **Private repo**: set `NIX_CONFIG="access-tokens = github.com=<token>"` on live USB.
-- **Format after all .nix changes**: run `treefmt` to format all files after any `.nix` file changes.
+- **Format after all .nix changes**: YOU MUST!!! run `treefmt` to format all files after any `.nix` file changes.
