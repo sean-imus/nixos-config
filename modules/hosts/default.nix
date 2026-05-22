@@ -54,7 +54,6 @@
 
           nix = {
             settings = {
-              auto-optimise-store = true;
               download-buffer-size = 536870912;
               experimental-features = [
                 "nix-command"
