@@ -114,6 +114,10 @@
                     name = "E-Mail Live Tracking";
                     url = "https://ms.hees.de/email_security/email_livetracking";
                   }
+                  {
+                    name = "EinfachGast";
+                    url = "https://mein.einfachgast.de/live";
+                  }
                 ];
               }
               {
