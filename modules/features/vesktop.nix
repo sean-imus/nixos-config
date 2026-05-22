@@ -6,8 +6,6 @@
       settings = {
         discordBranch = "stable";
         tray = false;
-        firstLaunch = false;
-        checkUpdates = false;
         hardwareAcceleration = true;
       };
       vencord.settings = {
@@ -23,6 +21,11 @@
           WebScreenShareFixes.enabled = true;
         };
       };
+    };
+
+    xdg.configFile."vesktop/state.json" = {
+      text = ''{"firstLaunch":false}'';
+      force = true;
     };
   };
 }
