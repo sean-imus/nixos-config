@@ -11,6 +11,7 @@
         enable = true;
         settings = {
           autoupdate = false;
+          formatter = true;
           lsp = true;
           mcp = {
             nixos = {
