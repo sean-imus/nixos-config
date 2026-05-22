@@ -14,6 +14,8 @@
         enable = true;
       };
 
+      systemd.services.virt-secret-init-encryption.enable = false;
+
       systemd.services.libvirtd.postStart = ''
         ${pkgs.libvirt}/bin/virsh net-info default >/dev/null 2>&1 || \
         ${pkgs.libvirt}/bin/virsh net-define ${pkgs.libvirt}/var/lib/libvirt/qemu/networks/default.xml 2>/dev/null || true
