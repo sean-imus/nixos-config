@@ -16,6 +16,7 @@
           AnonymiseFileNames.enabled = true;
           CrashHandler.enabled = true;
           PreviewMessage.enabled = true;
+          NoBlockedMessages = true;
           petpet.enabled = true;
           ShikiCodeblocks.enabled = true;
           WebKeybinds.enabled = true;
