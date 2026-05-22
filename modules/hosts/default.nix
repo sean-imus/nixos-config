@@ -1,10 +1,11 @@
 { ... }:
 {
   flake.modules.nixos.hostDefault =
-    { pkgs
-    , config
-    , lib
-    , ...
+    {
+      pkgs,
+      config,
+      lib,
+      ...
     }:
     {
       options.hostCfg.audio.enable = lib.mkEnableOption "Audio Support";

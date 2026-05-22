@@ -47,7 +47,6 @@
         "i915"
       ];
 
-
       services.power-profiles-daemon.enable = true;
     };
 }
