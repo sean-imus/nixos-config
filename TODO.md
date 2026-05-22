@@ -1,5 +1,3 @@
-- vm config and remove that ugly niri mod key alias, never need to toggle it so figure out a way to make it permanent for vm config but not for notebook config
-- make localsend not a system nixos module but instead make HM install localsend and make it open firewall ports, check if that is even possible via user based options
 - password manager, maybe synced via selfhost? keypassXC or a real self hosted password manager
 - use firefox containers for different profiles on the same pages
 - server config with declarative podman containers
