@@ -84,6 +84,7 @@
             networkmanager.enable = true;
             firewall.enable = true;
           };
+          programs.netpala.enable = true;
 
           boot.loader = {
             timeout = 1;
