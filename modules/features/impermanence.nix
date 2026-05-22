@@ -18,6 +18,7 @@
             "/etc/NetworkManager/system-connections"
             "/var/lib/bluetooth"
             "/var/lib/systemd/timers"
+            "/var/lib/libvirt/" # Needed for VM Storage, custom Networks and such, ugly but necessery
           ];
           files = [
             {

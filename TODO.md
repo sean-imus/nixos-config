@@ -1,4 +1,3 @@
-- fix qemu.nix so that virtualization actually works and it uses the path ~/persist/vm for vm storage and even after a reboot it should use that path for vm's
 - vm config and remove that ugly niri mod key alias, never need to toggle it so figure out a way to make it permanent for vm config but not for notebook config
 - make localsend not a system nixos module but instead make HM install localsend and make it open firewall ports, check if that is even possible via user based options
 - password manager, maybe synced via selfhost? keypassXC or a real self hosted password manager
