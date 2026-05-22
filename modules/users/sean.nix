@@ -21,8 +21,6 @@
 
       programs.zsh.enable = true;
 
-      nix.settings.trusted-users = [ "sean" ];
-
       home-manager.users.sean = {
         imports = [
           inputs.self.modules.homeManager.sean
