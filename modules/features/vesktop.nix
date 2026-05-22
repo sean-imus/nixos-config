@@ -15,7 +15,6 @@
           CrashHandler.enabled = true;
           PreviewMessage.enabled = true;
           NoBlockedMessages.enabled = true;
-          petpet.enabled = true;
           ShikiCodeblocks.enabled = true;
           WebKeybinds.enabled = true;
           WebScreenShareFixes.enabled = true;
