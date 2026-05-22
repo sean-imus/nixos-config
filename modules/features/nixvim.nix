@@ -59,7 +59,7 @@
             servers = {
               nixd = {
                 enable = true;
-                settings.formatting.command = [ "nixpkgs-fmt" ];
+                settings.formatting.command = [ "nixfmt" ];
               };
               pylsp.enable = true;
             };
@@ -74,7 +74,7 @@
                 timeout_ms = 500;
               };
               formatters_by_ft = {
-                nix = [ "nixpkgs_fmt" ];
+                nix = [ "nixfmt" ];
                 python = [
                   "isort"
                   "black"
