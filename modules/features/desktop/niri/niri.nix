@@ -24,7 +24,6 @@
           "Alt"
         ];
         default = "Super";
-        description = "Niri mod key for keybindings";
       };
 
       config = {
@@ -119,7 +118,6 @@
 
         home.packages = with pkgs; [
           awww
-          font-awesome
           wiremix
           swaylock
           waybar
