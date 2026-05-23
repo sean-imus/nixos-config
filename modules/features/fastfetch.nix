@@ -33,7 +33,6 @@ in
           "gpu"
           "memory"
           "storage"
-          "locale"
         ];
       };
     };
