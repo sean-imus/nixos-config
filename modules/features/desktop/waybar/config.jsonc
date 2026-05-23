@@ -127,7 +127,7 @@
         "format-source-muted": "<s>mic</s>",
         "scroll-step": 5,
         "on-click": "kitty --class wiremix -e wiremix -v input",
-        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+ -l 1.0",
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
     }
 }
