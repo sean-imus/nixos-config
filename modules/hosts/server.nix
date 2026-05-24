@@ -8,13 +8,15 @@
         disko
         impermanence
         ssh
-        sean-headless
+        sean
       ];
 
       hostCfg = {
         audio.enable = false;
         hm.enable = true;
         ssh-server.enable = true;
+        user.sean.gui.enable = false;
+        user.sean.dev.enable = true;
       };
 
       diskoConfigDevice = "/dev/disk/by-id/ata-TOSHIBA_MQ01ABD050_93HRC25TT";

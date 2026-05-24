@@ -13,35 +13,56 @@ Single-machine NixOS config using the **Dendritic Design** pattern with **flake-
 
 ```
 modules/
-├── nix/flake-parts.nix     ← framework entrypoint, mkNixos helper, nixosConfigurations
+├── nix/flake-parts.nix       ← framework entrypoint, mkNixos helper, nixosConfigurations
 ├── hosts/
-│   ├── default.nix         ← merged host defaults (hostDefault — timezone, locale, boot, networking)
-│   ├── notebook.nix        ← notebook host config
-│   └── vm.nix              ← VM host config
+│   ├── default.nix           ← host defaults (hostDefault — timezone, locale, boot, networking)
+│   ├── notebook.nix          ← Intel laptop (full desktop + dev)
+│   ├── gaming-notebook.nix   ← Intel + Nvidia laptop (full desktop + dev)
+│   ├── vm.nix                ← VM (desktop, no dev)
+│   └── server.nix            ← headless server (SSH + dev, no GUI)
 ├── users/
-│   ├── default.nix         ← user template (default HM, with home.stateVersion)
-│   └── sean.nix            ← sean's user config (imports modules, handles all user config directly)
-├── features/               ← self-contained, user-independent feature modules
-└── features/desktop/       ← nested feature directory (niri + waybar)
+│   ├── default.nix           ← user template (userDefault — home.stateVersion)
+│   └── sean.nix              ← single user module, features option-gated per host
+├── features/                 ← self-contained, user-independent feature modules
+└── features/desktop/         ← nested feature directory (niri)
 ```
+
+## Option-Gated User Features
+
+User features are **option-gated** via `hostCfg.user.sean.*` — the single `sean.nix` module declares
+what it *can* do, each host chooses what to *enable*:
+
+```nix
+# notebook.nix / gaming-notebook.nix
+hostCfg.user.sean = { gui.enable = true;  dev.enable = true;  };
+
+# vm.nix
+hostCfg.user.sean = { gui.enable = true;  dev.enable = false; };
+
+# server.nix
+hostCfg.user.sean = { gui.enable = false; dev.enable = true;  };
+```
+
+- **gui.enable** → desktop features: alacritty, firefox, niri, vesktop, opencode, localsend, libreoffice, printing HM, rdp-work HM
+- **dev.enable** → nixvim (neovim config with LSP, plugins)
+- **Always on** (core): btop, fastfetch, git, shell, sops, ssh, userDefault
 
 ## Import Chain
 
 ```
 import-tree ./modules
-  → nix/flake-parts.nix          (flake-parts + flake-file, mkNixos helper)
-  → hosts/default.nix            (merged host defaults: timezone, locale, boot, networking, pkgs)
-  → hosts/<host>.nix             (NixOS host config; notebook or vm)
-      → features/*               (NixOS aspects: disko, impermanence, printing, qemu, rdp-work, niri)
-      → users/sean.nix           (user feature, NixOS-level: user account + HM bridge)
-          → users/default.nix    (user template: userDefault — creates user via userCfg options)
-          → features/*           (NixOS aspects: localsend)
-          → features/*           (HM aspects: kitty, btop, firefox, git, niri, nixvim,
-                                  opencode, printing, rdp-work, shell, sops, ssh, vesktop)
-          + user-specific: git identity, firefox bookmarks, packages
+  → nix/flake-parts.nix              (flake-parts + flake-file, mkNixos helper)
+  → hosts/default.nix                (merged host defaults: timezone, locale, boot, networking, pkgs)
+  → hosts/<host>.nix                 (NixOS host config)
+      → features/*                   (NixOS aspects: disko, impermanence, printing, qemu, rdp-work, niri, ssh)
+      → users/sean.nix               (user module: account + HM bridge)
+          + always:  users/default.nix, core HM features (btop, git, shell, sops, ssh)
+          + if gui:   alacritty, firefox, niri, vesktop, opencode, localsend, libreoffice, printing, rdp-work
+          + if dev:   nixvim
+          + user-specific: git identity, authorizedKeys, packages
 ```
 
-Host and user are **parallel** — the host selects system features, the user module imports the user template (`userDefault`) and selects HM features. The user template bridges NixOS to HM via `home-manager.users.<name>.imports`.
+The user module is **single and option-gated** — no separate user profiles per host.
 
 ## Feature Module Pattern
 
@@ -66,6 +87,8 @@ User-specific data (git identity, bookmarks, extra packages) goes in `users/<use
 
 Individual user configs (e.g., `users/sean.nix`) import the template and handle all user-specific config directly — account creation, features, git identity, packages, bookmarks.
 
+User features are **option-gated** via `hostCfg.user.<name>.*` options — the single `<name>.nix` module declares what it *can* do, each host chooses what to *enable*. This avoids separate user profiles per host.
+
 ## Key Commands
 
 | Command | Purpose |
@@ -80,6 +103,7 @@ Rule of thumb: `nix flake check` catches eval errors but misses option type mism
 
 ## Gotchas
 
+- **`options` forces `config = { ... }`**: If a NixOS module declares top-level `options`, all config attributes (`users`, `programs`, `home-manager`, etc.) must go inside a `config = { ... }` block. The top-level module can only have `imports`, `options`, and `config` — anything else throws.
 - **HM `config` ≠ NixOS `config`**: HM module function args (`{ pkgs, config, ... }`) give HM-scoped config. NixOS options like `networking.hostName` are NOT available there. Use `inputs` via closure from the outer flake-parts module scope instead.
 - **`home.homeDirectory` has no default**: Must be set explicitly. Use `config.home.username` not `home.username` (the latter is not a variable in scope).
 - **`inputs` is available via closure**: The outer `{ inputs, ... }` function scope is accessible from inner HM module `let` blocks without passing it again.
@@ -163,7 +187,7 @@ Neovim is configured via **[nixvim](https://nix-community.github.io/nixvim)** (g
 ### Adding nixvim to a new host/user
 
 1. **Declare the input**: `nixvim.nix` already declares `flake-file.inputs` for nixvim. If starting from scratch, add a similar block.
-2. **Import the HM module**: In `users/<user>.nix`, add `inputs.nixvim.homeModules.nixvim` to `home-manager.users.<name>.imports` (after `inputs.self.modules.homeManager.<name>`).
+2. **Enable on a host**: Set `hostCfg.user.<name>.dev.enable = true` in the host config. This conditionally bridges `inputs.nixvim.homeModules.nixvim` and the local nixvim config into the HM user.
 3. **Regenerate flake.nix**: `nix run .#write-flake` and `git add` the result.
 
 ### Key nixvim options
@@ -210,6 +234,9 @@ Disk (NVMe by-id)
 | `modules/features/disko.nix` | GPT + LUKS + nested GPT (swap + BTRFS subvols) + tmpfs root; parameterized `diskoConfigDevice` option |
 | `modules/features/impermanence.nix` | Preservation config: /etc/NetworkManager/system-connections, /var/lib/bluetooth, /var/lib/systemd/timers, machine-id, SSH host keys, user ~/.ssh/sops_age_key, ~/persist, wireplumber |
 | `modules/hosts/notebook.nix` | Sets `diskoConfigDevice` to by-id NVMe path, imports disko + impermanence |
+| `modules/hosts/gaming-notebook.nix` | Sets `diskoConfigDevice` placeholder, imports disko + impermanence |
+| `modules/hosts/vm.nix` | Sets `diskoConfigDevice` to virtio path, imports disko + impermanence |
+| `modules/hosts/server.nix` | Sets `diskoConfigDevice` to SATA by-id path, imports disko + impermanence |
 
 ### Fresh Install (disko-install)
 
@@ -244,7 +271,7 @@ cd ~/persist/nixos-config
 sudo nixos-rebuild switch --flake .#notebook    # or `rbs` alias
 ```
 
-No `/etc/nixos` symlink needed — `--flake` accepts any path. `rbs` alias (defined in `hosts/default.nix`) runs from current directory.
+No `/etc/nixos` symlink needed — `--flake` accepts any path. `rbs` alias is defined per-host (`hosts/<host>.nix`) — uses local flake (`. #<host>`) for notebooks, remote GitHub flake for vm/server.
 
 ### Gotchas
 

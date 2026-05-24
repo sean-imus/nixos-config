@@ -17,6 +17,8 @@
       hostCfg = {
         hm.enable = true;
         audio.enable = true;
+        user.sean.gui.enable = true;
+        user.sean.dev.enable = true;
       };
 
       diskoConfigDevice = "/dev/disk/by-id/nvme-SAMSUNG_MZALQ512HALU-000L2_S4UKNF0R457642";

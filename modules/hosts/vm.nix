@@ -14,6 +14,8 @@
       hostCfg = {
         audio.enable = true;
         hm.enable = true;
+        user.sean.gui.enable = true;
+        user.sean.dev.enable = false;
       };
 
       home-manager.users.sean.niri.config.modKey = "Alt";

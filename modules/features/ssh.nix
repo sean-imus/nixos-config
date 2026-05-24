@@ -3,7 +3,7 @@
   flake.modules.nixos.ssh =
     { config, ... }:
     {
-      options.hostCfg.ssh-server.enable = lib.mkEnableOption "OpenSSH server";
+      options.hostCfg.ssh-server.enable = lib.mkEnableOption "OpenSSH Server";
 
       config = lib.mkIf config.hostCfg.ssh-server.enable {
         services.openssh = {
