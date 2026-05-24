@@ -8,8 +8,12 @@
         description = "Sean Tietz";
         hashedPassword = "$6$T3H3jI/bBMNzxJHi$wmROphZMsgAahqu2dP/H6pquwXvAoKqJ7BIzvuHpI3BaBj7GSjY6EXaDxTZv21OfRKuE0WriJgdm4hyxMoWC8.";
         shell = pkgs.zsh;
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIogKvjjq6px3o3FU76R9/FmYYtYeIs0SrqzkaLfx+ru sean.tietz2@gmail.com"
+        ];
         extraGroups = [
           "wheel"
+          "networkmanager"
         ];
       };
 
@@ -28,7 +32,6 @@
       imports = with inputs.self.modules.homeManager; [
         userDefault
         btop
-        git
         shell
         sops
         ssh
@@ -37,16 +40,8 @@
       home.username = "sean";
       home.homeDirectory = "/home/${config.home.username}";
 
-      programs.git = {
-        settings.user = {
-          name = "sean tietz";
-          email = "sean.tietz2@gmail.com";
-        };
-      };
-
       home.packages = with pkgs; [
         dnsutils
-        ripgrep
       ];
     };
 }
