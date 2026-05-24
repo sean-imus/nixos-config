@@ -116,11 +116,6 @@
             zsh
           ];
 
-          environment.shellAliases = {
-            rbs = "sudo nixos-rebuild switch --flake .#${config.networking.hostName}";
-            rbb = "sudo nixos-rebuild boot --flake .#${config.networking.hostName} && reboot";
-          };
-
           services.fwupd.enable = true;
           services.thermald.enable = true;
 

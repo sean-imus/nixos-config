@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.modules.nixos.gaming-notebook =
-    { ... }:
+    { config, ... }:
     {
       imports = with inputs.self.modules.nixos; [
         hostDefault
@@ -48,5 +48,10 @@
         "nvidia_modeset"
         "nvidia_uvm"
       ];
+
+      environment.shellAliases = {
+        rbs = "sudo nixos-rebuild switch --flake .#${config.networking.hostName}";
+        rbb = "sudo nixos-rebuild boot --flake .#${config.networking.hostName} && reboot";
+      };
     };
 }

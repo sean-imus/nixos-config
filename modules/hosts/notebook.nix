@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.modules.nixos.notebook =
-    { ... }:
+    { config, ... }:
     {
       imports = with inputs.self.modules.nixos; [
         hostDefault
@@ -42,5 +42,10 @@
       ];
 
       services.power-profiles-daemon.enable = true;
+
+      environment.shellAliases = {
+        rbs = "sudo nixos-rebuild switch --flake .#${config.networking.hostName}";
+        rbb = "sudo nixos-rebuild boot --flake .#${config.networking.hostName} && reboot";
+      };
     };
 }

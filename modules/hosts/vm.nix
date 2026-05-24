@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.modules.nixos.vm =
-    { ... }:
+    { config, ... }:
     {
       imports = with inputs.self.modules.nixos; [
         hostDefault
@@ -26,5 +26,10 @@
         "virtio_blk"
         "virtio_pci"
       ];
+
+      environment.shellAliases = {
+        rbs = "sudo nixos-rebuild switch --flake github:sean-imus/nixos-config#${config.networking.hostName}";
+        rbb = "sudo nixos-rebuild boot --flake github:sean-imus/nixos-config#${config.networking.hostName} && reboot";
+      };
     };
 }

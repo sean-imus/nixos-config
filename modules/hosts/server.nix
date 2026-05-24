@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.modules.nixos.server =
-    { ... }:
+    { config, ... }:
     {
       imports = with inputs.self.modules.nixos; [
         hostDefault
@@ -23,5 +23,10 @@
         "xhci_pci"
         "usbhid"
       ];
+
+      environment.shellAliases = {
+        rbs = "sudo nixos-rebuild switch --flake github:sean-imus/nixos-config#${config.networking.hostName}";
+        rbb = "sudo nixos-rebuild boot --flake github:sean-imus/nixos-config#${config.networking.hostName} && reboot";
+      };
     };
 }
