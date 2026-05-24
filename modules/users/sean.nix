@@ -34,7 +34,7 @@
     {
       imports = with inputs.self.modules.homeManager; [
         userDefault
-        kitty
+        alacritty
         btop
         firefox
         git

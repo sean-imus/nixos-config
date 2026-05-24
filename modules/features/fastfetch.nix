@@ -1,7 +1,4 @@
-{ inputs, ... }:
-let
-  logoPath = "${inputs.self}/assets/nixos.gif";
-in
+{ ... }:
 {
   flake.modules.homeManager.fastfetch = {
     home.shellAliases = {
@@ -11,11 +8,6 @@ in
     programs.fastfetch = {
       enable = true;
       settings = {
-        logo = {
-          source = logoPath;
-          type = "kitty-icat";
-          width = 30;
-        };
         modules = [
           "title"
           "separator"
