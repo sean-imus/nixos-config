@@ -7,7 +7,7 @@
         hostDefault
         disko
         impermanence
-        sean
+        sean-server
       ];
 
       hostCfg = {
