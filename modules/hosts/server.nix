@@ -8,7 +8,7 @@
         disko
         impermanence
         ssh
-        sean-server
+        sean-headless
       ];
 
       hostCfg = {

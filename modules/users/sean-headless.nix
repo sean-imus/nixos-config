@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.sean-server =
+  flake.modules.nixos.sean-headless =
     { pkgs, ... }:
     {
       users.users.sean = {
@@ -21,12 +21,12 @@
 
       home-manager.users.sean = {
         imports = [
-          inputs.self.modules.homeManager.sean-server
+          inputs.self.modules.homeManager.sean-headless
         ];
       };
     };
 
-  flake.modules.homeManager.sean-server =
+  flake.modules.homeManager.sean-headless =
     { pkgs, config, ... }:
     {
       imports = with inputs.self.modules.homeManager; [
