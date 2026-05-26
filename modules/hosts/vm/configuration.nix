@@ -4,7 +4,7 @@
     { ... }:
     {
       imports = with inputs.self.modules.nixos; [
-        desktop
+        vm-system
         disko
         persistence
         sean
