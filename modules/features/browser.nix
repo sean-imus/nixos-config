@@ -7,7 +7,7 @@
     };
   };
 
-  flake.modules.homeManager.firefox =
+  flake.modules.homeManager.browser =
     {
       pkgs,
       config,

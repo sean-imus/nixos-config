@@ -35,11 +35,11 @@
             inputs.self.modules.homeManager.sean
           ]
           ++ lib.optionals config.hostCfg.user.sean.gui.enable [
-            inputs.self.modules.homeManager.alacritty
-            inputs.self.modules.homeManager.firefox
+            inputs.self.modules.homeManager.terminal
+            inputs.self.modules.homeManager.browser
             inputs.self.modules.homeManager.niri
             inputs.self.modules.homeManager.waybar
-            inputs.self.modules.homeManager.swaylock
+            inputs.self.modules.homeManager.lockscreen
             inputs.self.modules.homeManager.localsend
             inputs.self.modules.homeManager.libreoffice
             inputs.self.modules.homeManager.opencode

@@ -1,10 +1,10 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.swaylock =
+  flake.modules.nixos.lockscreen =
     { ... }:
     { };
 
-  flake.modules.homeManager.swaylock =
+  flake.modules.homeManager.lockscreen =
     {
       pkgs,
       config,
