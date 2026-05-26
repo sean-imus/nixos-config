@@ -106,90 +106,115 @@ in
         niri
       ];
 
-      users.users.sean = {
-        isNormalUser = true;
-        description = "Sean Tietz";
-        hashedPassword = "$6$T3H3jI/bBMNzxJHi$wmROphZMsgAahqu2dP/H6pquwXvAoKqJ7BIzvuHpI3BaBj7GSjY6EXaDxTZv21OfRKuE0WriJgdm4hyxMoWC8.";
-        shell = pkgs.zsh;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIogKvjjq6px3o3FU76R9/FmYYtYeIs0SrqzkaLfx+ru sean.tietz2@gmail.com"
-        ];
-        extraGroups = [
-          "networkmanager"
-          "wheel"
-          "libvirtd"
-        ];
+      options = {
+        hostCfg.user.sean.gui.enable = lib.mkEnableOption "GUI desktop features";
+        hostCfg.user.sean.dev.enable = lib.mkEnableOption "Development tools";
       };
 
-      programs.zsh.enable = true;
+      config = lib.mkMerge [
+        {
+          users.users.sean = {
+            isNormalUser = true;
+            description = "Sean Tietz";
+            hashedPassword = "$6$T3H3jI/bBMNzxJHi$wmROphZMsgAahqu2dP/H6pquwXvAoKqJ7BIzvuHpI3BaBj7GSjY6EXaDxTZv21OfRKuE0WriJgdm4hyxMoWC8.";
+            shell = pkgs.zsh;
+            openssh.authorizedKeys.keys = [
+              "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIogKvjjq6px3o3FU76R9/FmYYtYeIs0SrqzkaLfx+ru sean.tietz2@gmail.com"
+            ];
+            extraGroups = [
+              "networkmanager"
+              "wheel"
+              "libvirtd"
+            ];
+          };
 
-      home-manager.users.sean = {
-        imports = [
-          inputs.self.modules.homeManager.sean
-        ];
-      }
-      // lib.optionalAttrs config.userCfg.niri.enable {
-        programs.niri.settings = {
-          outputs = monitorOutputs.${config.networking.hostName} or { };
-          binds = {
-            "Mod+T" = {
-              action.spawn = "alacritty";
-            };
-            "Mod+B" = {
-              action.spawn = "firefox";
-            };
-            "Mod+Ctrl+B" = {
-              action.spawn = [
-                "alacritty"
-                "--class"
-                "bluetui"
-                "-e"
-                "bluetui"
-              ];
-            };
-            "Mod+Ctrl+A" = {
-              action.spawn = [
-                "alacritty"
-                "--class"
-                "wiremix"
-                "-e"
-                "wiremix"
-                "-v"
-                "playback"
-              ];
-            };
-            "Mod+Ctrl+W" = {
-              action.spawn = [
-                "alacritty"
-                "--class"
-                "netpala"
-                "-e"
-                "netpala"
-              ];
-            };
-            "Mod+Shift+Space" = {
-              action.spawn = [
-                "sh"
-                "-c"
-                "pkill waybar || true && waybar"
-              ];
-            };
-            "Mod+Ctrl+Space" = {
-              action.spawn = [
-                "sh"
-                "-c"
-                "pkill waybar"
-              ];
-            };
-            "Mod+P" = {
-              action.spawn = "power-toggle";
-            };
-            "Mod+Ctrl+Shift+C" = {
-              action.spawn = "screencap";
+          programs.zsh.enable = true;
+
+          home-manager.users.sean = {
+            imports = [
+              inputs.self.modules.homeManager.sean
+            ];
+          };
+        }
+        (lib.mkIf config.hostCfg.user.sean.gui.enable {
+          userCfg.terminal.enable = true;
+          userCfg.browser.enable = true;
+          userCfg.bar.enable = true;
+          userCfg.lockscreen.enable = true;
+          userCfg.vesktop.enable = true;
+          userCfg.opencode.enable = true;
+          userCfg.localsend.enable = true;
+          userCfg.libreoffice.enable = true;
+          userCfg.printing.enable = true;
+          userCfg.rdp-work.enable = true;
+          userCfg.niri.enable = true;
+        })
+        (lib.mkIf config.hostCfg.user.sean.dev.enable {
+          userCfg.nixvim.enable = true;
+        })
+        (lib.mkIf config.userCfg.niri.enable {
+          home-manager.users.sean.programs.niri.settings = {
+            outputs = monitorOutputs.${config.networking.hostName} or { };
+            binds = {
+              "Mod+T" = {
+                action.spawn = "alacritty";
+              };
+              "Mod+B" = {
+                action.spawn = "firefox";
+              };
+              "Mod+Ctrl+B" = {
+                action.spawn = [
+                  "alacritty"
+                  "--class"
+                  "bluetui"
+                  "-e"
+                  "bluetui"
+                ];
+              };
+              "Mod+Ctrl+A" = {
+                action.spawn = [
+                  "alacritty"
+                  "--class"
+                  "wiremix"
+                  "-e"
+                  "wiremix"
+                  "-v"
+                  "playback"
+                ];
+              };
+              "Mod+Ctrl+W" = {
+                action.spawn = [
+                  "alacritty"
+                  "--class"
+                  "netpala"
+                  "-e"
+                  "netpala"
+                ];
+              };
+              "Mod+Shift+Space" = {
+                action.spawn = [
+                  "sh"
+                  "-c"
+                  "pkill waybar || true && waybar"
+                ];
+              };
+              "Mod+Ctrl+Space" = {
+                action.spawn = [
+                  "sh"
+                  "-c"
+                  "pkill waybar"
+                ];
+              };
+              "Mod+P" = {
+                action.spawn = "power-toggle";
+              };
+              "Mod+Ctrl+Shift+C" = {
+                action.spawn = "screencap";
+              };
             };
           };
-        };
-      };
+        })
+      ];
     };
 
   flake.modules.homeManager.sean =

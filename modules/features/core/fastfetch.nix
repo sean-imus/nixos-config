@@ -1,8 +1,6 @@
-{ lib, ... }:
+{ ... }:
 {
-  flake.modules.nixos.fastfetch = {
-    options.userCfg.fastfetch.enable = lib.mkEnableOption "fastfetch system info";
-  };
+  flake.modules.nixos.fastfetch = {};
 
   flake.modules.homeManager.fastfetch = {
     home.shellAliases = {

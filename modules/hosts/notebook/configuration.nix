@@ -17,26 +17,10 @@
         niri.enable = true;
         printing.enable = true;
         rdp-work.enable = true;
-      };
-      userCfg = {
-        terminal.enable = true;
-        browser.enable = true;
-        btop.enable = true;
-        fastfetch.enable = true;
-        git.enable = true;
-        shell.enable = true;
-        sops.enable = true;
-        ssh.enable = true;
-        niri.enable = true;
-        bar.enable = true;
-        lockscreen.enable = true;
-        vesktop.enable = true;
-        opencode.enable = true;
-        localsend.enable = true;
-        libreoffice.enable = true;
-        printing.enable = true;
-        rdp-work.enable = true;
-        nixvim.enable = true;
+        user.sean = {
+          gui.enable = true;
+          dev.enable = true;
+        };
       };
 
       diskoConfigDevice = "/dev/disk/by-id/nvme-SAMSUNG_MZALQ512HALU-000L2_S4UKNF0R457642";

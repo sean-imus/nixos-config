@@ -14,24 +14,10 @@
         hm.enable = true;
         audio.enable = true;
         niri.enable = true;
-      };
-      userCfg = {
-        terminal.enable = true;
-        browser.enable = true;
-        btop.enable = true;
-        fastfetch.enable = true;
-        git.enable = true;
-        shell.enable = true;
-        sops.enable = true;
-        ssh.enable = true;
-        niri.enable = true;
-        bar.enable = true;
-        lockscreen.enable = true;
-        vesktop.enable = true;
-        opencode.enable = true;
-        localsend.enable = true;
-        libreoffice.enable = true;
-        nixvim.enable = true;
+        user.sean = {
+          gui.enable = true;
+          dev.enable = true;
+        };
       };
 
       diskoConfigDevice = "/dev/disk/by-id/nvme-FIXME-ME";

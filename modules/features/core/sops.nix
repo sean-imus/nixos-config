@@ -1,8 +1,6 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 {
-  flake.modules.nixos.sops = {
-    options.userCfg.sops.enable = lib.mkEnableOption "SOPS secrets management";
-  };
+  flake.modules.nixos.sops = {};
 
   flake-file.inputs = {
     sops-nix = {
@@ -17,7 +15,7 @@
       imports = [ inputs.sops-nix.homeManagerModules.sops ];
 
       sops = {
-        defaultSopsFile = ../secrets/secrets.yaml;
+        defaultSopsFile = ../../secrets/secrets.yaml;
         age.keyFile = "${config.home.homeDirectory}/.ssh/sops_age_key";
       };
 

@@ -1,8 +1,6 @@
-{ lib, ... }:
+{ ... }:
 {
-  flake.modules.nixos.btop = {
-    options.userCfg.btop.enable = lib.mkEnableOption "btop system monitor";
-  };
+  flake.modules.nixos.btop = {};
 
   flake.modules.homeManager.btop = {
     programs.btop = {

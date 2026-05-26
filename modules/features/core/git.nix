@@ -1,8 +1,6 @@
-{ lib, ... }:
+{ ... }:
 {
-  flake.modules.nixos.git = {
-    options.userCfg.git.enable = lib.mkEnableOption "Git and lazygit";
-  };
+  flake.modules.nixos.git = {};
 
   flake.modules.homeManager.git = {
     programs.lazygit = {

@@ -485,7 +485,7 @@
           };
         };
 
-        home.file.".local/share/wallpapers/yuta_green.jpg".source = ../../assets/yuta_green.jpg;
+        home.file.".local/share/wallpapers/yuta_green.jpg".source = ../../../assets/yuta_green.jpg;
 
         programs.fuzzel = {
           enable = true;
