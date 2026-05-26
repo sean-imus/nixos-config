@@ -32,12 +32,14 @@
 
       home.activation.mergeOpencodeAuth = lib.hm.dag.entryAfter ["writeBoundary"] ''
         AUTH_KEY_PATH="${config.home.homeDirectory}/.config/opencode/auth_key"
-        CONFIG_PATH="${config.home.homeDirectory}/.config/opencode/opencode.json"
-        if [ -f "$AUTH_KEY_PATH" ] && [ -f "$CONFIG_PATH" ]; then
+        AUTH_FILE="${config.home.homeDirectory}/.local/share/opencode/auth.json"
+        if [ -f "$AUTH_KEY_PATH" ]; then
           API_KEY="$(cat "$AUTH_KEY_PATH")"
-          ${pkgs.jq}/bin/jq --arg key "$API_KEY" '.auth.apiKey = $key' \
-            "$CONFIG_PATH" > "$CONFIG_PATH.tmp" \
-            && mv "$CONFIG_PATH.tmp" "$CONFIG_PATH"
+          mkdir -p "$(dirname "$AUTH_FILE")"
+          ${pkgs.jq}/bin/jq -n --arg key "$API_KEY" \
+            '{ "opencode-go": { "type": "api", "key": $key } }' \
+            > "$AUTH_FILE.tmp" \
+            && mv "$AUTH_FILE.tmp" "$AUTH_FILE"
         fi
       '';
     };
