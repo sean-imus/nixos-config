@@ -1,1 +1,1 @@
-- manage opencode auth via sops
+- update AGENTS.md
