@@ -21,6 +21,35 @@
         user.sean.dev.enable = true;
       };
 
+      home-manager.users.sean.niri.config.monitorConfig = ''
+        output "eDP-1" {
+            mode "1920x1080@60"
+            position x=0 y=0
+        }
+
+        output "Iiyama North America PL2770H 0x0000011F" {
+            mode "1920x1080@144"
+            position x=-1920 y=0
+        }
+
+        output "Iiyama North America PL2770H 0x00000124" {
+            mode "1920x1080@143.998"
+            position x=-3840 y=0
+            focus-at-startup
+        }
+
+        output "Iiyama North America PLX2783H 1128255001580" {
+            mode "1920x1080@60"
+            position x=-5760 y=0
+        }
+
+        output "GIGA-BYTE TECHNOLOGY CO., LTD. M27U 23463B001145" {
+            mode "3840x2160@60"
+            position x=0 y=-1440
+            focus-at-startup
+        }
+      '';
+
       diskoConfigDevice = "/dev/disk/by-id/nvme-SAMSUNG_MZALQ512HALU-000L2_S4UKNF0R457642";
 
       networking.hostName = "notebook";

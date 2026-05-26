@@ -1,0 +1,175 @@
+input {
+    mod-key "@MOD_KEY@"
+    keyboard {
+        numlock
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+	dwt
+	drag-lock
+    }
+
+    warp-mouse-to-focus
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+cursor {
+    hide-when-typing
+}
+
+layout {
+    gaps 6
+    center-focused-column "never"
+    always-center-single-column
+    empty-workspace-above-first
+    preset-column-widths {
+        proportion 0.25
+	    proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+	    proportion 0.75
+    }
+
+    preset-window-heights {
+        proportion 0.25
+	    proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+	    proportion 0.75
+    }
+
+    default-column-width { proportion 0.5; }
+    focus-ring {
+        width 2
+        active-color "green"
+        inactive-color "gray"
+    }
+}
+
+spawn-at-startup    "waybar"
+spawn-sh-at-startup "awww-daemon & until awww query &>/dev/null; do sleep 0.1; done && awww img ~/.local/share/wallpapers/yuta_green.jpg"
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+prefer-no-csd
+
+screenshot-path "~/Screenshots/%Y-%m-%d %H-%M-%S.png"
+
+animations {
+    window-open {
+        duration-ms 250
+        curve "linear"
+        custom-shader r"
+            vec4 expanding_circle(vec3 coords_geo, vec3 size_geo) {
+                vec3 coords_tex = niri_geo_to_tex * coords_geo;
+                vec4 color = texture2D(niri_tex, coords_tex.st);
+                vec2 coords = (coords_geo.xy - vec2(0.5, 0.5)) * size_geo.xy * 2.0;
+                coords = coords / length(size_geo.xy);
+                float p = niri_clamped_progress;
+                if (p * p <= dot(coords, coords))
+                    color = vec4(0.0);
+                return color;
+            }
+            vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+                return expanding_circle(coords_geo, size_geo);
+            }
+        "
+    }
+
+    window-close {
+        duration-ms 250
+        curve "linear"
+        custom-shader r"
+            vec4 closing_circle(vec3 coords_geo, vec3 size_geo) {
+                vec3 coords_tex = niri_geo_to_tex * coords_geo;
+                vec4 color = texture2D(niri_tex, coords_tex.st);
+                vec2 coords = (coords_geo.xy - vec2(0.5, 0.5)) * size_geo.xy * 2.0;
+                coords = coords / length(size_geo.xy);
+                float p = 1.0 - niri_clamped_progress;
+                if (p * p <= dot(coords, coords))
+                    color = vec4(0.0);
+                return color;
+            }
+            vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+                return closing_circle(coords_geo, size_geo);
+            }
+        "
+    }
+}
+
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
+layer-rule {
+    match namespace="^waybar$"
+    background-effect {
+        blur true
+    }
+}
+
+layer-rule {
+    match namespace="^fuzzel$"
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+window-rule {
+    match app-id="^Alacritty$"
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+window-rule {
+    match app-id="^wiremix$"
+    open-floating true
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+window-rule {
+    match app-id="^bluetui$"
+    open-floating true
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+window-rule {
+    match app-id="^btop$"
+    open-floating true
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+window-rule {
+    match app-id="^netpala$"
+    open-floating true
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+window-rule {
+    match app-id="^localsend_app$"
+    open-floating true
+    background-effect {
+        blur true
+        xray false
+    }
+}

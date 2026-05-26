@@ -38,6 +38,8 @@
             inputs.self.modules.homeManager.alacritty
             inputs.self.modules.homeManager.firefox
             inputs.self.modules.homeManager.niri
+            inputs.self.modules.homeManager.waybar
+            inputs.self.modules.homeManager.swaylock
             inputs.self.modules.homeManager.localsend
             inputs.self.modules.homeManager.libreoffice
             inputs.self.modules.homeManager.opencode
@@ -49,6 +51,18 @@
             inputs.self.modules.homeManager.nixvim
             inputs.nixvim.homeModules.nixvim
           ];
+        } // lib.optionalAttrs config.hostCfg.user.sean.gui.enable {
+          niri.config.extraBinds = ''
+            Mod+T            { spawn "alacritty"; }
+            Mod+B            { spawn "firefox"; }
+            Mod+Ctrl+B       { spawn-sh "alacritty --class bluetui -e bluetui"; }
+            Mod+Ctrl+A       { spawn-sh "alacritty --class wiremix -e wiremix -v playback"; }
+            Mod+Ctrl+W       { spawn-sh "alacritty --class netpala -e netpala"; }
+            Mod+Shift+Space  { spawn-sh "pkill waybar || true && waybar"; }
+            Mod+CTRL+Space   { spawn-sh "pkill waybar"; }
+            Mod+P            { spawn "power-toggle"; }
+            Mod+Ctrl+Shift+C { spawn-sh "screencap"; }
+          '';
         };
       };
     };

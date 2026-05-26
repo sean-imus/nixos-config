@@ -18,6 +18,10 @@
         user.sean.dev.enable = true;
       };
 
+      home-manager.users.sean.niri.config.monitorConfig = ''
+        # FIXME: configure monitors for gaming-notebook
+      '';
+
       diskoConfigDevice = "/dev/disk/by-id/nvme-FIXME-ME";
 
       networking.hostName = "gaming-notebook";

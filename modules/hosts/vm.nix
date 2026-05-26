@@ -20,6 +20,13 @@
 
       home-manager.users.sean.niri.config.modKey = "Alt";
 
+      home-manager.users.sean.niri.config.monitorConfig = ''
+        output "Virtual-1" {
+            mode "1920x1080@60"
+            position x=0 y=0
+        }
+      '';
+
       diskoConfigDevice = "/dev/disk/by-id/virtio-ROOT";
 
       networking.hostName = "vm";

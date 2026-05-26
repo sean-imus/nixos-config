@@ -3,7 +3,6 @@
   flake.modules.nixos.niri =
     { ... }:
     {
-
       programs.niri.enable = true;
     };
 
@@ -16,32 +15,56 @@
     }:
     let
       cfg = config.niri.config;
+      base = builtins.readFile ./niri-base.kdl;
+      defaultBinds = builtins.readFile ./niri-default-binds.kdl;
     in
     {
-      options.niri.config.modKey = lib.mkOption {
-        type = lib.types.enum [
-          "Super"
-          "Alt"
-        ];
-        default = "Super";
+      options.niri.config = {
+        modKey = lib.mkOption {
+          type = lib.types.enum [
+            "Super"
+            "Alt"
+          ];
+          default = "Super";
+        };
+
+        monitorConfig = lib.mkOption {
+          type = lib.types.lines;
+          default = "";
+          description = "Niri output (monitor) configuration";
+        };
+
+        systemBinds = lib.mkOption {
+          type = lib.types.lines;
+          default = "";
+          description = "Keybinds injected by feature modules (lockscreen, etc.)";
+        };
+
+        extraBinds = lib.mkOption {
+          type = lib.types.lines;
+          default = "";
+          description = "User-specific app keybinds";
+        };
       };
 
       config = {
         xdg.configFile."niri/config.kdl" = {
-          text = lib.replaceStrings [ "@MOD_KEY@" ] [ cfg.modKey ] (builtins.readFile ./niri-config.kdl);
+          text = lib.replaceStrings [ "@MOD_KEY@" ] [ cfg.modKey ] ''
+            ${base}
+
+            ${cfg.monitorConfig}
+
+            binds {
+                ${defaultBinds}
+                ${cfg.systemBinds}
+                ${cfg.extraBinds}
+            }
+          '';
           force = true;
         };
 
-        xdg.configFile."waybar/config.jsonc" = {
-          source = ../waybar/config.jsonc;
-          force = true;
-        };
-        xdg.configFile."waybar/style.css" = {
-          source = ../waybar/style.css;
-          force = true;
-        };
         home.file.".local/share/wallpapers/yuta_green.jpg" = {
-          source = ../../../../assets/yuta_green.jpg;
+          source = ../../../assets/yuta_green.jpg;
         };
 
         programs.fuzzel = {
@@ -120,8 +143,6 @@
           xwayland-satellite
           awww
           wiremix
-          swaylock
-          waybar
           bluetui
           brightnessctl
           cava
