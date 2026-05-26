@@ -7,7 +7,6 @@
         enable = true;
         settings = {
           ignore-empty-password = true;
-          daemonize = true;
           show-failed-attempts = true;
           font = "Sans";
           ring-color = "84c906";
@@ -20,19 +19,6 @@
           text-caps-lock-color = "ffffff";
           indicator-radius = 100;
           indicator-thickness = 10;
-        };
-      };
-
-      services.swayidle = {
-        enable = true;
-        timeouts = [
-          {
-            timeout = 600;
-            command = "${lib.getExe pkgs.swaylock} -f";
-          }
-        ];
-        events = {
-          before-sleep = "${lib.getExe pkgs.swaylock} -f";
         };
       };
 
