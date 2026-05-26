@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.vesktop = {
+  flake.modules.homeManager.discord = {
     programs.vesktop = {
       enable = true;
       settings = {

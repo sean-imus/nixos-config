@@ -89,9 +89,9 @@ in
           browser
           bar
           lockscreen
-          vesktop
-          libreoffice
-          localsend
+          discord
+          office-suite
+          filesharing
           rdp-work
           niri
           neovim

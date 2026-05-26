@@ -23,8 +23,8 @@
           browser
           bar
           lockscreen
-          vesktop
-          libreoffice
+          discord
+          office-suite
           neovim
           opencode
         ];

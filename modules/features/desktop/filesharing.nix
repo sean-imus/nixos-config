@@ -1,17 +1,17 @@
 { lib, ... }:
 {
-  flake.modules.nixos.localsend =
+  flake.modules.nixos.filesharing =
     { config, ... }:
     {
-      options.hostCfg.localsend.enable = lib.mkEnableOption "LocalSend firewall ports";
+      options.hostCfg.filesharing.enable = lib.mkEnableOption "LocalSend firewall ports";
 
-      config = lib.mkIf config.hostCfg.localsend.enable {
+      config = lib.mkIf config.hostCfg.filesharing.enable {
         networking.firewall.allowedTCPPorts = [ 53317 ];
         networking.firewall.allowedUDPPorts = [ 53317 ];
       };
     };
 
-  flake.modules.homeManager.localsend =
+  flake.modules.homeManager.filesharing =
     { pkgs, ... }:
     {
       home.packages = [ pkgs.localsend ];
