@@ -20,6 +20,7 @@
         audio.enable = lib.mkDefault true;
         niri.enable = lib.mkDefault true;
         filesharing.enable = lib.mkDefault true;
+        qemu.enable = true;
         printing.enable = true;
         rdp-work.enable = true;
         user.sean = {
