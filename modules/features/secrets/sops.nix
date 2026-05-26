@@ -21,5 +21,10 @@
         path = "${config.home.homeDirectory}/.ssh/id_ed25519";
         mode = "0600";
       };
+
+      sops.secrets."opencode_api_key" = {
+        path = "${config.home.homeDirectory}/.config/opencode/auth_key";
+        mode = "0400";
+      };
     };
 }
