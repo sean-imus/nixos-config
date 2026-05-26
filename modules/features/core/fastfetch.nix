@@ -10,6 +10,8 @@
       settings = {
         modules = [
           "title"
+          "chassis"
+          "datetime"
           "separator"
           "os"
           "host"
@@ -19,12 +21,14 @@
           "shell"
           "de"
           "wm"
+          "monitor"
           "terminal"
-          "terminal_font"
+          "editor"
           "cpu"
           "gpu"
           "memory"
-          "storage"
+          "swap"
+          "disk"
         ];
       };
     };
