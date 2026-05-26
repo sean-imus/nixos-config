@@ -7,7 +7,6 @@
         enable = true;
         settings = [
           {
-            reload_style_on_change = true;
             spacing = 4;
             height = 0;
             margin = "5";
