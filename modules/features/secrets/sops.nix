@@ -23,7 +23,7 @@
       };
 
       sops.secrets."opencode_api_key" = {
-        path = "${config.home.homeDirectory}/.config/opencode/auth_key";
+        path = "${config.home.homeDirectory}/.local/share/opencode/auth.json";
         mode = "0400";
       };
     };
