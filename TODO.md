@@ -1,4 +1,1 @@
-- password manager, maybe synced via selfhost? keypassXC or a real self hosted password manager
-- use firefox containers for different profiles on the same pages
-- server config with declarative podman containers
-- configure python mcp for opencode
+- manage opencode auth via sops
