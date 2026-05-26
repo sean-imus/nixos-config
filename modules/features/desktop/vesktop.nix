@@ -1,12 +1,5 @@
-{ inputs, lib, ... }:
+{ ... }:
 {
-  flake.modules.nixos.vesktop = { config, ... }: {
-    options.userCfg.vesktop.enable = lib.mkEnableOption "Vesktop Discord client";
-    config = lib.mkIf config.userCfg.vesktop.enable {
-      home-manager.users.sean.imports = [ inputs.self.modules.homeManager.vesktop ];
-    };
-  };
-
   flake.modules.homeManager.vesktop = {
     programs.vesktop = {
       enable = true;

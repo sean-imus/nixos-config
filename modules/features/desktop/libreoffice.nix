@@ -1,12 +1,5 @@
-{ inputs, lib, ... }:
+{ ... }:
 {
-  flake.modules.nixos.libreoffice = { config, ... }: {
-    options.userCfg.libreoffice.enable = lib.mkEnableOption "LibreOffice suite";
-    config = lib.mkIf config.userCfg.libreoffice.enable {
-      home-manager.users.sean.imports = [ inputs.self.modules.homeManager.libreoffice ];
-    };
-  };
-
   flake.modules.homeManager.libreoffice =
     { pkgs, ... }:
     {

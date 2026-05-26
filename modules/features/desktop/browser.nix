@@ -1,12 +1,5 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 {
-  flake.modules.nixos.browser = { config, ... }: {
-    options.userCfg.browser.enable = lib.mkEnableOption "Firefox web browser";
-    config = lib.mkIf config.userCfg.browser.enable {
-      home-manager.users.sean.imports = [ inputs.self.modules.homeManager.browser ];
-    };
-  };
-
   flake-file.inputs = {
     nix-firefox-addons = {
       url = "github:OsiPog/nix-firefox-addons";

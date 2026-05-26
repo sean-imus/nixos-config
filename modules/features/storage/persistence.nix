@@ -6,7 +6,7 @@
     };
   };
 
-  flake.modules.nixos.impermanence =
+  flake.modules.nixos.persistence =
     { ... }:
     {
       imports = [ inputs.preservation.nixosModules.default ];

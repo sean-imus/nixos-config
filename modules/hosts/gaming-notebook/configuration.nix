@@ -6,17 +6,89 @@
       imports = with inputs.self.modules.nixos; [
         hostDefault
         disko
-        impermanence
+        persistence
         sean
+        niri
       ];
 
       hostCfg = {
         hm.enable = true;
         audio.enable = true;
         niri.enable = true;
-        user.sean = {
-          gui.enable = true;
-          dev.enable = true;
+      };
+
+      home-manager.users.sean = {
+        imports = with inputs.self.modules.homeManager; [
+          terminal
+          browser
+          bar
+          lockscreen
+          vesktop
+          libreoffice
+          neovim
+          opencode
+        ];
+
+        programs.niri.settings = {
+          outputs = { };
+
+          binds = {
+            "Mod+T" = {
+              action.spawn = "alacritty";
+            };
+            "Mod+B" = {
+              action.spawn = "firefox";
+            };
+            "Mod+Ctrl+B" = {
+              action.spawn = [
+                "alacritty"
+                "--class"
+                "bluetui"
+                "-e"
+                "bluetui"
+              ];
+            };
+            "Mod+Ctrl+A" = {
+              action.spawn = [
+                "alacritty"
+                "--class"
+                "wiremix"
+                "-e"
+                "wiremix"
+                "-v"
+                "playback"
+              ];
+            };
+            "Mod+Ctrl+W" = {
+              action.spawn = [
+                "alacritty"
+                "--class"
+                "netpala"
+                "-e"
+                "netpala"
+              ];
+            };
+            "Mod+Shift+Space" = {
+              action.spawn = [
+                "sh"
+                "-c"
+                "pkill waybar || true && waybar"
+              ];
+            };
+            "Mod+Ctrl+Space" = {
+              action.spawn = [
+                "sh"
+                "-c"
+                "pkill waybar"
+              ];
+            };
+            "Mod+P" = {
+              action.spawn = "power-toggle";
+            };
+            "Mod+Ctrl+Shift+C" = {
+              action.spawn = "screencap";
+            };
+          };
         };
       };
 
@@ -24,7 +96,7 @@
 
       networking.hostName = "gaming-notebook";
 
-      nixpkgs.config.allowUnfree = true; # NOTE Sadly the open-source drivers are borderline unusable, even the iGPU would provide compareable performance. So we have to use the closed-source drivers.
+      nixpkgs.config.allowUnfree = true;
 
       hardware = {
         enableRedistributableFirmware = true;

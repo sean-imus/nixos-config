@@ -1,12 +1,5 @@
-{ inputs, lib, ... }:
+{ ... }:
 {
-  flake.modules.nixos.opencode = { config, ... }: {
-    options.userCfg.opencode.enable = lib.mkEnableOption "opencode AI coding assistant";
-    config = lib.mkIf config.userCfg.opencode.enable {
-      home-manager.users.sean.imports = [ inputs.self.modules.homeManager.opencode ];
-    };
-  };
-
   flake.modules.homeManager.opencode =
     { pkgs, ... }:
     {

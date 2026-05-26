@@ -1,23 +1,15 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 {
-  flake.modules.nixos.nixvim = { config, ... }: {
-    options.userCfg.nixvim.enable = lib.mkEnableOption "Nixvim (Neovim)";
-    config = lib.mkIf config.userCfg.nixvim.enable {
-      home-manager.users.sean.imports = [
-        inputs.self.modules.homeManager.nixvim
-        inputs.nixvim.homeModules.nixvim
-      ];
-    };
-  };
-
   flake-file.inputs.nixvim = {
     url = "github:nix-community/nixvim";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  flake.modules.homeManager.nixvim =
+  flake.modules.homeManager.neovim =
     { ... }:
     {
+      imports = [ inputs.nixvim.homeModules.nixvim ];
+
       home.shellAliases.n = "nvim";
       home.sessionVariables.EDITOR = "nvim";
 

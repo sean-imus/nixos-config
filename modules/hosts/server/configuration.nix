@@ -6,17 +6,20 @@
       imports = with inputs.self.modules.nixos; [
         hostDefault
         disko
-        impermanence
+        persistence
         sean
+        ssh
       ];
 
       hostCfg = {
         hm.enable = true;
         ssh-server.enable = true;
-        user.sean = {
-          dev.enable = true;
-        };
       };
+
+      home-manager.users.sean.imports = with inputs.self.modules.homeManager; [
+        neovim
+        opencode
+      ];
 
       diskoConfigDevice = "/dev/disk/by-id/ata-TOSHIBA_MQ01ABD050_93HRC25TT";
 

@@ -10,19 +10,11 @@
     {
       imports = [ inputs.niri.nixosModules.niri ];
 
-      options = {
-        userCfg.niri.enable = lib.mkEnableOption "Niri WM user config (fuzzel, mako, wallpaper, keybinds)";
-        hostCfg.niri.enable = lib.mkEnableOption "Niri Wayland compositor";
-      };
+      options.hostCfg.niri.enable = lib.mkEnableOption "Niri Wayland compositor";
 
-      config = lib.mkMerge [
-        (lib.mkIf config.hostCfg.niri.enable {
-          programs.niri.enable = true;
-        })
-        (lib.mkIf config.userCfg.niri.enable {
-          home-manager.users.sean.imports = [ inputs.self.modules.homeManager.niri ];
-        })
-      ];
+      config = lib.mkIf config.hostCfg.niri.enable {
+        programs.niri.enable = true;
+      };
     };
 
   flake.modules.homeManager.niri =
@@ -113,6 +105,7 @@
           };
 
           spawn-at-startup = [
+            { argv = [ "waybar" ]; }
             {
               sh = "awww-daemon & until awww query &>/dev/null; do sleep 0.1; done && awww img ~/.local/share/wallpapers/yuta_green.jpg";
             }
