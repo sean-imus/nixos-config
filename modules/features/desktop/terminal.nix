@@ -11,7 +11,6 @@
           size = 10;
         };
         scrolling.multiplier = 5;
-        window.opacity = 0.65;
       };
     };
   };

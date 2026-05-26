@@ -6,7 +6,12 @@
   };
 
   flake.modules.nixos.niri =
-    { config, lib, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       imports = [ inputs.niri.nixosModules.niri ];
 
@@ -14,6 +19,7 @@
 
       config = lib.mkIf config.hostCfg.niri.enable {
         programs.niri.enable = true;
+        programs.niri.package = pkgs.niri;
       };
     };
 
@@ -177,9 +183,6 @@
 
           spawn-at-startup = [
             { argv = [ "waybar" ]; }
-            {
-              sh = "awww-daemon & until awww query &>/dev/null; do sleep 0.1; done && awww img ~/.local/share/wallpapers/yuta_green.jpg";
-            }
           ];
 
           hotkey-overlay.skip-at-startup = true;
@@ -605,8 +608,6 @@
           };
         };
 
-        home.file.".local/share/wallpapers/yuta_green.jpg".source = ../../../assets/yuta_green.jpg;
-
         programs.fuzzel = {
           enable = true;
           settings = {
@@ -679,7 +680,6 @@
 
         home.packages = with pkgs; [
           xwayland-satellite
-          awww
           wiremix
           bluetui
           brightnessctl
