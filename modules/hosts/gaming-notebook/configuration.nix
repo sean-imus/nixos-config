@@ -30,8 +30,6 @@
         ];
 
         programs.niri.settings = {
-          outputs = { };
-
           binds = {
             "Mod+T" = {
               action.spawn = "alacritty";

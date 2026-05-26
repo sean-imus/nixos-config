@@ -30,20 +30,6 @@
         programs.niri.settings = {
           input.mod-key = "Alt";
 
-          outputs = {
-            "Virtual-1" = {
-              mode = {
-                width = 1920;
-                height = 1080;
-                refresh = 60.0;
-              };
-              position = {
-                x = 0;
-                y = 0;
-              };
-            };
-          };
-
           binds = {
             "Alt+T" = {
               action.spawn = "alacritty";

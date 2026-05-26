@@ -6,12 +6,16 @@
   };
 
   flake.modules.homeManager.neovim =
-    { ... }:
+    { pkgs, ... }:
     {
       imports = [ inputs.nixvim.homeModules.nixvim ];
 
       home.shellAliases.n = "nvim";
       home.sessionVariables.EDITOR = "nvim";
+
+      home.packages = with pkgs; [
+        ripgrep
+      ];
 
       programs.nixvim = {
         enable = true;

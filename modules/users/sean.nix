@@ -26,7 +26,7 @@
     };
 
   flake.modules.homeManager.sean =
-    { pkgs, config, ... }:
+    { config, ... }:
     {
       imports = with inputs.self.modules.homeManager; [
         userDefault
@@ -46,9 +46,5 @@
         email = "sean.tietz2@gmail.com";
       };
 
-      home.packages = with pkgs; [
-        dnsutils
-        ripgrep
-      ];
     };
 }
