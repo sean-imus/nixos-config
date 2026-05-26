@@ -1,5 +1,9 @@
-{ ... }:
+{ lib, ... }:
 {
+  flake.modules.nixos.nixvim = {
+    options.userCfg.nixvim.enable = lib.mkEnableOption "Nixvim (Neovim)";
+  };
+
   flake-file.inputs.nixvim = {
     url = "github:nix-community/nixvim";
     inputs.nixpkgs.follows = "nixpkgs";

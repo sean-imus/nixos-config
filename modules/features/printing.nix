@@ -1,9 +1,16 @@
-{ ... }:
+{ lib, ... }:
 {
-  flake.modules.nixos.printing = {
-    services.printing.enable = true;
-    hardware.sane.enable = true;
-  };
+  flake.modules.nixos.printing =
+    { config, ... }:
+    {
+      options.userCfg.printing.enable = lib.mkEnableOption "Printing user tools (simple-scan)";
+      options.hostCfg.printing.enable = lib.mkEnableOption "CUPS printing and SANE scanner support";
+
+      config = lib.mkIf config.hostCfg.printing.enable {
+        services.printing.enable = true;
+        hardware.sane.enable = true;
+      };
+    };
 
   flake.modules.homeManager.printing =
     { pkgs, ... }:

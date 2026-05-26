@@ -1,5 +1,9 @@
-{ ... }:
+{ lib, ... }:
 {
+  flake.modules.nixos.shell = {
+    options.userCfg.shell.enable = lib.mkEnableOption "Zsh shell and starship prompt";
+  };
+
   flake.modules.homeManager.shell = {
     programs.starship = {
       enable = true;

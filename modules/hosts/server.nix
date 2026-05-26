@@ -7,16 +7,21 @@
         hostDefault
         disko
         impermanence
-        ssh
         sean
       ];
 
       hostCfg = {
-        audio.enable = false;
         hm.enable = true;
         ssh-server.enable = true;
-        user.sean.gui.enable = false;
-        user.sean.dev.enable = true;
+      };
+      userCfg = {
+        btop.enable = true;
+        fastfetch.enable = true;
+        git.enable = true;
+        shell.enable = true;
+        sops.enable = true;
+        ssh.enable = true;
+        nixvim.enable = true;
       };
 
       diskoConfigDevice = "/dev/disk/by-id/ata-TOSHIBA_MQ01ABD050_93HRC25TT";

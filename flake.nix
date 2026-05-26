@@ -22,6 +22,10 @@
       url = "github:joel-sgc/netpala";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-firefox-addons = {
       url = "github:OsiPog/nix-firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";

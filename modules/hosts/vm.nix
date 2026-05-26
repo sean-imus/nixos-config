@@ -7,25 +7,33 @@
         hostDefault
         disko
         impermanence
-        niri
         sean
       ];
 
       hostCfg = {
-        audio.enable = true;
         hm.enable = true;
-        user.sean.gui.enable = true;
-        user.sean.dev.enable = false;
+        audio.enable = true;
+        niri.enable = true;
+      };
+      userCfg = {
+        terminal.enable = true;
+        browser.enable = true;
+        btop.enable = true;
+        fastfetch.enable = true;
+        git.enable = true;
+        shell.enable = true;
+        sops.enable = true;
+        ssh.enable = true;
+        niri.enable = true;
+        bar.enable = true;
+        lockscreen.enable = true;
+        vesktop.enable = true;
+        opencode.enable = true;
+        localsend.enable = true;
+        libreoffice.enable = true;
       };
 
-      home-manager.users.sean.niri.config.modKey = "Alt";
-
-      home-manager.users.sean.niri.config.monitorConfig = ''
-        output "Virtual-1" {
-            mode "1920x1080@60"
-            position x=0 y=0
-        }
-      '';
+      home-manager.users.sean.programs.niri.settings.input.mod-key = "Alt";
 
       diskoConfigDevice = "/dev/disk/by-id/virtio-ROOT";
 

@@ -1,5 +1,9 @@
-{ ... }:
+{ lib, ... }:
 {
+  flake.modules.nixos.opencode = {
+    options.userCfg.opencode.enable = lib.mkEnableOption "opencode AI coding assistant";
+  };
+
   flake.modules.homeManager.opencode =
     { pkgs, ... }:
     {

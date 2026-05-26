@@ -1,5 +1,9 @@
-{ ... }:
+{ lib, ... }:
 {
+  flake.modules.nixos.terminal = {
+    options.userCfg.terminal.enable = lib.mkEnableOption "Alacritty terminal emulator";
+  };
+
   flake.modules.homeManager.terminal = {
     programs.alacritty = {
       enable = true;

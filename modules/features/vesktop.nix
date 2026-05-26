@@ -1,5 +1,9 @@
-{ ... }:
+{ lib, ... }:
 {
+  flake.modules.nixos.vesktop = {
+    options.userCfg.vesktop.enable = lib.mkEnableOption "Vesktop Discord client";
+  };
+
   flake.modules.homeManager.vesktop = {
     programs.vesktop = {
       enable = true;

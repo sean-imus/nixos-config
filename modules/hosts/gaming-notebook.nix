@@ -7,20 +7,32 @@
         hostDefault
         disko
         impermanence
-        niri
         sean
       ];
 
       hostCfg = {
         hm.enable = true;
         audio.enable = true;
-        user.sean.gui.enable = true;
-        user.sean.dev.enable = true;
+        niri.enable = true;
       };
-
-      home-manager.users.sean.niri.config.monitorConfig = ''
-        # FIXME: configure monitors for gaming-notebook
-      '';
+      userCfg = {
+        terminal.enable = true;
+        browser.enable = true;
+        btop.enable = true;
+        fastfetch.enable = true;
+        git.enable = true;
+        shell.enable = true;
+        sops.enable = true;
+        ssh.enable = true;
+        niri.enable = true;
+        bar.enable = true;
+        lockscreen.enable = true;
+        vesktop.enable = true;
+        opencode.enable = true;
+        localsend.enable = true;
+        libreoffice.enable = true;
+        nixvim.enable = true;
+      };
 
       diskoConfigDevice = "/dev/disk/by-id/nvme-FIXME-ME";
 

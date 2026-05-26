@@ -1,5 +1,9 @@
-{ ... }:
+{ lib, ... }:
 {
+  flake.modules.nixos.libreoffice = {
+    options.userCfg.libreoffice.enable = lib.mkEnableOption "LibreOffice suite";
+  };
+
   flake.modules.homeManager.libreoffice =
     { pkgs, ... }:
     {

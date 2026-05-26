@@ -1,5 +1,9 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
+  flake.modules.nixos.sops = {
+    options.userCfg.sops.enable = lib.mkEnableOption "SOPS secrets management";
+  };
+
   flake-file.inputs = {
     sops-nix = {
       url = "github:Mic92/sops-nix";

@@ -1,16 +1,13 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
   flake.modules.nixos.lockscreen =
     { ... }:
-    { };
+    {
+      options.userCfg.lockscreen.enable = lib.mkEnableOption "Swaylock lockscreen and swayidle";
+    };
 
   flake.modules.homeManager.lockscreen =
-    {
-      pkgs,
-      config,
-      lib,
-      ...
-    }:
+    { pkgs, config, lib, ... }:
     {
       config = {
         programs.swaylock = {
@@ -46,9 +43,9 @@
           };
         };
 
-        niri.config.systemBinds = lib.mkBefore ''
-          Super+Alt+L { spawn "${lib.getExe pkgs.swaylock}"; }
-        '';
+        programs.niri.settings.binds."Super+Alt+L" = {
+          action.spawn = lib.getExe pkgs.swaylock;
+        };
       };
     };
 }
