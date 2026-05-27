@@ -5,7 +5,6 @@
     {
       options = {
         hostCfg.user.sean.desktop = lib.mkEnableOption "desktop apps and WM";
-        hostCfg.user.sean.dev = lib.mkEnableOption "dev tooling";
       };
 
       config = {
@@ -26,7 +25,7 @@
 
         home-manager.users.sean.imports =
           let hm = inputs.self.modules.homeManager; in
-          [ hm.sean ]
+          [ hm.sean hm.neovim hm.opencode ]
           ++ lib.optionals config.hostCfg.user.sean.desktop (with hm; [
             application-launcher
             bar
@@ -40,10 +39,6 @@
             printing
             rdp-work
             terminal
-          ])
-          ++ lib.optionals config.hostCfg.user.sean.dev (with hm; [
-            neovim
-            opencode
           ]);
       };
     };

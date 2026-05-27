@@ -18,10 +18,7 @@
       hostCfg = {
         flakePath = ".";
         audio.enable = true;
-        user.sean = {
-          desktop = true;
-          dev = true;
-        };
+        user.sean.desktop = true;
       };
 
       diskoConfigDevice = "/dev/disk/by-id/nvme-SAMSUNG_MZALQ512HALU-000L2_S4UKNF0R457642";
