@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.modules.nixos.notebook =
-    { lib, ... }:
+    { ... }:
     {
       imports = with inputs.self.modules.nixos; [
         hostDefault
@@ -17,7 +17,7 @@
 
       hostCfg = {
         flakePath = ".";
-        audio.enable = lib.mkDefault true;
+        audio.enable = true;
         user.sean = {
           desktop = true;
           dev = true;

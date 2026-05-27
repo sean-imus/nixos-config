@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.modules.nixos.vm =
-    { lib, ... }:
+    { ... }:
     {
       imports = with inputs.self.modules.nixos; [
         hostDefault
