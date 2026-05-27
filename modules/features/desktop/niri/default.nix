@@ -58,6 +58,11 @@
       '';
     in
     {
+      imports = [
+        ./_keybindings.nix
+        ./_utilities.nix
+      ];
+
       config = {
         programs.niri.settings = {
           input = {
