@@ -18,7 +18,6 @@
       hostCfg = {
         flakePath = ".";
         audio.enable = lib.mkDefault true;
-        niri.enable = lib.mkDefault true;
         qemu.enable = true;
         printing.enable = true;
         rdp-work.enable = true;

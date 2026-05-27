@@ -17,7 +17,6 @@
       hostCfg = {
         flakePath = ".";
         audio.enable = lib.mkDefault true;
-        niri.enable = lib.mkDefault true;
         user.sean = {
           desktop = true;
           dev = true;

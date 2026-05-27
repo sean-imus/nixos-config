@@ -12,7 +12,6 @@
       ];
 
       hostCfg = {
-        niri.enable = lib.mkDefault true;
         user.sean.desktop = true;
       };
 
