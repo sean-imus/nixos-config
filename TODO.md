@@ -1,1 +1,1 @@
-- update AGENTS.md
+- rewrite README.md
