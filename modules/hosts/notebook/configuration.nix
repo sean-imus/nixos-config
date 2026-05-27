@@ -18,8 +18,6 @@
       hostCfg = {
         flakePath = ".";
         audio.enable = lib.mkDefault true;
-        qemu.enable = true;
-        rdp-work.enable = true;
         user.sean = {
           desktop = true;
           dev = true;
