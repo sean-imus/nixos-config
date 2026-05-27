@@ -1,8 +1,14 @@
 { inputs, ... }:
 {
-  flake-file.inputs.niri = {
-    url = "github:sodiboo/niri-flake";
-    inputs.nixpkgs.follows = "nixpkgs";
+  flake-file.inputs = {
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    netpala = {
+      url = "github:joel-sgc/netpala";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   flake.modules.nixos.niri =
@@ -11,10 +17,14 @@
       ...
     }:
     {
-      imports = [ inputs.niri.nixosModules.niri ];
+      imports = [
+        inputs.niri.nixosModules.niri
+        inputs.netpala.nixosModules.default
+      ];
 
       programs.niri.enable = true;
       programs.niri.package = pkgs.niri;
+      programs.netpala.enable = true;
 
       xdg.portal = {
         enable = true;

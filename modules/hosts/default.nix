@@ -1,10 +1,5 @@
-{ inputs, ... }:
+{ ... }:
 {
-  flake-file.inputs.netpala = {
-    url = "github:joel-sgc/netpala";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   flake.modules.nixos.hostDefault =
     {
       pkgs,
@@ -13,9 +8,6 @@
       ...
     }:
     {
-      imports = [
-        inputs.netpala.nixosModules.default
-      ];
       options.hostCfg.audio.enable = lib.mkEnableOption "Audio Support";
       options.hostCfg.flakePath = lib.mkOption {
         type = lib.types.str;
@@ -100,7 +92,6 @@
             networkmanager.enable = true;
             firewall.enable = true;
           };
-          programs.netpala.enable = true;
 
           boot.loader = {
             timeout = 1;
