@@ -129,9 +129,10 @@
                 height = 2160;
                 refresh = 60.0;
               };
+              scale = 1.75;
               position = {
                 x = 0;
-                y = -1440;
+                y = -1234;
               };
               focus-at-startup = true;
             };
