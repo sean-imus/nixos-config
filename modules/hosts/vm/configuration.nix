@@ -5,7 +5,6 @@
     {
       imports = with inputs.self.modules.nixos; [
         hostDefault
-        ssh
         niri
         disko
         persistence
