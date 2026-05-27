@@ -18,17 +18,17 @@
           "kernel"
           "uptime"
           "packages"
-          "shell"
-          "de"
-          "wm"
-          "monitor"
-          "terminal"
-          "editor"
           "cpu"
           "gpu"
           "memory"
           "swap"
           "disk"
+          "monitor"
+          "de"
+          "wm"
+          "shell"
+          "terminal"
+          "editor"
         ];
       };
     };
