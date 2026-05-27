@@ -11,7 +11,7 @@
       imports = [ inputs.areofyl-fetch.homeManagerModules.default ];
 
       home.shellAliases = {
-        ff = "fetch";
+        ff = "fetch --infinite";
       };
 
       programs.fetch = {
