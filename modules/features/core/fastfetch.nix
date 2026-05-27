@@ -6,7 +6,7 @@
   };
 
   flake.modules.homeManager.fastfetch =
-    { pkgs, ... }:
+    { ... }:
     {
       imports = [ inputs.areofyl-fetch.homeManagerModules.default ];
 
