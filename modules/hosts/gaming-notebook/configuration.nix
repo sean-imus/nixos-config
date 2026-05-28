@@ -19,7 +19,6 @@
         audio.enable = true;
         user.sean = {
           desktop = true;
-          dev = true;
         };
       };
 
