@@ -15,11 +15,13 @@
 
       home.packages = with pkgs; [
         ripgrep
+        wl-clipboard
       ];
 
       programs.nixvim = {
         enable = true;
         nixpkgs.source = inputs.nixpkgs;
+        waylandSupport = true;
         colorscheme = "everforest";
         globals.mapleader = " ";
 
