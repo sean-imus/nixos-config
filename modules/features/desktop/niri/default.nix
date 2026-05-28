@@ -194,11 +194,14 @@
 
           spawn-at-startup = [
             { argv = [ "waybar" ]; }
+            { argv = [ "wl-paste" "--watch" "cliphist" "store" ]; }
           ];
 
           hotkey-overlay.skip-at-startup = true;
           prefer-no-csd = true;
           screenshot-path = "~/Screenshots/%Y-%m-%d %H-%M-%S.png";
+
+          clipboard.disable-primary = true;
 
           animations = {
             window-open = {

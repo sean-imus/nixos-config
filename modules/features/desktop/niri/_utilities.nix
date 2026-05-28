@@ -35,6 +35,8 @@
     wf-recorder
     slurp
     libnotify
+    wl-clipboard
+    cliphist
     (pkgs.writeShellScriptBin "power-toggle" ''
       current=$(powerprofilesctl get)
       case "$current" in

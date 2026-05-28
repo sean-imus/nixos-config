@@ -274,6 +274,14 @@
       action."switch-focus-between-floating-and-tiling" = [ ];
     };
 
+    "Mod+H" = {
+      action.spawn = [
+        "sh"
+        "-c"
+        "cliphist list | fuzzel --dmenu --with-nth 2 | cliphist decode | wl-copy"
+      ];
+    };
+
     "Mod+C" = {
       action."screenshot" = [ ];
     };
