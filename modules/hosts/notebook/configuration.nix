@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.modules.nixos.notebook =
-    { ... }:
+    { pkgs, ... }:
     {
       imports = with inputs.self.modules.nixos; [
         hostDefault
@@ -30,6 +30,10 @@
         enableRedistributableFirmware = true;
         cpu.intel.updateMicrocode = true;
         bluetooth.enable = true;
+        graphics = {
+          enable = true;
+          extraPackages = with pkgs; [ intel-media-driver ];
+        };
       };
 
       boot.initrd.availableKernelModules = [
