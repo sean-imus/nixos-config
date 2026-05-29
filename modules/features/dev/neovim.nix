@@ -21,6 +21,7 @@
       programs.nixvim = {
         enable = true;
         nixpkgs.source = inputs.nixpkgs;
+        version.enableNixpkgsReleaseCheck = false;
         waylandSupport = true;
         colorscheme = "everforest";
         globals.mapleader = " ";
