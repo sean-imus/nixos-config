@@ -7,7 +7,7 @@
         enable = true;
         settings = {
           anchor = "top-right";
-          background-color = "#00000088";
+          background-color = "#000000ff";
           text-color = "#ffffff";
           border-color = "#437306";
           border-radius = 12;

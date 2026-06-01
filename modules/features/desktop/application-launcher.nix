@@ -13,7 +13,7 @@
             sort-result = false;
           };
           colors = {
-            background = "00000066";
+            background = "000000ff";
             text = "ffffffff";
             prompt = "ccccccff";
             input = "ffffffff";
