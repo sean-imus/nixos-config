@@ -55,10 +55,12 @@
           environment.variables = {
             XKB_DEFAULT_LAYOUT = "de";
             XKB_DEFAULT_VARIANT = "";
+            XKB_DEFAULT_OPTIONS = "caps:escape";
           };
 
           console.keyMap = "de-latin1";
           services.xserver.xkb.layout = "de";
+          services.xserver.xkb.options = "caps:escape";
 
           nix = {
             settings = {
