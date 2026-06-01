@@ -3,7 +3,7 @@
   flake.modules.nixos.tailscale =
     { ... }:
     {
-      services.tailscale.enable = true;
+      services.tailscale.enable = false;
 
       networking.firewall.trustedInterfaces = [ "tailscale0" ];
     };
