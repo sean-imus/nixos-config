@@ -124,9 +124,25 @@
             options.desc = "Open lazygit";
           }
           {
-            key = "<leader>q";
+            key = "<leader>h";
             action = "<cmd>nohlsearch<CR>";
             options.desc = "Clear search highlights";
+          }
+          {
+            key = "<leader>q";
+            action = "<cmd>q<CR>";
+            options.desc = "Close window";
+          }
+          {
+            key = "<leader>w";
+            action = "<cmd>w<CR>";
+            options.desc = "Save file";
+          }
+          {
+            key = "ö";
+            mode = "c";
+            action = ":";
+            options.desc = "Map ö to : in command mode";
           }
         ];
 
