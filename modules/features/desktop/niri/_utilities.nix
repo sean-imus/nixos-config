@@ -30,7 +30,6 @@
     wiremix
     bluetui
     brightnessctl
-    cava
     mpv
     wf-recorder
     slurp

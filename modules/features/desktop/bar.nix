@@ -12,7 +12,6 @@
             margin = "5";
             modules-left = [
               "niri/workspaces"
-              "cava"
               "custom/recording"
             ];
             modules-center = [
@@ -117,26 +116,6 @@
               dynamic-separator = " - ";
               max-length = 50;
             };
-            cava = {
-              bars = 14;
-              method = "pipewire";
-              sleep_timer = 5;
-              bar_delimiter = 0;
-              hide_on_silence = true;
-              format-icons = [
-                "▁"
-                "▂"
-                "▃"
-                "▄"
-                "▅"
-                "▆"
-                "▇"
-                "█"
-              ];
-              actions = {
-                on-click-right = "mode";
-              };
-            };
             "pulseaudio#mic" = {
               format = "{format_source}";
               format-source = "mic {volume}%";
@@ -201,13 +180,6 @@
 
           #mpris {
               background-color: @audio-bg;
-          }
-
-          #cava {
-              padding: 0px 4px;
-              min-width: 100px;
-              min-height: 20px;
-              background-color: transparent;
           }
 
           #battery {
