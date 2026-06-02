@@ -6,7 +6,7 @@
       enableZshIntegration = true;
       settings = {
         add_newline = false;
-        format = " $cmd_duration$directory$git_branch$git_status$character";
+        format = "$cmd_duration$directory$git_branch$git_status$character";
 
         cmd_duration = {
           min_time = 2000;
