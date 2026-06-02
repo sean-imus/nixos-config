@@ -38,13 +38,15 @@
     wl-clipboard
     cliphist
     (pkgs.writeShellScriptBin "power-toggle" ''
-      current=$(powerprofilesctl get)
+      raw=$(busctl get-property net.hadess.PowerProfiles /net/hadess/PowerProfiles net.hadess.PowerProfiles ActiveProfile)
+      current=''${raw#s \"}
+      current=''${current%\"}
       case "$current" in
         power-saver) next="balanced" ;;
         balanced) next="performance" ;;
         performance) next="power-saver" ;;
       esac
-      powerprofilesctl set "$next"
+      busctl set-property net.hadess.PowerProfiles /net/hadess/PowerProfiles net.hadess.PowerProfiles ActiveProfile s "$next"
     '')
     (pkgs.writeShellScriptBin "screencap" ''
       STATE=/tmp/waybar-recording
