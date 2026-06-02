@@ -22,7 +22,6 @@
       printing
       rdp-work
       terminal
-      email
     ];
   };
 }
