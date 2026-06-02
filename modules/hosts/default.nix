@@ -118,7 +118,6 @@
             bat
             zsh
             ncdu
-            ntfs3g
           ];
 
           services.fwupd.enable = true;
