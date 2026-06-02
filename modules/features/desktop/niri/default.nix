@@ -162,7 +162,24 @@
 
           spawn-at-startup = [
             { argv = [ "waybar" ]; }
-            { argv = [ "wl-paste" "--watch" "cliphist" "store" ]; }
+            {
+              argv = [
+                "wl-paste"
+                "--watch"
+                "cliphist"
+                "store"
+              ];
+            }
+            {
+              argv = [
+                "wl-paste"
+                "--type"
+                "image/png"
+                "--watch"
+                "cliphist"
+                "store"
+              ];
+            }
           ];
 
           hotkey-overlay.skip-at-startup = true;
