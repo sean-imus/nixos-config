@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.modules.nixos.gaming-notebook =
-    { ... }:
+    { lib, ... }:
     {
       imports = with inputs.self.modules.nixos; [
         hostDefault
@@ -20,7 +20,14 @@
 
       networking.hostName = "gaming-notebook";
 
-      nixpkgs.config.allowUnfree = true;
+      nixpkgs.config.allowUnfreePredicate = pkg:
+        builtins.elem (lib.getName pkg) [
+          "nvidia-x11"
+          "nvidia-settings"
+          "nvidia-persistenced"
+          "cudatoolkit"
+          "vulkan-validation-layers"
+        ];
 
       hardware = {
         enableRedistributableFirmware = true;
