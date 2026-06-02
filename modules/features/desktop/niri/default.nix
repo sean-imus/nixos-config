@@ -200,25 +200,12 @@
               open-floating = true;
             }
             {
-              matches = [ { app-id = "^btop$"; } ];
-              open-floating = true;
-            }
-            {
               matches = [ { app-id = "^netpala$"; } ];
               open-floating = true;
             }
             {
               matches = [ { app-id = "^localsend_app$"; } ];
               open-floating = true;
-            }
-          ];
-
-          layer-rules = [
-            {
-              matches = [ { namespace = "^waybar$"; } ];
-            }
-            {
-              matches = [ { namespace = "^fuzzel$"; } ];
             }
           ];
         };
