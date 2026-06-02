@@ -128,7 +128,7 @@
           };
 
           layout = {
-            gaps = 6;
+            gaps = 0;
             center-focused-column = "never";
             always-center-single-column = true;
             empty-workspace-above-first = true;
