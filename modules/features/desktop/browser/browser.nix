@@ -135,6 +135,8 @@ in
             "<Ctrl+Shift+K>" = "tab-move -";
             "xb" = "config-cycle statusbar.show always in-mode ;; config-cycle tabs.show always multiple";
             "xh" = "config-cycle tabs.position left top";
+            "j" = "cmd-run-with-count 3 scroll down";
+            "k" = "cmd-run-with-count 3 scroll up";
           };
           insert = {
             "<Ctrl+e>" = "edit-text";
