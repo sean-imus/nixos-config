@@ -4,12 +4,8 @@ let
 in
 {
   flake.modules.homeManager.browser =
-    { pkgs, config, lib, ... }:
+    { pkgs, config, ... }:
     {
-      home.activation.installQutebrowserDictionaries = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        run ${pkgs.python3}/bin/python3 ${pkgs.qutebrowser}/share/qutebrowser/scripts/dictcli.py install en-US de-DE
-      '';
-
       programs.qutebrowser = {
         enable = true;
         package = pkgs.qutebrowser;
@@ -81,8 +77,6 @@ in
             "{file}"
           ];
 
-          spellcheck.languages = [ "en-US" "de-DE" ];
-
           tabs = {
             position = "top";
             show = "multiple";
@@ -93,7 +87,13 @@ in
 
           statusbar = {
             show = "in-mode";
-            widgets = [ "keypress" "url" "scroll" "history" "tabs" ];
+            widgets = [
+              "keypress"
+              "url"
+              "scroll"
+              "history"
+              "tabs"
+            ];
           };
 
           scrolling.smooth = false;
