@@ -11,11 +11,15 @@
             height = 18;
             spacing = 0;
             margin = "0";
+            modules-left = [ "clock" ];
             modules-right = [
               "pulseaudio#mic"
               "pulseaudio#sink"
               "battery"
             ];
+            clock = {
+              format = "{:%H:%M %d.%m.%Y}";
+            };
             battery = {
               states = {
                 critical = 15;
@@ -52,6 +56,7 @@
             color: #ffffff;
           }
 
+          #clock,
           #battery,
           #pulseaudio.sink,
           #pulseaudio.mic {
