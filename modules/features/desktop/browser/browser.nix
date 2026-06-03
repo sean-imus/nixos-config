@@ -14,7 +14,6 @@ in
           DEFAULT = "https://duckduckgo.com/?q={}";
           ns = "https://search.nixos.org/options?channel=unstable&include_home_manager_options=1&include_modular_service_options=1&include_nixos_options=1&query={}";
           np = "https://search.nixos.org/packages?channel=unstable&query={}";
-          nw = "https://niri-wm.github.io/niri/?search={}";
           gh = "https://github.com/search?q={}&type=repositories";
         };
 
