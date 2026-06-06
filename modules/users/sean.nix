@@ -28,7 +28,7 @@
         home-manager.users.sean.imports = with inputs.self.modules.homeManager; [
           sean
           neovim
-          opencode
+          claude
         ];
       };
     };
