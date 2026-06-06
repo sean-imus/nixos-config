@@ -15,6 +15,30 @@
           };
         };
 
+        settings = {
+          hooks = {
+            PostToolUse = [
+              {
+                matcher = "Write|Edit";
+                hooks = [
+                  {
+                    type = "command";
+                    command = ''
+                      jq -r '.tool_input.file_path // .tool_response.filePath' | {
+                        read -r f
+                        case "$f" in
+                          *.nix) ${pkgs.nixfmt}/bin/nixfmt "$f" ;;
+                          *.py)  ${pkgs.python3Packages.black}/bin/black "$f" ;;
+                        esac
+                      } 2>/dev/null || true
+                    '';
+                  }
+                ];
+              }
+            ];
+          };
+        };
+
         lspServers = {
           python = {
             command = "${pkgs.pyright}/bin/pyright-langserver";
@@ -38,6 +62,7 @@
         nixd
         nixfmt
         python3Packages.black
+        jq
       ];
     };
 }
