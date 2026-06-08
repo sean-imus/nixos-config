@@ -46,6 +46,62 @@
 
       services.power-profiles-daemon.enable = true;
       services.thermald.enable = true;
+
+      home-manager.users.sean.programs.niri.settings.outputs = {
+        "eDP-1" = {
+          position = {
+            x = 0;
+            y = 0;
+          };
+        };
+        "Iiyama North America PL2770H 0x0000011F" = {
+          mode = {
+            width = 1920;
+            height = 1080;
+            refresh = 144.0;
+          };
+          position = {
+            x = -1920;
+            y = 0;
+          };
+        };
+        "Iiyama North America PL2770H 0x00000124" = {
+          mode = {
+            width = 1920;
+            height = 1080;
+            refresh = 143.998;
+          };
+          position = {
+            x = -3840;
+            y = 0;
+          };
+          focus-at-startup = true;
+        };
+        "Iiyama North America PLX2783H 1128255001580" = {
+          mode = {
+            width = 1920;
+            height = 1080;
+            refresh = 60.0;
+          };
+          position = {
+            x = -5760;
+            y = 0;
+          };
+        };
+        "GIGA-BYTE TECHNOLOGY CO., LTD. M27U 23463B001145" = {
+          mode = {
+            width = 3840;
+            height = 2160;
+            refresh = 60.0;
+          };
+          scale = 1.75;
+          position = {
+            x = 0;
+            y = -1234;
+          };
+          focus-at-startup = true;
+        };
+      };
     };
 
   flake.nixosConfigurations = inputs.self.lib.mkNixos "x86_64-linux" "notebook";

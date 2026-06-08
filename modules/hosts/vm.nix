@@ -12,6 +12,18 @@
 
       home-manager.users.sean.programs.niri.settings.input.mod-key = "Alt";
 
+      home-manager.users.sean.programs.niri.settings.outputs."Virtual-1" = {
+        mode = {
+          width = 1920;
+          height = 1080;
+          refresh = 60.0;
+        };
+        position = {
+          x = 0;
+          y = 0;
+        };
+      };
+
       diskoConfigDevice = "/dev/disk/by-id/virtio-ROOT";
       diskoSwapSize = "10G";
 

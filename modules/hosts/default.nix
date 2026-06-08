@@ -88,7 +88,6 @@
           };
 
           system.stateVersion = "25.11";
-          nixpkgs.hostPlatform = "x86_64-linux";
           nixpkgs.config.allowUnfreePredicate = lib.mkDefault (
             pkg: builtins.elem (lib.getName pkg) [ "claude-code" ]
           );
