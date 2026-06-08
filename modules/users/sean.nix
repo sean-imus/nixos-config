@@ -21,10 +21,7 @@
           ];
         };
 
-        #TODO Remove since it doenst make sense here, just needed it for a project here
         users.groups.adbusers = { };
-        environment.systemPackages = [ pkgs.android-tools ];
-
         home-manager.users.sean.imports = with inputs.self.modules.homeManager; [
           sean
           neovim
@@ -37,7 +34,6 @@
     { config, ... }:
     {
       imports = with inputs.self.modules.homeManager; [
-        userDefault
         btop
         fastfetch
         git
@@ -45,6 +41,8 @@
         sops
         ssh
       ];
+
+      home.stateVersion = "25.11";
 
       home.username = "sean";
       home.homeDirectory = "/home/${config.home.username}";
