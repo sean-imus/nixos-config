@@ -1,4 +1,3 @@
 - fix tailscale module killing internet connectivity
+- move monitor output configs from niri/default.nix into notebook.nix (currently shared but 100% notebook-specific)
 - dont preserver tailscale folder, use sops to manage auth
-- add torrentbox as a known host declaratively also create an alias to connect to it
-- add a torrentbox host server config

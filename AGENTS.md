@@ -1,6 +1,6 @@
 # AGENTS.md — NixOS Config
 
-Last updated: 2026-05-28
+Last updated: 2026-06-08
 
 Single-machine NixOS config using the **Dendritic Design** pattern with **flake-parts**.
 
@@ -18,23 +18,20 @@ modules/
 ├── nix/flake-parts.nix              ← framework entrypoint, mkNixos helper, nixosConfigurations
 ├── hosts/
 │   ├── default.nix                  ← host defaults (hostDefault — timezone, locale, boot, networking, pkgs, zsh)
-│   ├── notebook/configuration.nix   ← Intel laptop (full desktop + dev)
-│   ├── gaming-notebook/configuration.nix ← Intel + Nvidia laptop (full desktop + dev)
-│   ├── vm/configuration.nix         ← VM (desktop, no dev)
-│   └── server/configuration.nix     ← headless server (dev only, no GUI)
+│   ├── notebook.nix                 ← Intel laptop (full desktop + dev)
+│   └── vm.nix                       ← VM (desktop, no dev)
 ├── users/
-│   ├── default.nix                  ← user template (userDefault — home.stateVersion)
-│   └── sean.nix                     ← single user module, desktop features option-gated per host
+│   └── sean.nix                     ← user module: NixOS account + HM imports (core + dev + desktop)
 ├── features/
 │   ├── core/                        ← always-on user features: btop, fastfetch, git, shell, sops, ssh
-│   ├── desktop/                     ← desktop features (gated by hostCfg.user.sean.desktop)
+│   ├── desktop/                     ← desktop features
 │   │   ├── niri/                    ← niri compositor split into sub-modules
 │   │   │   ├── default.nix          ← core: NixOS module, input, layout, animations, window/layer rules
 │   │   │   ├── _keybindings.nix     ← all keybindings (media keys, navigation, workspace, app launchers)
 │   │   │   └── _utilities.nix       ← playerctld, hidden desktop entries, home packages + shell scripts
 │   │   ├── application-launcher.nix ← fuzzel
 │   │   ├── bar.nix                  ← waybar
-│   │   ├── browser.nix              ← firefox
+│   │   ├── browser.nix              ← qutebrowser
 │   │   ├── discord.nix              ← vesktop
 │   │   ├── filesharing.nix          ← localsend
 │   │   ├── lockscreen.nix           ← swaylock
@@ -43,9 +40,9 @@ modules/
 │   │   ├── printing.nix             ← CUPS + SANE
 │   │   ├── rdp-work.nix             ← RDP work network profile (user-specific, exception to feature rules)
 │   │   └── terminal.nix             ← alacritty
-│   ├── dev/                         ← dev tooling (always-on): neovim (nixvim), opencode
+│   ├── dev/                         ← dev tooling (always-on): neovim (nixvim), claude-code
 │   ├── secrets/                     ← sops-nix + encrypted secrets
-│   ├── storage/                     ← disko, persistence (impermance)
+│   ├── storage/                     ← disko, persistence (impermanence)
 │   └── virtualization/              ← qemu/libvirt
 ```
 
@@ -54,33 +51,20 @@ modules/
 Each host imports `sean` (the NixOS user module). `sean.nix` then bridges into Home Manager:
 
 ```
-Host (e.g. server/configuration.nix)
-  └─ imports: sean (NixOS module)
-       └─ creates user account (always)
+Host (e.g. notebook.nix)
+  └─ imports: sean-desktop (NixOS module)
+       └─ imports: sean (NixOS module)
+            └─ creates user account
+            └─ home-manager.users.sean.imports:
+                 ├─ core (always): btop, fastfetch, git, shell, sops, ssh
+                 └─ dev (always): neovim, claude
        └─ home-manager.users.sean.imports:
-            ├─ core (always): sean, btop, fastfetch, git, shell, sops, ssh, userDefault
-            ├─ dev (always): neovim, opencode
-            └─ desktop (gated): niri, bar, browser, terminal, etc.
+            └─ desktop: niri, bar, browser, terminal, discord, etc.
 ```
 
-### Option-Gated Desktop Features
-
-Only `hostCfg.user.sean.desktop` gates features — dev tooling is always-on for all hosts:
-
-```nix
-# notebook / gaming-notebook
-hostCfg.user.sean.desktop = true;
-
-# vm
-hostCfg.user.sean.desktop = true;
-
-# server
-# (not set → defaults to false, no desktop features)
-```
-
-- **desktop = true** → niri, waybar, alacritty, firefox, vesktop, localsend, libreoffice, swaylock, fuzzel, mako, printing, rdp-work
-- **Always on** (core): btop, fastfetch, git, shell, sops, ssh, userDefault
-- **Always on** (dev): neovim (nixvim), opencode
+- **Always on** (core): btop, fastfetch, git, shell, sops, ssh
+- **Always on** (dev): neovim (nixvim), claude-code
+- **Desktop** (imported via sean-desktop): niri, waybar, alacritty, qutebrowser, vesktop, localsend, libreoffice, swaylock, fuzzel, mako, printing, rdp-work
 
 ## Feature Module Pattern
 
@@ -248,32 +232,25 @@ Disk (NVMe by-id)
 |------|---------|
 | `modules/features/storage/disko.nix` | GPT + LUKS + nested GPT (swap + BTRFS subvols) + tmpfs root; parameterized `diskoConfigDevice` option |
 | `modules/features/storage/persistence.nix` | Preservation config: /etc/NetworkManager/system-connections, /var/lib/systemd/timers, /var/lib/libvirt/, /etc/machine-id, SSH host keys, user ~/.ssh/sops_age_key, ~/.local/state/wireplumber, ~/persist |
-| `modules/hosts/notebook/configuration.nix` | Sets `diskoConfigDevice` to by-id NVMe path, imports disko + persistence |
-| `modules/hosts/gaming-notebook/configuration.nix` | Sets `diskoConfigDevice` to by-id NVMe path, imports disko + persistence |
-| `modules/hosts/vm/configuration.nix` | Sets `diskoConfigDevice` to virtio path, imports disko + persistence |
-| `modules/hosts/server/configuration.nix` | Sets `diskoConfigDevice` to SATA by-id path, imports disko + persistence |
+| `modules/hosts/notebook.nix` | Sets `diskoConfigDevice` to by-id NVMe path, imports disko + persistence |
+| `modules/hosts/vm.nix` | Sets `diskoConfigDevice` to virtio path, imports disko + persistence |
 
-### Fresh Install (disko-install)
+### Fresh Install
 
-One command handles partitioning, formatting, mounting, and installation:
+**Why not `disko-install`?** `disko-install` builds the entire system closure on the ISO before writing to disk. Packages like nixvim have large closures that exceed typical ISO RAM/space. `nixos-install` builds directly on the target disk's Nix store, so only the ISO itself needs to fit in RAM.
 
 ```bash
-sudo nix run 'github:nix-community/disko/latest#disko-install' -- \
-  --flake github:<user>/nixos-config#notebook \
-  --disk main /dev/disk/by-id/<nvme-by-id> \
-  --write-efi-boot-entries
+# 1. Partition and format the target disk
+nix-shell -p disko
+sudo disko --mode disko --flake github:sean-imus/nixos-config#[notebook/vm]
+
+# 2. Install (builds into /mnt/nix/store on the target disk)
+sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#[notebook/vm]
 ```
 
-**Flag explanations:**
-- `--disk main <device>` — **required** by `install-cli.nix` (throws if missing). `main` is the disk attr name from `disko.nix`. Overrides the flake's device via `lib.mkVMOverride`.
-- `--write-efi-boot-entries` — without this, disko-install forcibly sets `canTouchEfiVariables = false` (overriding your config), so systemd-boot won't write NVRAM entries and the system might not boot.
-- Flake URL can be `github:` for remote or a local path.
-
 **Install flow:**
-1. Prompts for LUKS password (interactive, `cryptsetup` during disko format)
-2. Partitions, formats, mounts everything
-3. Runs `nixos-install --no-root-password --no-channel-copy`
-4. Writes systemd-boot entry to NVRAM
+1. `disko` prompts for LUKS password, partitions, formats, and mounts everything under `/mnt`
+2. `nixos-install` builds the system closure directly into `/mnt/nix/store` and installs the bootloader
 
 ### Post-Install Workflow
 
@@ -290,10 +267,10 @@ No `/etc/nixos` symlink needed — `--flake` accepts any path. `rbs` alias is de
 
 ### Gotchas
 
-- **LUKS password entered twice**: once during `disko-install` (format), and at every boot (initrd prompt). No keyfile — fully interactive.
+- **LUKS password entered twice**: once during `disko` (format), and at every boot (initrd prompt). No keyfile — fully interactive.
 - **Disko handles ALL filesystem config** on every rebuild — `fileSystems`, `boot.initrd.luks`, mount ordering. UUIDs not needed. The by-id path is stable across reboots.
 - **`/var/lib/nixos` not persisted** — nixos-rebuild generates a fresh profile chain each boot. Doesn't affect function, just means `list-generations` only shows current session.
 - **First boot timing**: Preservation runs before SSH via systemd ordering. SSH host keys are generated fresh into the `/persist` symlinks on first boot, then persist across reboots.
 - **Configs no longer depend on repo clone**: All file references use nix store paths (relative `./` paths in modules). Desktop configs work on first boot out of the box without cloning.
 - **`~/persist/nixos-config` survives reboots** because `~/persist` is a bind-mount into `/persist/home/sean/persist`.
-- **Commit before testing**: Nix reads from git tree. `git add` new `.nix` files, commit changes before `disko-install` or remote evaluation.
+- **Commit before testing**: Nix reads from git tree. `git add` new `.nix` files, commit changes before `disko` or remote evaluation.

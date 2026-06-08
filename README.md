@@ -1,7 +1,7 @@
 # nixos-config
 ## 3 min read, probably a lot more to fully understand.
 
-My personal NixOS configuration for my school notebook, gaming notebook, server and virtual machine. All managed by a single repo. 
+My personal NixOS configuration for my notebook and a VM. All managed by a single repo.
 
 ## What is this? (for non-Nix people)
 
@@ -19,7 +19,7 @@ My entire operating system: disk layout, installed programs, desktop environment
 |-------|-------------|
 | Disk | LUKS encryption, Btrfs, tmpfs root (ephemeral `/`) |
 | System | systemd-boot, networkmanager |
-| Desktop | Niri, Waybar, Alacritty, Neovim, Firefox, Vesktop |
+| Desktop | Niri, Waybar, Alacritty, Neovim, qutebrowser, Vesktop |
 | User | zsh, Neovim plugins, Firefox bookmarks + extensions, etc. |
 | Services | printing, QEMU VMs, remote desktop via xrdp, PipeWire audio, Bluetooth, etc. |
 | Persistence | opt-in only: SSH keys, Wi-Fi passwords, audio config, and `~/persist` |
@@ -35,13 +35,9 @@ All the code you see in this repo was written in Nix. It's most commonly describ
 
 **Nix flakes** take this further. A `flake.nix` file declares your dev environment: what shell to use, its config, what packages to install, and more. Want to work on a project on Arch that needs Python and some modules? Create a `flake.nix`, type `nix develop`, and you're dropped into a shell with everything ready. Your friend on Debian gets the exact same environment. The first run creates a `flake.lock` file that pins every dependency version, so nothing changes unless you explicitly run `nix flake update`.
 
-### One repo, four machines
+### One repo, multiple machines
 
-This config drives four completely different systems: a school notebook, a gaming notebook, a VM, and a headless server. Same flake, same repository, zero copy-paste.
-
-Each host is just a file that picks which modules to import. The notebook gets the full desktop stack. The server gets dev tooling only, no GUI, no bloat. A single boolean (`hostCfg.user.sean.desktop = true`) gates the entire desktop environment. Change one line and a headless machine becomes a daily driver.
-
-Hardware differences are handled the same way. Each host sets its own `diskoConfigDevice` to point at the right physical drive, its own kernel modules for Intel vs Nvidia, its own swap size. Everything else is shared.
+Each host is just a file that picks which modules to import. The notebook gets the full desktop stack. The VM gets the same desktop with a few tweaks (Alt as mod key, virtio disk). Hardware differences are handled the same way — each host sets its own `diskoConfigDevice` to point at the right drive, its own kernel modules, its own swap size. Everything else is shared.
 
 ### Secrets in git, decrypted at boot
 
@@ -62,8 +58,8 @@ No `fdisk`, no `cryptsetup`, no `mkfs.btrfs` during system installation. The ent
 
 # 1. Format Drive
 nix-shell -p disko
-sudo disko --mode disko --flake github:sean-imus/nixos-config#[notebook/vm/...]
+sudo disko --mode disko --flake github:sean-imus/nixos-config#[notebook/vm]
 
-# 2. Install System
-sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#[notebook/vm/...]
+# 2. Install System (builds directly on the target disk, not the ISO)
+sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#[notebook/vm]
 ```
