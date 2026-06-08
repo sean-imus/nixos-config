@@ -124,7 +124,6 @@
           ];
 
           services.fwupd.enable = true;
-          services.thermald.enable = true;
 
           users.mutableUsers = false;
         }

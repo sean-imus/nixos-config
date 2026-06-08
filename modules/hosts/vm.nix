@@ -22,4 +22,6 @@
         "virtio_pci"
       ];
     };
+
+  flake.nixosConfigurations = inputs.self.lib.mkNixos "x86_64-linux" "vm";
 }

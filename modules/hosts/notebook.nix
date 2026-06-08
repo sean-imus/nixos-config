@@ -45,5 +45,8 @@
       ];
 
       services.power-profiles-daemon.enable = true;
+      services.thermald.enable = true;
     };
+
+  flake.nixosConfigurations = inputs.self.lib.mkNixos "x86_64-linux" "notebook";
 }
