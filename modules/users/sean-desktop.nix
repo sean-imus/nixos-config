@@ -22,6 +22,7 @@
       printing
       rdp-work
       terminal
+      wallpaper
     ];
   };
 }
