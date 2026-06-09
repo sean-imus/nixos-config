@@ -2,6 +2,15 @@
 {
   services.playerctld.enable = true;
 
+  programs.mpv = {
+    enable = true;
+    config = {
+      hwdec = "vaapi";
+      vo = "gpu";
+      gpu-context = "wayland";
+    };
+  };
+
   xdg.dataFile = {
     "applications/cups.desktop".text = ''
       [Desktop Entry]
@@ -30,7 +39,6 @@
     wiremix
     bluetui
     brightnessctl
-    mpv
     wf-recorder
     slurp
     libnotify
@@ -68,7 +76,7 @@
         exit 1
       fi
       show
-      wf-recorder -g "$geometry" -r 30 -c libx264 -f "$HOME/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4" &
+      wf-recorder -g "$geometry" -r 30 -c h264_vaapi -d /dev/dri/renderD128 -f "$HOME/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4" &
       echo $! > "$PIDFILE"
       wait $!
       hide
