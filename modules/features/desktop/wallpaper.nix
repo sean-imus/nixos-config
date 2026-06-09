@@ -13,7 +13,7 @@
           argv = [
             "mpvpaper"
             "-o"
-            "loop-file=inf no-audio scale=nearest"
+            "loop-file=inf no-audio scale=nearest hwdec=vaapi"
             "ALL"
             "${wallpaper}"
           ];
