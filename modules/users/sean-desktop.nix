@@ -15,6 +15,7 @@
       browser
       discord
       filesharing
+      gtk
       lockscreen
       notifications
       niri

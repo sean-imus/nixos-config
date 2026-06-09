@@ -11,7 +11,24 @@
 
       programs.lazygit = {
         enable = true;
-        settings.disableStartupPopups = true;
+        settings = {
+          disableStartupPopups = true;
+          gui.theme = {
+            activeBorderColor = [
+              "#a7c080"
+              "bold"
+            ];
+            inactiveBorderColor = [ "#7a8478" ];
+            optionsTextColor = [ "#7fbbb3" ];
+            selectedLineBgColor = [ "#3a454a" ];
+            unstagedChangesColor = [ "#e67e80" ];
+            defaultFgColor = [ "#d3c6aa" ];
+            searchingActiveBorderColor = [
+              "#dbbc7f"
+              "bold"
+            ];
+          };
+        };
       };
 
       programs.ssh.settings."github.com" = {
