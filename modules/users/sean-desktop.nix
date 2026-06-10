@@ -13,6 +13,7 @@
       application-launcher
       bar
       browser
+      calc
       discord
       filesharing
       gtk
