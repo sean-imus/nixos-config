@@ -107,6 +107,18 @@
     "Mod+Right" = {
       action."focus-column-right" = [ ];
     };
+    "Mod+H" = {
+      action."focus-column-left" = [ ];
+    };
+    "Mod+J" = {
+      action."focus-window-or-workspace-down" = [ ];
+    };
+    "Mod+K" = {
+      action."focus-window-or-workspace-up" = [ ];
+    };
+    "Mod+L" = {
+      action."focus-column-right" = [ ];
+    };
 
     "Mod+Ctrl+Left" = {
       action."move-column-left" = [ ];
@@ -118,6 +130,18 @@
       action."move-window-up-or-to-workspace-up" = [ ];
     };
     "Mod+Ctrl+Right" = {
+      action."move-column-right" = [ ];
+    };
+    "Mod+Ctrl+H" = {
+      action."move-column-left" = [ ];
+    };
+    "Mod+Ctrl+J" = {
+      action."move-window-down-or-to-workspace-down" = [ ];
+    };
+    "Mod+Ctrl+K" = {
+      action."move-window-up-or-to-workspace-up" = [ ];
+    };
+    "Mod+Ctrl+L" = {
       action."move-column-right" = [ ];
     };
 
@@ -133,6 +157,18 @@
     "Mod+Shift+Right" = {
       action."focus-monitor-right" = [ ];
     };
+    "Mod+Shift+H" = {
+      action."focus-monitor-left" = [ ];
+    };
+    "Mod+Shift+J" = {
+      action."focus-monitor-down" = [ ];
+    };
+    "Mod+Shift+K" = {
+      action."focus-monitor-up" = [ ];
+    };
+    "Mod+Shift+L" = {
+      action."focus-monitor-right" = [ ];
+    };
 
     "Mod+Shift+Ctrl+Left" = {
       action."move-column-to-monitor-left" = [ ];
@@ -144,6 +180,18 @@
       action."move-column-to-monitor-up" = [ ];
     };
     "Mod+Shift+Ctrl+Right" = {
+      action."move-column-to-monitor-right" = [ ];
+    };
+    "Mod+Shift+Ctrl+H" = {
+      action."move-column-to-monitor-left" = [ ];
+    };
+    "Mod+Shift+Ctrl+J" = {
+      action."move-column-to-monitor-down" = [ ];
+    };
+    "Mod+Shift+Ctrl+K" = {
+      action."move-column-to-monitor-up" = [ ];
+    };
+    "Mod+Shift+Ctrl+L" = {
       action."move-column-to-monitor-right" = [ ];
     };
 
@@ -274,7 +322,7 @@
       action."switch-focus-between-floating-and-tiling" = [ ];
     };
 
-    "Mod+H" = {
+    "Mod+Y" = {
       action.spawn = [
         "sh"
         "-c"
