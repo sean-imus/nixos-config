@@ -16,6 +16,8 @@
         };
 
         settings = {
+          viewMode = "focus";
+
           hooks = {
             PostToolUse = [
               {
