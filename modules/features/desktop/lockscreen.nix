@@ -17,11 +17,13 @@
 
           background = [
             {
-              color = "rgba(000000ff)";
+              path = "screenshot";
+              blur_passes = 2;
+              blur_size = 7;
+              brightness = 0.75;
             }
           ];
 
-          # Clock
           label = [
             {
               text = "$TIME";
@@ -32,7 +34,6 @@
               halign = "center";
               valign = "center";
             }
-            # Date
             {
               text = ''cmd[update:60000] date +"%A, %d %B"'';
               font_size = 22;
