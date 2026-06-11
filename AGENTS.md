@@ -91,6 +91,31 @@ User-specific data (git identity, bookmarks, extra packages) goes in `users/<use
 
 Individual user configs (e.g., `users/sean.nix`) import the template and handle all user-specific config directly — account creation, features, git identity, packages.
 
+## Commits
+
+Commit once per completed request — not after every file edit. When a user asks for a specific change, make all edits, verify the build, then commit as a single atomic unit.
+
+### Format
+
+```
+<type>(<scope>): <short description>
+```
+
+- **type**: `feat`, `fix`, `refactor`, `chore`, `docs`
+- **scope**: the feature or module area (e.g. `notebook`, `dns`, `lockscreen`, `filesharing`)
+- **description**: lowercase, imperative, no period — describe *what* changed, not *why*
+
+### Examples (from this repo)
+
+```
+feat(notebook): suspend-then-hibernate on lid close
+feat(dns): force Cloudflare DNS-over-TLS system-wide
+feat(filesharing): restrict localsend ports to tailscale
+feat(lockscreen): replace swaylock with hyprlock
+```
+
+Keep the description concrete — name the package or behavior that changed, not the file.
+
 ## Key Commands
 
 | Command | Purpose |
