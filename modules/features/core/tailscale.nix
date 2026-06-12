@@ -1,9 +1,20 @@
-{ ... }:
+{ inputs, ... }:
 {
   flake.modules.nixos.tailscale =
-    { ... }:
+    { config, ... }:
     {
-      services.tailscale.enable = false;
+      imports = [ inputs.self.modules.nixos.sops ];
+
+      sops.secrets.tailscale_authkey = { };
+
+      services.tailscale = {
+        enable = true;
+        authKeyFile = config.sops.secrets.tailscale_authkey.path;
+        extraUpFlags = [
+          "--accept-routes=false"
+          "--accept-dns=false"
+        ];
+      };
 
       networking.firewall.trustedInterfaces = [ "tailscale0" ];
     };

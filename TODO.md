@@ -1,3 +1,1 @@
-- fix tailscale module killing internet connectivity
-- dont preserver tailscale folder, use sops to manage auth
 - fix theming

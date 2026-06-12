@@ -23,4 +23,17 @@
       };
 
     };
+
+  flake.modules.nixos.sops =
+    { pkgs, ... }:
+    {
+      imports = [ inputs.sops-nix.nixosModules.sops ];
+
+      sops = {
+        defaultSopsFile = ./secrets.yaml;
+        age.keyFile = "/home/sean/.ssh/sops_age_key";
+      };
+
+      environment.systemPackages = [ pkgs.sops ];
+    };
 }
