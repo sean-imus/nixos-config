@@ -53,10 +53,12 @@
       services.logind.settings.Login = {
         HandleLidSwitch = "suspend-then-hibernate";
         HandleLidSwitchExternalPower = "suspend-then-hibernate";
+        HandleLidSwitchDocked = "ignore";
       };
 
       systemd.sleep.settings.Sleep = {
         HibernateOnACPower = false;
+        HibernateDelaySec = 3600;
       };
 
       home-manager.users.sean.programs.niri.settings.outputs = {

@@ -1,11 +1,22 @@
 { ... }:
 {
+  flake.modules.nixos.lockscreen =
+    { ... }:
+    {
+      security.pam.services.hyprlock = { };
+    };
+
   flake.modules.homeManager.lockscreen =
     {
       lib,
       config,
+      pkgs,
       ...
     }:
+    let
+      lockCmd = lib.getExe config.programs.hyprlock.package;
+      suspendCmd = "${pkgs.systemd}/bin/systemctl suspend-then-hibernate";
+    in
     {
       programs.hyprlock = {
         enable = true;
@@ -64,8 +75,26 @@
         };
       };
 
+      services.swayidle = {
+        enable = true;
+        timeouts = [
+          {
+            timeout = 300;
+            command = lockCmd;
+          }
+          {
+            timeout = 1200;
+            command = suspendCmd;
+          }
+        ];
+        events = {
+          before-sleep = lockCmd;
+          lock = lockCmd;
+        };
+      };
+
       programs.niri.settings.binds."Super+Alt+L" = {
-        action.spawn = lib.getExe config.programs.hyprlock.package;
+        action.spawn = lockCmd;
       };
     };
 }

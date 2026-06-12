@@ -7,6 +7,7 @@
       rdp-work
       printing
       filesharing
+      lockscreen
     ];
 
     home-manager.users.sean.imports = with inputs.self.modules.homeManager; [
