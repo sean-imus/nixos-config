@@ -16,6 +16,7 @@
       calc
       discord
       filesharing
+      games
       gtk
       lockscreen
       notifications
