@@ -15,7 +15,6 @@
         enable = true;
         preserveAt."/persist" = {
           directories = [
-            "/etc/NetworkManager/system-connections"
             "/var/lib/systemd/timers"
             "/var/lib/libvirt/" # Needed for VM Storage, custom Networks and such, ugly but necessery
           ];

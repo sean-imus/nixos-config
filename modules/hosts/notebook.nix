@@ -10,6 +10,7 @@
         qemu
         sean-desktop
         tailscale
+        wifi
       ];
 
       hostCfg = {

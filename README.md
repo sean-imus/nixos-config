@@ -1,67 +1,87 @@
 # nixos-config
-## 3 min read, probably a lot more to fully understand.
 
-My personal NixOS configuration for my notebook and a VM. All managed by a single repo.
+> One repo. Two machines. Zero manual steps after install.
+
+My personal NixOS configuration for a notebook and a VM — every OS setting, package, disk layout, secret, and dotfile declared as code and version-controlled.
+
+---
 
 ## What is this? (for non-Nix people)
 
-Most operating systems work like a backpack: you keep throwing things in, and over months or years it gets heavier, messier, and you're never quite sure what's in there. If something breaks, good luck figuring out what changed. Trying to migrate to a different PC? Wanting to use multiple PCs concurrently? Need to reinstall your system for whatever reason? Hell on Earth on other OSes compared to how I manage it.
+Most operating systems work like a backpack: you keep throwing things in, and over months or years it gets heavier, messier, and you're never quite sure what's in there. If something breaks, good luck figuring out what changed. Migrating to a new PC? Reinstalling from scratch? Running two machines in sync? A nightmare on conventional systems. Here's how I handle it instead.
 
-My entire operating system: disk layout, installed programs, desktop environment, users and all their configurations, settings, everything is **defined as code in a single Git repository**. This makes it transferable, immutable, and most importantly, reproducible.
+**Everything is code.** Disk layout, installed programs, desktop environment, users, dotfiles, Wi-Fi passwords, SSH keys — all of it lives in this repository as Nix expressions. The system is what the repo says it is. Nothing more.
 
-**Nothing else sticks unless you opt in.** The system root is wiped on every reboot. That means no orphaned config files, no dependency rot, no accumulated junk. Only what you explicitly declare gets preserved: things like SSH keys, Wi-Fi passwords, audio settings, and anything you put in `~/persist`. Browser cache, downloads, those screenshots you forgot, all gone. A factory reset every time you turn it on, but your actual important stuff is still there. This is the closest one will ever get to having one central location depicting the entire truth of their operating system. What is not declared in this repo **will not** exist after a reboot. This is powerful and lets you experiment however much you like. Break your SSH config? Reboot. Delete your entire home directory? Reboot. It will be like nothing ever happened. 
+**Nothing sticks unless you opt in.** The system root is wiped on every reboot. No orphaned config files, no dependency rot, no accumulated junk. Only what you explicitly declare survives. Browser cache, stray downloads, forgotten screenshots — gone. A clean slate every boot, with your actual important stuff intact. This is the closest you'll ever get to a single source of truth for your entire operating system.
 
-**Total peace of mind.** Every system rebuild creates a new immutable "generation" that sits next to all previous ones in your boot menu. You edited your NixOS config and something broke? Reboot and pick the last working generation. Experiment backfired? Same thing. You can't lose your system. There's always a working entry to fall back to. And if your drive dies or you get a new laptop, two commands rebuild the *exact* same system from scratch, just like rebooting a totally working system. No manual disk setup, no "I forgot what I had installed," no drift from what worked before.
+**You can't lose your system.** Every rebuild produces a new immutable generation sitting next to all previous ones in the boot menu. Broke something? Boot the last working entry. Experiment backfired? Same. Drive died? Restore the age key, run two commands, get the exact same system back.
 
-**What's in this config:**
+---
 
-| Layer | What it does |
-|-------|-------------|
-| Disk | LUKS encryption, Btrfs, tmpfs root (ephemeral `/`) |
-| System | systemd-boot, networkmanager |
-| Desktop | Niri, Waybar, Alacritty, Neovim, qutebrowser, Vesktop |
-| User | zsh, Neovim plugins, Firefox bookmarks + extensions, etc. |
-| Services | printing, QEMU VMs, remote desktop via xrdp, PipeWire audio, Bluetooth, etc. |
-| Persistence | opt-in only: SSH keys, Wi-Fi passwords, audio config, and `~/persist` |
+## What's in here
 
-## How?
+| Layer | Details |
+|---|---|
+| Disk | LUKS encryption · Btrfs subvolumes · tmpfs root (ephemeral `/`) · declarative partitioning via disko |
+| Boot | systemd-boot · per-generation entries |
+| Network | NetworkManager · systemd-resolved with DNS-over-TLS · Tailscale · declarative Wi-Fi profiles |
+| Desktop | Niri compositor · Waybar · Alacritty · qutebrowser · Vesktop · fuzzel |
+| Shell | zsh · starship · fzf history search · bat |
+| Editor | Neovim via nixvim |
+| Services | PipeWire audio · Bluetooth · QEMU/libvirt · printing · RDP |
+| Secrets | sops-nix: SSH keys · login password · Wi-Fi PSKs — all encrypted at rest, decrypted at boot |
+| Persistence | opt-in only: age key · audio state · `~/persist` |
 
-Now that we have gotten the top-level stuff out of the way, let's talk about how all that nice-sounding stuff actually comes to life. Warning: it will be technical. Please ask your local Nix expert, the web, or even an AI about the terms I will be using here.
+---
 
-### **The Nix Language.**
-All the code you see in this repo was written in Nix. It's most commonly described as JSON with functions, but that doesn't do it justice. Its goal is to configure environments, nothing more, nothing less.
+## Highlights
 
-**NixOS** uses Nix to configure an entire operating system. But Nix itself is much broader: it compiles packages, builds dev environments (like Python venvs), or anything else in that nature. The ecosystem has grown enough that you can now declaratively set up an Apple Mac with it too.
+**Declarative Wi-Fi.** Passwords live in `secrets.yaml` as age-encrypted ciphertext — never plaintext, never in the Nix store. At boot, sops-nix decrypts them to `/run/secrets/` (tmpfs) and `nm-file-secret-agent` hands them to NetworkManager at connect time. Adding a new network is one line of Nix and one line in the secrets file.
 
-**Nix flakes** take this further. A `flake.nix` file declares your dev environment: what shell to use, its config, what packages to install, and more. Want to work on a project on Arch that needs Python and some modules? Create a `flake.nix`, type `nix develop`, and you're dropped into a shell with everything ready. Your friend on Debian gets the exact same environment. The first run creates a `flake.lock` file that pins every dependency version, so nothing changes unless you explicitly run `nix flake update`.
+**Ephemeral root.** `/` is a tmpfs. Every boot is a clean slate. State you care about is explicitly listed and symlinked from `/persist`. Everything else disappears.
 
-### One repo, multiple machines
+**Instant rollback.** `nixos-rebuild switch` creates a new generation. If it breaks anything, the previous generation is one reboot away.
 
-Each host is just a file that picks which modules to import. The notebook gets the full desktop stack. The VM gets the same desktop with a few tweaks (Alt as mod key, virtio disk). Hardware differences are handled the same way — each host sets its own `diskoConfigDevice` to point at the right drive, its own kernel modules, its own swap size. Everything else is shared.
+**One age key, everything else follows.** The age key is the only secret that can't be stored in the repo. Everything else — SSH identities, passwords, Wi-Fi PSKs — is encrypted against it and provisions itself automatically on install.
 
-### Secrets in git, decrypted at boot
+---
 
-My SSH private key, API keys, and other sensitive data live in an encrypted `secrets.yaml` file that is committed to git as ciphertext. An age key stored on disk (and preserved across reboots) decrypts everything at activation time. sops-nix then places each secret at the correct path with the correct permissions automatically. Rotate the key? Generate a new one, re-encrypt, commit, rebuild. Done. Reinstall NixOS? Just restore the age key from backup and everything provisions itself.
+## How it works
 
-This is the one thing that isn't fully declarative: the age key has to exist on disk before sops can decrypt anything. But managing one key beats remembering where to put eight SSH keys and a dozen API tokens across a fresh install.
+### The Nix language
 
-### Disks as code
+All config is written in Nix: a purely functional, lazily evaluated language designed for describing environments. Think JSON with functions and imports. NixOS uses it to describe an entire OS. Home Manager uses it to describe a user environment. Both live here.
 
-No `fdisk`, no `cryptsetup`, no `mkfs.btrfs` during system installation. The entire disk layout (ESP partition, LUKS encryption, GPT, Btrfs subvolumes, encrypted swap) is defined as Nix code. A single parameter (`diskoConfigDevice`) changes between hosts to point at the right physical drive. The `disko` command partitions, formats, and mounts.
+### Flakes
+
+A `flake.nix` at the root pins every dependency (nixpkgs, home-manager, sops-nix, disko, …) to exact commits via `flake.lock`. Every machine builds from the same locked inputs. No surprises from upstream.
+
+### One repo, two machines
+
+Each host is a file that imports whichever modules it needs. The notebook gets the full desktop stack. The VM gets the same desktop with minor tweaks (Alt as mod, virtio disk). Hardware differences (disk ID, kernel modules, swap size, display layout) are per-host. Everything else is shared.
+
+### Secrets: encrypted in git, decrypted at boot
+
+`modules/features/secrets/secrets.yaml` is committed as age-encrypted ciphertext. sops-nix decrypts it during activation and places each secret at the right path with the right permissions. The age key lives on disk at `~/.config/sops/age/keys.txt` (preserved across reboots, backed up to USB). It's the one secret that must exist before anything else can be decrypted.
+
+### Ephemeral root via tmpfs
+
+`/` is mounted as tmpfs and wiped on every reboot. The `preservation` module maintains an explicit list of directories and files to bind-mount from `/persist`. Anything not on that list is gone after a reboot — intentionally.
+
+---
 
 ## Installation
 
 **This wipes the entire target disk.**
 
-```
+```bash
 # 0. Boot a NixOS ISO
 
-# 1. Format and partition the disk
+# 1. Partition and format
 nix-shell -p disko
-sudo disko --mode disko --flake github:sean-imus/nixos-config#[notebook/vm]
+sudo disko --mode disko --flake github:sean-imus/nixos-config#[notebook|vm]
 
-# 2. Copy the sops age key from USB
-#    (required to decrypt secrets — including the login password — during install)
+# 2. Copy the age key from USB (needed to decrypt secrets during install)
 lsblk   # find your USB device
 mkdir -p /mnt/usb && mount /dev/sdX1 /mnt/usb
 mkdir -p /mnt/persist/home/sean/.config/sops/age
@@ -69,6 +89,6 @@ cp /mnt/usb/keys.txt /mnt/persist/home/sean/.config/sops/age/keys.txt
 chmod 600 /mnt/persist/home/sean/.config/sops/age/keys.txt
 umount /mnt/usb
 
-# 3. Install System (builds directly on the target disk, not the ISO)
-sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#[notebook/vm]
+# 3. Install
+sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#[notebook|vm]
 ```
