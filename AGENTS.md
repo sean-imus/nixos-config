@@ -198,14 +198,15 @@ Commit, rebuild.
 
 ### Fresh install bootstrap
 
-```bash
-# Restore ~/.ssh/sops_age_key from backup, OR:
-age-keygen -o ~/.ssh/sops_age_key &&              # generate new key
-  age-keygen -y ~/.ssh/sops_age_key               # get public key → update .sops.yaml
+The age key lives on a USB drive. See the **Fresh Install** section — copy it before `nixos-install`.
 
-# Re-encrypt secrets against the new key if needed, then:
-sudo nixos-rebuild switch --flake .#notebook
+If the age key is **lost permanently**, generate a new one:
+```bash
+age-keygen -o ~/.ssh/sops_age_key
+age-keygen -y ~/.ssh/sops_age_key   # prints public key → update the recipient in secrets.yaml
+nix run nixpkgs#sops -- --rotate --age <new-public-key> modules/features/secrets/secrets.yaml
 ```
+Commit the re-encrypted `secrets.yaml`, then follow the fresh install steps.
 
 ## Neovim (nixvim)
 
@@ -267,13 +268,26 @@ Disk (NVMe by-id)
 nix-shell -p disko
 sudo disko --mode disko --flake github:sean-imus/nixos-config#[notebook/vm]
 
-# 2. Install (builds into /mnt/nix/store on the target disk)
+# 2. Copy the sops age key from USB before installing
+#    (sops-nix needs it during nixos-install activation to decrypt the password hash)
+#    disko leaves /persist mounted at /mnt/persist
+lsblk   # find your USB device, e.g. /dev/sda1
+mkdir -p /mnt/usb
+mount /dev/sda1 /mnt/usb   # adjust device name
+mkdir -p /mnt/persist/home/sean/.ssh
+cp /mnt/usb/sops_age_key /mnt/persist/home/sean/.ssh/sops_age_key
+chmod 700 /mnt/persist/home/sean/.ssh
+chmod 600 /mnt/persist/home/sean/.ssh/sops_age_key
+umount /mnt/usb
+
+# 3. Install (builds into /mnt/nix/store on the target disk)
 sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#[notebook/vm]
 ```
 
 **Install flow:**
 1. `disko` prompts for LUKS password, partitions, formats, and mounts everything under `/mnt`
-2. `nixos-install` builds the system closure directly into `/mnt/nix/store` and installs the bootloader
+2. Age key copied from USB to `/mnt/persist/home/sean/.ssh/sops_age_key` — sops-nix reads this during activation to decrypt the password hash (via `neededForUsers`). Without it the install fails.
+3. `nixos-install` builds the system closure directly into `/mnt/nix/store` and installs the bootloader
 
 ### Post-Install Workflow
 
