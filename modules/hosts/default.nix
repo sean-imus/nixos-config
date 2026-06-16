@@ -65,6 +65,7 @@
           services.xserver.xkb.options = "caps:escape";
 
           nix = {
+            channel.enable = false;
             settings = {
               download-buffer-size = 536870912;
               experimental-features = [
@@ -82,6 +83,9 @@
               dates = "weekly";
             };
           };
+
+          documentation.nixos.enable = false;
+          documentation.doc.enable = false;
 
           zramSwap = {
             enable = true;
