@@ -1,0 +1,1 @@
+- make modules more self contained again, like having the sean age key not in persistence.nix preserved but in sean.nix, goal is to have modules providing functionality and then having stuff use that functionality, but also keep modules more or less self contained, confusing stuff, need to figure it out
