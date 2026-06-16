@@ -1,8 +1,10 @@
 { ... }:
 {
   flake.modules.homeManager.calc =
-    { ... }:
+    { pkgs, ... }:
     {
+      home.packages = [ pkgs.python3 ];
+
       programs.niri.settings = {
         binds."XF86Calculator" = {
           action.spawn = [
@@ -10,9 +12,7 @@
             "--class"
             "calc"
             "-e"
-            "sh"
-            "-c"
-            "nix run nixpkgs#python314 && exit"
+            "python3"
           ];
         };
 
