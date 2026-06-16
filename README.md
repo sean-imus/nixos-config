@@ -56,10 +56,19 @@ No `fdisk`, no `cryptsetup`, no `mkfs.btrfs` during system installation. The ent
 ```
 # 0. Boot a NixOS ISO
 
-# 1. Format Drive
+# 1. Format and partition the disk
 nix-shell -p disko
 sudo disko --mode disko --flake github:sean-imus/nixos-config#[notebook/vm]
 
-# 2. Install System (builds directly on the target disk, not the ISO)
+# 2. Copy the sops age key from USB
+#    (required to decrypt secrets — including the login password — during install)
+lsblk   # find your USB device
+mkdir -p /mnt/usb && mount /dev/sdX1 /mnt/usb
+mkdir -p /mnt/persist/home/sean/.config/sops/age
+cp /mnt/usb/keys.txt /mnt/persist/home/sean/.config/sops/age/keys.txt
+chmod 600 /mnt/persist/home/sean/.config/sops/age/keys.txt
+umount /mnt/usb
+
+# 3. Install System (builds directly on the target disk, not the ISO)
 sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#[notebook/vm]
 ```
