@@ -95,7 +95,11 @@
 
           system.stateVersion = "25.11";
           nixpkgs.config.allowUnfreePredicate = lib.mkDefault (
-            pkg: builtins.elem (lib.getName pkg) [ "claude-code" ]
+            pkg:
+            builtins.elem (lib.getName pkg) [
+              "claude-code"
+              "libfprint-2-tod1-elan"
+            ]
           );
 
           programs.zsh.enable = true;

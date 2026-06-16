@@ -139,6 +139,7 @@ nix run nixpkgs#sops -- --rotate --age <new-public-key> \
 **Persists** (on `/persist`, LUKS-encrypted BTRFS):
 - `/etc/NetworkManager/system-connections` — WiFi passwords
 - `/etc/machine-id` — stable machine identity
+- `/var/lib/fprint/` — enrolled fingerprints
 - `~/.config/sops/age/keys.txt` — age decryption key
 - `~/.local/state/wireplumber` — audio device preferences
 - `~/persist/` — your personal files (bind-mounted from `/persist/home/sean/persist`)
@@ -155,6 +156,26 @@ They survive reboots automatically once you connect once.
 
 If you want WiFi passwords declarative and in the repo (managed via sops), that's possible with
 `networking.networkmanager.ensureProfiles` + sops secrets, but is a separate task.
+
+---
+
+## Fingerprint sensor
+
+Fingerprints are stored in `/var/lib/fprint/` (persisted). Re-enroll on a fresh install.
+
+```bash
+fprintd-enroll -f right-index-finger sean   # enroll one finger
+fprintd-verify sean                          # test it
+```
+
+Available finger names: `right-thumb`, `right-index-finger`, `right-middle-finger`, `right-ring-finger`, `right-little-finger`, and `left-*` equivalents.
+
+Enroll a second finger (e.g. left index) for redundancy:
+```bash
+fprintd-enroll -f left-index-finger sean
+```
+
+Once enrolled, fingerprint works for `sudo` and the lock screen automatically.
 
 ---
 
@@ -177,4 +198,7 @@ umount /mnt/usb
 # 3. Install
 sudo nixos-install --no-channel-copy --no-root-password \
   --flake github:sean-imus/nixos-config#notebook
+
+# 4. After first boot — enroll fingerprints
+fprintd-enroll -f right-index-finger sean
 ```
