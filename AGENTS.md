@@ -208,6 +208,57 @@ nix run nixpkgs#sops -- --rotate --age <new-public-key> modules/features/secrets
 ```
 Commit the re-encrypted `secrets.yaml`, then follow the fresh install steps.
 
+## Declarative WiFi (NM ensureProfiles)
+
+Wi-Fi profiles are declared in `modules/features/desktop/wifi.nix` via `networking.networkmanager.ensureProfiles`. PSKs come from sops secrets injected by `nm-file-secret-agent` at connect time.
+
+**Critical: `psk-flags = 1` is required.** Without it, NM expects the PSK inline in the keyfile, finds nothing, and silently connects with no password. `psk-flags = 1` (agent-owned) tells NM to ask the secret agent instead.
+
+```nix
+wifi-security = {
+  key-mgmt = "wpa-psk";
+  psk-flags = 1;  # must be set — tells NM to ask nm-file-secret-agent
+};
+```
+
+The secrets entry pattern for WPA-PSK:
+```nix
+secrets.entries = [{
+  file = config.sops.secrets.wifi_home_psk.path;
+  key = "psk";
+  matchId = "home-wifi";       # must match connection.id in the profile
+  matchSetting = "wifi-security";
+  matchType = "wifi";
+  trim = true;                 # strips trailing newline from the secret file
+}];
+```
+
+Open networks (no password): omit `wifi-security` entirely and add no secrets entry.
+
+`key-mgmt = "wpa-psk"` negotiates the highest security the AP supports (WPA3/SAE if available, WPA2 otherwise). It does not lock to WPA2.
+
+NM profiles are recreated on every activation — `/etc/NetworkManager/system-connections` does **not** need to be persisted.
+
+## Waybar custom modules
+
+Custom modules use `"custom/<name>"` in the settings and `#custom-<name>` in CSS (note: dash not slash).
+
+For instant refresh on a user action (e.g. clicking cycles a value), use signals instead of polling:
+- Set `signal = N` (1–9) in the module config and `interval = "once"` — the exec script runs at startup only
+- After the action script changes state, call `pkill -RTMIN+N waybar` to trigger a re-run
+- Each module should use a distinct signal number to avoid cross-module refreshes
+
+Example (power profile widget, signal 9):
+```nix
+"custom/perf" = {
+  exec = "perf-status";   # outputs {"text":"...","class":"..."}
+  signal = 9;
+  interval = "once";
+  return-type = "json";
+  on-click = "power-toggle";  # power-toggle ends with: pkill -RTMIN+9 waybar
+};
+```
+
 ## Neovim (nixvim)
 
 Neovim is configured via **[nixvim](https://nix-community.github.io/nixvim)** (github:nix-community/nixvim), a fully declarative Neovim module system. The config lives in `modules/features/dev/neovim.nix`.
@@ -255,7 +306,7 @@ Disk (NVMe by-id)
 | File | Purpose |
 |------|---------|
 | `modules/features/storage/disko.nix` | GPT + LUKS + nested GPT (swap + BTRFS subvols) + tmpfs root; parameterized `diskoConfigDevice` option |
-| `modules/features/storage/persistence.nix` | Preservation config: /etc/NetworkManager/system-connections, /var/lib/systemd/timers, /var/lib/libvirt/, /etc/machine-id, user ~/.config/sops/age/keys.txt, ~/.local/state/wireplumber, ~/persist |
+| `modules/features/storage/persistence.nix` | Preservation config: /var/lib/systemd/timers, /var/lib/libvirt/, /etc/machine-id, user ~/.config/sops/age/keys.txt, ~/.local/state/wireplumber, ~/persist |
 | `modules/hosts/notebook.nix` | Sets `diskoConfigDevice` to by-id NVMe path, imports disko + persistence |
 | `modules/hosts/vm.nix` | Sets `diskoConfigDevice` to virtio path, imports disko + persistence |
 
