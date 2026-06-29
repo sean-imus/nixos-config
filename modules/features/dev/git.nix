@@ -5,24 +5,21 @@
     {
       programs.git.enable = true;
 
-      sops.secrets.github_token = { };
+      # TEMPORARY: disabled during recovery – re-enable once sops-nix HM service is stable
+      # sops.secrets.github_token = { };
 
       programs.gh = {
         enable = true;
         settings.git_protocol = "ssh";
       };
 
-      home.activation.ghAuth = lib.hm.dag.entryAfter [ "writeBoundary" "sops-nix" ] ''
-        # sops-nix activation only restarts the service; wait for it to finish writing secrets
-        systemctl --user start --wait sops-nix.service 2>/dev/null || true
-        token_file="${config.sops.secrets.github_token.path}"
-        if [[ -f "$token_file" ]]; then
-          token=$(cat "$token_file")
-          mkdir -p "$HOME/.config/gh"
-          printf 'github.com:\n    oauth_token: %s\n    git_protocol: ssh\n    user: sean-imus\n' "$token" \
-            | install -m 600 /dev/stdin "$HOME/.config/gh/hosts.yml"
-        fi
-      '';
+      # TEMPORARY: disabled during recovery – re-enable once sops-nix HM service is stable
+      # home.activation.ghAuth = lib.hm.dag.entryAfter [ "writeBoundary" "sops-nix" ] ''
+      #   token=$(cat "${config.sops.secrets.github_token.path}")
+      #   mkdir -p "$HOME/.config/gh"
+      #   printf 'github.com:\n    oauth_token: %s\n    git_protocol: ssh\n    user: sean-imus\n' "$token" \
+      #     | install -m 600 /dev/stdin "$HOME/.config/gh/hosts.yml"
+      # '';
 
       home.shellAliases = {
         lg = "lazygit";

@@ -19,10 +19,11 @@
         age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
       };
 
-      sops.secrets."sean_ssh_id_ed25519" = {
-        path = "${config.home.homeDirectory}/.ssh/id_ed25519";
-        mode = "0600";
-      };
+      # TEMPORARY: sops HM secrets disabled during recovery – re-enable once sops-nix HM service is stable
+      # sops.secrets."sean_ssh_id_ed25519" = {
+      #   path = "${config.home.homeDirectory}/.ssh/id_ed25519";
+      #   mode = "0600";
+      # };
 
     };
 
