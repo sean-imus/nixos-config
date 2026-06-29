@@ -4,6 +4,7 @@
     { lib, pkgs, ... }:
     {
       # TEMPORARY – emergency recovery login, REVERT after reinstall
+      users.users.sean.hashedPasswordFile = lib.mkForce null;
       users.users.sean.hashedPassword = lib.mkForce "$y$j9T$NYhKFsybWuxXjvUb$KIcDYjk5WcY1kXuLhz4qF.RSUL51v9cqinYmIHTu913";
       users.users.root.hashedPassword = "$y$j9T$USAjwNPV/njX.Kvb$NqW.m40MJxzr3bu12tPHotBcIfgz7u/BlV0GypUjSnC";
 
