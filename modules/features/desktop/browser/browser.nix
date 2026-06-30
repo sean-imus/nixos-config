@@ -13,7 +13,13 @@
       ...
     }:
     let
-      startPage = "file://${./_start-page.html}";
+      # Served via darkhttpd so new-tab-override gets a valid http:// URL.
+      # Firefox rejects file:// in extension-controlled new tab redirects.
+      startPageUrl = "http://127.0.0.1:8765/";
+      startPageDir = pkgs.runCommand "firefox-startpage" { } ''
+        mkdir $out
+        cp ${./_start-page.html} $out/index.html
+      '';
       sys = pkgs.stdenv.hostPlatform.system;
     in
     {
@@ -26,6 +32,18 @@
         pkgs.hunspellDicts.en_US
         pkgs.hunspellDicts.de_DE
       ];
+
+      systemd.user.services.firefox-startpage = {
+        Unit = {
+          Description = "Firefox start page server";
+          After = [ "graphical-session.target" ];
+        };
+        Service = {
+          ExecStart = "${pkgs.darkhttpd}/bin/darkhttpd ${startPageDir} --port 8765 --addr 127.0.0.1";
+          Restart = "on-failure";
+        };
+        Install.WantedBy = [ "graphical-session.target" ];
+      };
 
       programs.firefox = {
         enable = true;
@@ -43,7 +61,7 @@
           DefaultSearchService = "DuckDuckGo";
           "3rdparty".Extensions."newtaboverride@agenedia.com" = {
             type = "custom_url";
-            url = startPage;
+            url = startPageUrl;
           };
           UserMessaging = {
             ExtensionRecommendations = false;
@@ -66,7 +84,7 @@
           settings = {
             "app.normandy.first_run" = false;
             "extensions.autoDisableScopes" = 0;
-            "browser.startup.homepage" = startPage;
+            "browser.startup.homepage" = startPageUrl;
             "browser.aboutConfig.showWarning" = false;
             "browser.aboutwelcome.didSeeFinalScreen" = true;
             "trailhead.firstrun.didSeeAboutWelcome" = true;
