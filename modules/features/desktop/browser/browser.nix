@@ -1,151 +1,184 @@
-{ ... }:
-let
-  startPage = "file://${./_start-page.html}";
-in
+{ inputs, ... }:
 {
+  flake-file.inputs.nix-firefox-addons = {
+    url = "github:OsiPog/nix-firefox-addons";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   flake.modules.homeManager.browser =
-    { pkgs, config, ... }:
     {
-      programs.qutebrowser = {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    let
+      startPage = "file://${./_start-page.html}";
+      sys = pkgs.stdenv.hostPlatform.system;
+    in
+    {
+      home.packages = with pkgs; [
+        hunspellDicts.en_US
+        hunspellDicts.de_DE
+      ];
+
+      home.sessionVariables.DICPATH = lib.makeSearchPath "share/hunspell" [
+        pkgs.hunspellDicts.en_US
+        pkgs.hunspellDicts.de_DE
+      ];
+
+      programs.firefox = {
         enable = true;
-        package = pkgs.qutebrowser;
+        configPath = ".mozilla/firefox";
 
-        searchEngines = {
-          DEFAULT = "https://duckduckgo.com/?q={}";
-          ns = "https://search.nixos.org/options?channel=unstable&include_home_manager_options=1&include_modular_service_options=1&include_nixos_options=1&query={}";
-          np = "https://search.nixos.org/packages?channel=unstable&query={}";
-          gh = "https://github.com/search?q={}&type=repositories";
+        policies = {
+          DisableProfileImport = true;
+          OverrideFirstRunPage = "";
+          OverridePostUpdatePage = "";
+          SkipTermsOfUse = true;
+          DontCheckDefaultBrowser = true;
+          DisableTelemetry = true;
+          DisableFirefoxStudies = true;
+          DisablePocket = true;
+          DefaultSearchService = "DuckDuckGo";
+          UserMessaging = {
+            ExtensionRecommendations = false;
+            FeatureRecommendations = false;
+            UrlbarInterventions = false;
+            SkipOnboarding = true;
+            MoreFromMozilla = false;
+            FirefoxLabs = false;
+          };
+          FirefoxHome = {
+            Search = true;
+            TopSites = false;
+            SponsoredTopSites = false;
+            Highlights = false;
+            Snippets = false;
+          };
         };
 
-        quickmarks = {
-          oo = "https://outlook.cloud.microsoft/mail/";
-          tt = "https://teams.cloud.microsoft/";
-          td = "https://app.fizzy.do/6172759/boards/03fqfadkang7940o21lqrzl2e/columns/stream";
-          cp = "https://m365.cloud.microsoft/chat";
-          ma = "https://admin.cloud.microsoft/";
-          sa = "https://central.sophos.com/manage/overview/dashboard";
-          sw = "https://www.swyxon.com/ControlCenter";
-          em = "https://ms.hees.de/email_security/email_livetracking";
-          eg = "https://mein.einfachgast.de/live";
-          pe = "https://www.photopea.com/";
-          br = "https://www.remove.bg/";
-          gm = "https://app.diagrams.net/";
-        };
-
-        settings = {
-          url = {
-            start_pages = [ startPage ];
-            default_page = startPage;
-            open_base_url = true;
+        profiles.${config.home.username} = {
+          settings = {
+            "app.normandy.first_run" = false;
+            "extensions.autoDisableScopes" = 0;
+            "browser.startup.homepage" = startPage;
+            "browser.aboutConfig.showWarning" = false;
+            "browser.aboutwelcome.didSeeFinalScreen" = true;
+            "trailhead.firstrun.didSeeAboutWelcome" = true;
+            "doh-rollout.doneFirstRun" = true;
+            "browser.download.dir" = config.home.homeDirectory;
+            "browser.download.useDownloadDir" = false;
+            "browser.download.always_ask_before_handling" = true;
+            "browser.bookmarks.addedImportButton" = false;
+            "browser.shell.checkDefaultBrowser" = false;
+            "browser.toolbars.bookmarks.visibility" = "always";
+            "signon.rememberSignons" = false;
+            "browser.newtabpage.activity-stream.feeds.topsites" = false;
+            "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+            "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+            "sidebar.visibility" = "hide-sidebar";
+            "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
+            "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
+            "spellchecker.dictionary" = "en-US,de-DE";
+            "datareporting.policy.dataSubmissionPolicyBypassNotification" = true;
+            "browser.migration.didMigrate" = true;
+            "startup.homepage_welcome_url" = "";
+            "browser.uitour.enabled" = false;
+            "browser.disableResetPrompt" = true;
+            "browser.laterrun.enabled" = false;
           };
 
-          content = {
-            autoplay = false;
-            notifications.enabled = false;
-            javascript.clipboard = "access-paste";
-            blocking = {
-              enabled = true;
-              method = "both";
-              adblock.lists = [
-                "https://easylist.to/easylist/easylist.txt"
-                "https://easylist.to/easylist/easyprivacy.txt"
-                "https://easylist.to/easylistgermany/easylistgermany.txt"
-              ];
-              hosts.lists = [
-                "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-              ];
-            };
-            pdfjs = true;
-          };
-
-          downloads = {
-            location = {
-              directory = config.home.homeDirectory;
-              prompt = true;
-            };
-            position = "bottom";
-            remove_finished = 3000;
-          };
-
-          editor.command = [
-            "alacritty"
-            "--class"
-            "editor"
-            "-e"
-            "nvim"
-            "{file}"
-          ];
-
-          tabs = {
-            position = "top";
-            show = "multiple";
-            title.format = "{audio}{index}: {current_title}";
-            favicons.show = "never";
-            indicator.width = 0;
-          };
-
-          statusbar = {
-            show = "in-mode";
-            widgets = [
-              "keypress"
-              "url"
-              "scroll"
-              "history"
-              "tabs"
+          extensions = {
+            force = true;
+            packages = [
+              inputs.nix-firefox-addons.addons.${sys}.ublock-origin
+              inputs.nix-firefox-addons.addons.${sys}.vimium-ff
             ];
           };
 
-          scrolling.smooth = false;
-
-          fonts = {
-            default_family = "JetBrainsMono Nerd Font";
-            default_size = "10pt";
+          bookmarks = {
+            force = true;
+            settings = [
+              {
+                toolbar = true;
+                bookmarks = [
+                  {
+                    name = "NixOS";
+                    bookmarks = [
+                      {
+                        name = "NixOS Search";
+                        url = "https://search.nixos.org/options?channel=unstable&include_home_manager_options=1&include_modular_service_options=1&include_nixos_options=1";
+                      }
+                      {
+                        name = "Niri Wiki";
+                        url = "https://niri-wm.github.io/niri/";
+                      }
+                    ];
+                  }
+                  {
+                    name = "Work";
+                    bookmarks = [
+                      {
+                        name = "Outlook";
+                        url = "https://outlook.cloud.microsoft/mail/";
+                      }
+                      {
+                        name = "Teams";
+                        url = "https://teams.cloud.microsoft/";
+                      }
+                      {
+                        name = "To-Do";
+                        url = "https://app.fizzy.do/6172759/boards/03fqfadkang7940o21lqrzl2e/columns/stream";
+                      }
+                      {
+                        name = "Copilot";
+                        url = "https://m365.cloud.microsoft/chat";
+                      }
+                      {
+                        name = "Admin Center";
+                        url = "https://admin.cloud.microsoft/";
+                      }
+                      {
+                        name = "Sophos";
+                        url = "https://central.sophos.com/manage/overview/dashboard";
+                      }
+                      {
+                        name = "Swyx";
+                        url = "https://www.swyxon.com/ControlCenter";
+                      }
+                      {
+                        name = "Email Tracking";
+                        url = "https://ms.hees.de/email_security/email_livetracking";
+                      }
+                      {
+                        name = "EinfachGast";
+                        url = "https://mein.einfachgast.de/live";
+                      }
+                    ];
+                  }
+                  {
+                    name = "Tools";
+                    bookmarks = [
+                      {
+                        name = "Photopea";
+                        url = "https://www.photopea.com/";
+                      }
+                      {
+                        name = "Remove.bg";
+                        url = "https://www.remove.bg/";
+                      }
+                      {
+                        name = "Draw.io";
+                        url = "https://app.diagrams.net/";
+                      }
+                    ];
+                  }
+                ];
+              }
+            ];
           };
-
-          colors = {
-            webpage.darkmode.enabled = true;
-            webpage.preferred_color_scheme = "dark";
-          };
-
-          hints = {
-            chars = "asdfghjklqwertyuiopzxcvbnm";
-            uppercase = false;
-            scatter = true;
-          };
-
-          completion = {
-            height = "40%";
-            scrollbar.width = 0;
-            show = "auto";
-          };
-
-          session.lazy_restore = true;
-
-          keyhint.delay = 500;
-
-          messages.timeout = 3000;
-
-          confirm_quit = [ "downloads" ];
         };
-
-        keyBindings = {
-          normal = {
-            "<Ctrl+Shift+J>" = "tab-move +";
-            "<Ctrl+Shift+K>" = "tab-move -";
-            "xb" = "config-cycle statusbar.show always in-mode ;; config-cycle tabs.show always multiple";
-            "xh" = "config-cycle tabs.position left top";
-            "j" = "cmd-run-with-count 3 scroll down";
-            "k" = "cmd-run-with-count 3 scroll up";
-          };
-          insert = {
-            "<Ctrl+e>" = "edit-text";
-          };
-        };
-
-        extraConfig = ''
-          config.bind("M", "hint links spawn mpv {hint-url}")
-          config.bind(";M", "hint --rapid links spawn mpv {hint-url}")
-        '';
       };
     };
 }
