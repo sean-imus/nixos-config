@@ -23,7 +23,6 @@
       "cliphist list | fuzzel --dmenu --with-nth 2 | cliphist decode | wl-copy"
     ];
     "Mod+P".action.spawn = "power-toggle";
-    "Mod+Ctrl+Shift+C".action.spawn = "screencap";
   };
 
   programs.niri.settings.window-rules = [
@@ -97,8 +96,6 @@
     wiremix
     bluetui
     brightnessctl
-    wf-recorder
-    slurp
     wl-clipboard
     cliphist
     (pkgs.writeShellScriptBin "perf-status" ''
@@ -122,33 +119,6 @@
       esac
       busctl set-property net.hadess.PowerProfiles /net/hadess/PowerProfiles net.hadess.PowerProfiles ActiveProfile s "$next"
       pkill -RTMIN+9 waybar
-    '')
-    (pkgs.writeShellScriptBin "screencap" ''
-      STATE=/tmp/waybar-recording
-      PIDFILE=/tmp/screencap-pid
-      show() { echo '{"text": "●", "class": "recording", "tooltip": "Click to stop"}' > "$STATE"; pkill -RTMIN+8 waybar; }
-      hide() { rm -f "$STATE"; pkill -RTMIN+8 waybar; }
-      if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
-        kill "$(cat "$PIDFILE")"
-        sleep 0.2
-        hide
-        rm -f "$PIDFILE"
-        exit 0
-      fi
-      if pgrep -x slurp > /dev/null; then
-        exit 1
-      fi
-      geometry=$(slurp) || { hide; exit 1; }
-      if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
-        hide
-        exit 1
-      fi
-      show
-      wf-recorder -g "$geometry" -r 30 -c h264_vaapi -d /dev/dri/renderD128 -f "$HOME/Videos/screenrecord-$(date +%Y%m%d-%H%M%S).mp4" &
-      echo $! > "$PIDFILE"
-      wait $!
-      hide
-      rm -f "$PIDFILE"
     '')
   ];
 }

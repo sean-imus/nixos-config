@@ -25,6 +25,7 @@
       office-suite
       printing
       rdp-work
+      screencap
       terminal
       wallpaper
     ];
