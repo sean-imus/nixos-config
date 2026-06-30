@@ -30,12 +30,12 @@
         enable = true;
         extraPortals = [
           pkgs.xdg-desktop-portal-gtk
-          pkgs.xdg-desktop-portal-hyprland
+          pkgs.xdg-desktop-portal-luminous
         ];
-        config.common = {
+        config.niri = {
           default = "gtk";
-          "org.freedesktop.portal.ScreenCast" = "hyprland";
-          "org.freedesktop.portal.Screenshot" = "hyprland";
+          "org.freedesktop.impl.portal.ScreenCast" = "luminous";
+          "org.freedesktop.impl.portal.Screenshot" = "luminous";
         };
       };
     };
