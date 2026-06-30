@@ -8,6 +8,7 @@
       printing
       filesharing
       lockscreen
+      discord
     ];
 
     home-manager.users.sean.imports = with inputs.self.modules.homeManager; [

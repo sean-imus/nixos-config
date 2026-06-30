@@ -1,5 +1,10 @@
 { ... }:
 {
+  flake.modules.nixos.discord = {
+    # vesktop build dep; only used in a sandboxed build environment, not runtime
+    nixpkgs.config.permittedInsecurePackages = [ "pnpm-10.29.2" ];
+  };
+
   flake.modules.homeManager.discord = {
     programs.vesktop = {
       enable = true;
