@@ -13,6 +13,7 @@
         users.users.sean = {
           isNormalUser = true;
           description = "Sean Tietz";
+          linger = true;
           hashedPasswordFile = config.sops.secrets.sean_hashed_password.path;
           shell = pkgs.zsh;
           extraGroups = [

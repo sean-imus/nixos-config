@@ -226,12 +226,14 @@ The secrets entry pattern for WPA-PSK:
 secrets.entries = [{
   file = config.sops.secrets.wifi_home_psk.path;
   key = "psk";
-  matchId = "home-wifi";       # must match connection.id in the profile
-  matchSetting = "wifi-security";
-  matchType = "wifi";
-  trim = true;                 # strips trailing newline from the secret file
+  matchId = "home-wifi";                    # must match connection.id in the profile
+  matchSetting = "802-11-wireless-security"; # D-Bus name — NOT the nmcli alias "wifi-security"
+  matchType = "802-11-wireless";             # D-Bus name — NOT the nmcli alias "wifi"
+  trim = true;                              # strips trailing newline from the secret file
 }];
 ```
+
+**Gotcha: use D-Bus names, not nmcli aliases.** NM sends `settingName="802-11-wireless-security"` over D-Bus; `nm-file-secret-agent` does exact string matching against this. Using `"wifi-security"` or `"wifi"` silently fails — the agent logs `"no entries were configured that match the request"` and NM logs `"no secrets: No agents were available"`.
 
 Open networks (no password): omit `wifi-security` entirely and add no secrets entry.
 

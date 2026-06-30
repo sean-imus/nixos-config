@@ -12,7 +12,7 @@
         settings.git_protocol = "ssh";
       };
 
-      home.activation.ghAuth = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      home.activation.ghAuth = lib.hm.dag.entryAfter [ "writeBoundary" "sops-nix" ] ''
         tokenFile="${config.sops.secrets.github_token.path}"
         if [ -f "$tokenFile" ]; then
           token=$(cat "$tokenFile")

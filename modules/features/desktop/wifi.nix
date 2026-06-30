@@ -49,8 +49,8 @@
         file = config.sops.secrets.${secretKey name}.path;
         key = "psk";
         matchId = name;
-        matchSetting = "wifi-security";
-        matchType = "wifi";
+        matchSetting = "802-11-wireless-security";
+        matchType = "802-11-wireless";
         trim = true;
       };
     in
