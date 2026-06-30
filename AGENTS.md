@@ -1,6 +1,6 @@
 # AGENTS.md — NixOS Config
 
-Last updated: 2026-06-11
+Last updated: 2026-06-30
 
 Single-machine NixOS config using the **Dendritic Design** pattern with **flake-parts**.
 
@@ -26,19 +26,19 @@ modules/
 │   ├── core/                        ← always-on user features: btop, fastfetch, git, shell, sops, ssh; system: dns (cloudflare DoT), tailscale
 │   ├── desktop/                     ← desktop features
 │   │   ├── niri/                    ← niri compositor split into sub-modules
-│   │   │   ├── default.nix          ← core: NixOS module, input, layout, animations, window/layer rules
-│   │   │   ├── _keybindings.nix     ← all keybindings (media keys, navigation, workspace, app launchers)
-│   │   │   └── _utilities.nix       ← playerctld, hidden desktop entries, home packages + shell scripts
+│   │   │   ├── default.nix          ← NixOS module, xdg-desktop-portal (luminous), input, layout, animations, window rules
+│   │   │   ├── _keybindings.nix     ← pure WM actions only: media keys, focus/move/resize, workspaces, screenshots, quit
+│   │   │   └── _utilities.nix       ← playerctld, cliphist, wiremix, bluetui, power-toggle, hidden desktop entries
 │   │   ├── application-launcher.nix ← fuzzel
 │   │   ├── bar.nix                  ← waybar
-│   │   ├── browser/browser.nix      ← qutebrowser
+│   │   ├── browser/browser.nix      ← firefox
 │   │   ├── discord.nix              ← vesktop
 │   │   ├── filesharing.nix          ← localsend
 │   │   ├── lockscreen.nix           ← hyprlock
-│   │   ├── notifications.nix        ← mako
 │   │   ├── office-suite.nix         ← libreoffice
 │   │   ├── printing.nix             ← CUPS + SANE
 │   │   ├── rdp-work.nix             ← RDP work network profile (user-specific, exception to feature rules)
+│   │   ├── screencap.nix            ← wl-screenrec toggle script (slurp -o to pick output, fuzzel for audio)
 │   │   └── terminal.nix             ← alacritty
 │   ├── dev/                         ← dev tooling (always-on): neovim (nixvim), claude-code
 │   ├── secrets/                     ← sops-nix + encrypted secrets
@@ -64,7 +64,7 @@ Host (e.g. notebook.nix)
 
 - **Always on** (core): btop, fastfetch, git, shell, sops, ssh
 - **Always on** (dev): neovim (nixvim), claude-code
-- **Desktop** (imported via sean-desktop): niri, waybar, alacritty, qutebrowser, vesktop, localsend, libreoffice, hyprlock, fuzzel, mako, printing, rdp-work
+- **Desktop** (imported via sean-desktop): niri, waybar, alacritty, firefox, vesktop, localsend, libreoffice, hyprlock, fuzzel, screencap, printing, rdp-work
 
 ## Feature Module Pattern
 
@@ -252,6 +252,41 @@ Open networks (no password): omit `wifi-security` entirely and add no secrets en
 `key-mgmt = "wpa-psk"` negotiates the highest security the AP supports (WPA3/SAE if available, WPA2 otherwise). It does not lock to WPA2.
 
 NM profiles are recreated on every activation — `/etc/NetworkManager/system-connections` does **not** need to be persisted.
+
+## xdg-desktop-portal on niri
+
+niri (26.04+) uses `ext-image-copy-capture-v1` as its native capture protocol. This has several knock-on effects:
+
+**Portal backend:** use `xdg-desktop-portal-luminous` for ScreenCast/Screenshot — not `xdg-desktop-portal-hyprland` (requires Hyprland IPC) and not `xdg-desktop-portal-wlr` (never activates on niri).
+
+**Correct NixOS config in `niri/default.nix`:**
+```nix
+xdg.portal = {
+  enable = true;
+  extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-luminous ];
+  config.niri = {                                  # "niri" not "common" — creates niri-portals.conf
+    default = "gtk";
+    "org.freedesktop.impl.portal.ScreenCast" = "luminous";   # impl.portal.* not portal.*
+    "org.freedesktop.impl.portal.Screenshot" = "luminous";
+  };
+};
+```
+
+**Gotchas:**
+- `config.common` creates `portals.conf`; `config.niri` creates `niri-portals.conf`. Since `XDG_CURRENT_DESKTOP=niri`, xdp looks for `niri-portals.conf` first — use `config.niri`.
+- Interface keys must use the **impl** namespace: `org.freedesktop.impl.portal.ScreenCast`, not `org.freedesktop.portal.ScreenCast`. The wrong prefix silently matches nothing.
+- After a rebuild, stale xdp processes from manual testing can leave the service in a broken state. Fix with: `pkill -f "xdg-desktop-portal$"; systemctl --user start xdg-desktop-portal`
+- Debug portal routing: `G_MESSAGES_DEBUG=all /path/to/xdg-desktop-portal 2>&1 | grep -E "luminous|ScreenCast|config"`. The binary path is in the systemd unit: `systemctl --user cat xdg-desktop-portal`.
+
+## Screen recording on niri
+
+Use `wl-screenrec` directly — it speaks `ext-image-copy-capture-v1` natively, no portal involved. GUI apps like Kooha that go through the ScreenCast portal can work but behave oddly because the portal→wlroots capture layer is unreliable on niri.
+
+**Working config** (`screencap.nix`): `slurp -o` to visually click a monitor, fuzzel to prompt for audio, then `wl-screenrec -g "$geometry" --codec hevc -b 20MB -m 30`. Second keybind press kills the process via pidfile.
+
+**Codec:** `hevc` (not `hevc_vaapi` — wl-screenrec handles the vaapi suffix itself). Intel Iris Xe supports `hevc_vaapi` encoding. HEVC is significantly better than h264 for screen content (text, flat colors, UI). Valid values: `auto`, `avc`, `hevc`, `vp8`, `vp9`, `av1`.
+
+**Bitrate:** wl-screenrec uses VBR, so actual bitrate for static desktop content will be much lower than the ceiling — this is correct behavior, not a quality problem. Set a high ceiling (`20MB`) to allow the encoder to use what it needs for fast motion.
 
 ## Waybar custom modules
 
