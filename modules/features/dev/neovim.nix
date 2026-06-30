@@ -40,6 +40,7 @@
         };
 
         plugins = {
+          web-devicons.enable = true;
           gitsigns.enable = true;
           lazygit.enable = true;
           nvim-autopairs.enable = true;
