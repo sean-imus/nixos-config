@@ -3,6 +3,8 @@
   flake.modules.homeManager.application-launcher =
     { ... }:
     {
+      programs.niri.settings.binds."Mod+Space".action.spawn = "fuzzel";
+
       programs.fuzzel = {
         enable = true;
         settings = {

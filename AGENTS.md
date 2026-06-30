@@ -89,6 +89,18 @@ There is no shared user template. Each user is a self-contained pair:
 inline) and `modules/users/sean-desktop.nix` (layers the desktop HM modules on top).
 Hosts import `sean` or `sean-desktop` directly.
 
+## Keybinding Convention
+
+App-launching keybindings belong in the module that provides the app, following the `calc.nix` pattern:
+
+```nix
+programs.niri.settings.binds."Mod+X".action.spawn = "app-name";
+```
+
+This keeps each module self-contained — importing a feature automatically makes it keyboard-accessible without editing `_keybindings.nix`.
+
+Only pure WM actions belong in `_keybindings.nix`: focus/move/resize, workspaces, floating, screenshots, quit. If a keybind launches an app or toggles a tool, it lives in that tool's module.
+
 ## Commits
 
 Commit once per completed request — not after every file edit. When a user asks for a specific change, make all edits, verify the build, then commit as a single atomic unit.

@@ -84,9 +84,6 @@
       allow-when-locked = true;
     };
 
-    "Mod+Space" = {
-      action.spawn = "fuzzel";
-    };
     "Mod+O" = {
       action."toggle-overview" = [ ];
       repeat = false;
@@ -322,14 +319,6 @@
       action."switch-focus-between-floating-and-tiling" = [ ];
     };
 
-    "Mod+Y" = {
-      action.spawn = [
-        "sh"
-        "-c"
-        "cliphist list | fuzzel --dmenu --with-nth 2 | cliphist decode | wl-copy"
-      ];
-    };
-
     "Mod+C" = {
       action."screenshot" = [ ];
     };
@@ -349,60 +338,5 @@
       action."quit" = [ ];
     };
 
-    "Mod+T" = {
-      action.spawn = "alacritty";
-    };
-    "Mod+B" = {
-      action.spawn = "firefox";
-    };
-    "Mod+Ctrl+B" = {
-      action.spawn = [
-        "alacritty"
-        "--class"
-        "bluetui"
-        "-e"
-        "bluetui"
-      ];
-    };
-    "Mod+Ctrl+A" = {
-      action.spawn = [
-        "alacritty"
-        "--class"
-        "wiremix"
-        "-e"
-        "wiremix"
-        "-v"
-        "playback"
-      ];
-    };
-    "Mod+Ctrl+W" = {
-      action.spawn = [
-        "alacritty"
-        "--class"
-        "netpala"
-        "-e"
-        "netpala"
-      ];
-    };
-    "Mod+Shift+Space" = {
-      action.spawn = [
-        "sh"
-        "-c"
-        "pkill waybar || true && waybar"
-      ];
-    };
-    "Mod+Ctrl+Space" = {
-      action.spawn = [
-        "sh"
-        "-c"
-        "pkill waybar"
-      ];
-    };
-    "Mod+P" = {
-      action.spawn = "power-toggle";
-    };
-    "Mod+Ctrl+Shift+C" = {
-      action.spawn = "screencap";
-    };
   };
 }

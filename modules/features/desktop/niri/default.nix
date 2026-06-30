@@ -43,6 +43,13 @@
 
       config = {
         programs.niri.settings = {
+          binds."Mod+Ctrl+W".action.spawn = [
+            "alacritty"
+            "--class"
+            "netpala"
+            "-e"
+            "netpala"
+          ];
           input = {
             keyboard.numlock = true;
             touchpad = {

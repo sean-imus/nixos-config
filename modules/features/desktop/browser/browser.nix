@@ -27,6 +27,8 @@
         pkgs.hunspellDicts.de_DE
       ];
 
+      programs.niri.settings.binds."Mod+B".action.spawn = "firefox";
+
       programs.firefox = {
         enable = true;
         configPath = ".mozilla/firefox";

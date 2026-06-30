@@ -3,6 +3,19 @@
   flake.modules.homeManager.bar =
     { ... }:
     {
+      programs.niri.settings.binds = {
+        "Mod+Shift+Space".action.spawn = [
+          "sh"
+          "-c"
+          "pkill waybar || true && waybar"
+        ];
+        "Mod+Ctrl+Space".action.spawn = [
+          "sh"
+          "-c"
+          "pkill waybar"
+        ];
+      };
+
       programs.waybar = {
         enable = true;
         settings = [

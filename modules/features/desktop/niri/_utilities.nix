@@ -1,5 +1,31 @@
 { pkgs, ... }:
 {
+  programs.niri.settings.binds = {
+    "Mod+Ctrl+B".action.spawn = [
+      "alacritty"
+      "--class"
+      "bluetui"
+      "-e"
+      "bluetui"
+    ];
+    "Mod+Ctrl+A".action.spawn = [
+      "alacritty"
+      "--class"
+      "wiremix"
+      "-e"
+      "wiremix"
+      "-v"
+      "playback"
+    ];
+    "Mod+Y".action.spawn = [
+      "sh"
+      "-c"
+      "cliphist list | fuzzel --dmenu --with-nth 2 | cliphist decode | wl-copy"
+    ];
+    "Mod+P".action.spawn = "power-toggle";
+    "Mod+Ctrl+Shift+C".action.spawn = "screencap";
+  };
+
   services.playerctld.enable = true;
 
   programs.mpv = {

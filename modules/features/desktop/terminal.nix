@@ -1,6 +1,8 @@
 { ... }:
 {
   flake.modules.homeManager.terminal = {
+    programs.niri.settings.binds."Mod+T".action.spawn = "alacritty";
+
     programs.alacritty = {
       enable = true;
       settings = {
