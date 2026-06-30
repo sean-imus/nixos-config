@@ -34,6 +34,7 @@
             directories = [
               ".local/state/wireplumber"
               "persist"
+              ".claude"
             ];
           };
         };
