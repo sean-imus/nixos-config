@@ -1,3 +1,4 @@
-- persist some parts of claude like conversations and the authentication
+- use claude to go over the rest of the stuff, start from secrets folder
 - make modules more self contained again, like having the sean age key not in persistence.nix preserved but in sean.nix, goal is to have modules providing functionality and then having stuff use that functionality, but also keep modules more or less self contained, confusing stuff, need to figure it out
 - create an iso creator, either as a seperate repo or right inside this repo, it should create a nixos live iso that ships with the tools i need and aliases like using disko to mount drives, easily creating new generations etc, it should server as an installation tool on a fresh machine and a toolbelt for fixing a broken install, maybe even have the iso have a command for doing the install steps in the README for me? interesting stuff, research needed
+- fix HANDBOOK.md should be a purely personel handbook on how to daily drive ths repo
