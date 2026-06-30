@@ -40,6 +40,7 @@
           DisableTelemetry = true;
           DisableFirefoxStudies = true;
           DisablePocket = true;
+          Homepage.URL = startPage;
           HomepageIsNewTab = true;
           DefaultSearchService = "DuckDuckGo";
           UserMessaging = {
