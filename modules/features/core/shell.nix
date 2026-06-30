@@ -40,7 +40,7 @@
 
     programs.bat = {
       enable = true;
-      config.theme = "gruvbox-dark";
+      config.theme = "base16";
     };
 
     programs.zsh = {
