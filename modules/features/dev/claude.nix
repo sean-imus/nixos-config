@@ -5,6 +5,8 @@
     {
       home.shellAliases.c = "claude";
 
+      home.sessionVariables.CLAUDE_CODE_NO_FLICKER = "1";
+
       programs.claude-code = {
         enable = true;
 
@@ -17,7 +19,6 @@
 
         settings = {
           viewMode = "focus";
-          rendererMode = "fullscreen";
 
           hooks = {
             PostToolUse = [
