@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, ... }:
 {
   flake.modules.nixos.wifi =
     { config, lib, ... }:
@@ -55,6 +55,8 @@
       };
     in
     {
+      imports = [ inputs.self.modules.nixos.sops ];
+
       sops.secrets = lib.mapAttrs' (name: _: lib.nameValuePair (secretKey name) { }) networks;
 
       networking.networkmanager.ensureProfiles = {

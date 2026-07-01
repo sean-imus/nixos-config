@@ -54,7 +54,7 @@
         IdentityFile = "${config.home.homeDirectory}/.keys/generated_keys/id_ed25519";
       };
 
-      home.file."${config.home.homeDirectory}/.ssh/known_hosts" = {
+      home.file.".ssh/known_hosts" = {
         text = ''
           github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
         '';
