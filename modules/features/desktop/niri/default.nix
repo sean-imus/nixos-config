@@ -49,6 +49,11 @@
       ];
 
       config = {
+        # Backlight control via brightnessctl (media keys, _utilities.nix) writes to
+        # /sys/class/backlight, which is owned by the video group. Any desktop user
+        # importing niri requests it; the user-groups bridge grants it where present.
+        userCfg.extraGroups = [ "video" ];
+
         programs.niri.settings = {
           binds."Mod+Ctrl+W".action.spawn = [
             "alacritty"

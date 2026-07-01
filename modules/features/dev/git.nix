@@ -51,7 +51,7 @@
       programs.ssh.settings."github.com" = {
         HostName = "github.com";
         User = "git";
-        IdentityFile = "${config.home.homeDirectory}/.keys/generated_keys/id_ed25519";
+        IdentityFile = config.sops.secrets.sean_ssh_id_ed25519.path;
       };
 
       home.file.".ssh/known_hosts" = {

@@ -410,6 +410,41 @@ persist.directories = [ { directory = ".local/share/bar"; } ];
 can't be regenerated belong here — e.g. sops **generated** keys under `~/.keys/generated_keys/`
 are *not* persisted, since sops-nix recreates them each activation.
 
+### Group ownership
+
+`userCfg.extraGroups` and `persist.*` are two instances of **one convention**: a feature
+declares a *neutral, user-agnostic request* in the module that owns it, a NixOS-level bridge
+resolves that request *per-user*, and **no feature ever names a user** — the username comes
+from the HM attr key.
+
+`modules/features/core/user-groups.nix` is the group analog of the persist bridge. It:
+1. injects a per-user `userCfg.extraGroups` option into every HM user via
+   `home-manager.sharedModules`, and
+2. maps each HM user's request onto their system account:
+   ```nix
+   users.users = lib.mapAttrs (_name: hm: {
+     extraGroups = builtins.filter (g: config.users.groups ? ${g}) hm.userCfg.extraGroups;
+   }) config.home-manager.users;
+   ```
+
+The **filter-by-existing-group** is the host-safety trick. A user requests a group
+unconditionally from the feature they import, but only actually joins it on hosts where the
+group exists. Example: the `qemu` HM aspect requests `libvirtd`; on the notebook (qemu
+enabled) the group exists and the user joins, on the vm (no qemu) the request is silently
+dropped — no "group does not exist" eval error, no per-host user code.
+
+Where each membership request lives (service *enablement* stays host/NixOS-side; only the
+per-user group *membership* is a `userCfg.extraGroups` request in an HM aspect the user imports):
+
+- **`libvirtd`** → `flake.modules.homeManager.qemu` in `qemu.nix`, imported by `sean-desktop`.
+- **`networkmanager`** → `flake.modules.homeManager.networkmanager` in `hosts/default.nix`
+  (co-located with `networking.networkmanager.enable`), imported by `sean`'s core HM stack.
+- **`video`** → requested by `flake.modules.homeManager.niri` (owner of the brightnessctl
+  backlight keybinds), so any desktop user gets it.
+
+Result: `sean.nix` names no feature group — it lists only `wheel` (genuine user identity).
+A second user gets identical capabilities purely by importing the same HM features.
+
 ### Relevant Files
 
 | File | Purpose |

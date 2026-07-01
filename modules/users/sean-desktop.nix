@@ -24,6 +24,7 @@
       niri
       office-suite
       printing
+      qemu
       rdp-work
       screencap
       terminal
