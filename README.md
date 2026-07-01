@@ -30,7 +30,7 @@ Most operating systems work like a backpack: you keep throwing things in, and ov
 | Editor | Neovim via nixvim |
 | Services | PipeWire audio · Bluetooth · QEMU/libvirt · printing · RDP |
 | Secrets | sops-nix: SSH keys · login password · Wi-Fi PSKs — all encrypted at rest, decrypted at boot |
-| Persistence | opt-in only: age key · audio state · `~/persist` |
+| Persistence | opt-in only: age key · Claude Code state · `~/persist` |
 
 ---
 
@@ -62,7 +62,7 @@ Each host is a file that imports whichever modules it needs. The notebook gets t
 
 ### Secrets: encrypted in git, decrypted at boot
 
-`modules/features/secrets/secrets.yaml` is committed as age-encrypted ciphertext. sops-nix decrypts it during activation and places each secret at the right path with the right permissions. The age key lives on disk at `~/.config/sops/age/keys.txt` (preserved across reboots, backed up to USB). It's the one secret that must exist before anything else can be decrypted.
+`modules/features/secrets/secrets.yaml` is committed as age-encrypted ciphertext. sops-nix decrypts it during activation and places each secret at the right path with the right permissions. The age key lives on disk at `~/.keys/age.txt` (preserved across reboots, backed up to USB). It's the one secret that must exist before anything else can be decrypted.
 
 ### Ephemeral root via tmpfs
 
@@ -84,9 +84,9 @@ sudo disko --mode disko --flake github:sean-imus/nixos-config#[notebook|vm]
 # 2. Copy the age key from USB (needed to decrypt secrets during install)
 lsblk   # find your USB device
 mkdir -p /mnt/usb && mount /dev/sdX1 /mnt/usb
-mkdir -p /mnt/persist/home/sean/.config/sops/age
-cp /mnt/usb/keys.txt /mnt/persist/home/sean/.config/sops/age/keys.txt
-chmod 600 /mnt/persist/home/sean/.config/sops/age/keys.txt
+mkdir -p /mnt/persist/home/sean/.keys
+cp /mnt/usb/keys.txt /mnt/persist/home/sean/.keys/age.txt
+chmod 600 /mnt/persist/home/sean/.keys/age.txt
 umount /mnt/usb
 
 # 3. Install

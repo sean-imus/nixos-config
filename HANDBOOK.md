@@ -34,7 +34,7 @@ nix shell nixpkgs#age             # then: age-keygen ...
 ## Secrets (sops)
 
 All secrets live in `modules/features/secrets/secrets.yaml` (encrypted, committed to git).
-Age key: `~/.config/sops/age/keys.txt` (preserved from `/persist`, backed up on USB).
+Age key: `~/.keys/age.txt` (preserved from `/persist`, backed up on USB).
 
 ### Edit the secrets file
 
@@ -69,8 +69,8 @@ nix run nixpkgs#sops -- --decrypt --extract '["secret_name"]' \
 ### Rotate the age key (key lost/compromised)
 
 ```bash
-nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt
-age-keygen -y ~/.config/sops/age/keys.txt   # → new public key
+nix shell nixpkgs#age -c age-keygen -o ~/.keys/age.txt
+age-keygen -y ~/.keys/age.txt   # → new public key
 nix run nixpkgs#sops -- --rotate --age <new-public-key> \
   modules/features/secrets/secrets.yaml
 # commit re-encrypted secrets.yaml, copy key to USB, rbs
@@ -140,12 +140,12 @@ nix run nixpkgs#sops -- --rotate --age <new-public-key> \
 - `/etc/NetworkManager/system-connections` — WiFi passwords
 - `/etc/machine-id` — stable machine identity
 - `/var/lib/fprint/` — enrolled fingerprints
-- `~/.config/sops/age/keys.txt` — age decryption key
-- `~/.local/state/wireplumber` — audio device preferences
+- `~/.keys/age.txt` — age decryption key
+- `~/.claude/` — Claude Code credentials, sessions, projects
 - `~/persist/` — your personal files (bind-mounted from `/persist/home/sean/persist`)
 
 **Ephemeral** (lost on reboot, tmpfs `/`):
-- Everything else: downloads, browser cache, `/tmp`, shell history from other sessions, etc.
+- Everything else: downloads, browser cache, `/tmp`, shell history from other sessions, per-device audio volumes (wireplumber), etc.
 
 ---
 
@@ -190,9 +190,9 @@ sudo disko --mode disko --flake github:sean-imus/nixos-config#notebook
 
 # 2. Copy age key from USB (CRITICAL — without this, boot fails)
 mount /dev/sda1 /mnt/usb
-mkdir -p /mnt/persist/home/sean/.config/sops/age
-cp /mnt/usb/keys.txt /mnt/persist/home/sean/.config/sops/age/keys.txt
-chmod 600 /mnt/persist/home/sean/.config/sops/age/keys.txt
+mkdir -p /mnt/persist/home/sean/.keys
+cp /mnt/usb/keys.txt /mnt/persist/home/sean/.keys/age.txt
+chmod 600 /mnt/persist/home/sean/.keys/age.txt
 umount /mnt/usb
 
 # 3. Install

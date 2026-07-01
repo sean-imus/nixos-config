@@ -12,15 +12,22 @@
     {
       imports = [ inputs.sops-nix.homeManagerModules.sops ];
 
-      home.sessionVariables.SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+      home.sessionVariables.SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.keys/age.txt";
+
+      persist.files = [
+        {
+          file = ".keys/age.txt";
+          configureParent = true;
+        }
+      ];
 
       sops = {
         defaultSopsFile = ./secrets.yaml;
-        age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+        age.keyFile = "${config.home.homeDirectory}/.keys/age.txt";
       };
 
       sops.secrets."sean_ssh_id_ed25519" = {
-        path = "${config.home.homeDirectory}/.ssh/id_ed25519";
+        path = "${config.home.homeDirectory}/.keys/generated_keys/id_ed25519";
         mode = "0600";
       };
 
@@ -33,7 +40,7 @@
 
       sops = {
         defaultSopsFile = ./secrets.yaml;
-        age.keyFile = "/persist/home/sean/.config/sops/age/keys.txt";
+        age.keyFile = "/persist/home/sean/.keys/age.txt";
       };
 
       environment.systemPackages = [ pkgs.sops ];

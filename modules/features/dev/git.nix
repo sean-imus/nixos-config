@@ -51,7 +51,7 @@
       programs.ssh.settings."github.com" = {
         HostName = "github.com";
         User = "git";
-        IdentityFile = "${config.home.homeDirectory}/.ssh/id_ed25519";
+        IdentityFile = "${config.home.homeDirectory}/.keys/generated_keys/id_ed25519";
       };
 
       home.file."${config.home.homeDirectory}/.ssh/known_hosts" = {

@@ -7,6 +7,19 @@
 
       home.sessionVariables.CLAUDE_CODE_NO_FLICKER = "1";
 
+      persist.files = [
+        {
+          file = ".claude/.credentials.json";
+          configureParent = true;
+        }
+        { file = ".claude.json"; }
+      ];
+
+      persist.directories = [
+        { directory = ".claude/sessions"; }
+        { directory = ".claude/projects"; }
+      ];
+
       programs.claude-code = {
         enable = true;
 

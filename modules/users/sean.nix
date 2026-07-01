@@ -10,26 +10,6 @@
           neededForUsers = true;
         };
 
-        preservation.preserveAt."/persist".users.sean = {
-          files = [
-            {
-              file = ".config/sops/age/keys.txt";
-              configureParent = true;
-            }
-            {
-              file = ".claude/.credentials.json";
-              configureParent = true;
-            }
-            { file = ".claude.json"; }
-          ];
-          directories = [
-            ".local/state/wireplumber"
-            "persist"
-            { directory = ".claude/sessions"; }
-            { directory = ".claude/projects"; }
-          ];
-        };
-
         users.users.sean = {
           isNormalUser = true;
           description = "Sean Tietz";

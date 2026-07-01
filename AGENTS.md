@@ -1,6 +1,6 @@
 # AGENTS.md — NixOS Config
 
-Last updated: 2026-06-30
+Last updated: 2026-07-01
 
 Single-machine NixOS config using the **Dendritic Design** pattern with **flake-parts**.
 
@@ -169,7 +169,8 @@ SSH private key and other secrets managed via **sops-nix** (HM module, `modules/
 
 ### Architecture
 
-- **Age key** lives at `~/.config/sops/age/keys.txt` (preserved via impermanence as a single file). Only this one file persists — sops provisions everything else.
+- **Age key** lives at `~/.keys/age.txt` — the one secret that must exist before anything else can be decrypted. It's the only key that persists (declared via `persist.files` in `sops.nix`).
+- **sops-generated secrets** (e.g. the SSH identity) are written under `~/.keys/generated_keys/`. These are **not** persisted — sops-nix regenerates them from `secrets.yaml` on every activation.
 - **Encrypted secrets** are in `modules/features/secrets/secrets.yaml`, committed to git with `sops` metadata.
 - Decryption uses the age key on-disk at activation time. No machine/host keys involved.
 
@@ -199,11 +200,11 @@ Edit the value, save — sops re-encrypts automatically. Rebuild to deploy.
 
 If the age key is lost (e.g. fresh install), generate a new one:
 ```bash
-nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt
+nix shell nixpkgs#age -c age-keygen -o ~/.keys/age.txt
 ```
 Get the public key, update `.sops.yaml`, then re-encrypt `secrets.yaml`:
 ```bash
-sops --rotate --age $(nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt) \
+sops --rotate --age $(nix shell nixpkgs#age -c age-keygen -y ~/.keys/age.txt) \
   modules/features/secrets/secrets.yaml
 ```
 Commit, rebuild.
@@ -214,8 +215,8 @@ The age key lives on a USB drive. See the **Fresh Install** section — copy it 
 
 If the age key is **lost permanently**, generate a new one:
 ```bash
-age-keygen -o ~/.config/sops/age/keys.txt
-age-keygen -y ~/.config/sops/age/keys.txt   # prints public key → update the recipient in secrets.yaml
+age-keygen -o ~/.keys/age.txt
+age-keygen -y ~/.keys/age.txt   # prints public key → update the recipient in secrets.yaml
 nix run nixpkgs#sops -- --rotate --age <new-public-key> modules/features/secrets/secrets.yaml
 ```
 Commit the re-encrypted `secrets.yaml`, then follow the fresh install steps.
@@ -352,39 +353,46 @@ Disk (NVMe by-id)
 
 ### Preservation ownership
 
-`persistence.nix` provides the *mechanism* only — it enables preservation and holds
-globally-owned system state (machine-id, systemd timers). It must **not** know about
-individual features or users.
+`persistence.nix` provides the *mechanism* only — it enables preservation, holds
+globally-owned system state (machine-id, systemd timers), and hosts the **persist bridge**.
+It must **not** enumerate individual features.
 
-Everything else declares its own persistence in the module that owns it, extending the
-merged `preservation.preserveAt."/persist"` option:
+Everything else declares what it needs preserved *in the module that owns it*:
 
-- **System state** → the feature module that owns it. Example: `qemu.nix` preserves
-  `/var/lib/libvirt/`. Because that path is declared in `qemu.nix`, it is only preserved
-  on hosts that actually import qemu (notebook, not vm) — no dead config.
-- **Per-user state** (`users.<name>.*`) → that user's module (`users/sean.nix`). This is
-  the single place that legitimately knows the username, matching the "user-independent
-  features" rule above. The module only *sets* `preservation.preserveAt.*`; it does not
-  import `persistence` itself — the host supplies the mechanism (both hosts import it),
-  and importing it here too would apply the module twice (the anonymous-module reference
-  is not deduped, so machine-id/timers would double up).
+- **System state** → the feature module that owns it, extending
+  `preservation.preserveAt."/persist".directories` directly. Example: `qemu.nix` preserves
+  `/var/lib/libvirt/`. Because that path is declared in `qemu.nix`, it is only preserved on
+  hosts that actually import qemu (notebook, not vm) — no dead config.
+- **Per-user state** → home-manager feature/user modules set a `persist.{files,directories}`
+  option with paths relative to `$HOME`. `persistence.nix` injects that option into every user
+  via `home-manager.sharedModules`, defaults everyone to `~/persist`, and bridges each user's
+  declarations into `preservation.preserveAt."/persist".users.<name>` with a `mapAttrs` over
+  `config.home-manager.users`. No feature ever names a user — the username comes from the
+  attr key.
 
 ```nix
-# in a feature module — system path:
+# feature module (NixOS) — system path:
 preservation.preserveAt."/persist".directories = [ "/var/lib/foo" ];
 
-# in users/sean.nix — per-user path:
-preservation.preserveAt."/persist".users.sean.files = [ { file = ".config/foo"; } ];
+# feature module (home-manager) — per-user path, no username:
+persist.files = [ { file = ".config/foo"; configureParent = true; } ];
+persist.directories = [ { directory = ".local/share/bar"; } ];
 ```
+
+`persist.*` accepts the same entry shape as preservation's `users.<name>.{files,directories}`
+(bare string or attrs with `configureParent`, `mode`, …). Only paths that must survive but
+can't be regenerated belong here — e.g. sops **generated** keys under `~/.keys/generated_keys/`
+are *not* persisted, since sops-nix recreates them each activation.
 
 ### Relevant Files
 
 | File | Purpose |
 |------|---------|
 | `modules/features/storage/disko.nix` | GPT + LUKS + nested GPT (swap + BTRFS subvols) + tmpfs root; parameterized `diskoConfigDevice` option |
-| `modules/features/storage/persistence.nix` | Preservation *mechanism* + global system state only: /etc/machine-id, /var/lib/systemd/timers. Feature/user paths are declared by their owning module (see "Preservation ownership" below) |
+| `modules/features/storage/persistence.nix` | Preservation *mechanism* + global system state (/etc/machine-id, /var/lib/systemd/timers) + the persist bridge (injects `persist.*`, defaults every user to ~/persist, maps all HM users into preservation) |
 | `modules/features/virtualization/qemu.nix` | Preserves /var/lib/libvirt/ (VM storage/networks) — owned by the feature that needs it |
-| `modules/users/sean.nix` | Preserves sean's home state: ~/.config/sops/age/keys.txt, ~/.claude/* (creds, sessions, projects), ~/.local/state/wireplumber, ~/persist |
+| `modules/features/secrets/sops.nix` | Declares `persist.files` for the age key ~/.keys/age.txt |
+| `modules/features/dev/claude.nix` | Declares `persist.*` for ~/.claude/* (creds, sessions, projects) |
 | `modules/hosts/notebook.nix` | Sets `diskoConfigDevice` to by-id NVMe path, imports disko + persistence |
 | `modules/hosts/vm.nix` | Sets `diskoConfigDevice` to virtio path, imports disko + persistence |
 
@@ -403,9 +411,9 @@ sudo disko --mode disko --flake github:sean-imus/nixos-config#[notebook/vm]
 lsblk   # find your USB device, e.g. /dev/sda1
 mkdir -p /mnt/usb
 mount /dev/sda1 /mnt/usb   # adjust device name
-mkdir -p /mnt/persist/home/sean/.config/sops/age
-cp /mnt/usb/keys.txt /mnt/persist/home/sean/.config/sops/age/keys.txt
-chmod 600 /mnt/persist/home/sean/.config/sops/age/keys.txt
+mkdir -p /mnt/persist/home/sean/.keys
+cp /mnt/usb/keys.txt /mnt/persist/home/sean/.keys/age.txt
+chmod 600 /mnt/persist/home/sean/.keys/age.txt
 umount /mnt/usb
 
 # 3. Install (builds into /mnt/nix/store on the target disk)
@@ -414,7 +422,7 @@ sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus
 
 **Install flow:**
 1. `disko` prompts for LUKS password, partitions, formats, and mounts everything under `/mnt`
-2. Age key copied from USB to `/mnt/persist/home/sean/.config/sops/age/keys.txt` — sops-nix reads this during activation to decrypt the password hash (via `neededForUsers`). Without it the install fails.
+2. Age key copied from USB to `/mnt/persist/home/sean/.keys/age.txt` — sops-nix reads this during activation to decrypt the password hash (via `neededForUsers`). Without it the install fails.
 3. `nixos-install` builds the system closure directly into `/mnt/nix/store` and installs the bootloader
 
 ### Post-Install Workflow
