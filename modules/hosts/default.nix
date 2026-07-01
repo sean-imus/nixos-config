@@ -1,5 +1,12 @@
 { inputs, ... }:
 {
+  # Per-user opt-in to NetworkManager control. The service is enabled host-wide
+  # (see networking.networkmanager.enable below); a user who imports this HM aspect
+  # requests membership in the networkmanager group.
+  flake.modules.homeManager.networkmanager = {
+    userCfg.extraGroups = [ "networkmanager" ];
+  };
+
   flake.modules.nixos.hostDefault =
     {
       pkgs,

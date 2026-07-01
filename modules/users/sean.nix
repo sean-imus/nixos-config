@@ -16,20 +16,16 @@
           linger = true;
           hashedPasswordFile = config.sops.secrets.sean_hashed_password.path;
           shell = pkgs.zsh;
-          extraGroups = [
-            "networkmanager"
-            "wheel"
-            "libvirtd"
-            "video"
-            "adbusers"
-          ];
+          # wheel is genuine user identity; feature groups resolve via the
+          # user-groups bridge from the HM features this user imports.
+          extraGroups = [ "wheel" ];
         };
 
-        users.groups.adbusers = { };
         home-manager.users.sean.imports = with inputs.self.modules.homeManager; [
           sean
           neovim
           claude
+          networkmanager
         ];
       };
     };

@@ -1,5 +1,12 @@
 { ... }:
 {
+  # Per-user opt-in to libvirt access. The host enables the service (below); a user
+  # who imports this HM aspect requests the libvirtd group. The user-groups bridge
+  # grants it only on hosts where qemu created the group (notebook, not vm).
+  flake.modules.homeManager.qemu = {
+    userCfg.extraGroups = [ "libvirtd" ];
+  };
+
   flake.modules.nixos.qemu =
     { pkgs, ... }:
     {

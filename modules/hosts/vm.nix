@@ -7,6 +7,7 @@
         hostDefault
         disko
         persistence
+        user-groups
         sean-desktop
       ];
 
