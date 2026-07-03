@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.calc =
+  flake.modules.homeManager.desktop =
     { pkgs, ... }:
     {
       home.packages = [ pkgs.python3 ];

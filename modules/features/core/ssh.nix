@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.ssh =
+  flake.modules.homeManager.core =
     { ... }:
     {
       programs.ssh = {

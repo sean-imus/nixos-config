@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.git =
+  flake.modules.homeManager.core =
     { config, lib, ... }:
     {
       programs.git.enable = true;
@@ -12,6 +12,8 @@
         settings.git_protocol = "ssh";
       };
 
+      # gh has no declarative auth option, so write hosts.yml ourselves from the
+      # sops-decrypted token. Ordered after sops-nix so the token file exists.
       home.activation.ghAuth = lib.hm.dag.entryAfter [ "writeBoundary" "sops-nix" ] ''
         tokenFile="${config.sops.secrets.github_token.path}"
         if [ -f "$tokenFile" ]; then
@@ -54,6 +56,7 @@
         IdentityFile = config.sops.secrets.sean_ssh_id_ed25519.path;
       };
 
+      # Pin GitHub's host key so first-connect never prompts (non-interactive).
       home.file.".ssh/known_hosts" = {
         text = ''
           github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl

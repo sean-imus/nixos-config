@@ -4,13 +4,18 @@
     { ... }:
     {
       imports = with inputs.self.modules.nixos; [
+        # base + mechanisms (every host)
         hostDefault
         disko
         persistence
         user-groups
-        sean-desktop
+        # user + machine capability — full desktop, minus the notebook-only
+        # hardware aspects (qemu/tailscale/wifi/power) that are useless in a VM.
+        sean
+        desktop
       ];
 
+      # Alt as the mod key so it doesn't clash with the host compositor's Super.
       home-manager.users.sean.programs.niri.settings.input.mod-key = "Alt";
 
       home-manager.users.sean.programs.niri.settings.outputs."Virtual-1" = {
@@ -25,8 +30,11 @@
         };
       };
 
-      diskoConfigDevice = "/dev/disk/by-id/virtio-ROOT";
-      diskoSwapSize = "10G";
+      diskoCfg = {
+        device = "/dev/disk/by-id/virtio-ROOT";
+        swapSize = "10G";
+        encrypt = false; # no LUKS in the VM — no passphrase prompt at boot
+      };
 
       networking.hostName = "vm";
 

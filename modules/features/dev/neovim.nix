@@ -5,7 +5,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  flake.modules.homeManager.neovim =
+  flake.modules.homeManager.dev =
     { pkgs, ... }:
     {
       imports = [ inputs.nixvim.homeModules.nixvim ];

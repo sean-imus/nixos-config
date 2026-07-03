@@ -5,7 +5,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  flake.modules.homeManager.browser =
+  flake.modules.homeManager.desktop =
     {
       pkgs,
       lib,

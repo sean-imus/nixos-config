@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.rdp-work =
+  flake.modules.nixos.desktop =
     { ... }:
     {
       networking.networkmanager.ensureProfiles.profiles = {
@@ -22,7 +22,7 @@
       };
     };
 
-  flake.modules.homeManager.rdp-work =
+  flake.modules.homeManager.desktop =
     { pkgs, ... }:
     {
       home.packages = [ pkgs.freerdp ];

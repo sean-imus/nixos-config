@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.application-launcher =
+  flake.modules.homeManager.desktop =
     { ... }:
     {
       programs.niri.settings.binds."Mod+Space".action.spawn = "fuzzel";

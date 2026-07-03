@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.screencap =
+  flake.modules.homeManager.desktop =
     { pkgs, config, ... }:
     let
       recordingsDir = "${config.home.homeDirectory}/Recordings";

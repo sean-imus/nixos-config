@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.bar =
+  flake.modules.homeManager.desktop =
     { ... }:
     {
       programs.niri.settings.spawn-at-startup = [ { argv = [ "waybar" ]; } ];

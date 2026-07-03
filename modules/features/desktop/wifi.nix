@@ -25,7 +25,10 @@
           inherit ssid;
         };
         wifi-security = {
-          key-mgmt = "wpa-psk";
+          key-mgmt = "wpa-psk"; # negotiates up to WPA3/SAE, not locked to WPA2
+          # psk-flags = 1 (agent-owned) is mandatory: it tells NM to fetch the PSK
+          # from nm-file-secret-agent. Without it NM expects an inline PSK, finds
+          # none, and silently connects with no password.
           psk-flags = 1;
         };
         ipv4.method = "auto";
@@ -49,9 +52,11 @@
         file = config.sops.secrets.${secretKey name}.path;
         key = "psk";
         matchId = name;
+        # D-Bus interface names, NOT the nmcli aliases (wifi-security/wifi) — the
+        # agent does exact string matching and silently fails on the aliases.
         matchSetting = "802-11-wireless-security";
         matchType = "802-11-wireless";
-        trim = true;
+        trim = true; # strip trailing newline from the secret file
       };
     in
     {

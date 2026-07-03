@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.office-suite =
+  flake.modules.homeManager.desktop =
     { pkgs, ... }:
     {
       home.packages = [ pkgs.libreoffice-fresh ];

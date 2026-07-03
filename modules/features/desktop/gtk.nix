@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.gtk =
+  flake.modules.homeManager.desktop =
     { pkgs, config, ... }:
     {
       gtk = {

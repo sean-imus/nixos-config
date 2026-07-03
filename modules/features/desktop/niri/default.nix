@@ -12,7 +12,7 @@
     };
   };
 
-  flake.modules.nixos.niri =
+  flake.modules.nixos.desktop =
     {
       pkgs,
       ...
@@ -27,6 +27,9 @@
       programs.niri.package = pkgs.niri;
       programs.netpala.enable = true;
 
+      # ScreenCast/Screenshot on niri need the *luminous* backend (not wlr/
+      # hyprland). config.niri writes niri-portals.conf (looked up first under
+      # XDG_CURRENT_DESKTOP=niri); keys use the impl.portal.* namespace.
       xdg.portal = {
         enable = true;
         extraPortals = [
@@ -41,7 +44,7 @@
       };
     };
 
-  flake.modules.homeManager.niri =
+  flake.modules.homeManager.desktop =
     { ... }:
     {
       imports = [

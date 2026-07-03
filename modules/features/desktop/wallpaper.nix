@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.wallpaper =
+  flake.modules.homeManager.desktop =
     { pkgs, ... }:
     {
       home.packages = [ pkgs.swaybg ];

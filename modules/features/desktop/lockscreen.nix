@@ -1,12 +1,12 @@
 { ... }:
 {
-  flake.modules.nixos.lockscreen =
+  flake.modules.nixos.desktop =
     { ... }:
     {
       security.pam.services.hyprlock = { };
     };
 
-  flake.modules.homeManager.lockscreen =
+  flake.modules.homeManager.desktop =
     {
       lib,
       config,
@@ -15,6 +15,7 @@
     }:
     let
       lockCmd = lib.getExe config.programs.hyprlock.package;
+      # Only auto-suspend when on battery — never mid-task on AC power.
       suspendCmd = "${pkgs.gnugrep}/bin/grep -qx Discharging /sys/class/power_supply/BAT*/status 2>/dev/null && ${pkgs.systemd}/bin/systemctl suspend-then-hibernate";
     in
     {

@@ -1,2 +1,5 @@
-- analyze how stuff is imported in sean.nix and hosts stuff cuz ugly rn
-- create an iso creator, either as a seperate repo or right inside this repo, it should create a nixos live iso that ships with the tools i need and aliases like using disko to mount drives, easily creating new generations etc, it should server as an installation tool on a fresh machine and a toolbelt for fixing a broken install, maybe even have the iso have a command for doing the install steps in the README for me? interesting stuff, research needed
+- create an iso creator, either as a separate repo or right inside this repo: a
+  NixOS live ISO shipping the tools + aliases I need (disko to mount drives, easy
+  generation creation, etc.), serving as both an installer on a fresh machine and
+  a rescue toolbelt for a broken install — ideally with a command that runs the
+  README install steps for me. Research/design already written in `ISO_PLAN.md`.

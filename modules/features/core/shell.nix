@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.homeManager.shell = {
+  flake.modules.homeManager.core = {
     programs.starship = {
       enable = true;
       enableZshIntegration = true;

@@ -22,10 +22,10 @@ Most operating systems work like a backpack: you keep throwing things in, and ov
 
 | Layer | Details |
 |---|---|
-| Disk | LUKS encryption · Btrfs subvolumes · tmpfs root (ephemeral `/`) · declarative partitioning via disko |
+| Disk | LUKS encryption (per-host, opt-out) · Btrfs subvolumes · tmpfs root (ephemeral `/`) · declarative partitioning via disko |
 | Boot | systemd-boot · per-generation entries |
 | Network | NetworkManager · systemd-resolved with DNS-over-TLS · Tailscale · declarative Wi-Fi profiles |
-| Desktop | Niri compositor · Waybar · Alacritty · qutebrowser · Vesktop · fuzzel |
+| Desktop | Niri compositor · Waybar · Alacritty · Firefox · Vesktop · fuzzel |
 | Shell | zsh · starship · fzf history search · bat |
 | Editor | Neovim via nixvim |
 | Services | PipeWire audio · Bluetooth · QEMU/libvirt · printing · RDP |
@@ -58,7 +58,7 @@ A `flake.nix` at the root pins every dependency (nixpkgs, home-manager, sops-nix
 
 ### One repo, two machines
 
-Each host is a file that imports whichever modules it needs. The notebook gets the full desktop stack. The VM gets the same desktop with minor tweaks (Alt as mod, virtio disk). Hardware differences (disk ID, kernel modules, swap size, display layout) are per-host. Everything else is shared.
+Each host is a file that imports whichever modules it needs. Features register themselves into three role buckets — `core` (shell tools), `dev` (editor + tooling), `desktop` (the graphical stack) — so adding a feature is just dropping a file in; nothing to wire. A user brings their personal env (`core` + `dev`); a host brings the machine capability (`desktop`). The notebook gets the full stack plus laptop-only bits (Wi-Fi, Tailscale, power management, VM host). The VM gets the same desktop minus everything useless in a VM, and with **no disk encryption** (`diskoCfg.encrypt = false`, so no passphrase prompt at boot). Hardware differences (disk ID, kernel modules, swap size, display layout, mod key) are per-host. Everything else is shared.
 
 ### Secrets: encrypted in git, decrypted at boot
 

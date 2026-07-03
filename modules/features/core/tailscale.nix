@@ -12,7 +12,7 @@
         authKeyFile = config.sops.secrets.tailscale_authkey.path;
         extraUpFlags = [
           "--accept-routes=false"
-          "--accept-dns=false"
+          "--accept-dns=false" # keep the Cloudflare DoT setup (see dns.nix) authoritative
         ];
       };
 
