@@ -94,6 +94,7 @@
   home.packages = with pkgs; [
     xwayland-satellite
     wiremix
+    swayimg
     bluetui
     brightnessctl
     wl-clipboard
