@@ -29,6 +29,8 @@
 
       programs.niri.settings.binds."Mod+B".action.spawn = "firefox";
 
+      persist.directories.directory = ".mozilla/firefox";
+
       programs.firefox = {
         enable = true;
         configPath = ".mozilla/firefox";
