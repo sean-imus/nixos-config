@@ -142,8 +142,18 @@
         inherit isDefault extensions bookmarks id;
         settings = commonSettings // builtins.removeAttrs args [ "isDefault" "id" ];
       };
+
+      firefoxPkg = config.programs.firefox.finalPackage;
+      installsHash = builtins.substring 0 12 (builtins.hashString "sha256" (lib.toLower "${firefoxPkg}/bin"));
     in
     {
+      home.file."${config.programs.firefox.configPath}/installs.ini" = {
+        text = ''
+          [${installsHash}]
+          Default=private
+        '';
+      };
+
       home.packages = with pkgs; [
         hunspellDicts.en_US
         hunspellDicts.de_DE
