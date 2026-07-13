@@ -155,6 +155,6 @@ WiFi is **declarative** — SSIDs and sops-encrypted PSKs live in
 ## One-off tools (no config change)
 
 ```bash
-nix run nixpkgs#<package>     # run once and exit
-nix shell nixpkgs#<package>   # add to the current shell session
+nix run nixpkgs#<package> -- <args>     # run once and exit
+nix shell nixpkgs#<package>     # enter subshell with package
 ```
