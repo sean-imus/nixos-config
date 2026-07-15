@@ -126,16 +126,66 @@
           clipboard.disable-primary = true;
 
           animations = {
-            enable = false;
+            enable = true;
+            workspace-switch.kind = {
+              spring = {
+                damping-ratio = 1.0;
+                stiffness = 1000;
+                epsilon = 0.0001;
+              };
+            };
+            horizontal-view-movement.kind = {
+              spring = {
+                damping-ratio = 1.0;
+                stiffness = 800;
+                epsilon = 0.0001;
+              };
+            };
+            window-movement.kind = {
+              spring = {
+                damping-ratio = 1.0;
+                stiffness = 800;
+                epsilon = 0.0001;
+              };
+            };
+            window-open.kind = {
+              easing = {
+                duration-ms = 200;
+                curve = "ease-out-expo";
+              };
+            };
+            window-close.kind = {
+              easing = {
+                duration-ms = 150;
+                curve = "ease-out-quad";
+              };
+            };
+            window-resize.kind = {
+              spring = {
+                damping-ratio = 1.0;
+                stiffness = 800;
+                epsilon = 0.0001;
+              };
+            };
           };
 
           window-rules = [
+            {
+              geometry-corner-radius = {
+                top-left = 12.0;
+                top-right = 12.0;
+                bottom-right = 12.0;
+                bottom-left = 12.0;
+              };
+              clip-to-geometry = true;
+            }
             {
               matches = [ { app-id = "^netpala$"; } ];
               open-floating = true;
             }
           ];
         };
+
       };
     };
 }
