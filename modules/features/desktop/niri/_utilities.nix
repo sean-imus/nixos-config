@@ -73,10 +73,6 @@
       [Desktop Entry]
       Hidden=true
     '';
-    "applications/nixos-manual.desktop".text = ''
-      [Desktop Entry]
-      Hidden=true
-    '';
     "applications/btop.desktop".text = ''
       [Desktop Entry]
       Hidden=true
