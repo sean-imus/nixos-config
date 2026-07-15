@@ -7,8 +7,6 @@
 
       home.sessionVariables.CLAUDE_CODE_NO_FLICKER = "1";
 
-      # Survive the tmpfs wipe: auth + onboarding state (files) and history
-      # (dirs). Everything else under ~/.claude is regenerated, so not persisted.
       persist.files = [
         {
           file = ".claude/.credentials.json";
@@ -35,7 +33,6 @@
         settings = {
           viewMode = "focus";
 
-          # Auto-format files Claude writes: nixfmt for .nix, black for .py.
           hooks = {
             PostToolUse = [
               {
