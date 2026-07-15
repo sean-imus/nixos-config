@@ -86,7 +86,7 @@
           };
 
           layout = {
-            gaps = 2;
+            gaps = 8;
             center-focused-column = "on-overflow";
             always-center-single-column = true;
             empty-workspace-above-first = true;
@@ -113,7 +113,14 @@
               inactive.color = "#00000000";
             };
             shadow = {
-              enable = false;
+              enable = true;
+              softness = 20.0;
+              spread = 3.0;
+              offset = {
+                x = 0.0;
+                y = 4.0;
+              };
+              color = "#00000055";
             };
           };
 
