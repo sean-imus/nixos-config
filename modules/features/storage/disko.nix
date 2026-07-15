@@ -12,8 +12,6 @@
     let
       cfg = config.diskoCfg;
 
-      # Shared data layout, independent of encryption: btrfs with @nix + @persist
-      # subvolumes (zstd, noatime). Both branches below wrap or expose this.
       btrfs = {
         type = "btrfs";
         extraArgs = [ "-f" ];
@@ -37,7 +35,7 @@
 
       swap = {
         type = "swap";
-        resumeDevice = true; # enables hibernate/resume; harmless where unused
+        resumeDevice = true;
       };
 
       luks = name: content: {
@@ -47,12 +45,6 @@
         inherit content;
       };
 
-      # Encryption is the one structural difference between hosts. When on, the
-      # data btrfs and swap each sit inside a LUKS container (interactive
-      # passphrase at boot). When off (VM), they're plain partitions — no crypto,
-      # no boot prompt. The partition attr *keys* differ per branch deliberately:
-      # keeping `luks`/`cryptswap` on the encrypted branch preserves the existing
-      # notebook's on-disk layout exactly.
       dataPartitions =
         if cfg.encrypt then
           {
@@ -89,16 +81,15 @@
         };
         encrypt = lib.mkOption {
           type = lib.types.bool;
-          default = true; # secure by default; hosts opt out (e.g. the VM)
+          default = true; # secure by default -> hosts opt out
           description = "Wrap root + swap in LUKS. Off = plain partitions, no boot passphrase.";
         };
       };
 
       config = {
-        # disko generates every fileSystems entry; these two just flag that they
-        # must be mounted in the initrd (persisted state + the nix store).
         fileSystems."/nix".neededForBoot = true;
         fileSystems."/persist".neededForBoot = true;
+        # otherwise no boot since we need the store and the age key :O
 
         disko.devices = {
           disk.main = {
@@ -122,12 +113,12 @@
             };
           };
 
-          # Ephemeral root: everything not bind-mounted from /persist is wiped on
-          # reboot. See persistence.nix for what survives.
           nodev."/" = {
             fsType = "tmpfs";
+            # root dir is just a fs that lives in RAM, anything I want persisted is stored on disk but this is opt in not opt out
             mountOptions = [
               "size=4G"
+              # can be experimented with, 4G is just what I landed on in my testing
               "mode=755"
             ];
           };
