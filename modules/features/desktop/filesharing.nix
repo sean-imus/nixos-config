@@ -3,7 +3,7 @@
   flake.modules.nixos.desktop =
     { ... }:
     {
-      # localsend, reachable only over tailscale (not the LAN/public interfaces).
+      # localsend only reachable over tailscale
       networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 53317 ];
       networking.firewall.interfaces."tailscale0".allowedUDPPorts = [ 53317 ];
     };

@@ -21,6 +21,7 @@
       imports = [
         inputs.niri.nixosModules.niri
         inputs.netpala.nixosModules.default
+        #TODO move netpala to _utilities.nix
       ];
 
       programs.niri.enable = true;
@@ -117,7 +118,9 @@
           };
 
           hotkey-overlay.skip-at-startup = true;
+
           prefer-no-csd = true;
+
           screenshot-path = "~/Screenshots/%Y-%m-%d %H-%M-%S.png";
 
           clipboard.disable-primary = true;
