@@ -14,7 +14,7 @@
     }:
     let
       startPage = "file://${./_start-page.html}";
-      sys = pkgs.stdenv.hostPlatform.system;
+      sys = pkgs.stdenv.hostPlatform.system; # so we use the correct cpu architecture for our extensions below
 
       extPackages = [
         inputs.nix-firefox-addons.addons.${sys}.ublock-origin
@@ -154,6 +154,8 @@
         '';
       };
 
+      #TODO fix the ugly code above, its a bandage that isnt even working completely
+
       home.packages = with pkgs; [
         hunspellDicts.en_US
         hunspellDicts.de_DE
@@ -163,10 +165,12 @@
         pkgs.hunspellDicts.en_US
         pkgs.hunspellDicts.de_DE
       ];
+      #TODO sometimes the above code works for setting autocorrect languages, on some sites not -> check if its a website issue or an issue with the code
 
       programs.niri.settings.binds."Mod+B".action.spawn = "firefox";
 
       persist.directories = [ ".mozilla/firefox" ];
+      # one day we will get a better solution for not needing to log into every site on reboot, #TODO explore password managers as a workaround
 
       programs.firefox = {
         enable = true;
