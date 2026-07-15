@@ -138,13 +138,31 @@
         "browser.laterrun.enabled" = false;
       };
 
-      mkProfile = { isDefault ? false, id ? 0, ... }@args: {
-        inherit isDefault extensions bookmarks id;
-        settings = commonSettings // builtins.removeAttrs args [ "isDefault" "id" ];
-      };
+      mkProfile =
+        {
+          isDefault ? false,
+          id ? 0,
+          ...
+        }@args:
+        {
+          inherit
+            isDefault
+            extensions
+            bookmarks
+            id
+            ;
+          settings =
+            commonSettings
+            // builtins.removeAttrs args [
+              "isDefault"
+              "id"
+            ];
+        };
 
       firefoxPkg = config.programs.firefox.finalPackage;
-      installsHash = builtins.substring 0 12 (builtins.hashString "sha256" (lib.toLower "${firefoxPkg}/bin"));
+      installsHash = builtins.substring 0 12 (
+        builtins.hashString "sha256" (lib.toLower "${firefoxPkg}/bin")
+      );
     in
     {
       home.file."${config.programs.firefox.configPath}/installs.ini" = {
@@ -206,7 +224,10 @@
         profiles = {
           work = mkProfile { id = 0; };
           school = mkProfile { id = 1; };
-          private = mkProfile { id = 2; isDefault = true; };
+          private = mkProfile {
+            id = 2;
+            isDefault = true;
+          };
         };
       };
     };
