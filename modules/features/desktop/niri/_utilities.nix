@@ -29,10 +29,14 @@
     {
       matches = [ { app-id = "^wiremix$"; } ];
       open-floating = true;
+      opacity = 0.85;
+      background-effect.blur = true;
     }
     {
       matches = [ { app-id = "^bluetui$"; } ];
       open-floating = true;
+      opacity = 0.85;
+      background-effect.blur = true;
     }
   ];
 

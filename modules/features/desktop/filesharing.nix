@@ -17,6 +17,8 @@
         {
           matches = [ { app-id = "^localsend_app$"; } ];
           open-floating = true;
+          opacity = 0.85;
+          background-effect.blur = true;
         }
       ];
     };

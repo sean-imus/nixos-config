@@ -6,6 +6,7 @@
     programs.alacritty = {
       enable = true;
       settings = {
+        window.opacity = 0.85;
         font = {
           normal = {
             family = "JetBrainsMono Nerd Font";
@@ -45,5 +46,12 @@
         };
       };
     };
+
+    programs.niri.settings.window-rules = [
+      {
+        matches = [ { app-id = "^Alacritty$"; } ];
+        background-effect.blur = true;
+      }
+    ];
   };
 }
