@@ -146,14 +146,7 @@
               inactive.color = "#00000000";
             };
             shadow = {
-              enable = true;
-              softness = 20.0;
-              spread = 3.0;
-              offset = {
-                x = 0.0;
-                y = 4.0;
-              };
-              color = "#00000055";
+              enable = false;
             };
           };
 
