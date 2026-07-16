@@ -1,9 +1,8 @@
 { inputs, ... }:
 {
   flake-file.inputs = {
-    #TODO switch back to sodiboo/niri-flake once background-effect merges (PR#1731)
     niri = {
-      url = "github:myume/niri-flake/blur";
+      url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
@@ -217,8 +216,6 @@
             {
               matches = [ { app-id = "^netpala$"; } ];
               open-floating = true;
-              opacity = 0.85;
-              background-effect.blur = true;
             }
           ];
         };

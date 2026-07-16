@@ -18,10 +18,8 @@
 
         window-rules = [
           {
-          matches = [ { app-id = "^calc$"; } ];
-          open-floating = true;
-          opacity = 0.85;
-          background-effect.blur = true;
+            matches = [ { app-id = "^calc$"; } ];
+            open-floating = true;
           }
         ];
       };

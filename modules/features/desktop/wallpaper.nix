@@ -2,21 +2,15 @@
 {
   flake.modules.homeManager.desktop =
     { pkgs, ... }:
-    let
-      wallpaper = toString (./. + "/../../../assets/landscape.mp4");
-    in
     {
-      home.packages = [ pkgs.mpvpaper ];
+      home.packages = [ pkgs.swaybg ];
 
       programs.niri.settings.spawn-at-startup = [
         {
           argv = [
-            "mpvpaper"
-            "-f"
-            "-o"
-            "no-audio --loop"
-            "ALL"
-            wallpaper
+            "swaybg"
+            "-c"
+            "#000000"
           ];
         }
       ];
