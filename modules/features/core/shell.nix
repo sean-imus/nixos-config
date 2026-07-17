@@ -58,9 +58,9 @@
         ignoreAllDups = true;
         extended = true;
       };
-      initExtra = ''
-        				zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-        			'';
+      initContent = ''
+        zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+      '';
 
     };
 
