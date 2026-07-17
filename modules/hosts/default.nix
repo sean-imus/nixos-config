@@ -1,8 +1,5 @@
 { inputs, ... }:
 {
-  # Base every host imports: locale, boot, nix settings, base packages, and the
-  # cross-cutting defaults below. Feature buckets (core/dev/desktop) and the
-  # user account are layered on top per host.
   flake.modules.nixos.hostDefault =
     {
       pkgs,
@@ -44,8 +41,6 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            # NM is enabled below for every host, so every user joins its group
-            # here (via the user-groups bridge) rather than in a separate module.
             sharedModules = [ { userCfg.extraGroups = [ "networkmanager" ]; } ];
           };
 
@@ -103,7 +98,6 @@
           };
 
           system.stateVersion = "25.11";
-          # Allowlist rather than blanket allowUnfree — only claude-code is unfree.
           nixpkgs.config.allowUnfreePredicate = lib.mkDefault (
             pkg: builtins.elem (lib.getName pkg) [ "claude-code" ]
           );
@@ -140,8 +134,6 @@
 
           services.fwupd.enable = true;
 
-          # Passwords are declarative (sops hashedPasswordFile); block runtime
-          # passwd/useradd so the config stays the single source of truth.
           users.mutableUsers = false;
         }
       ];

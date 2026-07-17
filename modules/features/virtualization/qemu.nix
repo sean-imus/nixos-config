@@ -1,9 +1,5 @@
 { ... }:
 {
-  # Notebook-only named aspect (the VM doesn't nest virt). Importing it gives the
-  # host libvirtd AND joins every one of its users to the libvirtd group — the
-  # group request rides sharedModules so no user is named here, and the
-  # user-groups bridge drops it on hosts where the group is absent.
   flake.modules.nixos.qemu =
     { pkgs, ... }:
     {
@@ -14,8 +10,6 @@
         qemu.swtpm.enable = true;
       };
 
-      # VM definitions/disks/networks live here — persisted by this module so the
-      # path only exists on hosts that actually run libvirt.
       preservation.preserveAt."/persist".directories = [
         "/var/lib/libvirt/"
       ];
