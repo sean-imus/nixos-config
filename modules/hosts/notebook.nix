@@ -109,17 +109,6 @@
           };
           focus-at-startup = true;
         };
-        "Iiyama North America PLX2783H 1128255001580" = {
-          mode = {
-            width = 1920;
-            height = 1080;
-            refresh = 60.0;
-          };
-          position = {
-            x = -5760;
-            y = 0;
-          };
-        };
         "GIGA-BYTE TECHNOLOGY CO., LTD. M27U 23463B001145" = {
           mode = {
             width = 3840;
