@@ -6,10 +6,6 @@
     };
   };
 
-  # Preservation *mechanism* only: enables impermanence, holds globally-owned
-  # system state, and hosts the per-user persist bridge. It must NOT enumerate
-  # feature paths — each feature declares what it needs preserved in its own
-  # module (system paths directly, per-user paths via the `persist.*` option).
   flake.modules.nixos.persistence =
     { lib, config, ... }:
     {
@@ -23,8 +19,6 @@
         (
           { lib, ... }:
           {
-            # Bridge: features write user-agnostic paths into persist.*, and the
-            # mapAttrs below resolves them per-user — no feature names a user.
             options.persist = {
               files = lib.mkOption {
                 type = with lib.types; listOf (either str (attrsOf anything));
@@ -34,8 +28,9 @@
                 type = with lib.types; listOf (either str (attrsOf anything));
                 default = [ ];
               };
+              # functionality to allow modules to declare the files they need inside themselves
             };
-            config.persist.directories = [ "persist" ]; # everyone gets ~/persist (where this repo lives)
+            config.persist.directories = [ "persist" ]; # everyone gets a user owned persisted dir under ~/persist
           }
         )
       ];
