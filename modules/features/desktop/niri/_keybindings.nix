@@ -87,6 +87,7 @@
     "Mod+O" = {
       action."toggle-overview" = [ ];
       repeat = false;
+      allow-inhibiting = false;
     };
     "Mod+Q" = {
       action."close-window" = [ ];
