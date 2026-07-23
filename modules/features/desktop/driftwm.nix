@@ -97,7 +97,7 @@
       '';
 
       xdg.configFile."driftwm/config.toml".text = ''
-        mod_key = "alt"
+        mod_key = "super"
         autostart = ["waybar"]
 
         [input.keyboard]
@@ -112,7 +112,7 @@
         trackpad_speed = 1.5
         mouse_speed = 1.0
         touch_speed = 1.0
-        drift = 0
+        drift = 0.5
         animation_speed = 0.3
         auto_navigate_on_close = true
         auto_navigate_on_click = false
@@ -134,7 +134,7 @@
         font_weight = "medium"
         title_align = "center"
         default_mode = "client"
-        border_width = 0
+        border_width = 2
         border_color = "#303030"
         border_color_focused = "#303030"
 
