@@ -12,6 +12,7 @@
         # user + machine capability
         sean
         desktop
+        driftwm
         # notebook-only aspects (meaningless in a VM)
         qemu
         tailscale
