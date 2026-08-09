@@ -24,7 +24,6 @@
   	modules = [
     	inputs.self.modules.nixos.${name}
     	inputs.home-manager.nixosModules.home-manager
-    	inputs.disko.nixosModules.disko
   	];
 	};
 }
