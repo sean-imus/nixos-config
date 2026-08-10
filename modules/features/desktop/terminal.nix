@@ -1,48 +1,37 @@
 { ... }:
 {
   flake.modules.homeManager.desktop = {
-    programs.niri.settings.binds."Mod+T".action.spawn = "alacritty";
+    programs.niri.settings.binds."Mod+T".action.spawn = "kitty";
 
-    programs.alacritty = {
+    programs.kitty = {
       enable = true;
       settings = {
-        font = {
-          normal = {
-            family = "JetBrainsMono Nerd Font";
-          };
-          size = 10;
-        };
-        scrolling.multiplier = 5;
-        colors = {
-          primary = {
-            background = "#2d353b";
-            foreground = "#d3c6aa";
-          };
-          cursor = {
-            text = "#2d353b";
-            cursor = "#d3c6aa";
-          };
-          normal = {
-            black = "#475258";
-            red = "#e67e80";
-            green = "#a7c080";
-            yellow = "#dbbc7f";
-            blue = "#7fbbb3";
-            magenta = "#d699b6";
-            cyan = "#83c092";
-            white = "#d3c6aa";
-          };
-          bright = {
-            black = "#475258";
-            red = "#e67e80";
-            green = "#a7c080";
-            yellow = "#dbbc7f";
-            blue = "#7fbbb3";
-            magenta = "#d699b6";
-            cyan = "#83c092";
-            white = "#d3c6aa";
-          };
-        };
+        font_family = "JetBrainsMono Nerd Font";
+        font_size = 10;
+        wheel_scroll_multiplier = 5;
+        background = "#2d353b";
+        foreground = "#d3c6aa";
+        cursor = "#d3c6aa";
+        cursor_text_color = "#2d353b";
+        color0 = "#475258";
+        color1 = "#e67e80";
+        color2 = "#a7c080";
+        color3 = "#dbbc7f";
+        color4 = "#7fbbb3";
+        color5 = "#d699b6";
+        color6 = "#83c092";
+        color7 = "#d3c6aa";
+        color8 = "#475258";
+        color9 = "#e67e80";
+        color10 = "#a7c080";
+        color11 = "#dbbc7f";
+        color12 = "#7fbbb3";
+        color13 = "#d699b6";
+        color14 = "#83c092";
+        color15 = "#d3c6aa";
+        cursor_trail = 6;
+        cursor_trail_delay = 0.01;
+        cursor_trail_duration = 0.4;
       };
     };
   };

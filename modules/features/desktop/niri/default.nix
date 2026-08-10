@@ -90,10 +90,9 @@
 
         programs.niri.settings = {
           binds."Mod+Ctrl+W".action.spawn = [
-            "alacritty"
+            "kitty"
             "--class"
             "netpala"
-            "-e"
             "netpala"
           ];
           input = {

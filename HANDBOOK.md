@@ -86,7 +86,7 @@ Adding a new secret / declaring it in a module / rotating the age key → `AGENT
 
 | Key | Action |
 |-----|--------|
-| `Mod+T` | Terminal (alacritty) |
+| `Mod+T` | Terminal (kitty) |
 | `Mod+B` | Browser (Firefox) |
 | `Mod+Space` | App launcher (fuzzel) |
 | `XF86Calculator` | Python REPL (floating) |

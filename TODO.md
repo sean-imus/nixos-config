@@ -1,3 +1,4 @@
+- switch to kitty with cursor trails
 - try encrypting the wifi names in the wifi.nix module, no apparent security risk but still feels invasive
 - use native powerprofilesdaemon module in waybar, feature parity should exist, colors should work via css, use github docs
 - check kernel logs why usb port on left no worky for mouse adapter

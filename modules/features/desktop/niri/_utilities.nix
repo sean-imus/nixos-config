@@ -2,17 +2,15 @@
 {
   programs.niri.settings.binds = {
     "Mod+Ctrl+B".action.spawn = [
-      "alacritty"
+      "kitty"
       "--class"
       "bluetui"
-      "-e"
       "bluetui"
     ];
     "Mod+Ctrl+A".action.spawn = [
-      "alacritty"
+      "kitty"
       "--class"
       "wiremix"
-      "-e"
       "wiremix"
       "-v"
       "playback"

@@ -8,10 +8,9 @@
       programs.niri.settings = {
         binds."XF86Calculator" = {
           action.spawn = [
-            "alacritty"
+            "kitty"
             "--class"
             "calc"
-            "-e"
             "python3"
           ];
         };
