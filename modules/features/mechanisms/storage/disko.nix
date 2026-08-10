@@ -1,4 +1,4 @@
-{ inputs, lib, ... }:
+{ ... }:
 {
   # Use disko for declarative disk configuration
   flake-file.inputs = {
@@ -10,7 +10,7 @@
 
   # Storage layout as a reusable mechanism every host imports explicitly
   flake.modules.nixos.disko =
-    { config, ... }:
+    { inputs, config, lib, ... }:
     let
       cfg = config.diskoCfg;
 
@@ -77,7 +77,7 @@
           };
     in
     { 
-      # Import disko
+      # Import diskos NixOS module to use its options
 			imports = [ inputs.disko.nixosModules.disko ];
 
       # Create options for the hosts, only device is hard-required
