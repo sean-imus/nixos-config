@@ -2,9 +2,8 @@
 {
   flake-file.inputs = {
     niri = {
-      url = "github:sodiboo/niri-flake";
+      url = "github:epireyn/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs";
     };
     netpala = {
       url = "github:joel-sgc/netpala";
