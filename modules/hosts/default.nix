@@ -1,8 +1,13 @@
 { ... }:
 {
   flake.modules.nixos.hostDefault =
-    { pkgs, config, ... }:
+    { inputs, pkgs, config, ... }:
     {
+			# Import modules for every host
+      imports = with inputs.self.modules.nixos; [
+        group-bridge
+      ];
+
       # Create 2 aliases for easier rebuilding
       environment.shellAliases = {
         rbb = "sudo nixos-rebuild boot --flake /etc/nixos/nixos-config#${config.networking.hostName} && reboot";
