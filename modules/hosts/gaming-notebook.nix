@@ -39,7 +39,7 @@
 			powerManagement.enable = true;
 		};
 
-		# Enable bluetooth support
+		# Enable Bluetooth support
 		hardware.bluetooth.enable = true;
 
 		# Enable audio
@@ -52,6 +52,24 @@
 				enable = true;
 				support32Bit = true;
 			};
+		};
+
+		# Boot options
+		boot.initrd.availableKernelModules = [ "nvme" ];
+
+		# Enable hibernation safety net if battery falls to critical levels
+		services.upower = {
+			enable = true;
+  		usePercentageForPolicy = true;
+  		percentageAction = 5;
+  		criticalPowerAction = "Hibernate";
+		};
+
+		# Disable any other automatic suspending & hibernation behaviour
+		services.logind.settings.Login = {
+  		HandleLidSwitch = "ignore";
+		  HandleLidSwitchExternalPower = "ignore";
+		  HandleLidSwitchDocked = "ignore";
 		};
 
 		# Set hostname which is also used for the rbs/rbb aliases to determine what host to rebuild
