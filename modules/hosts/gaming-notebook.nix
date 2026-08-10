@@ -6,7 +6,8 @@
 	flake.modules.nixos."gaming-notebook" =
 	{ pkgs, ... }:
 	{
-		imports = with inputs.self.modules.nixos; [ hostDefault disko ];
+		# Import modules for this host
+		imports = with inputs.self.modules.nixos; [ hostDefault disko persistence];
 
 		# Disk configuration
 		diskoCfg = {
