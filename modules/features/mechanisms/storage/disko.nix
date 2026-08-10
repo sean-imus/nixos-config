@@ -15,11 +15,7 @@
       cfg = config.diskoCfg;
 
       # Hibernating hosts get RAM + 2G headroom, everyone else sets their own
-      swapSize =
-        if cfg.hibernationSupport then
-          "${toString (cfg.memorySize + 2)}G"
-        else
-          cfg.swapSize;
+      swapSize = if cfg.hibernationSupport then "${toString (cfg.memorySize + 2)}G" else cfg.swapSize;
 
       btrfs = {
         type = "btrfs";
@@ -28,11 +24,17 @@
         subvolumes = {
           "/nix" = {
             mountpoint = "/nix";
-            mountOptions = [ "compress=zstd" "noatime" ];
+            mountOptions = [
+              "compress=zstd"
+              "noatime"
+            ];
           };
           "/persist" = {
             mountpoint = "/persist";
-            mountOptions = [ "compress=zstd" "noatime" ];
+            mountOptions = [
+              "compress=zstd"
+              "noatime"
+            ];
           };
         };
       };
@@ -76,9 +78,9 @@
             };
           };
     in
-    { 
+    {
       # Import diskos NixOS module to use its options
-			imports = [ inputs.disko.nixosModules.disko ];
+      imports = [ inputs.disko.nixosModules.disko ];
 
       # Create options for the hosts, only device is hard-required
       options.diskoCfg = {
@@ -109,8 +111,8 @@
 
       config = {
         assertions = [
-					{
-						# Throw an error if hosts that want to hibernate don't declare their memory size
+          {
+            # Throw an error if hosts that want to hibernate don't declare their memory size
             assertion = !cfg.hibernationSupport || cfg.memorySize != null;
             message = "diskoCfg.memorySize must be set on hibernating hosts";
           }
@@ -120,7 +122,7 @@
         fileSystems."/nix".neededForBoot = true;
         fileSystems."/persist".neededForBoot = true;
 
-				# Actual disko configuration that creates /boot and imports the other partitions from above 
+        # Actual disko configuration that creates /boot and imports the other partitions from above
         disko.devices = {
           disk.main = {
             type = "disk";
@@ -139,7 +141,7 @@
                   };
                 };
               }
-							# Import data partitions
+              # Import data partitions
               // dataPartitions;
             };
           };
