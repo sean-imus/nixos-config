@@ -71,6 +71,9 @@
 		  HandleLidSwitchExternalPower = "ignore";
 		  HandleLidSwitchDocked = "ignore";
 		};
+	
+		# Enable firmware update support
+		services.fwupd.enable = true;
 
 		# Set hostname which is also used for the rbs/rbb aliases to determine what host to rebuild
 		networking.hostName = hostName;

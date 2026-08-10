@@ -88,8 +88,6 @@
 		users.defaultUserShell = pkgs.zsh;
 		users.mutableUsers = false;
 
-		services.fwupd.enable = true; #TODO make this declared in hosts, so vm does not get it by default
-
 		# Configure and enable ZRAM
 		zramSwap = {
 			enable = true;
