@@ -1,9 +1,14 @@
 { ... }:
 {
   flake.modules.nixos.hostDefault =
-    { inputs, pkgs, config, ... }:
     {
-			# Import modules for every host
+      inputs,
+      pkgs,
+      config,
+      ...
+    }:
+    {
+      # Import modules for every host
       imports = with inputs.self.modules.nixos; [
         group-bridge
       ];
