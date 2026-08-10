@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, ... }:
 {
   # Use disko for declarative disk configuration
   flake-file.inputs = {
@@ -10,7 +10,7 @@
 
   # Storage layout as a reusable mechanism every host imports explicitly
   flake.modules.nixos.disko =
-    { inputs, config, lib, ... }:
+    { config, lib, ... }:
     let
       cfg = config.diskoCfg;
 
