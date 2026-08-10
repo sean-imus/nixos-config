@@ -7,3 +7,6 @@
 # Rebuilding
 `rbs` - Rebuilds and switches instantly
 `rbb` - Rebuilds and switches on next boot
+
+# Testing
+`nix flake check --no-build --no-eval-cache`
