@@ -19,13 +19,13 @@
   systems = [ "x86_64-linux" ];
 
   # Complicated logic to generate actual NixOS builds from the hosts we configure
-  flake.lib.mkNixos =
-    system: name:
-    inputs.nixpkgs.lib.nixosSystem {
+  flake.lib.mkNixos = system: name: {
+    ${name} = inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
         inputs.self.modules.nixos.${name}
         inputs.home-manager.nixosModules.home-manager
       ];
     };
+  };
 }
