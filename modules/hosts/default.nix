@@ -117,7 +117,7 @@
         wget
       ];
 
-      # NixOS version where this config was originally created on
+      # NixOS version that this config was originally created on
       system.stateVersion = "26.11";
     };
 }
