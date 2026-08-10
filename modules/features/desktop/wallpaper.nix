@@ -9,8 +9,10 @@
         {
           argv = [
             "swaybg"
-            "-c"
-            "#000000"
+            "-i"
+            "${../../../assets/wallpaper.png}"
+            "-m"
+            "fill"
           ];
         }
       ];
