@@ -36,7 +36,7 @@ in
         extraPackages = with pkgs; [ intel-media-driver ];
       };
       environment.variables.LIBVA_DRIVER_NAME = "iHD";
-      
+
       # Enable Bluetooth support
       hardware.bluetooth.enable = true;
 
@@ -53,8 +53,13 @@ in
       };
 
       # Boot options
-      boot.initrd.availableKernelModules = [ "nvme" "thunderbolt" "xhci_pci" "usbhid" ];
-			boot.kernelModules = [ "kvm-intel" ];
+      boot.initrd.availableKernelModules = [
+        "nvme"
+        "thunderbolt"
+        "xhci_pci"
+        "usbhid"
+      ];
+      boot.kernelModules = [ "kvm-intel" ];
 
       # Enable hibernation safety net if battery falls to critical levels
       services.upower = {
@@ -71,7 +76,7 @@ in
         HandleLidSwitchDocked = "ignore";
       };
 
-			# Configure hibernation behaviour so shutting the display on power only suspends, and if not on power it hibernates after a certain amount of time
+      # Configure hibernation behaviour so shutting the display on power only suspends, and if not on power it hibernates after a certain amount of time
       systemd.sleep.settings.Sleep = {
         HibernateOnACPower = false;
         HibernateDelaySec = 3600;
