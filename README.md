@@ -11,7 +11,7 @@ sudo disko --mode disko --flake github:sean-imus/nixos-config#[notebook|vm]
 
 # 2. Copy the age key from USB (needed to boot after install)
 lsblk
-mkdir -p /usb && mount /dev/sdX1 /usb
+mount --mkdir /dev/sdX1 /usb
 mkdir -p /mnt/persist/home/sean/.keys
 cp /usb/keys.txt /mnt/persist/home/sean/.keys/age.txt
 chmod 600 /mnt/persist/home/sean/.keys/age.txt
