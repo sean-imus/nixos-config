@@ -8,7 +8,7 @@
       ...
     }:
     {
-			# This lets modules easily get the path to the nixos configuration directory
+      # This lets modules easily get the path to the nixos configuration directory
       options.hostCfg.flakePath = lib.mkOption {
         type = lib.types.str;
         default = "/etc/nixos/nixos-config";
