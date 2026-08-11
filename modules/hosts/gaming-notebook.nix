@@ -11,6 +11,7 @@ in
         hostDefault
         disko
         persistence
+        sean
       ];
 
       # Disk configuration
