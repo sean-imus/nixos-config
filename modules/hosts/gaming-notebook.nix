@@ -61,7 +61,7 @@ in
       };
 
       # Boot options
-      boot.initrd.availableKernelModules = [ "nvme" ];
+      boot.initrd.availableKernelModules = [ "nvme" "thunderbolt" "xhci_pci" "usbhid" ];
 
       # Enable hibernation safety net if battery falls to critical levels
       services.upower = {
