@@ -33,10 +33,16 @@
       	stateVersion = "26.11";
 			};
 
-			#TODO check why I even need this
+			# Currently in use for GitHub SSH access
       sops.secrets."sean_ssh_id_ed25519" = {
         path = "${config.home.homeDirectory}/.keys/generated_keys/id_ed25519";
         mode = "0600";
+      };
+
+			# Git settings
+      programs.git.settings.user = {
+        name = "sean tietz";
+        email = "sean.tietz2@gmail.com";
       };
     };
 }
