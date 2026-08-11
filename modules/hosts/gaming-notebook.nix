@@ -3,7 +3,7 @@ let
   hostName = "gaming-notebook";
 in
 {
-  flake.modules.nixos."gaming-notebook" =
+  flake.modules.nixos.${hostName} =
     { pkgs, ... }:
     {
       # Import modules for this host
