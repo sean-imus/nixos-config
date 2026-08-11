@@ -47,7 +47,7 @@
       environment.systemPackages = with pkgs; [ sops ];
 
       # Sops by default only accepts a .sops.yaml but since it is named sops.yaml here we need to set this
-      environment.variables.SOPS_CONFIG = "${config.hostCfg.flakePath}/modules/features/mechanisms/secrets/sops.yaml";
+      environment.variables.SOPS_CONFIG = "${config.hostCfg.flakePath}/modules/features/core/secrets/sops.yaml";
 
       # Keep SOPS_AGE_KEY_FILE across sudo so editing the secrets.yaml file works
       security.sudo.extraConfig = "Defaults env_keep+=SOPS_AGE_KEY_FILE";

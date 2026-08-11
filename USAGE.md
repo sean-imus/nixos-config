@@ -14,4 +14,4 @@ These should be ran inside the nixos-config directory.
 `nix flake check --no-build --no-eval-cache`
 
 # Updating secrets
-`sudo sops modules/features/mechanisms/secrets/secrets.yaml`
+`sudo sops modules/features/core/secrets/secrets.yaml`
