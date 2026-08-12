@@ -1,3 +1,5 @@
+# CURRENTLY BEING REWRITTEN FROM SCRATCH
+
 ## Installation
 
 **This wipes the entire target disk.**
