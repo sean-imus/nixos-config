@@ -59,7 +59,7 @@
           lsp = {
             enable = true;
             inlayHints = true;
-            servers.nixd.enable = true;
+            servers.nixd.enable = true; # TODO get auto-completion for options to work, alongside other IDE goodies
           };
 
           # Handle formatting

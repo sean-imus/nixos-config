@@ -3,10 +3,10 @@ These should be ran inside the nixos-config directory.
 # Formatting
 `nix run nixpkgs#nixfmt -- **/*.nix`
 
-# Updating inputs
+# Updating inputs AKA updating the system if coupled with rbs/rbb
 `nix flake update`
 
-# Rebuilding
+# Rebuilding AKA applying the changes to the config
 `rbs` - Rebuilds and switches instantly
 `rbb` - Rebuilds and switches on next boot
 
