@@ -1,35 +1,29 @@
 { inputs, ... }:
 {
+	# Use NixVim to declaratively manage NeoVim
   flake-file.inputs.nixvim = {
     url = "github:nix-community/nixvim";
-    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   flake.modules.homeManager.dev =
     { pkgs, ... }:
     {
+			# Import the NixVim Home-Manager module to use its options
       imports = [ inputs.nixvim.homeModules.nixvim ];
 
-      home.shellAliases.n = "nvim";
-      home.sessionVariables.EDITOR = "nvim";
+			# Set NeoVim Alias & Environment Variable for easier usage
+      home = {
+				shellAliases.n = "nvim";
+      	sessionVariables.EDITOR = "nvim";
+			};
 
-      home.packages = with pkgs; [
-        ripgrep
-        wl-clipboard
-        nixd
-        nixfmt
-        python3Packages.isort
-        python3Packages.black
-      ];
-
+			# Enable NixVim and set meta options
       programs.nixvim = {
         enable = true;
-        nixpkgs.source = inputs.nixpkgs;
-        version.enableNixpkgsReleaseCheck = false;
         waylandSupport = true;
-        colorscheme = "everforest";
         globals.mapleader = " ";
 
+				# NeoVim options
         opts = {
           number = true;
           relativenumber = true;
@@ -39,6 +33,7 @@
           clipboard = "unnamedplus";
         };
 
+				# NeoVim plugins and their settings
         plugins = {
           web-devicons.enable = true;
           gitsigns.enable = true;
@@ -48,8 +43,6 @@
             enable = true;
             grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
               nix
-              python
-              lua
               bash
             ];
           };
@@ -62,30 +55,29 @@
             };
           };
 
+					# Use nixd as the lsp of choice
           lsp = {
             enable = true;
             inlayHints = true;
-            keymaps = {
-              lspBuf = {
-                K = "hover";
-                gd = "definition";
-                gi = "implementation";
-                gr = "references";
+            servers.nixd.enable = true;
+          };
+
+					# Handle formatting
+          conform-nvim = {
+            enable = true;
+            autoInstall.enable = true;
+            settings = {
+              formatters_by_ft = {
+                nix = [ "nixfmt" ];
               };
-              diagnostic = {
-                "<leader>j" = "goto_next";
-                "<leader>k" = "goto_prev";
+              format_on_save = {
+                timeout_ms = 500;
+                lsp_format = "fallback";
               };
-            };
-            servers = {
-              nixd = {
-                enable = true;
-                settings.formatting.command = [ "nixfmt" ];
-              };
-              pylsp.enable = true;
             };
           };
 
+					# Enable a file manager that can be invoked inside NeoVim
           neo-tree = {
             enable = true;
             settings = {
@@ -99,11 +91,12 @@
           };
         };
 
+				# Set theme
         colorschemes.everforest = {
           enable = true;
-          settings.transparent_background = 2;
         };
 
+				# Keybinds
         keymaps = [
           {
             key = "<leader>e";
@@ -132,6 +125,7 @@
           }
         ];
 
+				# Watch files so if something changes from the outside it is immmediately reflected
         extraConfigLua = ''
           vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
             pattern = "*",
