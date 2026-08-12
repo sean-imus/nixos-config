@@ -19,6 +19,7 @@
     };
     import-tree.url = "github:vic/import-tree";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixvim.url = "github:nix-community/nixvim";
     preservation.url = "github:nix-community/preservation";
     sops-nix = {
       url = "github:Mic92/sops-nix";
