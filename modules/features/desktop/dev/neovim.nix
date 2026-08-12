@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-	# Use NixVim to declaratively manage NeoVim
+  # Use NixVim to declaratively manage NeoVim
   flake-file.inputs.nixvim = {
     url = "github:nix-community/nixvim";
   };
@@ -8,22 +8,22 @@
   flake.modules.homeManager.dev =
     { pkgs, ... }:
     {
-			# Import the NixVim Home-Manager module to use its options
+      # Import the NixVim Home-Manager module to use its options
       imports = [ inputs.nixvim.homeModules.nixvim ];
 
-			# Set NeoVim Alias & Environment Variable for easier usage
+      # Set NeoVim Alias & Environment Variable for easier usage
       home = {
-				shellAliases.n = "nvim";
-      	sessionVariables.EDITOR = "nvim";
-			};
+        shellAliases.n = "nvim";
+        sessionVariables.EDITOR = "nvim";
+      };
 
-			# Enable NixVim and set meta options
+      # Enable NixVim and set meta options
       programs.nixvim = {
         enable = true;
         waylandSupport = true;
         globals.mapleader = " ";
 
-				# NeoVim options
+        # NeoVim options
         opts = {
           number = true;
           relativenumber = true;
@@ -33,7 +33,7 @@
           clipboard = "unnamedplus";
         };
 
-				# NeoVim plugins and their settings
+        # NeoVim plugins and their settings
         plugins = {
           web-devicons.enable = true;
           gitsigns.enable = true;
@@ -55,14 +55,14 @@
             };
           };
 
-					# Use nixd as the lsp of choice
+          # Use nixd as the lsp of choice
           lsp = {
             enable = true;
             inlayHints = true;
             servers.nixd.enable = true;
           };
 
-					# Handle formatting
+          # Handle formatting
           conform-nvim = {
             enable = true;
             autoInstall.enable = true;
@@ -77,7 +77,7 @@
             };
           };
 
-					# Enable a file manager that can be invoked inside NeoVim
+          # Enable a file manager that can be invoked inside NeoVim
           neo-tree = {
             enable = true;
             settings = {
@@ -91,12 +91,12 @@
           };
         };
 
-				# Set theme
+        # Set theme
         colorschemes.everforest = {
           enable = true;
         };
 
-				# Keybinds
+        # Keybinds
         keymaps = [
           {
             key = "<leader>e";
@@ -125,7 +125,7 @@
           }
         ];
 
-				# Watch files so if something changes from the outside it is immmediately reflected
+        # Watch files so if something changes from the outside it is immmediately reflected
         extraConfigLua = ''
           vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
             pattern = "*",
