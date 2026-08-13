@@ -21,6 +21,7 @@
         sean
         sops
         dev
+        core
       ];
     };
 
