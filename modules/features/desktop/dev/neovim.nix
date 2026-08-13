@@ -59,7 +59,36 @@
           lsp = {
             enable = true;
             inlayHints = true;
-            servers.nixd.enable = true; # TODO get auto-completion for options to work, alongside other IDE goodies
+            servers.nixd = {
+              enable = true;
+              # This enables option auto-completion
+              settings.nixd = {
+                nixpkgs.expr = "import ${inputs.nixpkgs} { }";
+                formatting.command = [ "nixfmt" ];
+                options = {
+                  nixos.expr = ''
+                    (let
+                      flake = builtins.getFlake (toString ./.);
+                      pkgs = import ${inputs.nixpkgs} { };
+                      inherit (pkgs) lib;
+                    in (lib.evalModules {
+                      modules = (import "${inputs.nixpkgs}/nixos/modules/module-list.nix") ++ [
+                        { _module.check = false; }
+                      ] ++ (builtins.attrValues flake.modules.nixos);
+                    })).options
+                  '';
+                  home-manager.expr = ''
+                    (let
+                      flake = builtins.getFlake (toString ./.);
+                      pkgs = import ${inputs.nixpkgs} { };
+                      lib = import "${inputs.home-manager}/modules/lib/stdlib-extended.nix" pkgs.lib;
+                    in (lib.evalModules {
+                      modules = (import "${inputs.home-manager}/modules/modules.nix") { inherit lib pkgs; check = false; } ++ (builtins.attrValues flake.modules.homeManager);
+                    })).options
+                  '';
+                };
+              };
+            };
           };
 
           # Handle formatting
