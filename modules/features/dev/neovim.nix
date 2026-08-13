@@ -102,6 +102,15 @@
           # Popup that shows available keybinds as you type the leader key
           which-key.enable = true;
 
+          # Comment toggling with gcc & gc
+          comment.enable = true;
+
+          # Telescope picker for To-Do's
+          todo-comments = {
+            enable = true;
+            keymaps.todoTelescope.key = "<leader>ft";
+          };
+
           # Fuzzy finder for files
           telescope = {
             enable = true;
