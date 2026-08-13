@@ -31,6 +31,7 @@
           tabstop = 2;
           shiftwidth = 2;
           clipboard = "unnamedplus";
+          foldlevelstart = 99;
         };
 
         # NeoVim plugins and their settings
@@ -41,6 +42,7 @@
           nvim-autopairs.enable = true;
           treesitter = {
             enable = true;
+            folding.enable = true;
             grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
               nix
               bash
@@ -97,6 +99,23 @@
             settings.keymap.preset = "super-tab";
           };
 
+          # Popup that shows available keybinds as you type the leader key
+          which-key.enable = true;
+
+          # Fuzzy finder for files
+          telescope = {
+            enable = true;
+            keymaps = {
+              "<leader>ff" = "find_files";
+            };
+          };
+
+          # Vertical indentation guides
+          indent-blankline.enable = true;
+
+          # Jump anywhere on screen by typing a couple of characters
+          flash.enable = true;
+
           # Handle formatting
           conform-nvim = {
             enable = true;
@@ -122,6 +141,12 @@
                 use_libuv_file_watcher = true;
                 auto_reload = true;
               };
+              window.mappings = {
+                S = "open_vsplit";
+                # The keybind is disabled here to free it up for the flash plugin
+                s = false;
+              };
+
             };
           };
         };
@@ -157,6 +182,11 @@
             key = "<leader>w";
             action = "<cmd>w<CR>";
             options.desc = "Save file";
+          }
+          {
+            key = "s";
+            action = "<cmd>lua require('flash').jump()<CR>";
+            options.desc = "Flash jump";
           }
         ];
 
