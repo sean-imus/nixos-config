@@ -5,7 +5,7 @@
       enable = true;
       settings = {
         update_ms = 1000;
-        theme_background = false;
+        color_theme = "everforest-dark-medium";
       };
     };
   };
