@@ -91,6 +91,12 @@
             };
           };
 
+          # Completion engine that uses the generated option auto-completion to show hints
+          blink-cmp = {
+            enable = true;
+            settings.keymap.preset = "super-tab";
+          };
+
           # Handle formatting
           conform-nvim = {
             enable = true;
