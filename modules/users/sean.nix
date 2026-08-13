@@ -22,7 +22,6 @@
         sops
         dev
         core
-        desktop
       ];
     };
 
