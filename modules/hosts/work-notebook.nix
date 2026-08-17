@@ -7,7 +7,7 @@
     ../features/desktop/printing.nix
     ../features/desktop/rdp-work.nix
     ../features/desktop/lockscreen.nix
-    ../features/desktop/window-managers/niri/default.nix
+    ../features/desktop/window-managers
   ];
 
   diskoCfg = {

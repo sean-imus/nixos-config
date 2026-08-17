@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 let
   shaders.window-open = ''
     vec4 expanding_circle(vec3 coords_geo, vec3 size_geo) {
@@ -151,10 +151,6 @@ in
         clip-to-geometry = true;
       }
       {
-        matches = [ { app-id = "^netpala$"; } ];
-        open-floating = true;
-      }
-      {
         matches = [ { app-id = "^wiremix$"; } ];
         open-floating = true;
       }
@@ -225,15 +221,4 @@ in
       Hidden=true
     '';
   };
-
-  home.packages = with pkgs; [
-    xwayland-satellite
-    wiremix
-    feh
-    bluetui
-    brightnessctl
-    wl-clipboard
-    cliphist
-    swaybg
-  ];
 }

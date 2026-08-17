@@ -356,12 +356,6 @@
 
     "Super+Alt+L".action.spawn = "hyprlock";
 
-    "Mod+Ctrl+W".action.spawn = [
-      "kitty"
-      "--class"
-      "netpala"
-      "netpala"
-    ];
     "Mod+Ctrl+B".action.spawn = [
       "kitty"
       "--class"
