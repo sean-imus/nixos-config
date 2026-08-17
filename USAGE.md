@@ -14,7 +14,7 @@ These should be ran inside the nixos-config directory unless noted otherwise.
 `nix flake check`
 
 # Updating secrets
-`sops modules/features/core/secrets/secrets.yaml`
+`sops modules/features/secrets/secrets.yaml`
 
 # Installation
 
