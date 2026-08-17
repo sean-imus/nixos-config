@@ -100,7 +100,12 @@ in
             }
           ];
 
-          background.type = "none";
+          background = {
+            type = "shader";
+            path = "${
+              inputs.driftwm.packages.${pkgs.system}.default
+            }/share/driftwm/wallpapers/static/blue_drift.glsl";
+          };
           xwayland.enabled = true;
           session = {
             restore_windows = false;
