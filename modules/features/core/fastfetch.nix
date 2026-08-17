@@ -1,5 +1,7 @@
 { ... }:
 {
   programs.fastfetch.enable = true;
-  home.shellAliases.ff = "fastfetch";
+  home.shellAliases = {
+    ff = "fastfetch";
+  };
 }
