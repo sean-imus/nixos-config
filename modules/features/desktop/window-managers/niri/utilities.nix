@@ -225,27 +225,5 @@ in
     brightnessctl
     wl-clipboard
     cliphist
-    (pkgs.writeShellScriptBin "perf-status" ''
-      raw=$(busctl get-property net.hadess.PowerProfiles /net/hadess/PowerProfiles net.hadess.PowerProfiles ActiveProfile)
-      current=''${raw#s \"}
-      current=''${current%\"}
-      case "$current" in
-        power-saver) echo '{"text":"PERF low","class":"low","tooltip":"power-saver"}' ;;
-        balanced)    echo '{"text":"PERF med","class":"med","tooltip":"balanced"}' ;;
-        performance) echo '{"text":"PERF high","class":"high","tooltip":"performance"}' ;;
-      esac
-    '')
-    (pkgs.writeShellScriptBin "power-toggle" ''
-      raw=$(busctl get-property net.hadess.PowerProfiles /net/hadess/PowerProfiles net.hadess.PowerProfiles ActiveProfile)
-      current=''${raw#s \"}
-      current=''${current%\"}
-      case "$current" in
-        power-saver) next="balanced" ;;
-        balanced) next="performance" ;;
-        performance) next="power-saver" ;;
-      esac
-      busctl set-property net.hadess.PowerProfiles /net/hadess/PowerProfiles net.hadess.PowerProfiles ActiveProfile s "$next"
-      pkill -RTMIN+9 waybar
-    '')
   ];
 }

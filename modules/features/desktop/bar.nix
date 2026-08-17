@@ -10,7 +10,7 @@
         margin = "0";
         modules-left = [ "clock" ];
         modules-right = [
-          "custom/perf"
+          "power-profiles-daemon"
           "pulseaudio#mic"
           "pulseaudio#sink"
           "battery"
@@ -39,12 +39,15 @@
           on-scroll-up = "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+ -l 1.0";
           on-scroll-down = "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-";
         };
-        "custom/perf" = {
-          exec = "perf-status";
-          signal = 9;
-          interval = "once";
-          return-type = "json";
-          on-click = "power-toggle";
+        "power-profiles-daemon" = {
+          format = "{icon}";
+          tooltip-format = "Power profile: {profile}\nDriver: {driver}";
+          format-icons = {
+            default = "PERF med";
+            performance = "PERF high";
+            balanced = "PERF med";
+            "power-saver" = "PERF low";
+          };
         };
       }
     ];
@@ -63,9 +66,9 @@
 
       #clock,
       #battery,
+      #power-profiles-daemon,
       #pulseaudio.sink,
-      #pulseaudio.mic,
-      #custom-perf {
+      #pulseaudio.mic {
         padding: 0 6px;
       }
 
@@ -82,16 +85,16 @@
         color: #7a8478;
       }
 
-      #custom-perf.low {
-        color: #a7c080;
+      #power-profiles-daemon.performance {
+        color: #e67e80;
       }
 
-      #custom-perf.med {
+      #power-profiles-daemon.balanced {
         color: #dbbc7f;
       }
 
-      #custom-perf.high {
-        color: #e67e80;
+      #power-profiles-daemon.power-saver {
+        color: #a7c080;
       }
     '';
   };
