@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 let
   shaders.window-open = ''
     vec4 expanding_circle(vec3 coords_geo, vec3 size_geo) {
@@ -32,6 +32,8 @@ let
   '';
 in
 {
+  home.packages = [ pkgs.swaybg ];
+
   programs.niri.settings = {
     input = {
       keyboard.numlock = true;
