@@ -61,7 +61,7 @@
     HandleLidSwitchExternalPower = "ignore";
     HandleLidSwitchDocked = "ignore";
   };
-
+  # TODO CHECK THIS WHOLE THING I DONT WANT ANYTHING TO HAPPEN WITHOUT ME EXPLICIT, NO SUSPEND NO HIBERNATE, ONLY THAT CRITIAL 5% HIBERNATE THING NO LID SWTICH THINGS HAPPEING EITHER
   systemd.sleep.settings.Sleep = {
     HibernateOnACPower = false;
     HibernateDelaySec = 3600;
