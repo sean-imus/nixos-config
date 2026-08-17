@@ -1,7 +1,5 @@
 { ... }:
 {
-  flake.modules.homeManager.core = {
-    programs.fastfetch.enable = true;
-    home.shellAliases.ff = "fastfetch";
-  };
+  programs.fastfetch.enable = true;
+  home.shellAliases.ff = "fastfetch";
 }

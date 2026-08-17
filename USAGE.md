@@ -1,4 +1,4 @@
-These should be ran inside the nixos-config directory.
+These should be ran inside the nixos-config directory unless noted otherwise.
 
 # Formatting
 `nix run nixpkgs#nixfmt -- **/*.nix`
@@ -11,7 +11,37 @@ These should be ran inside the nixos-config directory.
 `rbb` - Rebuilds and switches on next boot
 
 # Testing
-`nix flake check --no-build --no-eval-cache`
+`nix flake check`
 
 # Updating secrets
-`sudo sops modules/features/core/secrets/secrets.yaml`
+`sops modules/features/core/secrets/secrets.yaml`
+
+# Installation
+
+**This wipes the entire target disk.**
+
+```bash
+# 0. Boot a NixOS ISO
+
+# 1. Partition and format
+nix-shell -p disko
+sudo disko --mode disko --flake .#hostname
+
+# 2. Copy the age key from USB
+lsblk
+mount --mkdir /dev/sdX1 /usb
+mkdir -p /mnt/home/sean/.sops
+cp /usb/age.txt /mnt/home/sean/.sops/age.key
+chmod 600 /mnt/home/sean/.sops/age.key
+
+# 3. Place the hashed password
+mkdir -p /mnt/home/sean/.secrets
+cp /usb/password.txt /mnt/home/sean/.secrets/password.txt
+chmod 600 /mnt/home/sean/.secrets/password.txt
+
+# 4. Install
+sudo nixos-install --no-channel-copy --no-root-password --flake .#hostname
+
+# 5. Clone the config for future rebuilds
+git clone https://github.com/sean-imus/nixos-config ~/nixos-config
+```
