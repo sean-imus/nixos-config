@@ -11,5 +11,4 @@
     ncdu
     tldr
   ];
-  # TLDR, BAT, NCDU, FZF
 }
