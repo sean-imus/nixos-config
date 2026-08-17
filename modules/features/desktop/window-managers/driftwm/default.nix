@@ -1,11 +1,11 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 let
   tomlFormat = pkgs.formats.toml { };
   keybindings = import ./keybindings.nix;
 in
 {
   config = {
-    environment.systemPackages = [ pkgs.driftwm ];
+    environment.systemPackages = [ inputs.driftwm.packages.${pkgs.system}.default ];
 
     home-manager.sharedModules = [
       ./utilities.nix
