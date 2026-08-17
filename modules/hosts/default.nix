@@ -1,4 +1,9 @@
-{ pkgs, config, inputs, ... }:
+{
+  pkgs,
+  config,
+  inputs,
+  ...
+}:
 {
   config = {
     environment.shellAliases = {
@@ -86,12 +91,9 @@
     fonts.packages = pkgs.nerd-fonts.jetbrains-mono;
 
     environment.systemPackages = with pkgs; [
-      bat
       iotop
       lm_sensors
-      ncdu
       pciutils
-      tldr
       usbutils
       wget
     ];
