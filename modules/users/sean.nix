@@ -1,5 +1,7 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
+  programs.zsh.enable = true;
+
   users.users.sean = {
     isNormalUser = true;
     extraGroups = [
@@ -8,6 +10,7 @@
       "audio"
       "networkmanager"
     ];
+    shell = pkgs.zsh;
     hashedPasswordFile = "/home/sean/.secrets/password.txt";
   };
 
