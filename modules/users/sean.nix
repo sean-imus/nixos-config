@@ -29,6 +29,9 @@
       ../features/desktop/kitty.nix
       ../features/desktop/launcher.nix
       ../features/desktop/bar.nix
+      ../features/desktop/theming.nix
+      ../features/desktop/gaming.nix
+      ../features/desktop/office.nix
     ];
 
     home = {

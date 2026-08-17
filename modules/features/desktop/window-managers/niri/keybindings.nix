@@ -114,9 +114,7 @@
     "Mod+K" = {
       action."focus-window-or-workspace-up" = [ ];
     };
-    "Mod+L" = {
-      action."focus-column-right" = [ ];
-    };
+    "Mod+L".action.spawn = "hyprlock";
 
     "Mod+Ctrl+Left" = {
       action."move-column-left" = [ ];
