@@ -4,6 +4,7 @@
     ./default.nix
     ../users/sean.nix
     ../features/storage/disko.nix
+    ../features/desktop/printing.nix
   ];
 
   diskoCfg = {

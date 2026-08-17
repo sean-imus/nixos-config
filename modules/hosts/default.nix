@@ -88,7 +88,7 @@
       memoryPercent = 50;
     };
 
-    fonts.packages = pkgs.nerd-fonts.jetbrains-mono;
+    fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
 
     environment.systemPackages = with pkgs; [
       iotop

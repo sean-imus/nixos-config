@@ -20,6 +20,8 @@
       ../features/secrets/sops.nix
       ../features/core/ssh.nix
       ../features/core/git.nix
+      ../features/core/zsh.nix
+      ../features/core/shell-tools.nix
       ../features/core/btop.nix
       ../features/core/fastfetch.nix
       ../features/desktop/dev/neovim.nix
