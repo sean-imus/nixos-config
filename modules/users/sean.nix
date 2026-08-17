@@ -15,6 +15,7 @@
     imports = [
       inputs.sops-nix.homeManagerModules.sops
       ../features/secrets/sops.nix
+      ../features/core/ssh.nix
       ../features/core/git.nix
       ../features/core/btop.nix
       ../features/core/fastfetch.nix

@@ -23,7 +23,7 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    extraPackages = pkgs.intel-media-driver;
+    extraPackages = [ pkgs.intel-media-driver ];
   };
   environment.variables.LIBVA_DRIVER_NAME = "iHD";
 

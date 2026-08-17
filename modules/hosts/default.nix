@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, inputs, ... }:
 {
   config = {
     environment.shellAliases = {
@@ -45,6 +45,7 @@
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
+      extraSpecialArgs = { inherit inputs; };
     };
 
     networking = {
