@@ -3,7 +3,7 @@
   imports = [
     ./default.nix
     ../users/sean.nix
-    ../features/core/storage/disko.nix
+    ../features/storage/disko.nix
   ];
 
   diskoCfg = {

@@ -2,25 +2,21 @@
 let
   cfg = config.diskoCfg;
 
-  swapSize = if cfg.hibernationSupport then "${toString (cfg.memorySize + 2)}G" else cfg.swapSize;
+  swapSize = "${toString (cfg.memorySize + 2)}G";
 
   btrfs = {
     type = "btrfs";
     extraArgs = [ "-f" ];
-    subvolumes = {
-      "/nix" = {
-        mountpoint = "/nix";
-        mountOptions = [
-          "compress=zstd"
-          "noatime"
-        ];
-      };
-    };
+    mountpoint = "/";
+    mountOptions = [
+      "compress=zstd"
+      "noatime"
+    ];
   };
 
   swap = {
     type = "swap";
-    resumeDevice = cfg.hibernationSupport;
+    resumeDevice = false;
   };
 
   luks = name: content: {
@@ -64,30 +60,13 @@ in
       type = lib.types.bool;
       default = true;
     };
-    hibernationSupport = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-    };
     memorySize = lib.mkOption {
-      type = lib.types.nullOr lib.types.int;
-      default = null;
-    };
-    swapSize = lib.mkOption {
-      type = lib.types.str;
-      default = "4G";
+      type = lib.types.int;
+      description = "RAM size in GB. Swap partition is set to this + 2 GB.";
     };
   };
 
   config = {
-    assertions = [
-      {
-        assertion = !cfg.hibernationSupport || cfg.memorySize != null;
-        message = "diskoCfg.memorySize must be set on hibernating hosts";
-      }
-    ];
-
-    fileSystems."/nix".neededForBoot = true;
-
     disko.devices = {
       disk.main = {
         type = "disk";

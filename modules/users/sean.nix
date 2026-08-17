@@ -14,7 +14,7 @@
   home-manager.users.sean = {
     imports = [
       inputs.sops-nix.homeManagerModules.sops
-      ../features/core/secrets/sops.nix
+      ../features/secrets/sops.nix
       ../features/core/git.nix
       ../features/core/btop.nix
       ../features/core/fastfetch.nix
