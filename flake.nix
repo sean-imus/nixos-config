@@ -18,6 +18,11 @@
     };
 
     nixvim.url = "github:nix-community/nixvim";
+
+    niri = {
+      url = "github:epireyn/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
