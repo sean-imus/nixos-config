@@ -24,6 +24,8 @@ in
 
           input = {
             keyboard = {
+              layout = "de";
+              options = "caps:escape";
               repeat_rate = 25;
               repeat_delay = 200;
             };
@@ -51,6 +53,7 @@ in
           };
 
           decorations = {
+            default_mode = "minimal";
             corner_radius = 10;
             border_width = 0;
             bg_color = "#303030";
@@ -69,7 +72,7 @@ in
             {
               name = "eDP-1";
               position = [
-                0
+                (-3840)
                 0
               ];
             }
@@ -85,7 +88,7 @@ in
               name = "Iiyama North America PL2770H 0x00000124";
               mode = "1920x1080@144";
               position = [
-                (-3840)
+                0
                 0
               ];
             }
@@ -102,9 +105,7 @@ in
 
           background = {
             type = "shader";
-            path = "${
-              inputs.driftwm.packages.${pkgs.system}.default
-            }/share/driftwm/wallpapers/static/blue_drift.glsl";
+            path = "${inputs.driftwm}/extras/wallpapers/animated/fast_smoke.glsl";
           };
           xwayland.enabled = true;
           session = {
