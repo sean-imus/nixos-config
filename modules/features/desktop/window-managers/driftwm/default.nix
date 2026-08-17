@@ -68,23 +68,35 @@ in
           outputs = [
             {
               name = "eDP-1";
-              position = [ 0 0 ];
+              position = [
+                0
+                0
+              ];
             }
             {
               name = "Iiyama North America PL2770H 0x0000011F";
               mode = "1920x1080@144";
-              position = [ (-1920) 0 ];
+              position = [
+                (-1920)
+                0
+              ];
             }
             {
               name = "Iiyama North America PL2770H 0x00000124";
               mode = "1920x1080@144";
-              position = [ (-3840) 0 ];
+              position = [
+                (-3840)
+                0
+              ];
             }
             {
               name = "GIGA-BYTE TECHNOLOGY CO., LTD. M27U 23463B001145";
               mode = "3840x2160@60";
               scale = 1.75;
-              position = [ 0 (-1234) ];
+              position = [
+                0
+                (-1234)
+              ];
             }
           ];
 
