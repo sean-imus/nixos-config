@@ -26,6 +26,9 @@
       ../features/core/fastfetch.nix
       ../features/desktop/dev/neovim.nix
       ../features/desktop/dev/opencode.nix
+      ../features/desktop/kitty.nix
+      ../features/desktop/launcher.nix
+      ../features/desktop/bar.nix
     ];
 
     home = {
