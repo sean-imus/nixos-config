@@ -1,13 +1,10 @@
 {
   "mod+return" = "exec-terminal";
   "mod+d" = "exec-launcher";
-  "mod+space" = "exec-fuzzel";
-  "mod+t" = "exec-terminal";
+  "mod+space" = "spawn fuzzel";
 
   "mod+q" = "close-window";
   "mod+f" = "toggle-fullscreen";
-  "mod+v" = "toggle-floating";
-  "mod+shift+v" = "toggle-focus-floating";
   "mod+shift+e" = "quit";
 
   "mod+l" = "spawn hyprlock";
