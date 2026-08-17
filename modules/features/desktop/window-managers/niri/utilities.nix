@@ -168,6 +168,15 @@ in
       { argv = [ "waybar" ]; }
       {
         argv = [
+          "swaybg"
+          "-i"
+          "${./wallpaper.png}"
+          "-m"
+          "fill"
+        ];
+      }
+      {
+        argv = [
           "wl-paste"
           "--watch"
           "cliphist"
@@ -225,5 +234,6 @@ in
     brightnessctl
     wl-clipboard
     cliphist
+    swaybg
   ];
 }

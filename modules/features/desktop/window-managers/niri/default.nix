@@ -20,6 +20,5 @@
   home-manager.sharedModules = [
     ./keybindings.nix
     ./utilities.nix
-    ./wallpaper.nix
   ];
 }
