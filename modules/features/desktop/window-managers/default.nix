@@ -11,7 +11,6 @@
     cliphist
     playerctl
     xwayland-satellite
-    swaybg
     wiremix
     bluetui
     feh
