@@ -20,7 +20,7 @@ in
           ];
 
           window_placement = "center";
-          focus_follows_mouse = false;
+          focus_follows_mouse = true;
 
           input = {
             keyboard = {
