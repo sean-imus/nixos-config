@@ -33,6 +33,7 @@ mount --mkdir /dev/sdX1 /usb
 mkdir -p /mnt/home/sean/.sops
 cp /usb/age.txt /mnt/home/sean/.sops/age.key
 chmod 600 /mnt/home/sean/.sops/age.key
+#TODO Fix Permissions
 
 # 3. Place the hashed password
 mkdir -p /mnt/home/sean/.secrets
