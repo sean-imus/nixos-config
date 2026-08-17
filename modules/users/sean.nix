@@ -23,6 +23,7 @@
       ../features/core/btop.nix
       ../features/core/fastfetch.nix
       ../features/desktop/dev/neovim.nix
+      ../features/desktop/dev/opencode.nix
     ];
 
     home = {
