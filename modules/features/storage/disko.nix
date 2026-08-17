@@ -54,7 +54,7 @@ in
   options.diskoCfg = {
     device = lib.mkOption {
       type = lib.types.str;
-      description = "Disk ID (e.g. nvme-SAMSUNG_MZALQ512HALU-000L2_S4UKNF0R457642)";
+      description = "Disk ID";
     };
     encrypt = lib.mkOption {
       type = lib.types.bool;
@@ -62,7 +62,7 @@ in
     };
     memorySize = lib.mkOption {
       type = lib.types.int;
-      description = "RAM size in GB. Swap partition is set to this + 2 GB.";
+      description = "RAM size in GB";
     };
   };
 
