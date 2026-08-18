@@ -12,7 +12,6 @@ let
 
   swap = {
     type = "swap";
-    resumeDevice = false;
   };
 
   luks = name: content: {
