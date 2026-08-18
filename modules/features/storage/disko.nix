@@ -1,9 +1,5 @@
-{ lib, config, ... }:
+{ lib, ... }:
 let
-  cfg = config.diskoCfg;
-
-  swapSize = "${toString (cfg.memorySize + 2)}G";
-
   btrfs = {
     type = "btrfs";
     extraArgs = [ "-f" ];
@@ -25,67 +21,33 @@ let
     settings.allowDiscards = true;
     inherit content;
   };
-
-  dataPartitions =
-    if cfg.encrypt then
-      {
-        luks = {
-          end = "-${swapSize}";
-          content = luks "cryptroot" btrfs;
-        };
-        cryptswap = {
-          size = swapSize;
-          content = luks "cryptswap" swap;
-        };
-      }
-    else
-      {
-        root = {
-          end = "-${swapSize}";
-          content = btrfs;
-        };
-        swap = {
-          size = swapSize;
-          content = swap;
-        };
-      };
 in
 {
-  options.diskoCfg = {
-    device = lib.mkOption {
-      type = lib.types.str;
-      description = "Disk ID";
-    };
-    encrypt = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-    };
-    memorySize = lib.mkOption {
-      type = lib.types.int;
-      description = "RAM size in GB";
-    };
-  };
-
-  config = {
-    disko.devices = {
-      disk.main = {
-        type = "disk";
-        device = "/dev/disk/by-id/${cfg.device}";
-        content = {
-          type = "gpt";
-          partitions = {
-            ESP = {
-              size = "1G";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
-              };
+  disko.devices = {
+    disk.main = {
+      type = "disk";
+      device = "/dev/disk/by-id/nvme-SAMSUNG_MZALQ512HALU-000L2_S4UKNF0R457642";
+      content = {
+        type = "gpt";
+        partitions = {
+          ESP = {
+            size = "1G";
+            type = "EF00";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+              mountOptions = [ "umask=0077" ];
             };
-          }
-          // dataPartitions;
+          };
+          luks = {
+            end = "-26G";
+            content = luks "cryptroot" btrfs;
+          };
+          cryptswap = {
+            size = "26G";
+            content = luks "cryptswap" swap;
+          };
         };
       };
     };
