@@ -95,18 +95,6 @@
       "close-window" = { };
     };
 
-    "Mod+Left" = {
-      "focus-column-left" = { };
-    };
-    "Mod+Down" = {
-      "focus-window-or-workspace-down" = { };
-    };
-    "Mod+Up" = {
-      "focus-window-or-workspace-up" = { };
-    };
-    "Mod+Right" = {
-      "focus-column-right" = { };
-    };
     "Mod+H" = {
       "focus-column-left" = { };
     };
@@ -117,21 +105,9 @@
       "focus-window-or-workspace-up" = { };
     };
     "Mod+L" = {
-      spawn = "hyprlock";
+      "focus-column-right" = { };
     };
 
-    "Mod+Ctrl+Left" = {
-      "move-column-left" = { };
-    };
-    "Mod+Ctrl+Down" = {
-      "move-window-down-or-to-workspace-down" = { };
-    };
-    "Mod+Ctrl+Up" = {
-      "move-window-up-or-to-workspace-up" = { };
-    };
-    "Mod+Ctrl+Right" = {
-      "move-column-right" = { };
-    };
     "Mod+Ctrl+H" = {
       "move-column-left" = { };
     };
@@ -145,18 +121,6 @@
       "move-column-right" = { };
     };
 
-    "Mod+Shift+Left" = {
-      "focus-monitor-left" = { };
-    };
-    "Mod+Shift+Down" = {
-      "focus-monitor-down" = { };
-    };
-    "Mod+Shift+Up" = {
-      "focus-monitor-up" = { };
-    };
-    "Mod+Shift+Right" = {
-      "focus-monitor-right" = { };
-    };
     "Mod+Shift+H" = {
       "focus-monitor-left" = { };
     };
@@ -170,18 +134,6 @@
       "focus-monitor-right" = { };
     };
 
-    "Mod+Shift+Ctrl+Left" = {
-      "move-column-to-monitor-left" = { };
-    };
-    "Mod+Shift+Ctrl+Down" = {
-      "move-column-to-monitor-down" = { };
-    };
-    "Mod+Shift+Ctrl+Up" = {
-      "move-column-to-monitor-up" = { };
-    };
-    "Mod+Shift+Ctrl+Right" = {
-      "move-column-to-monitor-right" = { };
-    };
     "Mod+Shift+Ctrl+H" = {
       "move-column-to-monitor-left" = { };
     };
@@ -328,7 +280,7 @@
     "Mod+Ctrl+C" = {
       "screenshot-screen" = { };
     };
-    "Mod+Alt+C" = {
+    "Mod+Shift+C" = {
       "screenshot-window" = { };
     };
 
@@ -356,6 +308,7 @@
         "pkill waybar || true && waybar"
       ];
     };
+
     "Mod+Ctrl+Space" = {
       spawn = [
         "sh"
@@ -376,6 +329,7 @@
         "bluetui"
       ];
     };
+
     "Mod+Ctrl+A" = {
       spawn = [
         "kitty"
@@ -386,7 +340,8 @@
         "playback"
       ];
     };
-    "Mod+Y" = {
+
+    "Mod+Ctrl+Y" = {
       spawn = [
         "sh"
         "-c"
