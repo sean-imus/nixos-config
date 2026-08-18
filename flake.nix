@@ -32,21 +32,16 @@
 
   outputs =
     { nixpkgs, ... }@inputs:
-    let
-      mkHost =
-        host:
-        nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
-          modules = [
-            inputs.disko.nixosModules.disko
-            inputs.home-manager.nixosModules.home-manager
-            inputs.sops-nix.nixosModules.sops
-            host
-          ];
-        };
-    in
     {
-      nixosConfigurations.work-notebook = mkHost ./modules/hosts/work-notebook.nix;
+      nixosConfigurations.work-notebook = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          inputs.disko.nixosModules.disko
+          inputs.home-manager.nixosModules.home-manager
+          inputs.sops-nix.nixosModules.sops
+          ./modules/hosts/work-notebook.nix
+        ];
+      };
     };
 }
