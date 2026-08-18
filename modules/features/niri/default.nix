@@ -13,19 +13,6 @@
     feh
   ];
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-luminous
-    ];
-    config.niri = lib.mkForce {
-      default = "gtk";
-      "org.freedesktop.impl.portal.ScreenCast" = "luminous";
-      "org.freedesktop.impl.portal.Screenshot" = "luminous";
-    };
-  };
-
   home-manager.sharedModules = [
     ./keybindings.nix
     ./utilities.nix
