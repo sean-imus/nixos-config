@@ -33,14 +33,14 @@
   outputs =
     { nixpkgs, ... }@inputs:
     {
-      nixosConfigurations.work-notebook = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.notebook = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
           inputs.disko.nixosModules.disko
           inputs.home-manager.nixosModules.home-manager
           inputs.sops-nix.nixosModules.sops
-          ./modules/hosts/work-notebook.nix
+          ./modules/hosts/notebook.nix
         ];
       };
     };

@@ -14,7 +14,7 @@
     ../features/desktop/window-managers
   ];
 
-  networking.hostName = "work-notebook";
+  networking.hostName = "notebook";
 
   services.power-profiles-daemon.enable = true;
 
@@ -67,8 +67,8 @@
   services.fwupd.enable = true;
 
   environment.shellAliases = {
-    rbb = "sudo nixos-rebuild boot --flake .#work-notebook && reboot";
-    rbs = "sudo nixos-rebuild switch --flake .#work-notebook";
+    rbb = "sudo nixos-rebuild boot --flake .#notebook && reboot";
+    rbs = "sudo nixos-rebuild switch --flake .#notebook";
   };
 
   boot.loader = {
