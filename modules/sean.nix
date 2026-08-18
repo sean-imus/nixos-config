@@ -1,18 +1,18 @@
 { inputs, pkgs, ... }:
 {
-  programs.zsh.enable = true;
-
   users.users.sean = {
     isNormalUser = true;
+    hashedPasswordFile = "/home/sean/.secrets/password.txt";
     extraGroups = [
       "wheel"
       "video"
       "audio"
       "networkmanager"
     ];
-    shell = pkgs.zsh;
-    hashedPasswordFile = "/home/sean/.secrets/password.txt";
   };
+
+  programs.zsh.enable = true;
+  users.users.sean.shell = pkgs.zsh;
 
   home-manager.users.sean = {
     imports = [
