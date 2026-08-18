@@ -34,138 +34,80 @@ in
 {
   home.packages = [ pkgs.swaybg ];
 
-  programs.niri.settings = {
-    input = {
-      keyboard.numlock = true;
-      touchpad = {
-        tap = true;
-        natural-scroll = true;
-        dwt = true;
-        drag-lock = true;
-      };
-      warp-mouse-to-focus.enable = true;
-      focus-follows-mouse = {
-        enable = true;
-        max-scroll-amount = "0%";
-      };
-    };
-
-    cursor = {
-      hide-when-typing = true;
-      theme = "everforest-cursors";
-      size = 24;
-    };
-
-    layout = {
-      gaps = 8;
-      center-focused-column = "on-overflow";
-      always-center-single-column = true;
-      empty-workspace-above-first = true;
-      preset-column-widths = [
-        { proportion = 0.25; }
-        { proportion = 0.33333; }
-        { proportion = 0.5; }
-        { proportion = 0.66667; }
-        { proportion = 0.75; }
-      ];
-      preset-window-heights = [
-        { proportion = 0.25; }
-        { proportion = 0.33333; }
-        { proportion = 0.5; }
-        { proportion = 0.66667; }
-        { proportion = 0.75; }
-      ];
-      default-column-width = {
-        proportion = 0.5;
-      };
-      focus-ring = {
-        width = 2;
-        active.color = "#a7c080";
-        inactive.color = "#00000000";
-      };
-      shadow = {
-        enable = false;
-      };
-    };
-
-    hotkey-overlay.skip-at-startup = true;
-
-    prefer-no-csd = true;
-
-    screenshot-path = "~/Screenshots/%Y-%m-%d %H-%M-%S.png";
-
-    clipboard.disable-primary = true;
-
-    animations = {
-      enable = true;
-      workspace-switch.kind = {
-        spring = {
-          damping-ratio = 1.0;
-          stiffness = 1000;
-          epsilon = 0.0001;
-        };
-      };
-      horizontal-view-movement.kind = {
-        spring = {
-          damping-ratio = 1.0;
-          stiffness = 800;
-          epsilon = 0.0001;
-        };
-      };
-      window-movement.kind = {
-        spring = {
-          damping-ratio = 1.0;
-          stiffness = 800;
-          epsilon = 0.0001;
-        };
-      };
-      window-open = {
-        kind.easing = {
-          duration-ms = 250;
-          curve = "linear";
-        };
-        custom-shader = shaders.window-open;
-      };
-      window-close = {
-        kind.easing = {
-          duration-ms = 250;
-          curve = "linear";
-        };
-        custom-shader = shaders.window-close;
-      };
-      window-resize.kind = {
-        spring = {
-          damping-ratio = 1.0;
-          stiffness = 800;
-          epsilon = 0.0001;
-        };
-      };
-    };
-
-    window-rules = [
+  wayland.windowManager.niri.settings = {
+    _children = [
       {
-        geometry-corner-radius = {
-          top-left = 12.0;
-          top-right = 12.0;
-          bottom-right = 12.0;
-          bottom-left = 12.0;
+        output._args = [ "eDP-1" ];
+        output.position._props = {
+          x = 0;
+          y = 0;
         };
-        clip-to-geometry = true;
       }
       {
-        matches = [ { app-id = "^wiremix$"; } ];
-        open-floating = true;
+        output._args = [ "Iiyama North America PL2770H 0x0000011F" ];
+        output.mode._args = [ "1920x1080@144.000000" ];
+        output.position._props = {
+          x = -1920;
+          y = 0;
+        };
       }
       {
-        matches = [ { app-id = "^bluetui$"; } ];
-        open-floating = true;
+        output._args = [ "Iiyama North America PL2770H 0x00000124" ];
+        output.mode._args = [ "1920x1080@143.998000" ];
+        output.position._props = {
+          x = -3840;
+          y = 0;
+        };
+        output."focus-at-startup" = { };
       }
-    ];
-
-    spawn-at-startup = [
-      { argv = [ "waybar" ]; }
       {
-        argv = [
+        output._args = [ "GIGA-BYTE TECHNOLOGY CO., LTD. M27U 23463B001145" ];
+        output.mode._args = [ "3840x2160@60.000000" ];
+        output.scale = 1.75;
+        output.position._props = {
+          x = 0;
+          y = -1234;
+        };
+        output."focus-at-startup" = { };
+      }
+      {
+        window-rule._children = [
+          {
+            "geometry-corner-radius"._args = [
+              12.0
+              12.0
+              12.0
+              12.0
+            ];
+            "clip-to-geometry" = true;
+          }
+        ];
+      }
+      {
+        window-rule._children = [
+          {
+            match._props = {
+              app-id = "^wiremix$";
+            };
+            "open-floating" = true;
+          }
+        ];
+      }
+      {
+        window-rule._children = [
+          {
+            match._props = {
+              app-id = "^bluetui$";
+            };
+            "open-floating" = true;
+          }
+        ];
+      }
+      {
+        "spawn-at-startup"._args = [ "waybar" ];
+      }
+      {
+        "spawn-at-startup"._args = [
           "swaybg"
           "-i"
           "${../../../assets/wallpaper.png}"
@@ -174,7 +116,7 @@ in
         ];
       }
       {
-        argv = [
+        "spawn-at-startup"._args = [
           "wl-paste"
           "--watch"
           "cliphist"
@@ -182,7 +124,7 @@ in
         ];
       }
       {
-        argv = [
+        "spawn-at-startup"._args = [
           "wl-paste"
           "--type"
           "image/png"
@@ -192,6 +134,109 @@ in
         ];
       }
     ];
+
+    input = {
+      keyboard.numlock = true;
+      touchpad = {
+        tap = { };
+        "natural-scroll" = { };
+        dwt = { };
+        "drag-lock" = { };
+      };
+      "warp-mouse-to-focus" = { };
+      "focus-follows-mouse"._props = {
+        "max-scroll-amount" = "0%";
+      };
+    };
+
+    cursor = {
+      "hide-when-typing" = true;
+      "xcursor-theme" = "everforest-cursors";
+      "xcursor-size" = 24;
+    };
+
+    layout = {
+      gaps = 8;
+      "center-focused-column" = "on-overflow";
+      "always-center-single-column" = { };
+      "empty-workspace-above-first" = { };
+      "preset-column-widths" = {
+        _children = [
+          { proportion = 0.25; }
+          { proportion = 0.33333; }
+          { proportion = 0.5; }
+          { proportion = 0.66667; }
+          { proportion = 0.75; }
+        ];
+      };
+      "preset-window-heights" = {
+        _children = [
+          { proportion = 0.25; }
+          { proportion = 0.33333; }
+          { proportion = 0.5; }
+          { proportion = 0.66667; }
+          { proportion = 0.75; }
+        ];
+      };
+      "default-column-width" = {
+        proportion = 0.5;
+      };
+      "focus-ring" = {
+        width = 2;
+        "active-color" = "#a7c080";
+        "inactive-color" = "#00000000";
+      };
+      shadow.off = { };
+    };
+
+    hotkey-overlay."skip-at-startup" = { };
+
+    prefer-no-csd = { };
+
+    screenshot-path = "~/Screenshots/%Y-%m-%d %H-%M-%S.png";
+
+    clipboard."disable-primary" = { };
+
+    animations = {
+      "workspace-switch" = {
+        spring._props = {
+          "damping-ratio" = 1.0;
+          stiffness = 1000;
+          epsilon = 0.0001;
+        };
+      };
+      "horizontal-view-movement" = {
+        spring._props = {
+          "damping-ratio" = 1.0;
+          stiffness = 800;
+          epsilon = 0.0001;
+        };
+      };
+      "window-movement" = {
+        spring._props = {
+          "damping-ratio" = 1.0;
+          stiffness = 800;
+          epsilon = 0.0001;
+        };
+      };
+      "window-open" = {
+        "custom-shader" = shaders.window-open;
+        "duration-ms" = 250;
+        curve = "linear";
+      };
+      "window-close" = {
+        "custom-shader" = shaders.window-close;
+        "duration-ms" = 250;
+        curve = "linear";
+      };
+      "window-resize" = {
+        spring._props = {
+          "damping-ratio" = 1.0;
+          stiffness = 800;
+          epsilon = 0.0001;
+        };
+      };
+    };
   };
 
   services.playerctld.enable = true;

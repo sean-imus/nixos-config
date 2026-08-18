@@ -1,377 +1,395 @@
 { ... }:
 {
-  programs.niri.settings.binds = {
-    XF86AudioRaiseVolume = {
-      action.spawn = [
+  wayland.windowManager.niri.settings.binds = {
+    "XF86AudioRaiseVolume" = {
+      _props.allow-when-locked = true;
+      spawn = [
         "wpctl"
         "set-volume"
         "@DEFAULT_AUDIO_SINK@"
         "0.1+"
       ];
-      allow-when-locked = true;
     };
-    XF86AudioLowerVolume = {
-      action.spawn = [
+    "XF86AudioLowerVolume" = {
+      _props.allow-when-locked = true;
+      spawn = [
         "wpctl"
         "set-volume"
         "@DEFAULT_AUDIO_SINK@"
         "0.1-"
       ];
-      allow-when-locked = true;
     };
-    XF86AudioMute = {
-      action.spawn = [
+    "XF86AudioMute" = {
+      _props.allow-when-locked = true;
+      spawn = [
         "wpctl"
         "set-mute"
         "@DEFAULT_AUDIO_SINK@"
         "toggle"
       ];
-      allow-when-locked = true;
     };
-    XF86AudioMicMute = {
-      action.spawn = [
+    "XF86AudioMicMute" = {
+      _props.allow-when-locked = true;
+      spawn = [
         "wpctl"
         "set-mute"
         "@DEFAULT_AUDIO_SOURCE@"
         "toggle"
       ];
-      allow-when-locked = true;
     };
-    XF86AudioPlay = {
-      action.spawn = [
+    "XF86AudioPlay" = {
+      _props.allow-when-locked = true;
+      spawn = [
         "playerctl"
         "play-pause"
       ];
-      allow-when-locked = true;
     };
-    XF86AudioStop = {
-      action.spawn = [
+    "XF86AudioStop" = {
+      _props.allow-when-locked = true;
+      spawn = [
         "playerctl"
         "stop"
       ];
-      allow-when-locked = true;
     };
-    XF86AudioPrev = {
-      action.spawn = [
+    "XF86AudioPrev" = {
+      _props.allow-when-locked = true;
+      spawn = [
         "playerctl"
         "previous"
       ];
-      allow-when-locked = true;
     };
-    XF86AudioNext = {
-      action.spawn = [
+    "XF86AudioNext" = {
+      _props.allow-when-locked = true;
+      spawn = [
         "playerctl"
         "next"
       ];
-      allow-when-locked = true;
     };
-    XF86MonBrightnessUp = {
-      action.spawn = [
+    "XF86MonBrightnessUp" = {
+      _props.allow-when-locked = true;
+      spawn = [
         "brightnessctl"
         "--class=backlight"
         "set"
         "+10%"
       ];
-      allow-when-locked = true;
     };
-    XF86MonBrightnessDown = {
-      action.spawn = [
+    "XF86MonBrightnessDown" = {
+      _props.allow-when-locked = true;
+      spawn = [
         "brightnessctl"
         "--class=backlight"
         "set"
         "10%-"
       ];
-      allow-when-locked = true;
     };
 
     "Mod+O" = {
-      action."toggle-overview" = [ ];
-      repeat = false;
-      allow-inhibiting = false;
+      _props.repeat = false;
+      _props.allow-inhibiting = false;
+      "toggle-overview" = { };
     };
     "Mod+Q" = {
-      action."close-window" = [ ];
+      "close-window" = { };
     };
 
     "Mod+Left" = {
-      action."focus-column-left" = [ ];
+      "focus-column-left" = { };
     };
     "Mod+Down" = {
-      action."focus-window-or-workspace-down" = [ ];
+      "focus-window-or-workspace-down" = { };
     };
     "Mod+Up" = {
-      action."focus-window-or-workspace-up" = [ ];
+      "focus-window-or-workspace-up" = { };
     };
     "Mod+Right" = {
-      action."focus-column-right" = [ ];
+      "focus-column-right" = { };
     };
     "Mod+H" = {
-      action."focus-column-left" = [ ];
+      "focus-column-left" = { };
     };
     "Mod+J" = {
-      action."focus-window-or-workspace-down" = [ ];
+      "focus-window-or-workspace-down" = { };
     };
     "Mod+K" = {
-      action."focus-window-or-workspace-up" = [ ];
+      "focus-window-or-workspace-up" = { };
     };
-    "Mod+L".action.spawn = "hyprlock";
+    "Mod+L" = {
+      spawn = "hyprlock";
+    };
 
     "Mod+Ctrl+Left" = {
-      action."move-column-left" = [ ];
+      "move-column-left" = { };
     };
     "Mod+Ctrl+Down" = {
-      action."move-window-down-or-to-workspace-down" = [ ];
+      "move-window-down-or-to-workspace-down" = { };
     };
     "Mod+Ctrl+Up" = {
-      action."move-window-up-or-to-workspace-up" = [ ];
+      "move-window-up-or-to-workspace-up" = { };
     };
     "Mod+Ctrl+Right" = {
-      action."move-column-right" = [ ];
+      "move-column-right" = { };
     };
     "Mod+Ctrl+H" = {
-      action."move-column-left" = [ ];
+      "move-column-left" = { };
     };
     "Mod+Ctrl+J" = {
-      action."move-window-down-or-to-workspace-down" = [ ];
+      "move-window-down-or-to-workspace-down" = { };
     };
     "Mod+Ctrl+K" = {
-      action."move-window-up-or-to-workspace-up" = [ ];
+      "move-window-up-or-to-workspace-up" = { };
     };
     "Mod+Ctrl+L" = {
-      action."move-column-right" = [ ];
+      "move-column-right" = { };
     };
 
     "Mod+Shift+Left" = {
-      action."focus-monitor-left" = [ ];
+      "focus-monitor-left" = { };
     };
     "Mod+Shift+Down" = {
-      action."focus-monitor-down" = [ ];
+      "focus-monitor-down" = { };
     };
     "Mod+Shift+Up" = {
-      action."focus-monitor-up" = [ ];
+      "focus-monitor-up" = { };
     };
     "Mod+Shift+Right" = {
-      action."focus-monitor-right" = [ ];
+      "focus-monitor-right" = { };
     };
     "Mod+Shift+H" = {
-      action."focus-monitor-left" = [ ];
+      "focus-monitor-left" = { };
     };
     "Mod+Shift+J" = {
-      action."focus-monitor-down" = [ ];
+      "focus-monitor-down" = { };
     };
     "Mod+Shift+K" = {
-      action."focus-monitor-up" = [ ];
+      "focus-monitor-up" = { };
     };
     "Mod+Shift+L" = {
-      action."focus-monitor-right" = [ ];
+      "focus-monitor-right" = { };
     };
 
     "Mod+Shift+Ctrl+Left" = {
-      action."move-column-to-monitor-left" = [ ];
+      "move-column-to-monitor-left" = { };
     };
     "Mod+Shift+Ctrl+Down" = {
-      action."move-column-to-monitor-down" = [ ];
+      "move-column-to-monitor-down" = { };
     };
     "Mod+Shift+Ctrl+Up" = {
-      action."move-column-to-monitor-up" = [ ];
+      "move-column-to-monitor-up" = { };
     };
     "Mod+Shift+Ctrl+Right" = {
-      action."move-column-to-monitor-right" = [ ];
+      "move-column-to-monitor-right" = { };
     };
     "Mod+Shift+Ctrl+H" = {
-      action."move-column-to-monitor-left" = [ ];
+      "move-column-to-monitor-left" = { };
     };
     "Mod+Shift+Ctrl+J" = {
-      action."move-column-to-monitor-down" = [ ];
+      "move-column-to-monitor-down" = { };
     };
     "Mod+Shift+Ctrl+K" = {
-      action."move-column-to-monitor-up" = [ ];
+      "move-column-to-monitor-up" = { };
     };
     "Mod+Shift+Ctrl+L" = {
-      action."move-column-to-monitor-right" = [ ];
+      "move-column-to-monitor-right" = { };
     };
 
     "Mod+WheelScrollDown" = {
-      action."focus-workspace-down" = [ ];
-      cooldown-ms = 150;
+      _props.cooldown-ms = 150;
+      "focus-workspace-down" = { };
     };
     "Mod+WheelScrollUp" = {
-      action."focus-workspace-up" = [ ];
-      cooldown-ms = 150;
+      _props.cooldown-ms = 150;
+      "focus-workspace-up" = { };
     };
     "Mod+WheelScrollRight" = {
-      action."focus-column-right" = [ ];
+      "focus-column-right" = { };
     };
     "Mod+WheelScrollLeft" = {
-      action."focus-column-left" = [ ];
+      "focus-column-left" = { };
     };
     "Mod+Shift+WheelScrollDown" = {
-      action."focus-column-left" = [ ];
+      "focus-column-left" = { };
     };
     "Mod+Shift+WheelScrollUp" = {
-      action."focus-column-right" = [ ];
+      "focus-column-right" = { };
     };
 
     "Mod+1" = {
-      action."focus-workspace" = 1;
+      "focus-workspace" = 1;
     };
     "Mod+2" = {
-      action."focus-workspace" = 2;
+      "focus-workspace" = 2;
     };
     "Mod+3" = {
-      action."focus-workspace" = 3;
+      "focus-workspace" = 3;
     };
     "Mod+4" = {
-      action."focus-workspace" = 4;
+      "focus-workspace" = 4;
     };
     "Mod+5" = {
-      action."focus-workspace" = 5;
+      "focus-workspace" = 5;
     };
     "Mod+6" = {
-      action."focus-workspace" = 6;
+      "focus-workspace" = 6;
     };
     "Mod+7" = {
-      action."focus-workspace" = 7;
+      "focus-workspace" = 7;
     };
     "Mod+8" = {
-      action."focus-workspace" = 8;
+      "focus-workspace" = 8;
     };
     "Mod+9" = {
-      action."focus-workspace" = 9;
+      "focus-workspace" = 9;
     };
 
     "Mod+Ctrl+1" = {
-      action."move-column-to-workspace" = 1;
+      "move-column-to-workspace" = 1;
     };
     "Mod+Ctrl+2" = {
-      action."move-column-to-workspace" = 2;
+      "move-column-to-workspace" = 2;
     };
     "Mod+Ctrl+3" = {
-      action."move-column-to-workspace" = 3;
+      "move-column-to-workspace" = 3;
     };
     "Mod+Ctrl+4" = {
-      action."move-column-to-workspace" = 4;
+      "move-column-to-workspace" = 4;
     };
     "Mod+Ctrl+5" = {
-      action."move-column-to-workspace" = 5;
+      "move-column-to-workspace" = 5;
     };
     "Mod+Ctrl+6" = {
-      action."move-column-to-workspace" = 6;
+      "move-column-to-workspace" = 6;
     };
     "Mod+Ctrl+7" = {
-      action."move-column-to-workspace" = 7;
+      "move-column-to-workspace" = 7;
     };
     "Mod+Ctrl+8" = {
-      action."move-column-to-workspace" = 8;
+      "move-column-to-workspace" = 8;
     };
     "Mod+Ctrl+9" = {
-      action."move-column-to-workspace" = 9;
+      "move-column-to-workspace" = 9;
     };
 
     "Mod+Comma" = {
-      action."consume-or-expel-window-left" = [ ];
+      "consume-or-expel-window-left" = { };
     };
     "Mod+Period" = {
-      action."consume-or-expel-window-right" = [ ];
+      "consume-or-expel-window-right" = { };
     };
 
     "Mod+R" = {
-      action."switch-preset-column-width" = [ ];
+      "switch-preset-column-width" = { };
     };
     "Mod+Shift+R" = {
-      action."switch-preset-column-width-back" = [ ];
+      "switch-preset-column-width-back" = { };
     };
     "Mod+Ctrl+Shift+R" = {
-      action."switch-preset-window-height" = [ ];
+      "switch-preset-window-height" = { };
     };
     "Mod+Ctrl+R" = {
-      action."reset-window-height" = [ ];
+      "reset-window-height" = { };
     };
 
     "Mod+F" = {
-      action."maximize-column" = [ ];
+      "maximize-column" = { };
     };
     "Mod+Shift+F" = {
-      action."fullscreen-window" = [ ];
+      "fullscreen-window" = { };
     };
     "Mod+Ctrl+F" = {
-      action."maximize-window-to-edges" = [ ];
+      "maximize-window-to-edges" = { };
     };
 
     "Mod+Minus" = {
-      action."set-column-width" = "-10%";
+      "set-column-width" = "-10%";
     };
     "Mod+Plus" = {
-      action."set-column-width" = "+10%";
+      "set-column-width" = "+10%";
     };
     "Mod+Shift+Minus" = {
-      action."set-window-height" = "-10%";
+      "set-window-height" = "-10%";
     };
     "Mod+Shift+Plus" = {
-      action."set-window-height" = "+10%";
+      "set-window-height" = "+10%";
     };
 
     "Mod+V" = {
-      action."toggle-window-floating" = [ ];
+      "toggle-window-floating" = { };
     };
     "Mod+Shift+V" = {
-      action."switch-focus-between-floating-and-tiling" = [ ];
+      "switch-focus-between-floating-and-tiling" = { };
     };
 
     "Mod+C" = {
-      action."screenshot" = [ ];
+      "screenshot" = { };
     };
     "Mod+Ctrl+C" = {
-      action."screenshot-screen" = [ ];
+      "screenshot-screen" = { };
     };
     "Mod+Alt+C" = {
-      action."screenshot-window" = [ ];
+      "screenshot-window" = { };
     };
 
     "Mod+Escape" = {
-      action."toggle-keyboard-shortcuts-inhibit" = [ ];
-      allow-inhibiting = false;
+      _props.allow-inhibiting = false;
+      "toggle-keyboard-shortcuts-inhibit" = { };
     };
 
     "Mod+Shift+E" = {
-      action."quit" = [ ];
+      "quit" = { };
     };
 
-    "Mod+Space".action.spawn = "fuzzel";
+    "Mod+Space" = {
+      spawn = "fuzzel";
+    };
 
-    "Mod+T".action.spawn = "kitty";
+    "Mod+T" = {
+      spawn = "kitty";
+    };
 
-    "Mod+Shift+Space".action.spawn = [
-      "sh"
-      "-c"
-      "pkill waybar || true && waybar"
-    ];
-    "Mod+Ctrl+Space".action.spawn = [
-      "sh"
-      "-c"
-      "pkill waybar"
-    ];
+    "Mod+Shift+Space" = {
+      spawn = [
+        "sh"
+        "-c"
+        "pkill waybar || true && waybar"
+      ];
+    };
+    "Mod+Ctrl+Space" = {
+      spawn = [
+        "sh"
+        "-c"
+        "pkill waybar"
+      ];
+    };
 
-    "Super+Alt+L".action.spawn = "hyprlock";
+    "Super+Alt+L" = {
+      spawn = "hyprlock";
+    };
 
-    "Mod+Ctrl+B".action.spawn = [
-      "kitty"
-      "--class"
-      "bluetui"
-      "bluetui"
-    ];
-    "Mod+Ctrl+A".action.spawn = [
-      "kitty"
-      "--class"
-      "wiremix"
-      "wiremix"
-      "-v"
-      "playback"
-    ];
-    "Mod+Y".action.spawn = [
-      "sh"
-      "-c"
-      "cliphist list | fuzzel --dmenu --with-nth 2 | cliphist decode | wl-copy"
-    ];
+    "Mod+Ctrl+B" = {
+      spawn = [
+        "kitty"
+        "--class"
+        "bluetui"
+        "bluetui"
+      ];
+    };
+    "Mod+Ctrl+A" = {
+      spawn = [
+        "kitty"
+        "--class"
+        "wiremix"
+        "wiremix"
+        "-v"
+        "playback"
+      ];
+    };
+    "Mod+Y" = {
+      spawn = [
+        "sh"
+        "-c"
+        "cliphist list | fuzzel --dmenu --with-nth 2 | cliphist decode | wl-copy"
+      ];
+    };
   };
 }
