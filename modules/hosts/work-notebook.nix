@@ -67,8 +67,8 @@
   services.fwupd.enable = true;
 
   environment.shellAliases = {
-    rbb = "sudo nixos-rebuild boot --flake .#${config.networking.hostName} && reboot";
-    rbs = "sudo nixos-rebuild switch --flake .#${config.networking.hostName}";
+    rbb = "sudo nixos-rebuild boot --flake .#work-notebook && reboot";
+    rbs = "sudo nixos-rebuild switch --flake .#work-notebook";
   };
 
   boot.loader = {
