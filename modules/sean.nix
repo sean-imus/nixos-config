@@ -20,13 +20,13 @@
       ./features/secrets/sops.nix
       ./features/ssh.nix
       ./features/git.nix
-      ./features/zsh.nix
+      ./features/shell.nix
       ./features/shell-tools.nix
       ./features/btop.nix
       ./features/fastfetch.nix
-      ./features/neovim.nix
+      ./features/editor.nix
       ./features/opencode.nix
-      ./features/kitty.nix
+      ./features/terminal.nix
       ./features/launcher.nix
       ./features/bar.nix
       ./features/theming.nix

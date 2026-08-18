@@ -7,7 +7,7 @@
 {
   imports = [
     ./sean.nix
-    ./features/storage/disko.nix
+    ./features/disk.nix
     ./features/printing.nix
     ./features/rdp-work.nix
     ./features/lockscreen.nix
