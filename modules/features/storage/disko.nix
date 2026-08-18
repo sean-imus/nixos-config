@@ -1,26 +1,4 @@
 { lib, ... }:
-let
-  btrfs = {
-    type = "btrfs";
-    extraArgs = [ "-f" ];
-    mountpoint = "/";
-    mountOptions = [
-      "compress=zstd"
-      "noatime"
-    ];
-  };
-
-  swap = {
-    type = "swap";
-  };
-
-  luks = name: content: {
-    type = "luks";
-    inherit name;
-    settings.allowDiscards = true;
-    inherit content;
-  };
-in
 {
   disko.devices = {
     disk.main = {
@@ -41,11 +19,31 @@ in
           };
           luks = {
             end = "-26G";
-            content = luks "cryptroot" btrfs;
+            content = {
+              type = "luks";
+              name = "cryptroot";
+              settings.allowDiscards = true;
+              content = {
+                type = "btrfs";
+                extraArgs = [ "-f" ];
+                mountpoint = "/";
+                mountOptions = [
+                  "compress=zstd"
+                  "noatime"
+                ];
+              };
+            };
           };
           cryptswap = {
             size = "26G";
-            content = luks "cryptswap" swap;
+            content = {
+              type = "luks";
+              name = "cryptswap";
+              settings.allowDiscards = true;
+              content = {
+                type = "swap";
+              };
+            };
           };
         };
       };
