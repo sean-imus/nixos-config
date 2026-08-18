@@ -25,7 +25,7 @@ These should be ran inside the nixos-config directory unless noted otherwise.
 
 # 1. Partition and format
 nix-shell -p disko
-sudo disko --mode disko --flake github:sean-imus/nixos-config#hostname
+sudo disko --mode disko --flake github:sean-imus/nixos-config#work-notebook
 
 # 2. Copy the age key from USB
 lsblk
@@ -42,7 +42,7 @@ chmod 600 /mnt/home/sean/.secrets/password.txt
 chown -R 1000:1000 /mnt/home/sean/.secrets
 
 # 4. Install
-sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#hostname
+sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#work-notebook
 
 # 5. Clone the config for future rebuilds
 git clone https://github.com/sean-imus/nixos-config ~/nixos-config
