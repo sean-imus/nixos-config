@@ -33,12 +33,13 @@ mount --mkdir /dev/sdX1 /usb
 mkdir -p /mnt/home/sean/.sops
 cp /usb/age.txt /mnt/home/sean/.sops/age.key
 chmod 600 /mnt/home/sean/.sops/age.key
-#TODO Fix Permissions
+chown -R 1000:1000 /mnt/home/sean/.sops
 
 # 3. Place the hashed password
 mkdir -p /mnt/home/sean/.secrets
 cp /usb/password.txt /mnt/home/sean/.secrets/password.txt
 chmod 600 /mnt/home/sean/.secrets/password.txt
+chown -R 1000:1000 /mnt/home/sean/.secrets
 
 # 4. Install
 sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#hostname
