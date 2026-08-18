@@ -8,10 +8,10 @@
   imports = [
     ./sean.nix
     ./features/storage/disko.nix
-    ./features/desktop/printing.nix
-    ./features/desktop/rdp-work.nix
-    ./features/desktop/lockscreen.nix
-    ./features/desktop/niri
+    ./features/printing.nix
+    ./features/rdp-work.nix
+    ./features/lockscreen.nix
+    ./features/niri
   ];
 
   networking.hostName = "notebook";
