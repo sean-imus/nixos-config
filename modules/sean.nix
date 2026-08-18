@@ -17,21 +17,21 @@
   home-manager.users.sean = {
     imports = [
       inputs.sops-nix.homeManagerModules.sops
-      ../features/secrets/sops.nix
-      ../features/core/ssh.nix
-      ../features/core/git.nix
-      ../features/core/zsh.nix
-      ../features/core/shell-tools.nix
-      ../features/core/btop.nix
-      ../features/core/fastfetch.nix
-      ../features/desktop/dev/neovim.nix
-      ../features/desktop/dev/opencode.nix
-      ../features/desktop/kitty.nix
-      ../features/desktop/launcher.nix
-      ../features/desktop/bar.nix
-      ../features/desktop/theming.nix
-      ../features/desktop/gaming.nix
-      ../features/desktop/office.nix
+      ./features/secrets/sops.nix
+      ./features/core/ssh.nix
+      ./features/core/git.nix
+      ./features/core/zsh.nix
+      ./features/core/shell-tools.nix
+      ./features/core/btop.nix
+      ./features/core/fastfetch.nix
+      ./features/desktop/dev/neovim.nix
+      ./features/desktop/dev/opencode.nix
+      ./features/desktop/kitty.nix
+      ./features/desktop/launcher.nix
+      ./features/desktop/bar.nix
+      ./features/desktop/theming.nix
+      ./features/desktop/gaming.nix
+      ./features/desktop/office.nix
     ];
 
     home = {

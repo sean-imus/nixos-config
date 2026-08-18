@@ -6,12 +6,12 @@
 }:
 {
   imports = [
-    ../users/sean.nix
-    ../features/storage/disko.nix
-    ../features/desktop/printing.nix
-    ../features/desktop/rdp-work.nix
-    ../features/desktop/lockscreen.nix
-    ../features/desktop/window-managers
+    ./sean.nix
+    ./features/storage/disko.nix
+    ./features/desktop/printing.nix
+    ./features/desktop/rdp-work.nix
+    ./features/desktop/lockscreen.nix
+    ./features/desktop/window-managers
   ];
 
   networking.hostName = "notebook";
