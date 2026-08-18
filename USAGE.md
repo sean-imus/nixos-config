@@ -42,8 +42,10 @@ chmod 600 /mnt/home/sean/.secrets/password.txt
 chown -R 1000:1000 /mnt/home/sean/.secrets
 
 # 4. Install
-sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#notebook
+sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus/nixos-config#notebook && shutdown now
 
-# 5. Clone the config for future rebuilds
+# 5. Unplug USB & boot
+
+# 6. Clone the config for future rebuilds
 git clone https://github.com/sean-imus/nixos-config ~/nixos-config
 ```
