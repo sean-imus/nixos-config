@@ -4,6 +4,17 @@
 
   programs.niri.enable = true;
 
+  environment.systemPackages = with pkgs; [
+    brightnessctl
+    wl-clipboard
+    cliphist
+    playerctl
+    xwayland-satellite
+    wiremix
+    bluetui
+    feh
+  ];
+
   xdg.portal = {
     enable = true;
     extraPortals = [
