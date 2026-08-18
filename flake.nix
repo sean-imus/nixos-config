@@ -23,11 +23,6 @@
       url = "github:epireyn/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    driftwm = {
-      url = "github:malbiruk/driftwm";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =

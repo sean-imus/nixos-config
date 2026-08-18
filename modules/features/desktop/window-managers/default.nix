@@ -2,7 +2,6 @@
 {
   imports = [
     ./niri
-    ./driftwm
   ];
 
   environment.systemPackages = with pkgs; [
