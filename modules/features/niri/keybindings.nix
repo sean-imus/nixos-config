@@ -231,19 +231,6 @@
       "consume-or-expel-window-right" = { };
     };
 
-    "Mod+R" = {
-      "switch-preset-column-width" = { };
-    };
-    "Mod+Shift+R" = {
-      "switch-preset-column-width-back" = { };
-    };
-    "Mod+Ctrl+Shift+R" = {
-      "switch-preset-window-height" = { };
-    };
-    "Mod+Ctrl+R" = {
-      "reset-window-height" = { };
-    };
-
     "Mod+F" = {
       "maximize-column" = { };
     };
