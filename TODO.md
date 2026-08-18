@@ -1,2 +1,0 @@
-- remove disko wiring, plain one host disko setup is enough
-- polish driftwm setup
