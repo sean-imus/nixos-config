@@ -168,7 +168,7 @@ in
         argv = [
           "swaybg"
           "-i"
-          "${./wallpaper.png}"
+          "${../../../assets/wallpaper.png}"
           "-m"
           "fill"
         ];
