@@ -108,6 +108,12 @@ in
   # user, group wpa_supplicant) can reach it.
   networking.wireless.enableHardening = false;
 
+  # Override the udev rule that restarts wpa_supplicant on wlan add/remove.
+  # This interferes with P2P connection setup (NM creates p2p-dev interfaces
+  # which trigger the restart, killing the ongoing connection).
+  # Since we use NetworkManager for wifi, we don't need this rule.
+  services.udev.extraRules = lib.mkForce "";
+
   services.dbus.packages = [ fluxcast ];
 
   environment.variables."FLUXCAST_NO_FIREWALL" = "1";
