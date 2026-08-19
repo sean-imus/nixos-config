@@ -113,6 +113,23 @@ in
   # Since we use NetworkManager for wifi, we don't need this rule.
   services.udev.extraRules = lib.mkForce "";
 
+  # Add CAP_CHOWN to NetworkManager so its dnsmasq can chown PID files.
+  # Without this, P2P group DHCP fails with "chown of PID file failed".
+  systemd.services.NetworkManager.serviceConfig.CapabilityBoundingSet = lib.mkForce [
+    "CAP_NET_ADMIN"
+    "CAP_DAC_OVERRIDE"
+    "CAP_NET_RAW"
+    "CAP_BPF"
+    "CAP_NET_BIND_SERVICE"
+    "CAP_SETGID"
+    "CAP_SETUID"
+    "CAP_SYS_MODULE"
+    "CAP_AUDIT_WRITE"
+    "CAP_KILL"
+    "CAP_SYS_CHROOT"
+    "CAP_CHOWN"
+  ];
+
   services.dbus.packages = [ fluxcast ];
 
   environment.variables."FLUXCAST_NO_FIREWALL" = "1";
