@@ -16,6 +16,9 @@ let
       hash = "sha256-VRzJPO5F+LAyNp9KtO1MC7nnqhHbOpN+p464waGTjAk=";
     };
 
+    # TEMPORARY: D-Bus P2P bypass patch. See patches/fluxcast-dbus-p2p.patch for details.
+    # This should be removed once we have a proper working casting solution (upstream fix,
+    # NM fix, or replacement tool).
     patches = [ ./patches/fluxcast-dbus-p2p.patch ];
 
     nativeBuildInputs = with pkgs; [

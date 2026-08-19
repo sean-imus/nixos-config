@@ -1,3 +1,32 @@
+# ============================================================================
+# TEMPORARY PATCH - DO NOT KEEP LONG-TERM
+# ============================================================================
+#
+# This patch adds a wpa_supplicant D-Bus P2P bypass to fluxcast to work around
+# NetworkManager's broken P2P peer tracking on NixOS.
+#
+# PROBLEM:
+#   NetworkManager 1.58's CreateInterface D-Bus call passes only Driver+Ifname
+#   (no ctrl_interface), so wpa_supplicant never creates the control socket for
+#   D-Bus-added interfaces. This breaks P2P peer discovery via NM.
+#
+# WORKAROUND:
+#   This patch adds a fallback path that queries wpa_supplicant's D-Bus API
+#   directly (fi.w1.wpa_supplicant1.Interface.P2PDevice) when NM reports no peers.
+#   It also adds a wpa.py module with D-Bus-based P2P connect/disconnect.
+#
+# TODO:
+#   Once we have a working casting solution, this should be handled properly:
+#   1. Upstream the D-Bus bypass to fluxcast (if accepted by upstream)
+#   2. OR fix NetworkManager's P2P peer tracking (if possible)
+#   3. OR replace fluxcast with a different Miracast source that works with NM
+#
+# Related config in casting.nix:
+#   - networking.wireless.enableHardening = false (needed for D-Bus socket access)
+#   - services.udev.extraRules = lib.mkForce "" (prevents wpa_supplicant restarts)
+#
+# ============================================================================
+
 diff --git a/src/wfd/p2p/peers.py b/src/wfd/p2p/peers.py
 index 0670093..d6ef3c0 100644
 --- a/src/wfd/p2p/peers.py
