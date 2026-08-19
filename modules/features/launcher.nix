@@ -6,7 +6,6 @@
       main = {
         dpi-aware = false;
         namespace = "fuzzel";
-        icons-enabled = false;
         sort-result = false;
       };
       colors = {
