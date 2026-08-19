@@ -16,6 +16,8 @@ let
       hash = "sha256-VRzJPO5F+LAyNp9KtO1MC7nnqhHbOpN+p464waGTjAk=";
     };
 
+    patches = [ ./patches/fluxcast-dbus-p2p.patch ];
+
     nativeBuildInputs = with pkgs; [
       python3Packages.hatchling
       gobject-introspection
@@ -58,6 +60,7 @@ let
         pkgs.pulseaudio
         pkgs.glib
         pkgs.dnsmasq
+        pkgs.dhcpcd
         pkgs.coreutils
         pkgs.iproute2
         pkgs.procps
@@ -96,6 +99,14 @@ let
 in
 {
   environment.systemPackages = [ fluxcast ];
+
+  # Expose wpa_supplicant's control interface (wpa_cli) so fluxcast's wpa_cli
+  # discovery/connect path can bypass NetworkManager's broken P2P peer tracking.
+  networking.wireless.userControlled = true;
+  # The hardened RootDirectory=/run/wpa_supplicant chroot hides the control
+  # socket from the user's namespace; disable hardening so wpa_cli (run as the
+  # user, group wpa_supplicant) can reach it.
+  networking.wireless.enableHardening = false;
 
   services.dbus.packages = [ fluxcast ];
 

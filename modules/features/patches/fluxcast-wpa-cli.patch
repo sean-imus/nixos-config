@@ -1,0 +1,245 @@
+diff --git a/src/wfd/p2p/peers.py b/src/wfd/p2p/peers.py
+index 0670093..4b88ef5 100644
+--- a/src/wfd/p2p/peers.py
++++ b/src/wfd/p2p/peers.py
+@@ -86,9 +86,14 @@ def active_scan(interface: Optional[str] = None, timeout: int = 8) -> list[WFDPe
+     """Run an active Wi-Fi Direct peer scan.
+     """
+     try:
+-        return _nm_scan(interface=interface, timeout=timeout)
++        nm_peers = _nm_scan(interface=interface, timeout=timeout)
+     except WFDNotReady as nm_error:
+         print(f"[FluxCast WFD] NetworkManager scan unavailable: {nm_error}")
++    else:
++        if nm_peers:
++            return nm_peers
++        print("[FluxCast WFD] NetworkManager reported no peers; "
++              "trying wpa_supplicant directly.")
+ 
+     if not shutil.which("wpa_cli"):
+         raise WFDNotReady("wpa_cli is required for active Wi-Fi Direct scans.")
+diff --git a/src/wfd/p2p/wpa.py b/src/wfd/p2p/wpa.py
+new file mode 100644
+index 0000000..58a03cc
+--- /dev/null
++++ b/src/wfd/p2p/wpa.py
+@@ -0,0 +1,107 @@
++import shutil
++import subprocess
++import time
++from typing import Optional
++
++from ..config import WFDNotReady
++from ..proc import _run
++from .peers import _default_wifi_interface
++
++
++def _wpa_cli(args, iface, timeout=5.0) -> str:
++    """Run wpa_cli against the given interface's control socket."""
++    if not shutil.which("wpa_cli"):
++        raise WFDNotReady("wpa_cli is required for the wpa_supplicant P2P path.")
++    result = _run(["wpa_cli", "-i", iface, *args], timeout=timeout)
++    if result.returncode != 0:
++        raise WFDNotReady((result.stderr or result.stdout).strip())
++    return result.stdout.strip()
++
++
++def _p2p_group_interfaces() -> list[str]:
++    """List p2p-* netdevs currently present."""
++    if not shutil.which("ip"):
++        return []
++    result = _run(["ip", "-br", "link"], timeout=5.0)
++    groups = []
++    for line in result.stdout.splitlines():
++        name = line.split(":")[0].strip()
++        if name.startswith("p2p-"):
++            groups.append(name)
++    return groups
++
++
++def _wait_for_group_interface(iface: str, timeout: float = 60.0) -> str:
++    deadline = time.monotonic() + timeout
++    while time.monotonic() < deadline:
++        for g in _p2p_group_interfaces():
++            if g.startswith("p2p-" + iface) or g.startswith("p2p-"):
++                return g
++        time.sleep(1.0)
++    raise WFDNotReady("Timed out waiting for the P2P group interface to appear.")
++
++
++def _wait_for_ip(group_iface: str, timeout: float = 60.0) -> str:
++    deadline = time.monotonic() + timeout
++    while time.monotonic() < deadline:
++        try:
++            result = _run(["ip", "-br", "-4", "addr", "show", group_iface], timeout=5.0)
++        except (OSError, subprocess.TimeoutExpired):
++            time.sleep(1.0)
++            continue
++        for line in result.stdout.splitlines():
++            parts = line.split()
++            for p in parts:
++                if "/" in p and not p.startswith("fe80:"):
++                    return p.split("/")[0]
++        time.sleep(1.0)
++    raise WFDNotReady(f"Timed out waiting for an IP address on {group_iface}.")
++
++
++def _wpa_connect_peer(peer, iface: Optional[str] = None, go_intent: int = 0,
++                      timeout: float = 60.0) -> tuple[str, str]:
++    """Connect to a P2P peer via wpa_supplicant directly, bypassing NetworkManager.
++
++    The sink is expected to become the Group Owner (go_intent=0) and serve DHCP;
++    we become the client and obtain an IP from it.
++    Returns (group_iface, ip).
++    """
++    iface = iface or _default_wifi_interface()
++    if not iface:
++        raise WFDNotReady("Could not detect a managed Wi-Fi interface for wpa_cli.")
++
++    print(f"[FluxCast WFD] Connecting to {peer.name or peer.address} via wpa_supplicant "
++          f"on {iface} (go_intent={go_intent})...")
++
++    out = _wpa_cli(["p2p_connect", peer.address, "pbc", f"go_intent={go_intent}"],
++                   iface, timeout=10.0)
++    if "OK" not in out:
++        raise WFDNotReady(f"wpa_cli p2p_connect failed: {out.strip()}")
++
++    group_iface = _wait_for_group_interface(iface, timeout=timeout)
++
++    if shutil.which("dhcpcd"):
++        _run(["dhcpcd", "-b", "-4", "--noipv4ll", group_iface], timeout=10.0)
++    ip = _wait_for_ip(group_iface, timeout=timeout)
++
++    print(f"[FluxCast WFD] P2P group {group_iface} up, IP {ip}.")
++    return group_iface, ip
++
++
++def _wpa_disconnect(peer, group_iface: str, iface: Optional[str] = None):
++    """Tear down a P2P group formed via wpa_supplicant."""
++    if not group_iface:
++        return
++    iface = iface or _default_wifi_interface()
++    if shutil.which("dhcpcd"):
++        try:
++            _run(["dhcpcd", "--release", group_iface], timeout=5.0)
++        except Exception:
++            pass
++    if not iface:
++        return
++    try:
++        out = _wpa_cli(["p2p_group_remove", group_iface], iface, timeout=5.0)
++        print(f"[FluxCast WFD] P2P group removed: {out}")
++    except Exception as exc:
++        print(f"[FluxCast WFD] P2P group removal warning: {exc}")
+\ No newline at end of file
+diff --git a/src/wfd/session.py b/src/wfd/session.py
+index aad716f..471f745 100644
+--- a/src/wfd/session.py
++++ b/src/wfd/session.py
+@@ -14,6 +14,7 @@ from .p2p.nm import (
+     _nm_p2p_device_path, _wait_for_nm_activation,
+ )
+ from .p2p.peers import _scan_and_select
++from .p2p.wpa import _wpa_connect_peer, _wpa_disconnect
+ from .probe import _active_rtsp_probe
+ from .rtsp.rtsp_server import WFDRTSPServer
+ 
+@@ -69,15 +70,22 @@ def start_experimental_backend(args) -> None:
+                 from capture import prompt_monitor
+                 monitor = prompt_monitor()
+ 
+-    _set_p2p_device_name(args.wfd_interface)
+     peer = _scan_and_select(
+         args.wfd_interface, getattr(args, "wfd_peer", None), args.wfd_timeout
+     )
+-    device_path = _nm_p2p_device_path(args.wfd_interface)
+-    if not device_path:
++    use_wpa = peer.source == "wpa_cli"
++    if not use_wpa:
++        _set_p2p_device_name(args.wfd_interface)
++    device_path = None if use_wpa else _nm_p2p_device_path(args.wfd_interface)
++    if not use_wpa and not device_path:
+         raise WFDNotReady("NetworkManager P2P device disappeared before connection.")
+ 
+     if getattr(args, "wfd_dry_run", False):
++        if use_wpa:
++            print(f"[FluxCast WFD] Dry-run wpa_cli connect:")
++            print(f"wpa_cli -i {args.wfd_interface or '<iface>'} "
++                  f"p2p_connect {peer.address} pbc go_intent={getattr(args, 'wfd_go_intent', 0)}")
++            return
+         _connect_peer(
+             device_path,
+             peer,
+@@ -125,24 +133,32 @@ def start_experimental_backend(args) -> None:
+     uibc_firewall_opened = False
+     active_path = ""
+     previous_go_intent = None
++    group_iface = ""
+     try:
+-        # Clear stale P2P device state from previous runs before new activation.
+-        try:
+-            _disconnect_device(device_path)
+-        except Exception:
+-            pass
+         rtsp.start()
+-        # Lower our GO intent before negotiation so the TV becomes the group
+-        # owner; most Miracast sinks only start the RTSP session in that role.
+-        previous_go_intent = _set_p2p_go_intent(
+-            args.wfd_interface, getattr(args, "wfd_go_intent", 0)
+-        )
+-        active_path = _connect_peer(
+-            device_path,
+-            peer,
+-            rtsp_port=rtsp_port,
+-        )
+-        _wait_for_nm_activation(active_path)
++        if use_wpa:
++            group_iface, group_ip = _wpa_connect_peer(
++                peer,
++                args.wfd_interface,
++                go_intent=getattr(args, "wfd_go_intent", 0),
++            )
++        else:
++            # Clear stale P2P device state from previous runs before new activation.
++            try:
++                _disconnect_device(device_path)
++            except Exception:
++                pass
++            # Lower our GO intent before negotiation so the TV becomes the group
++            # owner; most Miracast sinks only start the RTSP session in that role.
++            previous_go_intent = _set_p2p_go_intent(
++                args.wfd_interface, getattr(args, "wfd_go_intent", 0)
++            )
++            active_path = _connect_peer(
++                device_path,
++                peer,
++                rtsp_port=rtsp_port,
++            )
++            _wait_for_nm_activation(active_path)
+ 
+         if not getattr(args, "wfd_no_firewall", False):
+             firewall_opened = _open_wfd_firewall_port(rtsp_port)
+@@ -175,11 +191,17 @@ def start_experimental_backend(args) -> None:
+         if active_path:
+             _cleanup_step("connection deactivate",
+                           lambda: _deactivate_connection(active_path))
+-        _cleanup_step("P2P device disconnect", lambda: _disconnect_device(device_path))
+-        if previous_go_intent is not None:
++        if use_wpa:
+             _cleanup_step(
+-                "GO intent restore",
+-                lambda: _set_p2p_go_intent(
+-                    args.wfd_interface, previous_go_intent, restoring=True
+-                ),
++                "P2P group teardown",
++                lambda: _wpa_disconnect(peer, group_iface, args.wfd_interface),
+             )
++        else:
++            _cleanup_step("P2P device disconnect", lambda: _disconnect_device(device_path))
++            if previous_go_intent is not None:
++                _cleanup_step(
++                    "GO intent restore",
++                    lambda: _set_p2p_go_intent(
++                        args.wfd_interface, previous_go_intent, restoring=True
++                    ),
++                )
