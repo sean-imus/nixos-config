@@ -12,6 +12,7 @@
     ./features/rdp-work.nix
     ./features/lockscreen.nix
     ./features/niri
+    ./features/casting.nix
   ];
 
   networking.hostName = "notebook";
