@@ -8,7 +8,6 @@
       "video"
       "audio"
       "networkmanager"
-      "wpa_supplicant"
     ];
   };
 

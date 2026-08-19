@@ -100,12 +100,8 @@ in
 {
   environment.systemPackages = [ fluxcast ];
 
-  # Expose wpa_supplicant's control interface (wpa_cli) so fluxcast's wpa_cli
-  # discovery/connect path can bypass NetworkManager's broken P2P peer tracking.
-  networking.wireless.userControlled = true;
-  # The hardened RootDirectory=/run/wpa_supplicant chroot hides the control
-  # socket from the user's namespace; disable hardening so wpa_cli (run as the
-  # user, group wpa_supplicant) can reach it.
+  # wpa_supplicant hardening puts it in a chroot that breaks D-Bus socket access.
+  # We need direct D-Bus access for P2P peer discovery (bypasses NM's broken peer tracking).
   networking.wireless.enableHardening = false;
 
   # Override the udev rule that restarts wpa_supplicant on wlan add/remove.
