@@ -101,6 +101,16 @@ in
         ];
       }
       {
+        window-rule._children = [
+          {
+            match._props = {
+              app-id = "^fluxcast$";
+            };
+            "open-floating" = true;
+          }
+        ];
+      }
+      {
         "spawn-at-startup"._args = [ "waybar" ];
       }
       {
