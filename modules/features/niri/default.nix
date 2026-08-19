@@ -1,6 +1,9 @@
 { lib, pkgs, ... }:
 {
-  programs.niri.enable = true;
+  programs.niri = {
+    enable = true;
+    useNautilus = false;
+  };
 
   environment.systemPackages = with pkgs; [
     brightnessctl
