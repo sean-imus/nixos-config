@@ -264,5 +264,9 @@ in
       [Desktop Entry]
       Hidden=true
     '';
+    "applications/kitty.desktop".text = ''
+      [Desktop Entry]
+      Hidden=true
+    '';
   };
 }
