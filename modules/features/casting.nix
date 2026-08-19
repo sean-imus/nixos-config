@@ -26,16 +26,19 @@ let
       hatchling
     ];
 
-    propagatedBuildInputs = with pkgs.python3Packages; [
-      upnpclient
-      pychromecast
-      dbus-next
-      pillow
-      pystray
-      pygobject3
-    ] ++ [
-      pkgs.gobject-introspection
-    ];
+    propagatedBuildInputs =
+      with pkgs.python3Packages;
+      [
+        upnpclient
+        pychromecast
+        dbus-next
+        pillow
+        pystray
+        pygobject3
+      ]
+      ++ [
+        pkgs.gobject-introspection
+      ];
 
     nativeCheckInputs = [ ];
 
@@ -58,28 +61,29 @@ let
         pkgs.coreutils
         pkgs.iproute2
         pkgs.procps
+        pkgs.xrandr
       ])
     ];
 
     postInstall = ''
-      mkdir -p $out/share/applications
-      mkdir -p $out/share/icons/hicolor/512x512/apps
-      mkdir -p $out/share/dbus-1/system.d
+            mkdir -p $out/share/applications
+            mkdir -p $out/share/icons/hicolor/512x512/apps
+            mkdir -p $out/share/dbus-1/system.d
 
-      cat > $out/share/applications/fluxcast.desktop << 'DESKTOP'
-[Desktop Entry]
-Name=FluxCast
-Comment=Stream your desktop to a Smart TV via Miracast/DLNA
-Exec=fluxcast --wfd-no-firewall
-Icon=fluxcast
-Terminal=false
-Type=Application
-Categories=AudioVideo;Video;Network;
-DESKTOP
+            cat > $out/share/applications/fluxcast.desktop << 'DESKTOP'
+      [Desktop Entry]
+      Name=FluxCast
+      Comment=Stream your desktop to a Smart TV via Miracast/DLNA
+      Exec=kitty --class fluxcast fluxcast --wfd-no-firewall --wfd-capture-backend wf-recorder
+      Icon=fluxcast
+      Terminal=false
+      Type=Application
+      Categories=AudioVideo;Video;Network;
+      DESKTOP
 
-      cp src/assets/flcast_logo_512x512.png $out/share/icons/hicolor/512x512/apps/fluxcast.png
+            cp src/assets/flcast_logo_512x512.png $out/share/icons/hicolor/512x512/apps/fluxcast.png
 
-      cp meta/zz-dev.fluxcast.wpa-supplicant.conf $out/share/dbus-1/system.d/
+            cp meta/zz-dev.fluxcast.wpa-supplicant.conf $out/share/dbus-1/system.d/
     '';
 
     meta = with lib; {
