@@ -328,6 +328,15 @@
       ];
     };
 
+    "Mod+Ctrl+T" = {
+      spawn = [
+        "kitty"
+        "--class"
+        "btop"
+        "btop"
+      ];
+    };
+
     "Mod+Ctrl+Y" = {
       spawn = [
         "sh"

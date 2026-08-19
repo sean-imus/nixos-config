@@ -73,19 +73,6 @@ in
       {
         window-rule._children = [
           {
-            "geometry-corner-radius"._args = [
-              12.0
-              12.0
-              12.0
-              12.0
-            ];
-            "clip-to-geometry" = true;
-          }
-        ];
-      }
-      {
-        window-rule._children = [
-          {
             match._props = {
               app-id = "^wiremix$";
             };
@@ -98,6 +85,16 @@ in
           {
             match._props = {
               app-id = "^bluetui$";
+            };
+            "open-floating" = true;
+          }
+        ];
+      }
+      {
+        window-rule._children = [
+          {
+            match._props = {
+              app-id = "^btop$";
             };
             "open-floating" = true;
           }
