@@ -260,7 +260,7 @@ index 0000000..b7c0dce
 +    except Exception as exc:
 +        print(f"[FluxCast WFD] P2P disconnect error: {exc}")
 diff --git a/src/wfd/session.py b/src/wfd/session.py
-index aad716f..c29cc7b 100644
+index aad716f..69f7cb7 100644
 --- a/src/wfd/session.py
 +++ b/src/wfd/session.py
 @@ -14,6 +14,7 @@ from .p2p.nm import (
@@ -276,8 +276,6 @@ index aad716f..c29cc7b 100644
                  monitor = prompt_monitor()
  
 -    _set_p2p_device_name(args.wfd_interface)
-+    if peer.source != "wpa_supplicant":
-+        _set_p2p_device_name(args.wfd_interface)
      peer = _scan_and_select(
          args.wfd_interface, getattr(args, "wfd_peer", None), args.wfd_timeout
      )
@@ -285,6 +283,8 @@ index aad716f..c29cc7b 100644
 -    if not device_path:
 -        raise WFDNotReady("NetworkManager P2P device disappeared before connection.")
 +    use_wpa = peer.source == "wpa_supplicant"
++    if not use_wpa:
++        _set_p2p_device_name(args.wfd_interface)
 +    if not use_wpa:
 +        device_path = _nm_p2p_device_path(args.wfd_interface)
 +        if not device_path:
