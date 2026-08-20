@@ -16,27 +16,25 @@
         cursorSize = 24,
       }
     '';
-    "caelestia/hypr-user.lua".text = ''
-      hl.monitor({ output = "eDP-1", mode = "preferred", position = "0x0", scale = 1 })
-      hl.monitor({ output = "Iiyama North America PL2770H 0x0000011F", mode = "1920x1080@144", position = "-1920x0", scale = 1 })
-      hl.monitor({ output = "Iiyama North America PL2770H 0x00000124", mode = "1920x1080@144", position = "-3840x0", scale = 1 })
-      hl.monitor({ output = "GIGA-BYTE TECHNOLOGY CO., LTD. M27U 23463B001145", mode = "3840x2160@60", position = "0x-1234", scale = 1.75 })
+    "caelestia/hypr-user.conf".text = ''
+      monitor = eDP-1, preferred, 0x0, 1
+      monitor = Iiyama North America PL2770H 0x0000011F, 1920x1080@144, -1920x0, 1
+      monitor = Iiyama North America PL2770H 0x00000124, 1920x1080@144, -3840x0, 1
+      monitor = GIGA-BYTE TECHNOLOGY CO., LTD. M27U 23463B001145, 3840x2160@60, 0x-1234, 1.75
 
-      hl.config({
-        input = {
-          kb_layout = "de",
-          kb_options = "caps:escape",
-          numlock_by_default = true,
-          follow_mouse = 1,
-          warp_mouse_to_focus = true,
-          touchpad = {
-            natural_scroll = true,
-            tap_to_click = true,
-            drag_lock = true,
-            disable_while_typing = true,
-          },
-        },
-      })
+      input {
+        kb_layout = de
+        kb_options = caps:escape
+        numlock_by_default = true
+        follow_mouse = 1
+        warp_mouse_to_focus = true
+        touchpad {
+          natural_scroll = true
+          tap_to_click = true
+          drag_lock = true
+          disable_while_typing = true
+        }
+      }
     '';
     "btop" = {
       source = "${inputs.caelestia-dots}/btop";
