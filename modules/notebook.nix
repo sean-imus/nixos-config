@@ -13,6 +13,7 @@
     ./features/lockscreen.nix
     ./features/niri
     ./features/casting.nix
+    ./features/gaming.nix
   ];
 
   networking.hostName = "notebook";
