@@ -10,8 +10,7 @@
     ./features/disk.nix
     ./features/printing.nix
     ./features/rdp-work.nix
-    ./features/lockscreen.nix
-    ./features/niri
+    ./features/hyprland
     ./features/gaming.nix
   ];
 
@@ -149,7 +148,12 @@
     memoryPercent = 50;
   };
 
-  fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    material-symbols
+    nerd-fonts.caskaydia-cove
+    rubik
+  ];
 
   environment.systemPackages = with pkgs; [
     iotop

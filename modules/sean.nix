@@ -22,14 +22,11 @@
       ./features/git.nix
       ./features/shell.nix
       ./features/shell-tools.nix
-      ./features/btop.nix
-      ./features/fastfetch.nix
       ./features/editor.nix
       ./features/opencode.nix
       ./features/terminal.nix
-      ./features/launcher.nix
-      ./features/bar.nix
       ./features/theming.nix
+      ./features/caelestia.nix
       ./features/office.nix
       ./features/browser.nix
     ];

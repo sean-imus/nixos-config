@@ -18,6 +18,16 @@
     };
 
     nixvim.url = "github:nix-community/nixvim";
+
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    caelestia-dots = {
+      url = "github:caelestia-dots/caelestia";
+      flake = false;
+    };
   };
 
   outputs =
