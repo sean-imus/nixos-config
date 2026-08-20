@@ -26,7 +26,7 @@
       ./features/opencode.nix
       ./features/terminal.nix
       ./features/theming.nix
-      ./features/caelestia.nix
+      ./features/desktop-shell.nix
       ./features/office.nix
       ./features/browser.nix
     ];
