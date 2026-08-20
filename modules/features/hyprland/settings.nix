@@ -23,5 +23,20 @@
       source = "${inputs.caelestia-dots}/hypr/scheme/default.lua";
       force = true;
     };
+    "hypr/hyprland/execs.lua" = {
+      text = ''
+        local vars = require("variables")
+
+        hl.on("hyprland.start", function()
+            -- Clipboard history
+            hl.exec_cmd("wl-paste --type text --watch cliphist store")
+            hl.exec_cmd("wl-paste --type image --watch cliphist store")
+
+            -- Start shell
+            hl.exec_cmd("caelestia shell -d")
+        end)
+      '';
+      force = true;
+    };
   };
 }
