@@ -14,6 +14,10 @@ These should be ran inside the nixos-config directory unless noted otherwise.
 `nix flake check` - Quick test
 `nix build .#nixosConfigurations.notebook.config.system.build.toplevel --dry-run 2>&1` - Deep test
 
+# Commit style
+Use "https://www.conventionalcommits.org":
+`feat(scope): description`, `fix(scope): description`, `docs`, `chore`, `cleanup`
+
 # Updating secrets
 `sops modules/features/secrets/secrets.yaml`
 
