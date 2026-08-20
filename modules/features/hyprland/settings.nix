@@ -1,38 +1,25 @@
 { inputs, ... }:
 {
   # Disable home-manager's hyprland module to avoid conflicts with caelestia's config
-  wayland.windowManager.hyprland = {
-    enable = false;
-  };
+  wayland.windowManager.hyprland.enable = false;
 
   xdg.configFile = {
-    "hypr/hyprland" = {
-      source = "${inputs.caelestia-dots}/hypr/hyprland";
+    # Copy entire caelestia hypr config
+    "hypr" = {
+      source = "${inputs.caelestia-dots}/hypr";
       recursive = true;
     };
-    "hypr/scheme" = {
-      source = "${inputs.caelestia-dots}/hypr/scheme";
-      recursive = true;
-    };
-    "hypr/utils" = {
-      source = "${inputs.caelestia-dots}/hypr/utils";
-      recursive = true;
-    };
+
+    # Override: remove default monitor config that interferes with our setup
     "hypr/hyprland.lua" = {
       text = ''
-        local home   = os.getenv("HOME")
-        local hypr   = home .. "/.config/hypr"
+        local home = os.getenv("HOME")
+        local hypr = home .. "/.config/hypr"
         package.path = package.path .. ";" .. home .. "/.config/caelestia/?.lua"
 
-        -- Create a file if it doesn't exist, optionally with initial content
         local function maybe_create(file, content)
             local f = io.open(file)
-
-            if f then
-                f:close()
-                return
-            end
-
+            if f then f:close(); return end
             f = io.open(file, "w")
             if f then
                 if content then f:write(content) end
@@ -40,17 +27,11 @@
             end
         end
 
-        -- Copy src to dst, but only if dst doesn't already exist
         local function maybe_copy(src, dst)
             local out = io.open(dst)
-            if out then
-                out:close()
-                return
-            end
-
+            if out then out:close(); return end
             local input = io.open(src, "r")
             if not input then return end
-
             out = io.open(dst, "w")
             if out then
                 out:write(input:read("*a"))
@@ -59,20 +40,15 @@
             input:close()
         end
 
-        -- Maybe set current colours to defaults
         maybe_copy(hypr .. "/scheme/default.lua", hypr .. "/scheme/current.lua")
-
-        -- User variables
         maybe_create(home .. "/.config/caelestia/hypr-vars.lua", "return {}\n")
+
         local overrides = require("hypr-vars")
         if type(overrides) == "table" then
             local vars = require("variables")
-            for k, v in pairs(overrides) do
-                vars[k] = v
-            end
+            for k, v in pairs(overrides) do vars[k] = v end
         end
 
-        -- Configs
         require("hyprland.env")
         require("hyprland.general")
         require("hyprland.input")
@@ -85,30 +61,27 @@
         require("hyprland.gestures")
         require("hyprland.keybinds")
 
-        -- User configs
         maybe_create(home .. "/.config/caelestia/hypr-user.lua")
         require("hypr-user")
       '';
       force = true;
     };
-    "hypr/variables.lua".source = "${inputs.caelestia-dots}/hypr/variables.lua";
-    "hypr/scheme/current.lua" = {
-      source = "${inputs.caelestia-dots}/hypr/scheme/default.lua";
-      force = true;
-    };
+
+    # Override: remove Arch-specific commands (polkit, geoclue, gammastep)
     "hypr/hyprland/execs.lua" = {
       text = ''
-        local vars = require("variables")
-
         hl.on("hyprland.start", function()
-            -- Clipboard history
             hl.exec_cmd("wl-paste --type text --watch cliphist store")
             hl.exec_cmd("wl-paste --type image --watch cliphist store")
-
-            -- Start shell
             hl.exec_cmd("caelestia shell -d")
         end)
       '';
+      force = true;
+    };
+
+    # Force: caelestia creates this at runtime
+    "hypr/scheme/current.lua" = {
+      source = "${inputs.caelestia-dots}/hypr/scheme/default.lua";
       force = true;
     };
   };
