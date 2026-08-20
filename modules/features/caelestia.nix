@@ -34,13 +34,15 @@
                 kb_options = "caps:escape",
                 numlock_by_default = true,
                 follow_mouse = 1,
-                warp_mouse_to_focus = true,
                 touchpad = {
                     natural_scroll = true,
                     tap_to_click = true,
                     drag_lock = true,
                     disable_while_typing = true,
                 },
+            },
+            misc = {
+                warp_mouse_to_focus = true,
             },
         })
       '';
