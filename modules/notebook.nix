@@ -79,6 +79,12 @@
     timeout = 1;
   };
 
+  fileSystems."/mnt/games" = {
+    device = "/dev/disk/by-uuid/f6338310-836a-46a3-8b5f-30ee4a9d57e7";
+    fsType = "ext4";
+    options = [ "nofail" "x-systemd.automount" ];
+  };
+
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
