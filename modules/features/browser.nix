@@ -21,6 +21,11 @@
     profiles.default = {
       isDefault = true;
 
+      search.force = true;
+      containersForce = true;
+      extensions.force = true;
+      handlers.force = true;
+
       settings = {
         "browser.startup.homepage_override.once" = "about:home";
         "browser.newtabpage.enabled" = true;
