@@ -11,6 +11,7 @@
     ./features/printing.nix
     ./features/rdp-work.nix
     ./features/hyprland
+    ./features/display-manager.nix
     ./features/gaming.nix
   ];
 
