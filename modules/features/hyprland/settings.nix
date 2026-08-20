@@ -1,5 +1,6 @@
 { inputs, ... }:
 {
+  # Disable home-manager's hyprland module to avoid conflicts with caelestia's config
   wayland.windowManager.hyprland = {
     enable = false;
   };
