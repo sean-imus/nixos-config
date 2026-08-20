@@ -31,6 +31,7 @@
       ./features/bar.nix
       ./features/theming.nix
       ./features/office.nix
+      ./features/browser.nix
     ];
 
     home = {
