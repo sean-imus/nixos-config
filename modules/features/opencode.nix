@@ -12,5 +12,5 @@
     };
   };
 
-  home.shellAliases.c = "opencode";
+  home.shellAliases.c = "opencode --auto";
 }
