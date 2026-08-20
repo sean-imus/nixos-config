@@ -288,6 +288,10 @@
       spawn = "kitty";
     };
 
+    "Mod+B" = {
+      spawn = "firefox";
+    };
+
     "Mod+Shift+Space" = {
       spawn = [
         "sh"
