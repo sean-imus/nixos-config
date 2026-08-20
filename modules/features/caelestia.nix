@@ -23,8 +23,8 @@
       text = ''
         -- Monitor configuration
         hl.monitor({ output = "eDP-1", mode = "preferred", position = "0x0", scale = 1 })
-        hl.monitor({ output = "desc:Iiyama North America PL2770H 0x00000124", mode = "1920x1080@144", position = "-1920x0", scale = 1 })
-        hl.monitor({ output = "desc:Iiyama North America PL2770H 0x0000011F", mode = "1920x1080@144", position = "-3840x0", scale = 1 })
+        hl.monitor({ output = "desc:Iiyama North America PL2770H 0x0000011F", mode = "1920x1080@144", position = "-1920x0", scale = 1 })
+        hl.monitor({ output = "desc:Iiyama North America PL2770H 0x00000124", mode = "1920x1080@144", position = "-3840x0", scale = 1 })
 
         -- Input configuration
         hl.config({
