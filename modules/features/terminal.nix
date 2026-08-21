@@ -1,4 +1,7 @@
 { ... }:
+let
+  colors = import ../../lib/colors.nix;
+in
 {
   programs.foot = {
     enable = true;
@@ -14,24 +17,24 @@
         style = "block";
       };
       colors-dark = {
-        foreground = "d3c6aa";
-        background = "2d353b";
-        regular0 = "475258";
-        regular1 = "e67e80";
-        regular2 = "a7c080";
-        regular3 = "dbbc7f";
-        regular4 = "7fbbb3";
-        regular5 = "d699b6";
-        regular6 = "83c092";
-        regular7 = "d3c6aa";
-        bright0 = "475258";
-        bright1 = "e67e80";
-        bright2 = "a7c080";
-        bright3 = "dbbc7f";
-        bright4 = "7fbbb3";
-        bright5 = "d699b6";
-        bright6 = "83c092";
-        bright7 = "d3c6aa";
+        foreground = colors.fg;
+        background = colors.bg0;
+        regular0 = colors.bg4;
+        regular1 = colors.red;
+        regular2 = colors.green;
+        regular3 = colors.yellow;
+        regular4 = colors.blue;
+        regular5 = colors.purple;
+        regular6 = colors.aqua;
+        regular7 = colors.fg;
+        bright0 = colors.bg4;
+        bright1 = colors.red;
+        bright2 = colors.green;
+        bright3 = colors.yellow;
+        bright4 = colors.blue;
+        bright5 = colors.purple;
+        bright6 = colors.aqua;
+        bright7 = colors.fg;
       };
     };
   };

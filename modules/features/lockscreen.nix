@@ -1,4 +1,9 @@
 { ... }:
+let
+  colors = import ../../lib/colors.nix;
+  rgba = hex: "rgba(${hex}ff)";
+  rgbaAlpha = hex: alpha: "rgba(${hex}${alpha})";
+in
 {
   security.pam.services.hyprlock = { };
 
@@ -26,7 +31,7 @@
               text = "$TIME";
               font_size = 90;
               font_family = "monospace";
-              color = "rgba(d3c6aaff)";
+              color = rgba colors.fg;
               position = "0, 160";
               halign = "center";
               valign = "center";
@@ -34,7 +39,7 @@
             {
               text = ''cmd[update:60000] date +"%A, %d %B"'';
               font_size = 22;
-              color = "rgba(a7c080ff)";
+              color = rgba colors.green;
               position = "0, 60";
               halign = "center";
               valign = "center";
@@ -49,11 +54,11 @@
               valign = "center";
               outline_thickness = 2;
               rounding = 12;
-              inner_color = "rgba(2d353bcc)";
-              outer_color = "rgba(a7c080ff)";
-              check_color = "rgba(dbbc7fff)";
-              fail_color = "rgba(e67e80ff)";
-              font_color = "rgba(d3c6aaff)";
+              inner_color = rgbaAlpha colors.bg0 "cc";
+              outer_color = rgba colors.green;
+              check_color = rgba colors.yellow;
+              fail_color = rgba colors.red;
+              font_color = rgba colors.fg;
               fade_on_empty = false;
               placeholder_text = "<i>Password...</i>";
             }

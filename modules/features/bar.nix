@@ -1,4 +1,7 @@
 { ... }:
+let
+  colors = import ../../lib/colors.nix;
+in
 {
   programs.waybar = {
     enable = true;
@@ -51,7 +54,7 @@
         };
       }
     ];
-    style = ''
+    style = with colors; ''
       * {
         font-family: monospace;
         font-size: 11px;
@@ -60,8 +63,8 @@
       }
 
       window#waybar {
-        background: #2d353b;
-        color: #d3c6aa;
+        background: #${bg0};
+        color: #${fg};
       }
 
       #clock,
@@ -73,28 +76,28 @@
       }
 
       #battery.charging {
-        color: #a7c080;
+        color: #${green};
       }
 
       #battery.critical:not(.charging) {
-        color: #e67e80;
+        color: #${red};
       }
 
       #pulseaudio.sink.muted,
       #pulseaudio.mic.source-muted {
-        color: #7a8478;
+        color: #${grey0};
       }
 
       #power-profiles-daemon.performance {
-        color: #e67e80;
+        color: #${red};
       }
 
       #power-profiles-daemon.balanced {
-        color: #dbbc7f;
+        color: #${yellow};
       }
 
       #power-profiles-daemon.power-saver {
-        color: #a7c080;
+        color: #${green};
       }
     '';
   };
