@@ -15,6 +15,11 @@
     initContent = ''
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
     '';
+    profileExtra = ''
+      if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+        exec niri-session
+      fi
+    '';
   };
 
   programs.starship = {

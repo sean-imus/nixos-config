@@ -65,6 +65,11 @@
     HandleLidSwitchDocked = "ignore";
   };
 
+  services.getty = {
+    autologinUser = "sean";
+    autologinOnce = true;
+  };
+
   environment.shellAliases = {
     rbb = "sudo nixos-rebuild boot --flake .#notebook && reboot";
     rbs = "sudo nixos-rebuild switch --flake .#notebook";
@@ -80,7 +85,10 @@
   fileSystems."/mnt/games" = {
     device = "/dev/disk/by-uuid/f6338310-836a-46a3-8b5f-30ee4a9d57e7";
     fsType = "ext4";
-    options = [ "nofail" "x-systemd.automount" ];
+    options = [
+      "nofail"
+      "x-systemd.automount"
+    ];
   };
 
   time.timeZone = "Europe/Berlin";
