@@ -65,8 +65,6 @@
     HandleLidSwitchDocked = "ignore";
   };
 
-  services.fwupd.enable = true;
-
   environment.shellAliases = {
     rbb = "sudo nixos-rebuild boot --flake .#notebook && reboot";
     rbs = "sudo nixos-rebuild switch --flake .#notebook";
@@ -74,7 +72,7 @@
 
   boot.loader = {
     efi.canTouchEfiVariables = true;
-    systemd-boot.configurationLimit = 10;
+    systemd-boot.configurationLimit = 5;
     systemd-boot.enable = true;
     timeout = 1;
   };
@@ -163,7 +161,6 @@
     lm_sensors
     pciutils
     usbutils
-    wget
   ];
 
   system.stateVersion = "26.11";
