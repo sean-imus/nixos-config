@@ -61,11 +61,6 @@
   };
 
   services.fwupd.enable = true;
-  services.logind.settings.Login = {
-    HandleLidSwitch = "ignore";
-    HandleLidSwitchExternalPower = "ignore";
-    HandleLidSwitchDocked = "ignore";
-  };
 
   services.getty = {
     autologinUser = "sean";
@@ -158,18 +153,15 @@
 
   users.mutableUsers = false;
 
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-  };
+  zramSwap.enable = true;
 
   fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
 
   environment.systemPackages = with pkgs; [
-    iotop
     lm_sensors
     pciutils
     usbutils
+    ntfs3g
   ];
 
   system.stateVersion = "26.11";
