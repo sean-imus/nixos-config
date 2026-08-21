@@ -15,5 +15,8 @@
     };
   };
 
-  home.shellAliases.c = "opencode --auto";
+  home.shellAliases = {
+    c = "opencode --auto";
+    ce = "opencode --auto --continue ~/nixos-config";
+  };
 }
