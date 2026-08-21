@@ -33,7 +33,6 @@
 
   hardware.bluetooth.enable = true;
 
-  hardware.alsa.enableBluetooth = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -152,7 +151,6 @@
   zramSwap = {
     enable = true;
     algorithm = "zstd";
-    memoryPercent = 50;
   };
 
   fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];

@@ -252,7 +252,6 @@ in
     enable = true;
     config = {
       hwdec = "vaapi";
-      vo = "gpu";
       gpu-context = "wayland";
     };
   };
@@ -274,7 +273,15 @@ in
       [Desktop Entry]
       Hidden=true
     '';
-    "applications/kitty.desktop".text = ''
+    "applications/foot.desktop".text = ''
+      [Desktop Entry]
+      Hidden=true
+    '';
+    "applications/footclient.desktop".text = ''
+      [Desktop Entry]
+      Hidden=true
+    '';
+    "applications/foot-server.desktop".text = ''
       [Desktop Entry]
       Hidden=true
     '';
