@@ -20,7 +20,6 @@
     ./keybindings.nix
     ./outputs.nix
     ./animations.nix
-    ./utilities.nix
     {
       wayland.windowManager.niri = {
         enable = true;

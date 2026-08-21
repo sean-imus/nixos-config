@@ -1,6 +1,6 @@
-{ ... }:
+{ theme, ... }:
 let
-  colors = import ../../lib/colors.nix;
+  colors = theme;
   withAlpha = hex: hex + "ff";
 in
 {

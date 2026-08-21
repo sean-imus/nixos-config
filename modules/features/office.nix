@@ -1,6 +1,13 @@
 { pkgs, ... }:
 let
-  hideDesktopEntries = import ../../lib/desktop-hide.nix;
+  hideDesktopEntries =
+    names:
+    builtins.listToAttrs (
+      map (name: {
+        name = "applications/${name}.desktop";
+        value.text = "[Desktop Entry]\nHidden=true\n";
+      }) names
+    );
 in
 {
   home.packages = [ pkgs.libreoffice-fresh ];

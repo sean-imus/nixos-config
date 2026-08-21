@@ -3,7 +3,7 @@
   programs.opencode = {
     enable = true;
     tui = {
-      theme = "everforest";
+      theme = "system";
     };
     settings = {
       mcp = {

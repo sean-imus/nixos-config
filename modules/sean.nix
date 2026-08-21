@@ -30,6 +30,7 @@
       ./features/launcher.nix
       ./features/bar.nix
       ./features/theming.nix
+      ./features/niri/utilities.nix
       ./features/office.nix
       ./features/browser.nix
     ];

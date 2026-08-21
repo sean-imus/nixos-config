@@ -1,6 +1,6 @@
-{ ... }:
+{ theme, ... }:
 let
-  colors = import ../../lib/colors.nix;
+  inherit theme;
 in
 {
   programs.waybar = {
@@ -54,10 +54,10 @@ in
         };
       }
     ];
-    style = with colors; ''
+    style = with theme; ''
       * {
-        font-family: monospace;
-        font-size: 11px;
+        font-family: "${font.family}";
+        font-size: ${toString barFontSize}px;
         padding: 0;
         margin: 0;
       }

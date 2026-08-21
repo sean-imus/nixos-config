@@ -1,13 +1,13 @@
-{ ... }:
+{ theme, ... }:
 let
-  colors = import ../../lib/colors.nix;
+  inherit theme;
 in
 {
   programs.foot = {
     enable = true;
     settings = {
       main = {
-        font = "JetBrainsMono Nerd Font:size=10";
+        font = "${theme.font.family}:size=${toString theme.font.size}";
         term = "xterm-256color";
       };
       scrollback = {
@@ -17,24 +17,24 @@ in
         style = "block";
       };
       colors-dark = {
-        foreground = colors.fg;
-        background = colors.bg0;
-        regular0 = colors.bg4;
-        regular1 = colors.red;
-        regular2 = colors.green;
-        regular3 = colors.yellow;
-        regular4 = colors.blue;
-        regular5 = colors.purple;
-        regular6 = colors.aqua;
-        regular7 = colors.fg;
-        bright0 = colors.bg4;
-        bright1 = colors.red;
-        bright2 = colors.green;
-        bright3 = colors.yellow;
-        bright4 = colors.blue;
-        bright5 = colors.purple;
-        bright6 = colors.aqua;
-        bright7 = colors.fg;
+        foreground = theme.fg;
+        background = theme.bg0;
+        regular0 = theme.bg4;
+        regular1 = theme.red;
+        regular2 = theme.green;
+        regular3 = theme.yellow;
+        regular4 = theme.blue;
+        regular5 = theme.purple;
+        regular6 = theme.aqua;
+        regular7 = theme.fg;
+        bright0 = theme.bg4;
+        bright1 = theme.red;
+        bright2 = theme.green;
+        bright3 = theme.yellow;
+        bright4 = theme.blue;
+        bright5 = theme.purple;
+        bright6 = theme.aqua;
+        bright7 = theme.fg;
       };
     };
   };

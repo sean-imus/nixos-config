@@ -1,6 +1,6 @@
-{ config, ... }:
+{ config, theme, ... }:
 let
-  colors = import ../../lib/colors.nix;
+  colors = theme;
 in
 {
   programs.git = {

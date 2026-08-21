@@ -1,7 +1,14 @@
-{ pkgs, ... }:
+{ pkgs, theme, ... }:
 let
-  colors = import ../../../lib/colors.nix;
-  hideDesktopEntries = import ../../../lib/desktop-hide.nix;
+  colors = theme;
+  hideDesktopEntries =
+    names:
+    builtins.listToAttrs (
+      map (name: {
+        name = "applications/${name}.desktop";
+        value.text = "[Desktop Entry]\nHidden=true\n";
+      }) names
+    );
 in
 {
   home.packages = [ pkgs.swaybg ];
