@@ -79,7 +79,7 @@
     efi.canTouchEfiVariables = true;
     systemd-boot.configurationLimit = 5;
     systemd-boot.enable = true;
-    timeout = 1;
+    timeout = 0;
   };
 
   fileSystems."/mnt/games" = {
