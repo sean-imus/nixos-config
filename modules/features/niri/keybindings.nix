@@ -308,7 +308,7 @@
       ];
     };
 
-    "Super+Ctrl+L" = {
+    "Super+Alt+L" = {
       spawn = "hyprlock";
     };
 
