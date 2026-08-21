@@ -59,6 +59,7 @@
     criticalPowerAction = "Hibernate";
   };
 
+  services.fwupd.enable = true;
   services.logind.settings.Login = {
     HandleLidSwitch = "ignore";
     HandleLidSwitchExternalPower = "ignore";
