@@ -2,6 +2,9 @@
 {
   programs.opencode = {
     enable = true;
+    tui = {
+      theme = "everforest";
+    };
     settings = {
       mcp = {
         nixos = {
