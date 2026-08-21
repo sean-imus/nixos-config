@@ -285,7 +285,7 @@
     };
 
     "Mod+T" = {
-      spawn = "kitty";
+      spawn = "foot";
     };
 
     "Mod+B" = {
@@ -314,8 +314,8 @@
 
     "Mod+Ctrl+B" = {
       spawn = [
-        "kitty"
-        "--class"
+        "foot"
+        "--app-id"
         "bluetui"
         "bluetui"
       ];
@@ -323,8 +323,8 @@
 
     "Mod+Ctrl+A" = {
       spawn = [
-        "kitty"
-        "--class"
+        "foot"
+        "--app-id"
         "wiremix"
         "wiremix"
         "-v"
@@ -334,8 +334,8 @@
 
     "Mod+Ctrl+T" = {
       spawn = [
-        "kitty"
-        "--class"
+        "foot"
+        "--app-id"
         "btop"
         "btop"
       ];

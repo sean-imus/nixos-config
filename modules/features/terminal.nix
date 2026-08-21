@@ -1,35 +1,38 @@
 { ... }:
 {
-  programs.kitty = {
+  programs.foot = {
     enable = true;
     settings = {
-      font_family = "JetBrainsMono Nerd Font";
-      font_size = 10;
-      wheel_scroll_multiplier = 5;
-      cursor_trail = 6;
-      cursor_trail_delay = 0.01;
-      cursor_trail_duration = 0.4;
-
-      background = "#2d353b";
-      foreground = "#d3c6aa";
-      cursor = "#d3c6aa";
-      cursor_text_color = "#2d353b";
-      color0 = "#475258";
-      color1 = "#e67e80";
-      color2 = "#a7c080";
-      color3 = "#dbbc7f";
-      color4 = "#7fbbb3";
-      color5 = "#d699b6";
-      color6 = "#83c092";
-      color7 = "#d3c6aa";
-      color8 = "#475258";
-      color9 = "#e67e80";
-      color10 = "#a7c080";
-      color11 = "#dbbc7f";
-      color12 = "#7fbbb3";
-      color13 = "#d699b6";
-      color14 = "#83c092";
-      color15 = "#d3c6aa";
+      main = {
+        font = "JetBrainsMono Nerd Font:size=10";
+        term = "xterm-256color";
+      };
+      scrollback = {
+        lines = 10000;
+      };
+      cursor = {
+        style = "block";
+      };
+      colors-dark = {
+        foreground = "d3c6aa";
+        background = "2d353b";
+        regular0 = "475258";
+        regular1 = "e67e80";
+        regular2 = "a7c080";
+        regular3 = "dbbc7f";
+        regular4 = "7fbbb3";
+        regular5 = "d699b6";
+        regular6 = "83c092";
+        regular7 = "d3c6aa";
+        bright0 = "475258";
+        bright1 = "e67e80";
+        bright2 = "a7c080";
+        bright3 = "dbbc7f";
+        bright4 = "7fbbb3";
+        bright5 = "d699b6";
+        bright6 = "83c092";
+        bright7 = "d3c6aa";
+      };
     };
   };
 }
