@@ -39,14 +39,14 @@ in
       IdentityFile = config.sops.secrets.ssh_key.path;
     };
 
-    settings."medion-server" = {
+    settings."medion-server1" = {
       HostName = "192.168.178.201";
       User = "sean";
       IdentityFile = config.sops.secrets.ssh_key.path;
       IdentitiesOnly = true;
     };
 
-    settings."medion-server-2" = {
+    settings."medion-server2" = {
       HostName = "192.168.178.202";
       User = "sean";
       IdentityFile = config.sops.secrets.ssh_key.path;
