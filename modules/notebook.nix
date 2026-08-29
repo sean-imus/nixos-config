@@ -153,6 +153,7 @@
     pciutils
     usbutils
     ntfs3g
+    e2fsprogs
   ];
 
   system.stateVersion = "26.11";
