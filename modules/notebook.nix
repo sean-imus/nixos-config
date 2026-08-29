@@ -6,13 +6,13 @@
 }:
 {
   imports = [
-    ./sean.nix
     ./features/disk.nix
-    ./features/printing.nix
-    ./features/rdp-work.nix
+    ./features/gaming.nix
     ./features/lockscreen.nix
     ./features/niri
-    ./features/gaming.nix
+    ./features/printing.nix
+    ./features/rdp-work.nix
+    ./sean.nix
   ];
 
   networking.hostName = "notebook";

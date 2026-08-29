@@ -17,22 +17,22 @@
   home-manager.users.sean = {
     imports = [
       inputs.sops-nix.homeManagerModules.sops
-      ./features/secrets/sops.nix
-      ./features/ssh.nix
-      ./features/git.nix
-      ./features/shell.nix
-      ./features/shell-tools.nix
-      ./features/btop.nix
-      ./features/fastfetch.nix
-      ./features/editor.nix
-      ./features/opencode.nix
-      ./features/terminal.nix
-      ./features/launcher.nix
       ./features/bar.nix
-      ./features/theming.nix
+      ./features/browser.nix
+      ./features/btop.nix
+      ./features/editor.nix
+      ./features/fastfetch.nix
+      ./features/git.nix
+      ./features/launcher.nix
       ./features/niri/utilities.nix
       ./features/office.nix
-      ./features/browser.nix
+      ./features/opencode.nix
+      ./features/secrets/sops.nix
+      ./features/shell-tools.nix
+      ./features/shell.nix
+      ./features/ssh.nix
+      ./features/terminal.nix
+      ./features/theming.nix
     ];
 
     home = {
