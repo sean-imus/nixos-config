@@ -10,7 +10,7 @@ let
     );
 in
 {
-  home.packages = [ pkgs.libreoffice-fresh ];
+  home.packages = [ pkgs.libreoffice-stable ];
 
   xdg.dataFile = hideDesktopEntries [
     "base"
