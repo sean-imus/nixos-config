@@ -19,7 +19,6 @@
   home-manager.sharedModules = [
     ./keybindings.nix
     ./outputs.nix
-    ./animations.nix
     {
       wayland.windowManager.niri = {
         enable = true;

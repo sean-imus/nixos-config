@@ -14,6 +14,8 @@ in
   home.packages = [ pkgs.swaybg ];
 
   wayland.windowManager.niri.settings = {
+    animations.off = { };
+
     _children = [
       {
         "spawn-at-startup"._args = [ "waybar" ];
