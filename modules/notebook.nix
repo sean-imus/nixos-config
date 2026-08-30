@@ -154,6 +154,7 @@
     usbutils
     ntfs3g
     e2fsprogs
+    android-tools
   ];
 
   system.stateVersion = "26.11";
