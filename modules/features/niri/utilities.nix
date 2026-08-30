@@ -11,23 +11,12 @@ let
     );
 in
 {
-  home.packages = [ pkgs.swaybg ];
-
   wayland.windowManager.niri.settings = {
     animations.off = { };
 
     _children = [
       {
         "spawn-at-startup"._args = [ "waybar" ];
-      }
-      {
-        "spawn-at-startup"._args = [
-          "swaybg"
-          "-i"
-          "${../../../assets/wallpaper.png}"
-          "-m"
-          "fill"
-        ];
       }
       {
         "spawn-at-startup"._args = [
