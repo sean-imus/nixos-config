@@ -4,7 +4,7 @@
 
   programs.fzf = {
     enable = true;
-    enableZshIntegration = true;
+    enableFishIntegration = true;
   };
 
   home.packages = with pkgs; [

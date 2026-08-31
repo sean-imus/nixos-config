@@ -11,8 +11,8 @@
     ];
   };
 
-  programs.zsh.enable = true;
-  users.users.sean.shell = pkgs.zsh;
+  programs.fish.enable = true;
+  users.users.sean.shell = pkgs.fish;
 
   home-manager.users.sean = {
     imports = [

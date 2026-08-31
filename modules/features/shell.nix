@@ -1,28 +1,18 @@
 { ... }:
 {
-  programs.zsh = {
+  programs.fish = {
     enable = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    enableCompletion = true;
-    history = {
-      size = 10000;
-      save = 10000;
-      share = true;
-      ignoreAllDups = true;
-      extended = true;
-    };
-    initContent = ''
-      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-      if [ -z "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+    functions.fish_greeting = "";
+    interactiveShellInit = ''
+      if test -z "$DISPLAY"; and test -z "$WAYLAND_DISPLAY"; and test (tty) = "/dev/tty1"
         exec niri-session
-      fi
+      end
     '';
   };
 
   programs.starship = {
     enable = true;
-    enableZshIntegration = true;
+    enableFishIntegration = true;
     settings = {
       add_newline = false;
       format = "$cmd_duration$directory$git_branch$git_status$character";
