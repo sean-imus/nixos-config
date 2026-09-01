@@ -28,7 +28,6 @@
       ./features/office.nix
       ./features/opencode.nix
       ./features/secrets/sops.nix
-      ./features/shell-tools.nix
       ./features/shell.nix
       ./features/ssh.nix
       ./features/terminal.nix

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.fish = {
     enable = true;
@@ -45,4 +45,15 @@
       };
     };
   };
+
+  programs.fzf = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  home.packages = with pkgs; [
+    bat
+    ncdu
+    tldr
+  ];
 }
