@@ -69,6 +69,7 @@ in
 
     layout = {
       gaps = 8;
+      "background-color" = "#000000";
       "center-focused-column" = "on-overflow";
       "always-center-single-column" = { };
       "empty-workspace-above-first" = { };
