@@ -16,6 +16,8 @@
             general = {
               hide_cursor = true;
               ignore_empty_input = true;
+              no_fade_in = true;
+              no_fade_out = true;
             };
 
             background = [

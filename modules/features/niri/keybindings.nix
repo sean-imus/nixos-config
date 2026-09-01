@@ -309,7 +309,10 @@
     };
 
     "Super+Alt+L" = {
-      spawn = "hyprlock";
+      spawn = [
+        "hyprlock"
+        "--no-fade-in"
+      ];
     };
 
     "Mod+Ctrl+B" = {
