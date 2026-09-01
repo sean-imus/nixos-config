@@ -20,11 +20,11 @@ in
         selection = "a7c08044";
         selection-text = withAlpha "d3c6aa";
         selection-match = withAlpha "a7c080";
-        border = "a7c08055";
+        border = withAlpha "a7c080";
       };
       border = {
         width = 2;
-        radius = 12;
+        radius = 0;
       };
     };
   };
