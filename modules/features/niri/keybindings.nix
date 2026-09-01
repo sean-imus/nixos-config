@@ -309,11 +309,7 @@
     };
 
     "Super+Alt+L" = {
-      spawn = [
-        "swaylock"
-        "--config"
-        "/home/sean/.config/swaylock/config"
-      ];
+      spawn = "swaylock";
     };
 
     "Mod+Ctrl+B" = {
