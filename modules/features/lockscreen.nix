@@ -1,71 +1,37 @@
 { ... }:
 {
-  security.pam.services.hyprlock = { };
+  security.pam.services.swaylock = { };
 
   home-manager.users.sean.imports = [
     (
       { theme, ... }:
-      let
-        rgba = hex: "rgba(${hex}ff)";
-        rgbaAlpha = hex: alpha: "rgba(${hex}${alpha})";
-      in
       {
-        programs.hyprlock = {
+        programs.swaylock = {
           enable = true;
           settings = {
-            general = {
-              hide_cursor = true;
-              ignore_empty_input = true;
-              no_fade_in = true;
-              no_fade_out = true;
-            };
-
-            background = [
-              {
-                path = "screenshot";
-                blur_passes = 3;
-                blur_size = 7;
-                brightness = 0.75;
-              }
-            ];
-
-            label = [
-              {
-                text = "$TIME";
-                font_size = 90;
-                font_family = "monospace";
-                color = rgba theme.fg;
-                position = "0, 160";
-                halign = "center";
-                valign = "center";
-              }
-              {
-                text = ''cmd[update:60000] date +"%A, %d %B"'';
-                font_size = 22;
-                color = rgba theme.green;
-                position = "0, 60";
-                halign = "center";
-                valign = "center";
-              }
-            ];
-
-            input-field = [
-              {
-                size = "300, 60";
-                position = "0, -20";
-                halign = "center";
-                valign = "center";
-                outline_thickness = 2;
-                rounding = 12;
-                inner_color = rgbaAlpha theme.bg0 "cc";
-                outer_color = rgba theme.green;
-                check_color = rgba theme.yellow;
-                fail_color = rgba theme.red;
-                font_color = rgba theme.fg;
-                fade_on_empty = false;
-                placeholder_text = "<i>Password...</i>";
-              }
-            ];
+            screenshots = true;
+            scaling = "fill";
+            indicator = true;
+            indicator-radius = 120;
+            indicator-thickness = 8;
+            indicator-x-position = 0;
+            indicator-y-position = 0;
+            clock = true;
+            timestr = "%H:%M";
+            datestr = "%A, %d %B";
+            font-size = 90;
+            font = "monospace";
+            color = theme.bg0;
+            inside-color = "${theme.bg0}cc";
+            ring-color = theme.green;
+            ring-ver-color = theme.yellow;
+            ring-wrong-color = theme.red;
+            inside-ver-color = "${theme.bg0}cc";
+            inside-wrong-color = "${theme.bg0}cc";
+            line-color = theme.bg0;
+            separator-color = theme.bg0;
+            text-color = theme.fg;
+            show-failed-attempts = true;
           };
         };
       }

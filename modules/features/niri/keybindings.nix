@@ -309,10 +309,7 @@
     };
 
     "Super+Alt+L" = {
-      spawn = [
-        "hyprlock"
-        "--no-fade-in"
-      ];
+      spawn = "swaylock";
     };
 
     "Mod+Ctrl+B" = {
