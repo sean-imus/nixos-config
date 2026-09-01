@@ -1,6 +1,5 @@
-{ theme, ... }:
+{ ... }:
 let
-  colors = theme;
   withAlpha = hex: hex + "ff";
 in
 {
@@ -13,15 +12,15 @@ in
         sort-result = false;
       };
       colors = {
-        background = withAlpha colors.bg0;
-        text = withAlpha colors.fg;
-        prompt = withAlpha colors.grey0;
-        input = withAlpha colors.fg;
-        match = withAlpha colors.green;
-        selection = colors.green + "44";
-        selection-text = withAlpha colors.fg;
-        selection-match = withAlpha colors.green;
-        border = colors.green + "55";
+        background = withAlpha "2d353b";
+        text = withAlpha "d3c6aa";
+        prompt = withAlpha "7a8478";
+        input = withAlpha "d3c6aa";
+        match = withAlpha "a7c080";
+        selection = "a7c08044";
+        selection-text = withAlpha "d3c6aa";
+        selection-match = withAlpha "a7c080";
+        border = "a7c08055";
       };
       border = {
         width = 2;

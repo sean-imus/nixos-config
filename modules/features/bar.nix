@@ -1,7 +1,4 @@
-{ theme, ... }:
-let
-  inherit theme;
-in
+{ ... }:
 {
   programs.waybar = {
     enable = true;
@@ -54,17 +51,17 @@ in
         };
       }
     ];
-    style = with theme; ''
+    style = ''
       * {
-        font-family: "${font.family}";
-        font-size: ${toString barFontSize}px;
+        font-family: "JetBrainsMono Nerd Font";
+        font-size: 11px;
         padding: 0;
         margin: 0;
       }
 
       window#waybar {
-        background: #${bg0};
-        color: #${fg};
+        background: #2d353b;
+        color: #d3c6aa;
       }
 
       #clock,
@@ -76,28 +73,28 @@ in
       }
 
       #battery.charging {
-        color: #${green};
+        color: #a7c080;
       }
 
       #battery.critical:not(.charging) {
-        color: #${red};
+        color: #e67e80;
       }
 
       #pulseaudio.sink.muted,
       #pulseaudio.mic.source-muted {
-        color: #${grey0};
+        color: #7a8478;
       }
 
       #power-profiles-daemon.performance {
-        color: #${red};
+        color: #e67e80;
       }
 
       #power-profiles-daemon.balanced {
-        color: #${yellow};
+        color: #dbbc7f;
       }
 
       #power-profiles-daemon.power-saver {
-        color: #${green};
+        color: #a7c080;
       }
     '';
   };

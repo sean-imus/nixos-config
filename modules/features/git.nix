@@ -1,7 +1,4 @@
-{ config, theme, ... }:
-let
-  colors = theme;
-in
+{ config, ... }:
 {
   programs.git = {
     enable = true;
@@ -15,16 +12,16 @@ in
     enable = true;
     settings.gui.theme = {
       activeBorderColor = [
-        "#${colors.green}"
+        "#a7c080"
         "bold"
       ];
-      inactiveBorderColor = [ "#${colors.grey0}" ];
-      optionsTextColor = [ "#${colors.grey2}" ];
-      selectedLineBgColor = [ "#${colors.bg1}" ];
-      unstagedChangesColor = [ "#${colors.red}" ];
-      defaultFgColor = [ "#${colors.fg}" ];
+      inactiveBorderColor = [ "#7a8478" ];
+      optionsTextColor = [ "#9da9a0" ];
+      selectedLineBgColor = [ "#343f44" ];
+      unstagedChangesColor = [ "#e67e80" ];
+      defaultFgColor = [ "#d3c6aa" ];
       searchingActiveBorderColor = [
-        "#${colors.yellow}"
+        "#dbbc7f"
         "bold"
       ];
     };

@@ -4,7 +4,7 @@
 
   home-manager.users.sean.imports = [
     (
-      { theme, ... }:
+      { ... }:
       {
         programs.swaylock = {
           enable = true;

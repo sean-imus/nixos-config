@@ -32,13 +32,36 @@
       ./features/shell.nix
       ./features/ssh.nix
       ./features/terminal.nix
-      ./features/theming.nix
     ];
 
     home = {
       username = "sean";
       homeDirectory = "/home/sean";
       stateVersion = "26.11";
+    };
+
+    gtk = {
+      enable = true;
+      theme = {
+        name = "everforest-dark-medium";
+        package = pkgs.everforest-gtk-theme;
+      };
+      iconTheme = {
+        name = "Papirus-Dark";
+        package = pkgs.papirus-icon-theme;
+      };
+      font = {
+        name = "JetBrainsMono Nerd Font";
+        size = 10;
+      };
+    };
+
+    home.pointerCursor = {
+      enable = true;
+      name = "everforest-cursors";
+      package = pkgs.everforest-cursors;
+      size = 24;
+      gtk.enable = true;
     };
 
     sops.secrets."ssh_key" = {

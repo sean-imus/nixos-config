@@ -1,6 +1,5 @@
-{ pkgs, theme, ... }:
+{ ... }:
 let
-  colors = theme;
   hideDesktopEntries =
     names:
     builtins.listToAttrs (
@@ -96,7 +95,7 @@ in
       };
       "focus-ring" = {
         width = 2;
-        "active-color" = "#${colors.green}";
+        "active-color" = "#a7c080";
         "inactive-color" = "#00000000";
       };
       shadow.off = { };
