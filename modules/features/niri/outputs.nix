@@ -9,7 +9,7 @@
     }
     {
       output._args = [ "Iiyama North America PL2770H 0x0000011F" ];
-      output.mode._args = [ "1920x1080@144.000000" ];
+      output.mode._args = [ "1920x1080" ];
       output.position._props = {
         x = -1920;
         y = 0;
@@ -17,7 +17,7 @@
     }
     {
       output._args = [ "Iiyama North America PL2770H 0x00000124" ];
-      output.mode._args = [ "1920x1080@143.998000" ];
+      output.mode._args = [ "1920x1080" ];
       output.position._props = {
         x = -3840;
         y = 0;
