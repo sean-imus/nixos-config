@@ -39,6 +39,16 @@
       stateVersion = "26.11";
     };
 
+    services.udiskie = {
+      enable = true;
+      automount = true;
+      notify = false;
+      tray = "never";
+      settings = {
+        password_prompt = "builtin:gui";
+      };
+    };
+
     gtk = {
       enable = true;
       theme = {
