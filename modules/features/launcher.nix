@@ -10,6 +10,7 @@ in
         dpi-aware = false;
         namespace = "fuzzel";
         sort-result = false;
+        icons-enabled = false;
       };
       colors = {
         background = withAlpha "2d353b";
