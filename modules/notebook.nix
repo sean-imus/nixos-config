@@ -7,7 +7,6 @@
 {
   imports = [
     ./features/disk.nix
-    ./features/gaming.nix
     ./features/lockscreen.nix
     ./features/niri
     ./features/printing.nix
@@ -145,8 +144,6 @@
       ];
     };
   };
-
-  nixpkgs.config.allowUnfree = true;
 
   users.mutableUsers = false;
 

@@ -22,6 +22,7 @@
       ./features/btop.nix
       ./features/editor.nix
       ./features/fastfetch.nix
+      ./features/gaming.nix
       ./features/git.nix
       ./features/launcher.nix
       ./features/niri/utilities.nix
