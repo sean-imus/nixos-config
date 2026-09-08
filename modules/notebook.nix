@@ -17,6 +17,7 @@
   networking.hostName = "notebook";
 
   services.power-profiles-daemon.enable = true;
+  services.thermald.enable = true;
 
   services.logind.settings.Login = {
     HandleLidSwitch = "ignore";
@@ -31,7 +32,6 @@
 
   hardware.graphics = {
     enable = true;
-    enable32Bit = true;
     extraPackages = [ pkgs.intel-media-driver ];
   };
   environment.variables.LIBVA_DRIVER_NAME = "iHD";
@@ -42,10 +42,7 @@
   services.pipewire = {
     enable = true;
     pulse.enable = true;
-    alsa = {
-      enable = true;
-      support32Bit = true;
-    };
+    alsa.enable = true;
   };
 
   boot.initrd.availableKernelModules = [
@@ -80,6 +77,7 @@
   boot.loader = {
     efi.canTouchEfiVariables = true;
     systemd-boot.configurationLimit = 5;
+    systemd-boot.editor = false;
     systemd-boot.enable = true;
     timeout = 0;
   };
@@ -137,7 +135,7 @@
       dates = "weekly";
     };
     settings = {
-      download-buffer-size = 8388608;
+      download-buffer-size = 134217728;
       experimental-features = [
         "nix-command"
         "flakes"
