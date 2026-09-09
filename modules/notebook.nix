@@ -30,6 +30,8 @@
     cpu.intel.updateMicrocode = true;
   };
 
+  programs.solaar.enable = true;
+
   hardware.graphics = {
     enable = true;
     extraPackages = [ pkgs.intel-media-driver ];
