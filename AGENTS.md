@@ -3,13 +3,10 @@ These should be ran inside the nixos-config directory unless noted otherwise.
 # Formatting
 `nix run nixpkgs#nixfmt -- **/*.nix`
 
-# Updating inputs AKA updating the system if coupled with rbs/rbb
-`nix flake update`
-
 # Rebuilding AKA applying the changes to the config
 `rbs` - Rebuilds and switches instantly
 `rbb` - Rebuilds and switches on next boot
-`rbu` - Updates flake inputs and commits flake.lock
+`rbu` - Updates flake inputs, commits flake.lock AKA updating
 
 # Testing
 `nix flake check` - Quick test
