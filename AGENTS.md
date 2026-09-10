@@ -9,6 +9,7 @@ These should be ran inside the nixos-config directory unless noted otherwise.
 # Rebuilding AKA applying the changes to the config
 `rbs` - Rebuilds and switches instantly
 `rbb` - Rebuilds and switches on next boot
+`rbu` - Updates flake inputs and commits flake.lock
 
 # Testing
 `nix flake check` - Quick test
