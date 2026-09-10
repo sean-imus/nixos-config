@@ -1,5 +1,14 @@
 { ... }:
 {
+  wayland.windowManager.niri.settings.recent-windows.binds = {
+    "Mod+Tab" = {
+      "next-window" = { };
+    };
+    "Mod+Shift+Tab" = {
+      "previous-window" = { };
+    };
+  };
+
   wayland.windowManager.niri.settings.binds = {
     "XF86AudioRaiseVolume" = {
       _props.allow-when-locked = true;
