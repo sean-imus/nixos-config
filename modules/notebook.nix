@@ -74,6 +74,7 @@
   environment.shellAliases = {
     rbb = "sudo nixos-rebuild boot --flake .#notebook && reboot";
     rbs = "sudo nixos-rebuild switch --flake .#notebook";
+    rbu = "nix flake update";
   };
 
   boot.loader = {
