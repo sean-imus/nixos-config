@@ -3,8 +3,12 @@
   imports = [ inputs.nixvim.homeModules.nixvim ];
 
   home = {
-    shellAliases.n = "nvim";
+    shellAliases = {
+      n = "nvim";
+      p = "python3";
+    };
     sessionVariables.EDITOR = "nvim";
+    packages = with pkgs; [ python3 ];
   };
 
   programs.nixvim = {
