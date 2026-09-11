@@ -7,6 +7,7 @@
 {
   imports = [
     ./features/disk.nix
+    ./features/esp32.nix
     ./features/lockscreen.nix
     ./features/niri
     ./features/printing.nix
