@@ -22,6 +22,7 @@
       ./features/btop.nix
       ./features/editor.nix
       ./features/fastfetch.nix
+      ./features/file-manager.nix
       ./features/gaming.nix
       ./features/git.nix
       ./features/launcher.nix
@@ -32,7 +33,6 @@
       ./features/shell.nix
       ./features/ssh.nix
       ./features/terminal.nix
-      ./features/file-manager.nix
     ];
 
     home = {
