@@ -19,8 +19,8 @@
 
     nixvim.url = "github:nix-community/nixvim";
 
-    yazi-flavors = {
-      url = "github:yazi-rs/flavors";
+    yazi-everforest = {
+      url = "github:jcarter/everforest-yazi";
       flake = false;
     };
   };
