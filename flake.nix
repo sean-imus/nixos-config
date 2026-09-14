@@ -18,6 +18,11 @@
     };
 
     nixvim.url = "github:nix-community/nixvim";
+
+    yazi-flavors = {
+      url = "github:yazi-rs/flavors";
+      flake = false;
+    };
   };
 
   outputs =
