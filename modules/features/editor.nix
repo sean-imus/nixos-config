@@ -31,7 +31,6 @@
       {
         event = [
           "FocusGained"
-          ""
           "BufEnter"
           "CursorHold"
         ];
@@ -140,6 +139,14 @@
           };
         };
       };
+
+      toggleterm = {
+        enable = true;
+        settings = {
+          direction = "float";
+          float_opts.border = "curved";
+        };
+      };
     };
 
     colorschemes.everforest.enable = true;
@@ -190,8 +197,42 @@
         action = "<cmd>lua vim.diagnostic.open_float()<CR>";
         options.desc = "Show diagnostic details under cursor";
       }
+      {
+        key = "<leader>r";
+        action = "<cmd>RunFile<CR>";
+        options.desc = "Run current file (per filetype)";
+      }
+      {
+        key = "<leader>tt";
+        action = "<cmd>ToggleTerm<CR>";
+        options.desc = "Toggle terminal";
+      }
     ];
 
-    extraConfigLua = "";
+    userCommands.RunFile = {
+      desc = "Run current file in a split terminal, per filetype";
+      command.__raw = ''
+        function()
+          local runners = {
+            python = "python3 %",
+            bash = "bash %",
+            sh = "bash %",
+            fish = "fish %",
+            lua = "lua %",
+            ruby = "ruby %",
+            javascript = "node %",
+            typescript = "deno run -A %",
+          }
+          local cmd = runners[vim.bo.filetype]
+          if not cmd then
+            vim.notify("No runner mapped for filetype: " .. vim.bo.filetype, vim.log.levels.WARN)
+            return
+          end
+          vim.cmd.write()
+          vim.cmd("belowright 15split | term " .. cmd)
+          vim.cmd.startinsert()
+        end
+      '';
+    };
   };
 }
