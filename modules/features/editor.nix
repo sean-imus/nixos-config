@@ -24,6 +24,25 @@
       shiftwidth = 2;
       clipboard = "unnamedplus";
       foldlevelstart = 99;
+      updatetime = 250;
+    };
+
+    autoCmd = [
+      {
+        event = [
+          "FocusGained"
+          ""
+          "BufEnter"
+          "CursorHold"
+        ];
+        pattern = "*";
+        command = "checktime";
+      }
+    ];
+
+    performance.byteCompileLua = {
+      enable = true;
+      plugins = true;
     };
 
     plugins = {
@@ -54,7 +73,14 @@
         servers = {
           nixd = {
             enable = true;
-            settings.nix.flake = inputs.self.outPath;
+            settings = {
+              nixpkgs.expr = "import ${inputs.nixpkgs.outPath} { }";
+              formatting.command = [ "nixfmt" ];
+              options = {
+                nixos.expr = "(builtins.getFlake (toString ${inputs.self.outPath})).nixosConfigurations.notebook.options";
+                home-manager.expr = "(builtins.getFlake (toString ${inputs.self.outPath})).nixosConfigurations.notebook.options.home-manager.users.type.getSubOptions []";
+              };
+            };
           };
           pyright.enable = true;
         };
@@ -77,6 +103,7 @@
         enable = true;
         keymaps = {
           "<leader>ff" = "find_files";
+          "<leader>fd" = "diagnostics";
         };
       };
 
@@ -148,13 +175,23 @@
         action = "<cmd>lua require('flash').jump()<CR>";
         options.desc = "Flash jump";
       }
+      {
+        key = "K";
+        action = "<cmd>lua vim.lsp.buf.hover()<CR>";
+        options.desc = "Show docs: option/value explanation (LSP hover)";
+      }
+      {
+        key = "gK";
+        action = "<cmd>lua vim.lsp.buf.signature_help()<CR>";
+        options.desc = "Show function signature";
+      }
+      {
+        key = "<leader>d";
+        action = "<cmd>lua vim.diagnostic.open_float()<CR>";
+        options.desc = "Show diagnostic details under cursor";
+      }
     ];
 
-    extraConfigLua = ''
-      vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
-        pattern = "*",
-        command = "checktime",
-      })
-    '';
+    extraConfigLua = "";
   };
 }
