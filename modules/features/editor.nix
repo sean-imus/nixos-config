@@ -51,6 +51,13 @@
       lsp = {
         enable = true;
         inlayHints = true;
+        servers = {
+          nixd = {
+            enable = true;
+            settings.nix.flake = inputs.self.outPath;
+          };
+          pyright.enable = true;
+        };
       };
 
       blink-cmp = {
