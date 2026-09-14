@@ -32,7 +32,7 @@
       ./features/shell.nix
       ./features/ssh.nix
       ./features/terminal.nix
-      ./features/yazi.nix
+      ./features/file-manager.nix
     ];
 
     home = {
