@@ -4,9 +4,9 @@
     enable = true;
     enableFishIntegration = true;
 
-    flavors.everforest = "${inputs.yazi-flavors}/everforest.yazi";
+    flavors.everforest-medium-dark = "${inputs.yazi-everforest}/everforest-medium-dark.yazi";
 
-    theme.flavor.dark = "everforest";
+    theme.flavor.dark = "everforest-medium-dark";
 
     settings = {
       mgr = {
