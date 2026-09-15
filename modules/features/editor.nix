@@ -23,6 +23,11 @@
       number = true;
       relativenumber = true;
       autoread = true;
+      expandtab = true;
+      ignorecase = true;
+      smartcase = true;
+      scrolloff = 5;
+      undofile = true;
       tabstop = 2;
       shiftwidth = 2;
       clipboard = "unnamedplus";
