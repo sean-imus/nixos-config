@@ -4,8 +4,8 @@ These should be ran inside the nixos-config directory unless noted otherwise.
 `nix run nixpkgs#nixfmt -- **/*.nix`
 
 # Rebuilding AKA applying the changes to the config
-`rbs` - Rebuilds and switches instantly
-`rbb` - Rebuilds and switches on next boot
+`nh os switch` - Rebuilds and switches instantly
+`nh os boot` - Rebuilds and applies on next boot (reboot yourself)
 `rbu` - Updates flake inputs, commits flake.lock AKA updating
 
 # Testing
