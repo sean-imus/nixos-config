@@ -1,7 +1,7 @@
 These should be ran inside the nixos-config directory unless noted otherwise.
 
 # Formatting
-`nix run nixpkgs#nixfmt -- **/*.nix`
+`nix fmt`
 
 # Rebuilding AKA applying the changes to the config
 `nh os switch` - Rebuilds and switches instantly
