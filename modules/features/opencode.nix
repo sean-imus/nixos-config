@@ -7,7 +7,8 @@
 
   programs.opencode = {
     enable = true;
-    #TODO REMOVE WORKAROUND BELOW AND INPUTS INPUT
+    # TODO: pinned flake input (see MEMORY.md) — use the nixpkgs package once
+    # upstream ships the fix, then drop the input from flake.nix.
     package = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default;
     enableMcpIntegration = true;
     tui = {
