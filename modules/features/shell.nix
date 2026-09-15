@@ -49,6 +49,26 @@
   programs.fzf = {
     enable = true;
     enableFishIntegration = true;
+    colors = {
+      bg = "#2d353b";
+      "bg+" = "#343f44";
+      border = "#7a8478";
+      fg = "#d3c6aa";
+      "fg+" = "#d3c6aa";
+      header = "#83c092";
+      hl = "#a7c080";
+      "hl+" = "#a7c080";
+      info = "#dbbc7f";
+      marker = "#e67e80";
+      pointer = "#d699b6";
+      prompt = "#e67e80";
+      spinner = "#a7c080";
+    };
+    defaultOptions = [
+      "--height=40%"
+      "--layout=reverse"
+      "--border"
+    ];
   };
 
   programs.zoxide = {
