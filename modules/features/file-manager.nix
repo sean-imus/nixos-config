@@ -68,10 +68,16 @@
     };
 
     extraPackages = with pkgs; [
-      file
+      _7zz
+      chafa
       fd
-      ripgrep
+      ffmpeg
+      file
+      imagemagick
       jq
+      poppler-utils
+      resvg
+      ripgrep
     ];
   };
 }
