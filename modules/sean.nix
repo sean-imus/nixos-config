@@ -29,8 +29,10 @@
       ./features/launcher.nix
       ./features/mime.nix
       ./features/niri/utilities.nix
+      ./features/notifications.nix
       ./features/office.nix
       ./features/opencode.nix
+      ./features/rebuild.nix
       ./features/secrets/sops.nix
       ./features/shell.nix
       ./features/ssh.nix

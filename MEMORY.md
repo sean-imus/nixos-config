@@ -4,7 +4,6 @@ Parked ideas and decisions from the config deep dive (2026-09-15). Only the item
 
 ## Dismissed for now
 
-- **Notification daemon (mako/swaync)**: dismissed. No use case currently.
 - **Idle timeouts (auto lock/blank/suspend via swayidle)**: dismissed on purpose. Only the 5% hibernate safeguard and lid-close locking are wanted.
 - **Avahi/mDNS for printer/scanner discovery**: dismissed. Printing worked without it; Avahi only adds automatic discovery, not functionality.
 - **nixvim `inputs.nixpkgs.follows = "nixpkgs"`**: do not add. Upstream nixvim explicitly recommends against it; update nixvim and nixpkgs together instead.
@@ -53,3 +52,4 @@ Parked ideas and decisions from the config deep dive (2026-09-15). Only the item
 - Desktop entries: shadows are now `NoDisplay=true` copies of the real entries instead of `Hidden=true`, so MIME launching works (nvim, mpv, foot, cups, LibreOffice extras).
 - Shell: eza (icons + git, aliases ls/ll/la/lla/lt), carapace completions, fzf styled with the everforest palette and height/reverse/border defaults.
 - Wallpaper: `assets/everforest.png` (1080p) shown by swaybg via one niri `spawn-at-startup` entry (`modules/features/wallpaper.nix`). The niri overview backdrop stays the layout background color.
+- Notifications: mako with everforest styling (`modules/features/notifications.nix`), running as a systemd user service plus D-Bus activation. `Mod+U` runs `nh os switch` in the background (notification on start; activation elevates via pkexec -> soteria prompt; notification replaced with success/failure). Log: `~/.cache/nh-os-switch.log`.
