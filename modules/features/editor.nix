@@ -8,7 +8,10 @@
       p = "python3";
     };
     sessionVariables.EDITOR = "nvim";
-    packages = with pkgs; [ python3 ];
+    packages = with pkgs; [
+      nixfmt
+      python3
+    ];
   };
 
   programs.nixvim = {
@@ -218,10 +221,6 @@
             bash = "bash %",
             sh = "bash %",
             fish = "fish %",
-            lua = "lua %",
-            ruby = "ruby %",
-            javascript = "node %",
-            typescript = "deno run -A %",
           }
           local cmd = runners[vim.bo.filetype]
           if not cmd then
