@@ -9,6 +9,7 @@ Parked ideas and decisions from the config deep dive (2026-09-15). Only the item
 - **nixvim `inputs.nixpkgs.follows = "nixpkgs"`**: do not add. Upstream nixvim explicitly recommends against it; update nixvim and nixpkgs together instead.
 - **Fingerprint reader (ELAN 04f3:0c4b)**: not viable. Not supported by open-source libfprint; requires Lenovo's proprietary TOD blob.
 - **Separate image for the niri overview backdrop**: dismissed. niri has no native wallpaper support, so a backdrop image needs a second layer-shell client with its own namespace (`awww-daemon --namespace backdrop` + `awww img` + a `layer-rule`); too much machinery for one wallpaper.
+- **Animated launcher (anyrun)**: tried and reverted. Fuzzel has no animation support (niri cannot animate layer surfaces), and anyrun's fullscreen transparent surface made it feel like it covered the whole screen. Revisit only with a launcher that animates just its own box.
 
 ## Awaiting decision / discussion
 
@@ -53,5 +54,5 @@ Parked ideas and decisions from the config deep dive (2026-09-15). Only the item
 - Shell: eza (icons + git, aliases ls/ll/la/lla/lt), carapace completions, fzf styled with the everforest palette and height/reverse/border defaults.
 - Wallpaper: `assets/everforest.png` (1080p) shown by swaybg via one niri `spawn-at-startup` entry (`modules/features/wallpaper.nix`). The niri overview backdrop stays the layout background color.
 - Notifications: swaync with everforest CSS variables and 250ms transitions (`modules/features/notifications.nix`), replacing mako because mako cannot animate. `Mod+U` builds with `nh os build` in the background, then applies the result with a single run0 elevation (one soteria prompt), replacing the notification with success/failure. Log: `~/.cache/nh-os-switch.log`.
-- Launcher: anyrun on `Mod+Space` (everforest CSS, fade in, applications/nix_run/shell/symbols/websearch plugins); fuzzel is kept only for the cliphist dmenu bind. Layer rules give anyrun and swaync blur behind them.
+- Launcher: fuzzel (everforest) on `Mod+Space`. Anyrun was tried for its fade animation but reverted: its surface is a fullscreen transparent layer window, so with niri blur behind it the whole screen appeared covered. Layer-rule blur now applies only to swaync (notification window + control center).
 - Niri eyecandy: animations enabled (springy workspace-switch/overview, longer window open/close), global window blur with 0.95 opacity, 8px rounded corners (`clip-to-geometry`), and layout shadows on.
