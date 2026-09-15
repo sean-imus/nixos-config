@@ -35,6 +35,7 @@
       ./features/shell.nix
       ./features/ssh.nix
       ./features/terminal.nix
+      ./features/wallpaper.nix
     ];
 
     home = {

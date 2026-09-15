@@ -9,6 +9,7 @@ Parked ideas and decisions from the config deep dive (2026-09-15). Only the item
 - **Avahi/mDNS for printer/scanner discovery**: dismissed. Printing worked without it; Avahi only adds automatic discovery, not functionality.
 - **nixvim `inputs.nixpkgs.follows = "nixpkgs"`**: do not add. Upstream nixvim explicitly recommends against it; update nixvim and nixpkgs together instead.
 - **Fingerprint reader (ELAN 04f3:0c4b)**: not viable. Not supported by open-source libfprint; requires Lenovo's proprietary TOD blob.
+- **Separate image for the niri overview backdrop**: dismissed. niri has no native wallpaper support, so a backdrop image needs a second layer-shell client with its own namespace (`awww-daemon --namespace backdrop` + `awww img` + a `layer-rule`); too much machinery for one wallpaper.
 
 ## Awaiting decision / discussion
 
@@ -51,3 +52,4 @@ Parked ideas and decisions from the config deep dive (2026-09-15). Only the item
 - Nix dev QoL: `keep-derivations`/`keep-outputs`; `nix fmt` via nixfmt-tree (flake `formatter` output); `nh` added with `NH_FLAKE=/home/sean/nixos-config`; `rbs`/`rbb` aliases removed in favour of `nh os switch`/`nh os boot` (`rbu` kept, nh cannot update/commit flake.lock); nix-index-database with `comma` (prebuilt full DB; fish command-not-found integration disabled because it was slow, use `, tool` instead).
 - Desktop entries: shadows are now `NoDisplay=true` copies of the real entries instead of `Hidden=true`, so MIME launching works (nvim, mpv, foot, cups, LibreOffice extras).
 - Shell: eza (icons + git, aliases ls/ll/la/lla/lt), carapace completions, fzf styled with the everforest palette and height/reverse/border defaults.
+- Wallpaper: `assets/13977451.png` (1080p) shown by swaybg via one niri `spawn-at-startup` entry (`modules/features/wallpaper.nix`). The niri overview backdrop stays the layout background color.
