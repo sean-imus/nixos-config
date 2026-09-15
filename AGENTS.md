@@ -5,7 +5,7 @@ These should be ran inside the nixos-config directory unless noted otherwise.
 
 # Rebuilding AKA applying the changes to the config
 `nh os switch` - Rebuilds and switches instantly
-`nh os boot` - Rebuilds and applies on next boot (reboot yourself)
+`nh os boot` - Rebuilds and applies on next boot
 `rbu` - Updates flake inputs, commits flake.lock AKA updating
 
 # Testing
