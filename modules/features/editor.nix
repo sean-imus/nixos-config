@@ -124,6 +124,9 @@
 
       indent-blankline.enable = true;
       flash.enable = true;
+      fidget.enable = true;
+      grug-far.enable = true;
+      mini-surround.enable = true;
 
       conform-nvim = {
         enable = true;
@@ -217,6 +220,11 @@
         key = "<leader>r";
         action = "<cmd>RunFile<CR>";
         options.desc = "Run current file (per filetype)";
+      }
+      {
+        key = "<leader>sr";
+        action = "<cmd>GrugFar<CR>";
+        options.desc = "Search and replace (project)";
       }
       {
         key = "<leader>tt";
