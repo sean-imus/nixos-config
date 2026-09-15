@@ -29,9 +29,9 @@ Currently still unhandled or questionable:
 
 ## Backlog from the deep dive
 
-- **Shell**: zoxide, atuin, carapace, direnv + nix-direnv, nix-index (+ nix-index-database for `,`), nh (`FLAKE = "~/nixos-config"`), eza, delta with git integration, `programs.bat`, fzf everforest colors, television.
+- **Shell**: atuin, carapace, direnv + nix-direnv, nix-index (+ nix-index-database for `,`), nh (`FLAKE = "~/nixos-config"`), eza, delta with git integration, `programs.bat`, fzf everforest colors, television.
 - **Nvim (remaining)**: luasnip + blink-cmp snippet preset, optionally snacks.nvim; extra LSPs only if new file types appear (taplo/yamlls/jsonls/bashls/fish_lsp).
-- **Yazi**: poppler (PDF), ffmpeg + ffmpegthumbnailer (video), 7zip or ouch (archives), resvg (SVG), imagemagick, chafa (foot has no graphics protocol), fzf + zoxide for its jump features; yazi plugin system.
+- **Yazi (remaining)**: plugin system (chmod, full-border, smart-enter).
 - **Desktop apps**: password manager (keepassxc/bitwarden) since Firefox password manager is disabled; localsend; nvtop; gdu/duf; zellij; kdeconnect; vicinae (launcher) and noctalia-shell (Quickshell shell for niri) as experiments; stylix to consolidate everforest theming (niri itself is not a stylix target).
 - **Security**: Lanzaboote Secure Boot (works with systemd-boot; firmware Secure Boot currently disabled, test carefully); TPM2 auto-unlock is blocked by firmware (bootctl reports "TPM2 Support: no" -> enable Intel PTT in BIOS first, then `boot.initrd.systemd.tpm2.enable` + `systemd-cryptenroll`); restic backups (none configured yet).
 - **ESP32**: platformio and/or arduino-language-server for nvim `.ino` support.
@@ -51,3 +51,4 @@ Currently still unhandled or questionable:
 - nvim RunFile runners trimmed to installed interpreters; `nixfmt` installed.
 - OpenCode MCP config unified via `programs.mcp.servers`.
 - Neovim: treesitter grammars (json/yaml/toml/lua/vim/vimdoc/markdown/markdown_inline), editor opts (undofile/expandtab/smartcase/scrolloff), fidget, grug-far with `<leader>sr`, mini-surround, render-markdown, ruff LSP.
+- Yazi: preview deps (poppler-utils, ffmpeg, 7zz, resvg, imagemagick, chafa); zoxide added to fish (also enables yazi's `z` jump).
