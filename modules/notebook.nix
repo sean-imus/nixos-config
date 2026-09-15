@@ -42,6 +42,7 @@
   hardware.bluetooth.enable = true;
 
   security.rtkit.enable = true;
+  security.soteria.enable = true;
   services.pipewire = {
     enable = true;
     pulse.enable = true;
