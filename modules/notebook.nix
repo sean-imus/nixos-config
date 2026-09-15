@@ -57,6 +57,7 @@
   ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.resumeDevice = "/dev/mapper/cryptswap";
+  boot.tmp.cleanOnBoot = true;
 
   services.upower = {
     enable = true;
