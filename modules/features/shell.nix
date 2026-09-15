@@ -61,6 +61,12 @@
     flake = "/home/sean/nixos-config";
   };
 
+  programs.eza = {
+    enable = true;
+    git = true;
+    icons = "auto";
+  };
+
   home.packages = with pkgs; [
     bat
     ncdu
