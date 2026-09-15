@@ -55,6 +55,7 @@
     "usbhid"
   ];
   boot.kernelModules = [ "kvm-intel" ];
+  boot.resumeDevice = "/dev/mapper/cryptswap";
 
   services.upower = {
     enable = true;
