@@ -56,6 +56,11 @@
     options = [ "--cmd=cd" ];
   };
 
+  programs.nh = {
+    enable = true;
+    flake = "/home/sean/nixos-config";
+  };
+
   home.packages = with pkgs; [
     bat
     ncdu
