@@ -8,7 +8,7 @@
   programs.opencode = {
     enable = true;
     #TODO REMOVE WORKAROUND BELOW AND INPUTS INPUT
-    package = inputs.opencode.packages.${pkgs.system}.default;
+    package = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default;
     enableMcpIntegration = true;
     tui = {
       theme = "system";
