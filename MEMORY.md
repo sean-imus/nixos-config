@@ -13,22 +13,19 @@ Parked ideas and decisions from the config deep dive (2026-09-15). Only the item
 ## Awaiting decision / discussion
 
 - **`services.locate` (plocate)**: builds a filename database so `locate foo` is instant instead of walking the filesystem with `find`. Runs a low-priority `updatedb` timer. Default is off in NixOS; needs a yes/no.
-- **Extra MIME defaults**: see "MIME gaps" below.
 - **Waybar workspace module**: optional `niri/workspaces` addition (visual change, not applied).
 - **zram tuning**: applied `vm.swappiness = 180` and `vm.page-cluster = 0`. Revisit if disk swap ever gets hammered.
 
-## MIME gaps (proposal, not applied)
+## MIME notes
 
-Currently still unhandled or questionable:
-- `application/zip`, `application/x-tar` and other archives: no handler (would need e.g. file-roller/ark).
-- `text/markdown`, `application/json`: no handler.
-- Presentations (odp/pptx): `impress.desktop` is hidden in `office.nix`, so the association is broken.
-- `application/vnd.oasis.opendocument.spreadsheet` etc.: calc.desktop works (not hidden).
-- `text/csv` already maps to calc.desktop; audio already maps to mpv.desktop.
+- Archives (`zip`/`tar`/`7z`/`rar`/...): deliberately unhandled; extract via yazi/7zz.
+- Presentations: fixed by shadowing `impress.desktop` with a `NoDisplay=true` copy (associations work, launcher stays clean).
+- `text/markdown` and `text/x-markdown` -> Writer; `application/json` -> Firefox (built-in JSON viewer).
+- All desktop-entry shadows now use `NoDisplay=true` copies of the real entries instead of `Hidden=true`; the old `Hidden` shadows had also broken video/audio launching via the shadowed `mpv.desktop`.
 
 ## Backlog from the deep dive
 
-- **Shell**: atuin, carapace, direnv + nix-direnv, eza, delta with git integration, `programs.bat`, fzf everforest colors, television.
+- **Shell**: atuin, direnv + nix-direnv, delta with git integration, `programs.bat`, television.
 - **Nvim (remaining)**: luasnip + blink-cmp snippet preset, optionally snacks.nvim; extra LSPs only if new file types appear (taplo/yamlls/jsonls/bashls/fish_lsp).
 - **Yazi (remaining)**: plugin system (chmod, full-border, smart-enter).
 - **Desktop apps**: password manager (keepassxc/bitwarden) since Firefox password manager is disabled; localsend; nvtop; gdu/duf; zellij; kdeconnect; vicinae (launcher) and noctalia-shell (Quickshell shell for niri) as experiments; stylix to consolidate everforest theming (niri itself is not a stylix target).
@@ -52,3 +49,5 @@ Currently still unhandled or questionable:
 - Neovim: treesitter grammars (json/yaml/toml/lua/vim/vimdoc/markdown/markdown_inline), editor opts (undofile/expandtab/smartcase/scrolloff), fidget, grug-far with `<leader>sr`, mini-surround, render-markdown, ruff LSP.
 - Yazi: preview deps (poppler-utils, ffmpeg, 7zz, resvg, imagemagick, chafa); zoxide added to fish with `cd` replaced (`--cmd=cd`), which also enables yazi's `z` jump.
 - Nix dev QoL: `keep-derivations`/`keep-outputs`; `nix fmt` via nixfmt-tree (flake `formatter` output); `nh` added with `NH_FLAKE=/home/sean/nixos-config`; `rbs`/`rbb` aliases removed in favour of `nh os switch`/`nh os boot` (`rbu` kept, nh cannot update/commit flake.lock); nix-index-database with `comma` (prebuilt full DB; fish command-not-found integration disabled because it was slow, use `, tool` instead).
+- Desktop entries: shadows are now `NoDisplay=true` copies of the real entries instead of `Hidden=true`, so MIME launching works (nvim, mpv, foot, cups, LibreOffice extras).
+- Shell: eza (icons + git, aliases ls/ll/la/lla/lt), carapace completions, fzf styled with the everforest palette and height/reverse/border defaults.
