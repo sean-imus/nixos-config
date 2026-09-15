@@ -51,6 +51,8 @@
     enableFishIntegration = true;
   };
 
+  programs.zoxide.enable = true;
+
   home.packages = with pkgs; [
     bat
     ncdu
