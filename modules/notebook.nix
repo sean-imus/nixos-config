@@ -161,7 +161,11 @@
     "vm.swappiness" = 180;
   };
 
-  fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
+  fonts.packages = [
+    pkgs.nerd-fonts.jetbrains-mono
+    pkgs.nerd-fonts.symbols-only
+    pkgs.noto-fonts-color-emoji
+  ];
 
   environment.systemPackages = with pkgs; [
     lm_sensors
