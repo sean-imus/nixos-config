@@ -89,9 +89,14 @@
 
   programs.carapace.enable = true;
 
+  programs.tealdeer = {
+    enable = true;
+    enableAutoUpdates = false;
+    settings.updates.auto_update = true;
+  };
+
   home.packages = with pkgs; [
     bat
     ncdu
-    tldr
   ];
 }
