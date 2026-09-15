@@ -16,6 +16,7 @@
 
   home-manager.users.sean = {
     imports = [
+      inputs.nix-index-database.homeModules.default
       inputs.sops-nix.homeManagerModules.sops
       ./features/bar.nix
       ./features/browser.nix
@@ -41,6 +42,8 @@
       homeDirectory = "/home/sean";
       stateVersion = "26.11";
     };
+
+    programs.nix-index-database.comma.enable = true;
 
     gtk = {
       enable = true;
