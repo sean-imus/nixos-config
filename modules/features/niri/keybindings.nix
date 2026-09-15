@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   wayland.windowManager.niri.settings.recent-windows.binds = {
     "Mod+Tab" = {
       "next-window" = { };

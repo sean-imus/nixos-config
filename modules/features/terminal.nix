@@ -1,10 +1,13 @@
-{ ... }:
+_:
+let
+  theme = import ../lib/theme.nix;
+in
 {
   programs.foot = {
     enable = true;
     settings = {
       main = {
-        font = "JetBrainsMono Nerd Font:size=10";
+        font = "${theme.fontFamily}:size=10";
         term = "xterm-256color";
       };
       scrollback = {
@@ -14,24 +17,24 @@
         style = "block";
       };
       colors-dark = {
-        foreground = "d3c6aa";
-        background = "2d353b";
-        regular0 = "4f585e";
-        regular1 = "e67e80";
-        regular2 = "a7c080";
-        regular3 = "dbbc7f";
-        regular4 = "7fbbb3";
-        regular5 = "d699b6";
-        regular6 = "83c092";
-        regular7 = "d3c6aa";
-        bright0 = "4f585e";
-        bright1 = "e67e80";
-        bright2 = "a7c080";
-        bright3 = "dbbc7f";
-        bright4 = "7fbbb3";
-        bright5 = "d699b6";
-        bright6 = "83c092";
-        bright7 = "d3c6aa";
+        foreground = "${theme.fg}";
+        background = "${theme.bg0}";
+        regular0 = "${theme.bg4}";
+        regular1 = "${theme.red}";
+        regular2 = "${theme.green}";
+        regular3 = "${theme.yellow}";
+        regular4 = "${theme.blue}";
+        regular5 = "${theme.purple}";
+        regular6 = "${theme.aqua}";
+        regular7 = "${theme.fg}";
+        bright0 = "${theme.bg4}";
+        bright1 = "${theme.red}";
+        bright2 = "${theme.green}";
+        bright3 = "${theme.yellow}";
+        bright4 = "${theme.blue}";
+        bright5 = "${theme.purple}";
+        bright6 = "${theme.aqua}";
+        bright7 = "${theme.fg}";
       };
     };
   };

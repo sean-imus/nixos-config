@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let
+  theme = import ../lib/theme.nix;
+in
 {
   services.swaync = {
     enable = true;
@@ -32,26 +35,26 @@
 
     style = ''
       :root {
-        --cc-bg: rgba(45, 53, 59, 0.85);
-        --noti-border-color: #a7c080;
-        --noti-bg: 45, 53, 59;
+        --cc-bg: rgba(${theme.rgb.bg0}, 0.85);
+        --noti-border-color: ${theme.hex theme.green};
+        --noti-bg: ${theme.rgb.bg0};
         --noti-bg-alpha: 0.9;
-        --noti-bg-darker: rgb(52, 63, 68);
-        --noti-bg-hover: rgb(52, 63, 68);
-        --noti-bg-focus: rgba(52, 63, 68, 0.7);
-        --noti-close-bg: rgb(52, 63, 68);
-        --noti-close-bg-hover: rgb(230, 126, 128);
-        --text-color: #d3c6aa;
-        --text-color-disabled: #859289;
-        --bg-selected: #a7c080;
-        --border: 2px solid #a7c080;
+        --noti-bg-darker: rgb(${theme.rgb.bg1});
+        --noti-bg-hover: rgb(${theme.rgb.bg1});
+        --noti-bg-focus: rgba(${theme.rgb.bg1}, 0.7);
+        --noti-close-bg: rgb(${theme.rgb.bg1});
+        --noti-close-bg-hover: rgb(${theme.rgb.red});
+        --text-color: ${theme.hex theme.fg};
+        --text-color-disabled: ${theme.hex theme.grey1};
+        --bg-selected: ${theme.hex theme.green};
+        --border: 2px solid ${theme.hex theme.green};
         --border-radius: 8px;
         --font-size-body: 11px;
         --font-size-summary: 11px;
       }
 
       * {
-        font-family: "JetBrainsMono Nerd Font";
+        font-family: "${theme.fontFamily}";
       }
     '';
   };

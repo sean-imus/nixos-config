@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 {
   programs.niri = {
     enable = true;
@@ -18,6 +18,7 @@
   home-manager.sharedModules = [
     ./keybindings.nix
     ./outputs.nix
+    ./utilities.nix
     {
       wayland.windowManager.niri = {
         enable = true;

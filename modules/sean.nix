@@ -1,4 +1,7 @@
 { inputs, pkgs, ... }:
+let
+  theme = import ./lib/theme.nix;
+in
 {
   users.users.sean = {
     isNormalUser = true;
@@ -28,7 +31,6 @@
       ./features/git.nix
       ./features/launcher.nix
       ./features/mime.nix
-      ./features/niri/utilities.nix
       ./features/notifications.nix
       ./features/office.nix
       ./features/omp.nix
@@ -62,7 +64,7 @@
         package = pkgs.papirus-icon-theme;
       };
       font = {
-        name = "JetBrainsMono Nerd Font";
+        name = theme.fontFamily;
         size = 10;
       };
     };
@@ -74,11 +76,5 @@
       size = 24;
       gtk.enable = true;
     };
-
-    sops.secrets."ssh_key" = {
-      path = "/home/sean/.sops/ssh_key";
-      mode = "0600";
-    };
-
   };
 }

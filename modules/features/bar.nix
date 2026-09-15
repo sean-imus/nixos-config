@@ -1,4 +1,7 @@
-{ ... }:
+_:
+let
+  theme = import ../lib/theme.nix;
+in
 {
   programs.waybar = {
     enable = true;
@@ -57,7 +60,7 @@
     ];
     style = ''
       * {
-        font-family: "JetBrainsMono Nerd Font";
+        font-family: "${theme.fontFamily}";
         font-size: 11px;
         padding: 0;
         margin: 0;
@@ -65,7 +68,7 @@
 
       window#waybar {
         background: transparent;
-        color: #d3c6aa;
+        color: ${theme.hex theme.fg};
       }
 
       #clock,
@@ -77,28 +80,28 @@
       }
 
       #battery.charging {
-        color: #a7c080;
+        color: ${theme.hex theme.green};
       }
 
       #battery.critical:not(.charging) {
-        color: #e67e80;
+        color: ${theme.hex theme.red};
       }
 
       #pulseaudio.sink.muted,
       #pulseaudio.mic.source-muted {
-        color: #7a8478;
+        color: ${theme.hex theme.grey0};
       }
 
       #power-profiles-daemon.performance {
-        color: #e67e80;
+        color: ${theme.hex theme.red};
       }
 
       #power-profiles-daemon.balanced {
-        color: #dbbc7f;
+        color: ${theme.hex theme.yellow};
       }
 
       #power-profiles-daemon.power-saver {
-        color: #a7c080;
+        color: ${theme.hex theme.green};
       }
     '';
   };

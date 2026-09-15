@@ -1,11 +1,14 @@
-{ ... }:
+_:
+let
+  theme = import ../lib/theme.nix;
+in
 {
   xdg.configFile."soteria/style.css".text = ''
-    @define-color ef_bg #2d353b;
-    @define-color ef_bg_alt #343f44;
-    @define-color ef_fg #d3c6aa;
-    @define-color ef_grey #7a8478;
-    @define-color ef_green #a7c080;
+    @define-color ef_bg ${theme.hex theme.bg0};
+    @define-color ef_bg_alt ${theme.hex theme.bg1};
+    @define-color ef_fg ${theme.hex theme.fg};
+    @define-color ef_grey ${theme.hex theme.grey0};
+    @define-color ef_green ${theme.hex theme.green};
 
     window,
     window.background {
@@ -49,13 +52,13 @@
 
     button:hover,
     dropdown button:hover {
-      background-color: #3d484d;
+      background-color: ${theme.hex theme.bg2};
       border-color: @ef_green;
     }
 
     button:active,
     button:checked {
-      background-color: #475258;
+      background-color: ${theme.hex theme.bg3};
     }
 
     popover {

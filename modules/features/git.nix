@@ -1,44 +1,38 @@
-{ config, ... }:
+_:
+let
+  theme = import ../lib/theme.nix;
+in
 {
-  programs.git = {
-    enable = true;
-    settings.user = {
-      name = "sean tietz";
-      email = "sean.tietz2@gmail.com";
+  programs = {
+    git = {
+      enable = true;
+      settings.user = {
+        name = "sean tietz";
+        email = "sean.tietz2@gmail.com";
+      };
+    };
+
+    lazygit = {
+      enable = true;
+      settings.gui.theme = {
+        activeBorderColor = [
+          (theme.hex theme.green)
+          "bold"
+        ];
+        inactiveBorderColor = [ (theme.hex theme.grey0) ];
+        optionsTextColor = [ (theme.hex theme.grey2) ];
+        selectedLineBgColor = [ (theme.hex theme.bg1) ];
+        unstagedChangesColor = [ (theme.hex theme.red) ];
+        defaultFgColor = [ (theme.hex theme.fg) ];
+        searchingActiveBorderColor = [
+          (theme.hex theme.yellow)
+          "bold"
+        ];
+      };
     };
   };
 
-  programs.lazygit = {
-    enable = true;
-    settings.gui.theme = {
-      activeBorderColor = [
-        "#a7c080"
-        "bold"
-      ];
-      inactiveBorderColor = [ "#7a8478" ];
-      optionsTextColor = [ "#9da9a0" ];
-      selectedLineBgColor = [ "#343f44" ];
-      unstagedChangesColor = [ "#e67e80" ];
-      defaultFgColor = [ "#d3c6aa" ];
-      searchingActiveBorderColor = [
-        "#dbbc7f"
-        "bold"
-      ];
-    };
-  };
   home.shellAliases = {
     lg = "lazygit";
-  };
-
-  programs.ssh = {
-    settings."github.com" = {
-      User = "git";
-      IdentityFile = config.sops.secrets.ssh_key.path;
-    };
-  };
-
-  home.file.".ssh/known_hosts" = {
-    text = "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl\n";
-    force = true;
   };
 }

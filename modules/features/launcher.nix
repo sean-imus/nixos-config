@@ -1,6 +1,6 @@
-{ ... }:
+_:
 let
-  withAlpha = hex: hex + "ff";
+  theme = import ../lib/theme.nix;
 in
 {
   programs.fuzzel = {
@@ -13,15 +13,15 @@ in
         icons-enabled = false;
       };
       colors = {
-        background = withAlpha "2d353b";
-        text = withAlpha "d3c6aa";
-        prompt = withAlpha "7a8478";
-        input = withAlpha "d3c6aa";
-        match = withAlpha "a7c080";
-        selection = "a7c08044";
-        selection-text = withAlpha "d3c6aa";
-        selection-match = withAlpha "a7c080";
-        border = withAlpha "a7c080";
+        background = theme.rgba theme.bg0 "ff";
+        text = theme.rgba theme.fg "ff";
+        prompt = theme.rgba theme.grey0 "ff";
+        input = theme.rgba theme.fg "ff";
+        match = theme.rgba theme.green "ff";
+        selection = theme.rgba theme.green "44";
+        selection-text = theme.rgba theme.fg "ff";
+        selection-match = theme.rgba theme.green "ff";
+        border = theme.rgba theme.green "ff";
       };
       border = {
         width = 2;

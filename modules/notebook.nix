@@ -15,102 +15,132 @@
     ./sean.nix
   ];
 
-  networking.hostName = "notebook";
+  networking = {
+    hostName = "notebook";
+    networkmanager.enable = true;
+    firewall.enable = true;
+  };
 
-  services.power-profiles-daemon.enable = true;
-  services.thermald.enable = true;
+  services = {
+    power-profiles-daemon.enable = true;
+    thermald.enable = true;
 
-  services.logind.settings.Login = {
-    HandleLidSwitch = "lock";
-    HandleLidSwitchExternalPower = "lock";
-    HandleLidSwitchDocked = "ignore";
+    logind.settings.Login = {
+      HandleLidSwitch = "lock";
+      HandleLidSwitchExternalPower = "lock";
+      HandleLidSwitchDocked = "ignore";
+    };
+
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      alsa.enable = true;
+    };
+
+    upower = {
+      enable = true;
+      usePercentageForPolicy = true;
+      percentageLow = 20;
+      percentageCritical = 10;
+      percentageAction = 5;
+      criticalPowerAction = "Hibernate";
+    };
+
+    fwupd.enable = true;
+
+    getty = {
+      autologinUser = "sean";
+      autologinOnce = true;
+    };
+
+    xserver.xkb = {
+      layout = "de";
+      options = "caps:escape";
+    };
   };
 
   hardware = {
     enableRedistributableFirmware = true;
     cpu.intel.updateMicrocode = true;
+
+    graphics = {
+      enable = true;
+      extraPackages = [ pkgs.intel-media-driver ];
+    };
+
+    bluetooth.enable = true;
   };
 
   programs.solaar.enable = true;
 
-  hardware.graphics = {
-    enable = true;
-    extraPackages = [ pkgs.intel-media-driver ];
-  };
-  environment.variables.LIBVA_DRIVER_NAME = "iHD";
-
-  hardware.bluetooth.enable = true;
-
-  security.rtkit.enable = true;
-  security.soteria.enable = true;
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-    alsa.enable = true;
-  };
-
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "thunderbolt"
-    "xhci_pci"
-    "usbhid"
-  ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.resumeDevice = "/dev/mapper/cryptswap";
-  boot.tmp.cleanOnBoot = true;
-
-  services.upower = {
-    enable = true;
-    usePercentageForPolicy = true;
-    percentageLow = 20;
-    percentageCritical = 10;
-    percentageAction = 5;
-    criticalPowerAction = "Hibernate";
-  };
-
-  services.fwupd.enable = true;
-
-  services.getty = {
-    autologinUser = "sean";
-    autologinOnce = true;
-  };
-
-  environment.shellAliases = {
-    rbu = "nix flake update && git add flake.lock && git commit -m 'chore(inputs): updated hashes'";
-  };
-
-  boot.loader = {
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 5;
-      editor = false;
+  environment = {
+    variables = {
+      LIBVA_DRIVER_NAME = "iHD";
+      XKB_DEFAULT_LAYOUT = "de";
+      XKB_DEFAULT_OPTIONS = "caps:escape";
+      XKB_DEFAULT_VARIANT = "";
     };
-    efi.canTouchEfiVariables = true;
-    timeout = 0;
+
+    systemPackages = with pkgs; [
+      lm_sensors
+      pciutils
+      usbutils
+      ntfs3g
+      e2fsprogs
+    ];
+  };
+
+  security = {
+    rtkit.enable = true;
+    soteria.enable = true;
+  };
+
+  boot = {
+    initrd.availableKernelModules = [
+      "nvme"
+      "thunderbolt"
+      "xhci_pci"
+      "usbhid"
+    ];
+
+    kernelModules = [ "kvm-intel" ];
+    resumeDevice = "/dev/mapper/cryptswap";
+    tmp.cleanOnBoot = true;
+
+    loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 5;
+        editor = false;
+      };
+      efi.canTouchEfiVariables = true;
+      timeout = 0;
+    };
+
+    kernel.sysctl = {
+      "vm.page-cluster" = 0;
+      "vm.swappiness" = 180;
+    };
   };
 
   time.timeZone = "Europe/Berlin";
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "de_DE.UTF-8";
-    LC_IDENTIFICATION = "de_DE.UTF-8";
-    LC_MEASUREMENT = "de_DE.UTF-8";
-    LC_MONETARY = "de_DE.UTF-8";
-    LC_NAME = "de_DE.UTF-8";
-    LC_NUMERIC = "de_DE.UTF-8";
-    LC_PAPER = "de_DE.UTF-8";
-    LC_TELEPHONE = "de_DE.UTF-8";
-    LC_TIME = "de_DE.UTF-8";
+
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "de_DE.UTF-8";
+      LC_IDENTIFICATION = "de_DE.UTF-8";
+      LC_MEASUREMENT = "de_DE.UTF-8";
+      LC_MONETARY = "de_DE.UTF-8";
+      LC_NAME = "de_DE.UTF-8";
+      LC_NUMERIC = "de_DE.UTF-8";
+      LC_PAPER = "de_DE.UTF-8";
+      LC_TELEPHONE = "de_DE.UTF-8";
+      LC_TIME = "de_DE.UTF-8";
+    };
   };
 
   console.keyMap = "de-latin1";
-  environment.variables = {
-    XKB_DEFAULT_LAYOUT = "de";
-    XKB_DEFAULT_OPTIONS = "caps:escape";
-    XKB_DEFAULT_VARIANT = "";
-  };
-  services.xserver.xkb.layout = "de";
-  services.xserver.xkb.options = "caps:escape";
 
   documentation = {
     doc.enable = false;
@@ -123,11 +153,6 @@
     useUserPackages = true;
     backupFileExtension = "bak";
     extraSpecialArgs = { inherit inputs; };
-  };
-
-  networking = {
-    networkmanager.enable = true;
-    firewall.enable = true;
   };
 
   nix = {
@@ -156,23 +181,10 @@
 
   zramSwap.enable = true;
 
-  boot.kernel.sysctl = {
-    "vm.page-cluster" = 0;
-    "vm.swappiness" = 180;
-  };
-
   fonts.packages = [
     pkgs.nerd-fonts.jetbrains-mono
     pkgs.nerd-fonts.symbols-only
     pkgs.noto-fonts-color-emoji
-  ];
-
-  environment.systemPackages = with pkgs; [
-    lm_sensors
-    pciutils
-    usbutils
-    ntfs3g
-    e2fsprogs
   ];
 
   system.stateVersion = "26.11";

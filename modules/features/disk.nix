@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+_: {
   disko.devices = {
     disk.main = {
       type = "disk";
