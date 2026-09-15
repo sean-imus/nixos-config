@@ -40,7 +40,7 @@ Parked ideas and decisions from the config deep dive (2026-09-15). Only the item
 
 - Hibernation resume via `boot.resumeDevice = "/dev/mapper/cryptswap"`.
 - Lid close locks the screen while undocked (logind `lock` + swayidle `lock` event running swaylock); docked lid close is ignored.
-- Soteria polkit agent.
+- Soteria polkit agent, styled with everforest via `~/.config/soteria/style.css` (`modules/features/soteria.nix`; the agent loads the CSS at startup, so restart `polkit-soteria.service` after changes).
 - zram-favouring sysctls.
 - `/tmp` cleaned on boot.
 - Waybar managed by systemd; manual `pkill waybar` binds and `spawn-at-startup` removed.
