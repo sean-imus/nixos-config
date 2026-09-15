@@ -1,5 +1,3 @@
-Personal NixOS flake for the `notebook` host and the `sean` user: nixos-unstable + home-manager, with disko, sops-nix, nixvim and niri.
-
 # Installation
 
 **This wipes the entire target disk.**
@@ -33,5 +31,3 @@ sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus
 # 6. Clone the config for future rebuilds
 git clone https://github.com/sean-imus/nixos-config ~/nixos-config
 ```
-
-Repo rules, commands and commit style: [CONTRIBUTING.md](CONTRIBUTING.md).
