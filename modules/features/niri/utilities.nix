@@ -20,7 +20,26 @@ let
 in
 {
   wayland.windowManager.niri.settings = {
-    animations.off = { };
+    animations = {
+      "overview-open-close".spring._props = {
+        damping-ratio = 0.85;
+        stiffness = 700;
+        epsilon = 0.0001;
+      };
+      "window-close" = {
+        duration-ms = 200;
+        curve = "ease-out-quad";
+      };
+      "window-open" = {
+        duration-ms = 250;
+        curve = "ease-out-expo";
+      };
+      "workspace-switch".spring._props = {
+        damping-ratio = 0.9;
+        stiffness = 700;
+        epsilon = 0.0001;
+      };
+    };
 
     _children = [
       {
@@ -39,6 +58,16 @@ in
           "--watch"
           "cliphist"
           "store"
+        ];
+      }
+      {
+        window-rule._children = [
+          {
+            "clip-to-geometry" = true;
+            "geometry-corner-radius" = 8;
+            opacity = 0.95;
+            background-effect.blur = true;
+          }
         ];
       }
       {
@@ -105,7 +134,16 @@ in
         "active-color" = "#a7c080";
         "inactive-color" = "#00000000";
       };
-      shadow.off = { };
+      shadow = {
+        on = { };
+        softness = 40;
+        spread = 5;
+        offset._props = {
+          x = 0;
+          y = 5;
+        };
+        color = "#00000064";
+      };
     };
 
     hotkey-overlay."skip-at-startup" = { };
