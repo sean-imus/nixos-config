@@ -30,7 +30,7 @@ Currently still unhandled or questionable:
 ## Backlog from the deep dive
 
 - **Shell**: zoxide, atuin, carapace, direnv + nix-direnv, nix-index (+ nix-index-database for `,`), nh (`FLAKE = "~/nixos-config"`), eza, delta with git integration, `programs.bat`, fzf everforest colors, television.
-- **Nvim**: more treesitter grammars (json/yaml/toml/markdown/markdown_inline/lua/vim/fish), LSPs (fish_lsp, bashls, taplo, yamlls, jsonls, lua_ls, ruff), fidget.nvim, grug-far, mini-surround, luasnip + blink-cmp snippet preset, render-markdown, optionally snacks.nvim; opts: undofile, expandtab, smartcase, scrolloff.
+- **Nvim (remaining)**: luasnip + blink-cmp snippet preset, optionally snacks.nvim; extra LSPs only if new file types appear (taplo/yamlls/jsonls/bashls/fish_lsp).
 - **Yazi**: poppler (PDF), ffmpeg + ffmpegthumbnailer (video), 7zip or ouch (archives), resvg (SVG), imagemagick, chafa (foot has no graphics protocol), fzf + zoxide for its jump features; yazi plugin system.
 - **Desktop apps**: password manager (keepassxc/bitwarden) since Firefox password manager is disabled; localsend; nvtop; gdu/duf; zellij; kdeconnect; vicinae (launcher) and noctalia-shell (Quickshell shell for niri) as experiments; stylix to consolidate everforest theming (niri itself is not a stylix target).
 - **Security**: Lanzaboote Secure Boot (works with systemd-boot; firmware Secure Boot currently disabled, test carefully); TPM2 auto-unlock is blocked by firmware (bootctl reports "TPM2 Support: no" -> enable Intel PTT in BIOS first, then `boot.initrd.systemd.tpm2.enable` + `systemd-cryptenroll`); restic backups (none configured yet).
@@ -50,3 +50,4 @@ Currently still unhandled or questionable:
 - MIME defaults: pdf/images -> Firefox, text/plain -> LibreOffice Writer; `feh` removed.
 - nvim RunFile runners trimmed to installed interpreters; `nixfmt` installed.
 - OpenCode MCP config unified via `programs.mcp.servers`.
+- Neovim: treesitter grammars (json/yaml/toml/lua/vim/vimdoc/markdown/markdown_inline), editor opts (undofile/expandtab/smartcase/scrolloff), fidget, grug-far with `<leader>sr`, mini-surround, render-markdown, ruff LSP.
