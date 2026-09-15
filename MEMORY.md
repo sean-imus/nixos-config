@@ -42,7 +42,7 @@ Currently still unhandled or questionable:
 ## Applied (done)
 
 - Hibernation resume via `boot.resumeDevice = "/dev/mapper/cryptswap"`.
-- Lid close locks the screen (logind `lock` + swayidle `lock` event running swaylock).
+- Lid close locks the screen while undocked (logind `lock` + swayidle `lock` event running swaylock); docked lid close is ignored.
 - Soteria polkit agent.
 - zram-favouring sysctls.
 - `/tmp` cleaned on boot.
