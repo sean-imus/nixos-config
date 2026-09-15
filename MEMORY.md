@@ -13,7 +13,6 @@ Parked ideas and decisions from the config deep dive (2026-09-15). Only the item
 ## Awaiting decision / discussion
 
 - **`services.locate` (plocate)**: builds a filename database so `locate foo` is instant instead of walking the filesystem with `find`. Runs a low-priority `updatedb` timer. Default is off in NixOS; needs a yes/no.
-- **Nix development QoL**: `nix.settings.keep-derivations`/`keep-outputs` (keeps build outputs and derivations from GC so dev shells and `nix develop` don't rebuild; costs disk space), flake `formatter` output with nixfmt-tree (`nix fmt` instead of the `nix run nixpkgs#nixfmt -- **/*.nix` ritual), treefmt/git-hooks for auto-format on commit.
 - **Extra MIME defaults**: see "MIME gaps" below.
 - **Waybar workspace module**: optional `niri/workspaces` addition (visual change, not applied).
 - **zram tuning**: applied `vm.swappiness = 180` and `vm.page-cluster = 0`. Revisit if disk swap ever gets hammered.
@@ -29,7 +28,7 @@ Currently still unhandled or questionable:
 
 ## Backlog from the deep dive
 
-- **Shell**: atuin, carapace, direnv + nix-direnv, nix-index (+ nix-index-database for `,`), nh (`FLAKE = "~/nixos-config"`), eza, delta with git integration, `programs.bat`, fzf everforest colors, television.
+- **Shell**: atuin, carapace, direnv + nix-direnv, eza, delta with git integration, `programs.bat`, fzf everforest colors, television.
 - **Nvim (remaining)**: luasnip + blink-cmp snippet preset, optionally snacks.nvim; extra LSPs only if new file types appear (taplo/yamlls/jsonls/bashls/fish_lsp).
 - **Yazi (remaining)**: plugin system (chmod, full-border, smart-enter).
 - **Desktop apps**: password manager (keepassxc/bitwarden) since Firefox password manager is disabled; localsend; nvtop; gdu/duf; zellij; kdeconnect; vicinae (launcher) and noctalia-shell (Quickshell shell for niri) as experiments; stylix to consolidate everforest theming (niri itself is not a stylix target).
@@ -52,3 +51,4 @@ Currently still unhandled or questionable:
 - OpenCode MCP config unified via `programs.mcp.servers`.
 - Neovim: treesitter grammars (json/yaml/toml/lua/vim/vimdoc/markdown/markdown_inline), editor opts (undofile/expandtab/smartcase/scrolloff), fidget, grug-far with `<leader>sr`, mini-surround, render-markdown, ruff LSP.
 - Yazi: preview deps (poppler-utils, ffmpeg, 7zz, resvg, imagemagick, chafa); zoxide added to fish with `cd` replaced (`--cmd=cd`), which also enables yazi's `z` jump.
+- Nix dev QoL: `keep-derivations`/`keep-outputs`; `nix fmt` via nixfmt-tree (flake `formatter` output); `nh` added with `NH_FLAKE=/home/sean/nixos-config`; `rbs`/`rbb` aliases removed in favour of `nh os switch`/`nh os boot` (`rbu` kept, nh cannot update/commit flake.lock); nix-index-database with `comma` (prebuilt full DB, fish command-not-found integration).
