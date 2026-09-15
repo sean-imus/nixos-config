@@ -301,22 +301,6 @@
       spawn = "firefox";
     };
 
-    "Mod+Shift+Space" = {
-      spawn = [
-        "sh"
-        "-c"
-        "pkill waybar || true && waybar"
-      ];
-    };
-
-    "Mod+Ctrl+Space" = {
-      spawn = [
-        "sh"
-        "-c"
-        "pkill waybar"
-      ];
-    };
-
     "Super+Alt+L" = {
       spawn = "swaylock";
     };

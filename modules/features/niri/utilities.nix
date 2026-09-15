@@ -15,9 +15,6 @@ in
 
     _children = [
       {
-        "spawn-at-startup"._args = [ "waybar" ];
-      }
-      {
         "spawn-at-startup"._args = [
           "wl-paste"
           "--watch"
