@@ -80,10 +80,12 @@
   };
 
   boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 5;
+      editor = false;
+    };
     efi.canTouchEfiVariables = true;
-    systemd-boot.configurationLimit = 5;
-    systemd-boot.editor = false;
-    systemd-boot.enable = true;
     timeout = 0;
   };
 
