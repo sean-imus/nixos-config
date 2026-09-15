@@ -98,6 +98,7 @@
             };
           };
           pyright.enable = true;
+          ruff.enable = true;
         };
       };
 
@@ -127,6 +128,7 @@
       fidget.enable = true;
       grug-far.enable = true;
       mini-surround.enable = true;
+      render-markdown.enable = true;
 
       conform-nvim = {
         enable = true;
