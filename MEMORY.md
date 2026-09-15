@@ -51,4 +51,4 @@ Currently still unhandled or questionable:
 - nvim RunFile runners trimmed to installed interpreters; `nixfmt` installed.
 - OpenCode MCP config unified via `programs.mcp.servers`.
 - Neovim: treesitter grammars (json/yaml/toml/lua/vim/vimdoc/markdown/markdown_inline), editor opts (undofile/expandtab/smartcase/scrolloff), fidget, grug-far with `<leader>sr`, mini-surround, render-markdown, ruff LSP.
-- Yazi: preview deps (poppler-utils, ffmpeg, 7zz, resvg, imagemagick, chafa); zoxide added to fish (also enables yazi's `z` jump).
+- Yazi: preview deps (poppler-utils, ffmpeg, 7zz, resvg, imagemagick, chafa); zoxide added to fish with `cd` replaced (`--cmd=cd`), which also enables yazi's `z` jump.
