@@ -6,6 +6,7 @@
 }:
 {
   imports = [
+    ./features/android.nix
     ./features/disk.nix
     ./features/esp32.nix
     ./features/lockscreen.nix
@@ -167,7 +168,6 @@
     usbutils
     ntfs3g
     e2fsprogs
-    android-tools
   ];
 
   system.stateVersion = "26.11";
