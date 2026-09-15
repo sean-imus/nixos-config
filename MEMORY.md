@@ -1,5 +1,7 @@
 # MEMORY
 
+Decision log for parked ideas, open questions and the backlog. Nothing here is active work unless an entry says so.
+
 Parked ideas and decisions from the config deep dive (2026-09-15). Only the items marked "done" were applied.
 
 ## Dismissed for now

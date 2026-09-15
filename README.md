@@ -1,23 +1,4 @@
-These should be ran inside the nixos-config directory unless noted otherwise.
-
-# Formatting
-`nix fmt`
-
-# Rebuilding AKA applying the changes to the config
-`nh os switch` - Rebuilds and switches instantly
-`nh os boot` - Rebuilds and applies on next boot
-`rbu` - Updates flake inputs, commits flake.lock AKA updating
-
-# Testing
-`nix flake check` - Quick test
-`nix build .#nixosConfigurations.notebook.config.system.build.toplevel --dry-run 2>&1` - Deep test
-
-# Commit style
-Use "https://www.conventionalcommits.org":
-`feat(scope): description`, `fix(scope): description`, `docs`, `chore`, `cleanup`
-
-# Updating secrets
-`sops modules/features/secrets/secrets.yaml`
+Personal NixOS flake for the `notebook` host and the `sean` user: nixos-unstable + home-manager, with disko, sops-nix, nixvim and niri.
 
 # Installation
 
@@ -52,3 +33,5 @@ sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus
 # 6. Clone the config for future rebuilds
 git clone https://github.com/sean-imus/nixos-config ~/nixos-config
 ```
+
+Repo rules, commands and commit style: [CONTRIBUTING.md](CONTRIBUTING.md).
