@@ -64,7 +64,7 @@
       }
 
       window#waybar {
-        background: #2d353b;
+        background: transparent;
         color: #d3c6aa;
       }
 
