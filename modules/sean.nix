@@ -26,6 +26,7 @@
       ./features/gaming.nix
       ./features/git.nix
       ./features/launcher.nix
+      ./features/mime.nix
       ./features/niri/utilities.nix
       ./features/office.nix
       ./features/opencode.nix

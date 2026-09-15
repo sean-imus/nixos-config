@@ -13,7 +13,6 @@
     xwayland-satellite
     wiremix
     bluetui
-    feh
   ];
 
   home-manager.sharedModules = [
