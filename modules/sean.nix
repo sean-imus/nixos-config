@@ -31,6 +31,7 @@
       ./features/niri/utilities.nix
       ./features/notifications.nix
       ./features/office.nix
+      ./features/omp.nix
       ./features/opencode.nix
       ./features/rebuild.nix
       ./features/secrets/sops.nix
