@@ -17,6 +17,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    #TODO REMOVE WORKAROUND
+    opencode.url = "github:anomalyco/opencode/e03db9bc6908f75c9334d8aa997deeaac81c0298";
+
     nixvim.url = "github:nix-community/nixvim";
 
     yazi-everforest = {

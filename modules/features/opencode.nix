@@ -1,7 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   programs.opencode = {
     enable = true;
+    #TODO REMOVE WORKAROUND BELOW AND INPUTS INPUT
+    package = inputs.opencode.packages.${pkgs.system}.default;
     tui = {
       theme = "system";
     };
