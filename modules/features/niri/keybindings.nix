@@ -290,7 +290,7 @@
     };
 
     "Mod+Space" = {
-      spawn = "anyrun";
+      spawn = "fuzzel";
     };
 
     "Mod+T" = {

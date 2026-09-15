@@ -73,7 +73,7 @@ in
       {
         layer-rule._children = [
           {
-            match._props.namespace = "^(anyrun|swaync-notification-window|swaync-control-center)$";
+            match._props.namespace = "^(swaync-notification-window|swaync-control-center)$";
             "geometry-corner-radius" = 8;
             background-effect.blur = true;
           }

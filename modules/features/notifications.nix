@@ -46,6 +46,12 @@
         --bg-selected: #a7c080;
         --border: 2px solid #a7c080;
         --border-radius: 8px;
+        --font-size-body: 11px;
+        --font-size-summary: 11px;
+      }
+
+      * {
+        font-family: "JetBrainsMono Nerd Font";
       }
     '';
   };
