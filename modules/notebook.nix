@@ -153,6 +153,11 @@
 
   zramSwap.enable = true;
 
+  boot.kernel.sysctl = {
+    "vm.page-cluster" = 0;
+    "vm.swappiness" = 180;
+  };
+
   fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
 
   environment.systemPackages = with pkgs; [
