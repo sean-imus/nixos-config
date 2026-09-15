@@ -67,6 +67,8 @@
     icons = "auto";
   };
 
+  programs.carapace.enable = true;
+
   home.packages = with pkgs; [
     bat
     ncdu
