@@ -1,11 +1,20 @@
-{ ... }:
+{ config, pkgs, ... }:
 let
-  hideDesktopEntries =
-    names:
+  noDisplayDesktopEntries =
+    packages: names:
     builtins.listToAttrs (
       map (name: {
         name = "applications/${name}.desktop";
-        value.text = "[Desktop Entry]\nHidden=true\n";
+        value.source = pkgs.runCommand "${name}-nodisplay.desktop" { } ''
+          for dir in ${builtins.concatStringsSep " " (map (p: "${p}/share/applications") packages)}; do
+            if [ -f "$dir/${name}.desktop" ]; then
+              sed '/^\[Desktop Entry\]$/a NoDisplay=true' "$dir/${name}.desktop" > $out
+              exit 0
+            fi
+          done
+          echo "desktop file ${name}.desktop not found" >&2
+          exit 1
+        '';
       }) names
     );
 in
@@ -118,13 +127,22 @@ in
     };
   };
 
-  xdg.dataFile = hideDesktopEntries [
-    "cups"
-    "btop"
-    "nvim"
-    "mpv"
-    "foot"
-    "footclient"
-    "foot-server"
-  ];
+  xdg.dataFile =
+    noDisplayDesktopEntries
+      [
+        config.programs.nixvim.build.packageUnchecked
+        pkgs.btop
+        pkgs.cups
+        pkgs.foot
+        pkgs.mpv
+      ]
+      [
+        "cups"
+        "btop"
+        "nvim"
+        "mpv"
+        "foot"
+        "footclient"
+        "foot-server"
+      ];
 }
