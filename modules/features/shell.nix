@@ -3,6 +3,10 @@
   programs.fish = {
     enable = true;
     functions.fish_greeting = "";
+    shellAbbrs."-" = {
+      position = "command";
+      expansion = "tldr";
+    };
     interactiveShellInit = ''
       if test -z "$DISPLAY"; and test -z "$WAYLAND_DISPLAY"; and test (tty) = "/dev/tty1"
         exec niri-session
