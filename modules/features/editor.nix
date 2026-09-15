@@ -63,6 +63,14 @@
           nix
           bash
           python
+          json
+          yaml
+          toml
+          lua
+          vim
+          vimdoc
+          markdown
+          markdown_inline
         ];
       };
       lualine.enable = true;
