@@ -15,7 +15,7 @@ let
 
     id=$(notify --print-id --expire-time=0 "Rebuilding system" "nh os switch is running in the background" 2>/dev/null || true)
 
-    if ${pkgs.nh}/bin/nh os switch --elevation-strategy /run/current-system/sw/bin/pkexec >"$log" 2>&1; then
+    if ${pkgs.nh}/bin/nh os switch --elevation-strategy /run/current-system/sw/bin/run0 >"$log" 2>&1; then
       notify ''${id:+--replace-id=$id} "Rebuild finished" "The system configuration was applied."
     else
       notify --urgency=critical ''${id:+--replace-id=$id} "Rebuild failed" "See $log"
