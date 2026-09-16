@@ -30,17 +30,5 @@
         "focus-at-startup" = { };
       };
     }
-    {
-      output = {
-        _args = [ "GIGA-BYTE TECHNOLOGY CO., LTD. M27U 23463B001145" ];
-        mode._args = [ "3840x2160@60.000000" ];
-        scale = 1.75;
-        position._props = {
-          x = 0;
-          y = -1234;
-        };
-        "focus-at-startup" = { };
-      };
-    }
   ];
 }
