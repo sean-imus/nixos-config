@@ -30,7 +30,6 @@ The only known exceptions to the rules above. Keep this list current.
 - `printing.nix`, `rdp-work.nix` and `lockscreen.nix` attach their user-level parts the same way.
 - `ssh.nix` declares and consumes its own `sops.secrets."ssh_key"`; `secrets/sops.nix` keeps the sops defaults and the age key path.
 - fish is split on purpose: `programs.fish.enable` and `users.users.sean.shell` live in `modules/sean.nix` (system side), the rest of `programs.fish` in `modules/features/shell.nix`.
-- `niri/outputs.nix`'s dock autoswitch stops `rdp-work.nix`'s `sdl-freerdp` client when the dock is removed (the RDP link runs over the dock).
 
 ## Style
 

@@ -12,7 +12,6 @@ Parked ideas and decisions from the config deep dive (2026-09-15). Only the item
 - **Fingerprint reader (ELAN 04f3:0c4b)**: not viable. Not supported by open-source libfprint; requires Lenovo's proprietary TOD blob.
 - **Separate image for the niri overview backdrop**: dismissed. niri has no native wallpaper support, so a backdrop image needs a second layer-shell client with its own namespace (`awww-daemon --namespace backdrop` + `awww img` + a `layer-rule`); too much machinery for one wallpaper.
 - **Animated launcher (anyrun)**: tried and reverted. Fuzzel has no animation support (niri cannot animate layer surfaces), and anyrun's fullscreen transparent surface made it feel like it covered the whole screen. Revisit only with a launcher that animates just its own box.
-- **Patching FreeRDP's SDL display-removal bug**: dismissed. `removeDisplayWindow` matches on the window's current display instead of the display it was created for, so unplugging a monitor leaves ghost RDP windows (upstream still has it as a TODO). The dock autoswitch stops the RDP session when the dock goes away instead of carrying a local patch.
 
 ## Awaiting decision / discussion
 

@@ -24,22 +24,9 @@
 
       xdg.desktopEntries.rdp-to-work = {
         name = "Connect to Work Laptop";
-        exec = "sdl-freerdp /v:192.168.200.1 /u:stietz /p: /d:ENTEX /multimon /dynamic-resolution /kbd:layout:0x0407,lang:0x0407 /wm-class:rdp-work";
+        exec = "xfreerdp /v:192.168.200.1 /u:stietz /p: /d:ENTEX /f /dynamic-resolution /kbd:layout:0x0407,lang:0x0407";
         terminal = false;
       };
-
-      wayland.windowManager.niri.settings._children = [
-        {
-          window-rule._children = [
-            {
-              match._props = {
-                app-id = "^rdp-work$";
-              };
-              "open-floating" = true;
-            }
-          ];
-        }
-      ];
     }
   ];
 }
