@@ -34,7 +34,7 @@ in
       ./features/git.nix
       ./features/launcher.nix
       ./features/mime.nix
-      ./features/notifications.nix
+      ./features/notifications
       ./features/office.nix
       ./features/omp.nix
       ./features/opencode.nix

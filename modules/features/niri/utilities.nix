@@ -55,15 +55,6 @@ in
         ];
       }
       {
-        layer-rule._children = [
-          {
-            match._props.namespace = "^(swaync-notification-window|swaync-control-center)$";
-            "geometry-corner-radius" = 8;
-            background-effect.blur = true;
-          }
-        ];
-      }
-      {
         window-rule._children = [
           {
             match._props = {
