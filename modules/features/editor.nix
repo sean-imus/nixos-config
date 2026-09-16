@@ -17,6 +17,7 @@
   programs.nixvim = {
     enable = true;
     enableMan = false;
+    enablePrintInit = false;
     waylandSupport = true;
     globals.mapleader = " ";
 

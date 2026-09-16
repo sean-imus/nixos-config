@@ -3,9 +3,12 @@ let
   theme = import ../lib/theme.nix;
 in
 {
+  manual.manpages.enable = false;
+
   programs = {
     fish = {
       enable = true;
+      generateCompletions = false;
       functions.fish_greeting = "";
       shellAbbrs."-" = {
         position = "command";

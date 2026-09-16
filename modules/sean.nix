@@ -14,7 +14,10 @@ in
     ];
   };
 
-  programs.fish.enable = true;
+  programs.fish = {
+    enable = true;
+    generateCompletions = false;
+  };
   users.users.sean.shell = pkgs.fish;
 
   home-manager.users.sean = {
