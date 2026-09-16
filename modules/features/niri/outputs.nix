@@ -1,12 +1,22 @@
 { pkgs, ... }:
 let
-  edpAutoswitch = pkgs.writeShellApplication {
-    name = "niri-edp-autoswitch";
+  dockAutoswitch = pkgs.writeShellApplication {
+    name = "niri-dock-autoswitch";
     runtimeInputs = [
       pkgs.jq
       pkgs.niri
+      pkgs.procps
     ];
     text = ''
+      stop_rdp() {
+        pkill -TERM -x sdl-freerdp || true
+        for _ in {1..10}; do
+          pgrep -x sdl-freerdp >/dev/null 2>&1 || break
+          sleep 0.1
+        done
+        pkill -KILL -x sdl-freerdp || true
+      }
+
       apply() {
         local outputs
         outputs=$(niri msg --json outputs 2>/dev/null) || return 0
@@ -21,9 +31,12 @@ let
           edp_on=false
         fi
 
-        if ((iiyamas > 0)) && [[ $edp_on == true ]]; then
-          niri msg output eDP-1 off || true
-        elif ((iiyamas == 0)) && [[ $edp_on == false ]]; then
+        if ((iiyamas > 0)); then
+          if [[ $edp_on == true ]]; then
+            niri msg output eDP-1 off || true
+          fi
+        elif [[ $edp_on == false ]]; then
+          stop_rdp
           niri msg output eDP-1 on || true
         fi
       }
@@ -69,15 +82,15 @@ in
     }
   ];
 
-  systemd.user.services.niri-edp-autoswitch = {
+  systemd.user.services.niri-dock-autoswitch = {
     Unit = {
-      Description = "Keep the internal panel off while the docked iiyama monitors are connected";
+      Description = "Keep the internal panel off while docked and stop RDP when the dock is removed";
       After = [ "graphical-session.target" ];
       PartOf = [ "graphical-session.target" ];
       ConditionEnvironment = "WAYLAND_DISPLAY";
     };
     Service = {
-      ExecStart = "${edpAutoswitch}/bin/niri-edp-autoswitch";
+      ExecStart = "${dockAutoswitch}/bin/niri-dock-autoswitch";
       Restart = "on-failure";
     };
     Install.WantedBy = [ "graphical-session.target" ];
