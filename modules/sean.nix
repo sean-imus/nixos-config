@@ -38,6 +38,7 @@ in
       ./features/office.nix
       ./features/omp.nix
       ./features/opencode.nix
+      ./features/quickshell
       ./features/rebuild.nix
       ./features/secrets/sops.nix
       ./features/shell.nix
