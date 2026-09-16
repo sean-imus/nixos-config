@@ -4,6 +4,10 @@ Decision log for parked ideas, open questions and the backlog. Nothing here is a
 
 Parked ideas and decisions from the config deep dive (2026-09-15). Only the items marked "done" were applied.
 
+## Applied
+
+- **opencode agent orchestration (2026-09-16)**: global working agreements (`programs.opencode.context`), an `orchestrator` primary agent set as `default_agent`, read-only `reviewer`/`scout` subagents plus a reworked `explore`, and `/orchestrate` + `/review` commands. Prompt assets live in `modules/features/opencode/`. Background subagents are on via `OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS=true` (experimental in the pinned commit; drop the env var if it regresses, everything else still works). Model routing: explore/scout -> `opencode-go/deepseek-v4-flash`, reviewer -> `opencode-go/deepseek-v4-pro`, orchestrator inherits the global model; `small_model` -> `deepseek-v4-flash`. Revisit the model IDs if the provider changes.
+
 ## Dismissed for now
 
 - **Idle timeouts (auto lock/blank/suspend via swayidle)**: dismissed on purpose. Only the 5% hibernate safeguard and lid-close locking are wanted.
