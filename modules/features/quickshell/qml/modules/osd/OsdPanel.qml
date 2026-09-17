@@ -39,8 +39,12 @@ PanelWindow {
 
         anchors.centerIn: parent
 
-        readonly property bool shown: Osd.visible && Osd.label !== ""
+        color: Theme.bg0
+        radius: 10
+        border.width: 1
+        border.color: Theme.bg3
 
+        readonly property bool shown: Osd.visible && Osd.label !== ""
         opacity: shown ? 1 : 0
 
         Behavior on opacity {
