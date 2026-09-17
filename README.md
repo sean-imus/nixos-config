@@ -31,3 +31,12 @@ sudo nixos-install --no-channel-copy --no-root-password --flake github:sean-imus
 # 6. Clone the config for future rebuilds
 git clone https://github.com/sean-imus/nixos-config ~/nixos-config
 ```
+
+# License
+
+GPL-3.0-or-later — see [LICENSE](LICENSE). Anyone may use, modify and redistribute
+this config and derived versions, provided derivative works carry the same license
+and make their source available.
+
+Not covered by this grant: `modules/features/secrets/` (sops-encrypted secrets and
+age recipients) and `assets/` (wallpaper artwork).

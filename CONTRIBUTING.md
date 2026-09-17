@@ -64,3 +64,7 @@ Run in the repo root.
 - `sops modules/features/secrets/secrets.yaml` — edit the encrypted secrets.
 - Age key: `/home/sean/.sops/age.key`.
 - Recipients: `modules/features/secrets/sops.yaml`.
+
+## License
+
+GPL-3.0-or-later (see `LICENSE`). Contributions are accepted under the same license.
