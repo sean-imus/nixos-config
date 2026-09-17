@@ -141,6 +141,7 @@ PanelWindow {
 
                 anchors.centerIn: parent
 
+                visible: Audio.sourceReady
                 text: Audio.sourceMuted ? "MIC muted" : "MIC " + Math.round(Audio.sourceVolume * 100) + "%"
                 color: Audio.sourceMuted ? Theme.grey0 : Theme.fg
                 font.family: Theme.fontFamily
@@ -171,7 +172,7 @@ PanelWindow {
                 id: volText
 
                 anchors.centerIn: parent
-
+                visible: Audio.sinkReady
                 text: Audio.sinkMuted ? "VOL muted" : "VOL " + Math.round(Audio.sinkVolume * 100) + "%"
                 color: Audio.sinkMuted ? Theme.grey0 : Theme.fg
                 font.family: Theme.fontFamily
@@ -182,16 +183,20 @@ PanelWindow {
         Text {
             id: batText
 
+            readonly property real pct: {
+                const dev = UPower.displayDevice;
+                return dev ? Math.max(0, Math.min(100, Math.round(dev.percentage * 100))) : 0;
+            }
 
             visible: UPower.displayDevice !== null
-            text: visible ? "BAT " + Math.round(UPower.displayDevice.percentage) + "%" : ""
+            text: visible ? "BAT " + pct + "%" : ""
             color: {
                 const dev = UPower.displayDevice;
                 if (!dev)
                     return Theme.fg;
                 if (dev.state === UPowerDeviceState.Charging || dev.state === UPowerDeviceState.FullyCharged)
                     return Theme.green;
-                if (dev.state === UPowerDeviceState.Discharging && dev.percentage <= 15)
+                if (dev.state === UPowerDeviceState.Discharging && pct <= 15)
                     return Theme.red;
                 return Theme.fg;
             }
