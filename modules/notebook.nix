@@ -92,7 +92,6 @@
 
   security = {
     rtkit.enable = true;
-    soteria.enable = true;
   };
 
   boot = {

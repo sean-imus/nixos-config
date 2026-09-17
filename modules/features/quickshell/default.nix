@@ -27,10 +27,77 @@ let
   '';
 in
 {
-  # Personal Quickshell shell, built from scratch. Step 1: a clock bar.
-  # New surfaces (panels, OSD, lock) grow here; see MEMORY.md for the plan.
+  # Personal Quickshell shell: one process owning the bar, notifications,
+  # polkit agent and OSD. New surfaces grow here; see MEMORY.md for the plan.
   programs.quickshell = {
     enable = true;
+    systemd.enable = false;
     configs.qs-shell = qml;
+  };
+
+  home.packages = [ pkgs.libnotify ];
+
+  wayland.windowManager.niri.settings = {
+    _children = [
+      {
+        "spawn-at-startup"._args = [
+          "quickshell"
+          "-c"
+          "qs-shell"
+          "-n"
+        ];
+      }
+      {
+        layer-rule._children = [
+          {
+            match._props.namespace = "^qs-shell-notifs$";
+            "geometry-corner-radius" = 16;
+            background-effect.blur = true;
+          }
+        ];
+      }
+      {
+        layer-rule._children = [
+          {
+            match._props.namespace = "^qs-shell-polkit$";
+            "geometry-corner-radius" = 12;
+            background-effect.blur = true;
+          }
+        ];
+      }
+    ];
+
+    binds = {
+      "Mod+Shift+D".spawn = [
+        "quickshell"
+        "-c"
+        "qs-shell"
+        "ipc"
+        "call"
+        "notifs"
+        "toggleDnd"
+      ];
+      "Mod+Shift+N".spawn = [
+        "quickshell"
+        "-c"
+        "qs-shell"
+        "ipc"
+        "call"
+        "notifs"
+        "clear"
+      ];
+      "Mod+P" = {
+        _props.repeat = false;
+        spawn = [
+          "quickshell"
+          "-c"
+          "qs-shell"
+          "ipc"
+          "call"
+          "powerprofiles"
+          "cycle"
+        ];
+      };
+    };
   };
 }

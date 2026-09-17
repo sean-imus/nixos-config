@@ -22,8 +22,6 @@ let
     exec 9>/tmp/rebuild-system.lock
     ${pkgs.util-linux}/bin/flock -n 9 || exit 0
 
-    ${pkgs.systemd}/bin/systemctl --user start polkit-soteria.service 2>/dev/null || true
-
     id=$(notify --print-id --expire-time=0 "Rebuilding system" "Building the new configuration in the background" 2>/dev/null || true)
 
     if ! ${pkgs.nh}/bin/nh os build --out-link "$result" >"$log" 2>&1; then

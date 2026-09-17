@@ -24,7 +24,6 @@ in
     imports = [
       inputs.nix-index-database.homeModules.default
       inputs.sops-nix.homeManagerModules.sops
-      ./features/bar.nix
       ./features/browser.nix
       ./features/btop.nix
       ./features/editor.nix
@@ -34,7 +33,6 @@ in
       ./features/git.nix
       ./features/launcher.nix
       ./features/mime.nix
-      ./features/notifications
       ./features/office.nix
       ./features/omp.nix
       ./features/opencode.nix
@@ -42,7 +40,6 @@ in
       ./features/rebuild.nix
       ./features/secrets/sops.nix
       ./features/shell.nix
-      ./features/soteria.nix
       ./features/ssh.nix
       ./features/terminal.nix
       ./features/wallpaper.nix
