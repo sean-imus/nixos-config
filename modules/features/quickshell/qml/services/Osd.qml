@@ -70,7 +70,7 @@ Singleton {
                 return;
             const pct = Math.round(Audio.sinkVolume * 100);
             if (Audio.sinkMuted) {
-                root.show("volume", "\uf6a9", "VOL muted", -1, null);
+                root.show("volume", "\uf026", "VOL muted", -1, null);
             } else {
                 root.show("volume", "\uf028", `VOL ${pct}%`, Audio.sinkVolume, null);
             }
@@ -80,7 +80,7 @@ Singleton {
             if (!root.armed)
                 return;
             if (Audio.sinkMuted) {
-                root.show("volume", "\uf6a9", "VOL muted", -1, null);
+                root.show("volume", "\uf026", "VOL muted", -1, null);
             } else {
                 const pct = Math.round(Audio.sinkVolume * 100);
                 root.show("volume", "\uf028", `VOL ${pct}%`, Audio.sinkVolume, null);
