@@ -87,6 +87,17 @@ Singleton {
             }
         }
 
+        function onSourceVolumeChanged(): void {
+            if (!root.armed)
+                return;
+            if (Audio.sourceMuted) {
+                root.show("mic", "\uf131", "MIC muted", -1, null);
+            } else {
+                const pct = Math.round(Audio.sourceVolume * 100);
+                root.show("mic", "\uf130", `MIC ${pct}%`, Audio.sourceVolume, null);
+            }
+        }
+
         function onSourceMutedChanged(): void {
             if (!root.armed)
                 return;
