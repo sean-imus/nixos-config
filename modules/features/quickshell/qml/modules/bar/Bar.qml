@@ -136,6 +136,16 @@ PanelWindow {
 
             onClicked: Audio.toggleSourceMuted()
 
+            WheelHandler {
+                onWheel: wheel => {
+                    if (wheel.angleDelta.y > 0)
+                        Audio.changeSourceVolume(0.05);
+                    else if (wheel.angleDelta.y < 0)
+                        Audio.changeSourceVolume(-0.05);
+                    wheel.accepted = true;
+                }
+            }
+
             Text {
                 id: micText
 
