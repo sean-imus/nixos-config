@@ -12,7 +12,7 @@
       services.swayidle = {
         enable = true;
         systemdTargets = [ "graphical-session.target" ];
-        events.lock = "${pkgs.swaylock}/bin/swaylock -f";
+        events.lock = "quickshell -c qs-shell ipc call lock lock";
       };
     }
   ];

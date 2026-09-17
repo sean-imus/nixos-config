@@ -272,8 +272,17 @@ _: {
     "Mod+C" = {
       "screenshot" = { };
     };
-    "Mod+Ctrl+C" = {
-      "screenshot-screen" = { };
+    "Super+Alt+L" = {
+      _props.repeat = false;
+      spawn = [
+        "quickshell"
+        "-c"
+        "qs-shell"
+        "ipc"
+        "call"
+        "lock"
+        "lock"
+      ];
     };
     "Mod+Shift+C" = {
       "screenshot-window" = { };
@@ -298,10 +307,6 @@ _: {
 
     "Mod+B" = {
       spawn = "firefox";
-    };
-
-    "Super+Alt+L" = {
-      spawn = "swaylock";
     };
 
     "Mod+Ctrl+B" = {

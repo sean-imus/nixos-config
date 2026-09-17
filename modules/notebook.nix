@@ -92,6 +92,7 @@
 
   security = {
     rtkit.enable = true;
+    pam.services."quickshell-lock" = { };
   };
 
   boot = {
