@@ -37,7 +37,6 @@ in
       ./features/mcp.nix
       ./features/mime.nix
       ./features/office.nix
-      ./features/omp.nix
       ./features/opencode.nix
       ./features/quickshell
       ./features/rebuild.nix
