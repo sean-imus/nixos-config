@@ -1,11 +1,9 @@
-{ inputs, lib, pkgs, ... }:
+{ inputs, pkgs, ... }:
 let
   theme = import ./lib/theme.nix;
 in
 {
-  # claude-code is unfree; useGlobalPkgs means home-manager's own
-  # nixpkgs.config is ignored, so this has to live at the NixOS level.
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "claude-code" ];
+  imports = [ ./features/claude-code.nix ];
 
   users.users.sean = {
     isNormalUser = true;
@@ -30,7 +28,6 @@ in
       inputs.sops-nix.homeManagerModules.sops
       ./features/browser.nix
       ./features/btop.nix
-      ./features/claude-code.nix
       ./features/editor.nix
       ./features/fastfetch.nix
       ./features/file-manager.nix
