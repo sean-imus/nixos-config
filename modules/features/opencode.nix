@@ -1,10 +1,5 @@
 { pkgs, inputs, ... }:
 {
-  programs.mcp = {
-    enable = true;
-    servers.nixos.command = "${pkgs.mcp-nixos}/bin/mcp-nixos";
-  };
-
   programs.opencode = {
     enable = true;
     # TODO: pinned flake input (see MEMORY.md) — use the nixpkgs package once
@@ -33,8 +28,8 @@
     };
   };
 
-  # Experimental in the pinned package: lets `task` run subagents in the
-  # background with automatic result delivery. Remove if it regresses.
+  # Experimental: lets `task` run subagents in the background with automatic
+  # result delivery. Remove if it regresses.
   home.sessionVariables.OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS = "true";
 
   home.shellAliases = {
