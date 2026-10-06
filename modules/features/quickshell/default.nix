@@ -75,15 +75,6 @@ in
           "-n"
         ];
       }
-      {
-        layer-rule._children = [
-          {
-            match._props.namespace = "^qs-shell-notifs$";
-            "geometry-corner-radius" = 16;
-            background-effect.blur = true;
-          }
-        ];
-      }
     ];
 
     binds = {

@@ -13,7 +13,7 @@ PanelWindow {
     screen: Niri.focusedScreen
     color: "transparent"
     implicitWidth: 400
-    implicitHeight: column.height + 16
+    implicitHeight: column.height
     exclusiveZone: -1
     exclusionMode: ExclusionMode.Ignore
 
@@ -36,7 +36,11 @@ PanelWindow {
         spacing: 8
 
         Repeater {
-            model: Notifs.popups
+            // ScriptModel keeps each card's delegate across list changes, so a new
+            // notification does not replay the other cards' animations.
+            model: ScriptModel {
+                values: Notifs.popups
+            }
 
             NotifCard {
                 required property var modelData
@@ -65,12 +69,45 @@ PanelWindow {
 
         // 0 -> 1 on appear: slides in from the right while fading up.
         property real enter: 0
+        // 0 -> 1 when leaving: slides out to the right and fades, then the slot
+        // collapses (collapse 0 -> 1) so the cards below glide up.
+        property real leave: 0
+        property real collapse: 0
+
+        readonly property real fullHeight: body.y + body.height + (bar.visible ? 22 : 16)
 
         width: 400
-        height: body.y + body.height + (bar.visible ? 22 : 16)
-        opacity: Math.min(1, enter * 1.6)
+        height: fullHeight * (1 - collapse)
+        opacity: Math.min(1, enter * 1.6) * (1 - leave)
         transform: Translate {
-            x: (1 - card.enter) * 70
+            x: (1 - card.enter) * 70 + card.leave * 90
+        }
+
+        // Timed out or dismissed: Notifs flags the entry and removes it a moment
+        // later, after this has played.
+        readonly property bool leaving: popup.leaving
+        onLeavingChanged: {
+            if (leaving)
+                leaveAnim.start();
+        }
+
+        SequentialAnimation {
+            id: leaveAnim
+
+            NumberAnimation {
+                target: card
+                property: "leave"
+                to: 1
+                duration: 320
+                easing.type: Easing.InCubic
+            }
+            NumberAnimation {
+                target: card
+                property: "collapse"
+                to: 1
+                duration: 200
+                easing.type: Easing.OutCubic
+            }
         }
 
         NumberAnimation on enter {
@@ -86,8 +123,7 @@ PanelWindow {
 
             anchors.fill: parent
             radius: 16
-            // Translucent so the compositor blur shows through.
-            color: Qt.alpha(Theme.bg0, 0.86)
+            color: Theme.bg0
             border.width: 1
             border.color: card.critical ? Theme.red : Qt.alpha(Theme.fg, 0.08)
         }
@@ -97,7 +133,7 @@ PanelWindow {
             x: 0
             y: 18
             width: 3
-            height: card.height - 36
+            height: card.fullHeight - 36
             radius: 2
             color: card.accent
         }
@@ -107,6 +143,7 @@ PanelWindow {
 
             anchors.fill: parent
             hoverEnabled: true
+            enabled: !card.leaving
 
             onClicked: Notifs.dismiss(card.popup)
         }
@@ -254,7 +291,7 @@ PanelWindow {
 
             visible: card.popup.timeout > 0
             x: 16
-            y: card.height - 10
+            y: card.fullHeight - 10
             width: (card.width - 32) * remaining
             height: 2
             radius: 1

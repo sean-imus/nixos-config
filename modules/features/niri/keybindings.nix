@@ -77,20 +77,20 @@ _: {
     };
     "XF86MonBrightnessUp" = {
       _props.allow-when-locked = true;
+      # Poke the shell first so it polls fast and the OSD follows the change at once.
       spawn = [
-        "brightnessctl"
-        "--class=backlight"
-        "set"
-        "+10%"
+        "sh"
+        "-c"
+        "quickshell -c qs-shell ipc call brightness poke & brightnessctl --class=backlight set +10%; wait"
       ];
     };
     "XF86MonBrightnessDown" = {
       _props.allow-when-locked = true;
+      # Poke the shell first so it polls fast and the OSD follows the change at once.
       spawn = [
-        "brightnessctl"
-        "--class=backlight"
-        "set"
-        "10%-"
+        "sh"
+        "-c"
+        "quickshell -c qs-shell ipc call brightness poke & brightnessctl --class=backlight set 10%-; wait"
       ];
     };
 

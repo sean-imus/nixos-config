@@ -36,17 +36,31 @@ Singleton {
         root.dismiss(entry);
     }
 
+    // Starts the leave animation; the entry is dropped once it has played out.
     function remove(entry): void {
-        if (entry.timer)
-            entry.timer.destroy();
-
-        const index = root.list.indexOf(entry);
-        if (index === -1)
+        if (entry.leaving)
             return;
 
-        const copy = root.list.slice();
-        copy.splice(index, 1);
-        root.list = copy;
+        entry.leaving = true;
+        if (entry.timer) {
+            entry.timer.destroy();
+            entry.timer = null;
+        }
+
+        const timer = timerComp.createObject(root, {
+            interval: 520
+        });
+        timer.triggered.connect(() => {
+            const index = root.list.indexOf(entry);
+            if (index !== -1) {
+                const copy = root.list.slice();
+                copy.splice(index, 1);
+                root.list = copy;
+            }
+            entry.destroy();
+            timer.destroy();
+        });
+        timer.restart();
     }
 
     function push(notif, visible): void {
@@ -55,9 +69,10 @@ Singleton {
         const timeout = notif.expireTimeout > 0 ? notif.expireTimeout
             : (notif.urgency === NotificationUrgency.Critical ? 0 : 6000);
 
-        const entry = {
+        // A QtObject (not a plain object) so the cards can react to `leaving`,
+        // and so the popup model keeps delegate identity across list changes.
+        const entry = entryComp.createObject(root, {
             notification: notif,
-            id: notif.id,
             appName: notif.appName,
             summary: notif.summary,
             body: notif.body,
@@ -68,7 +83,7 @@ Singleton {
                     label: action.text
                 })),
             visible: visible
-        };
+        });
 
         notif.closed.connect(() => root.remove(entry));
 
@@ -118,6 +133,24 @@ Singleton {
                 root.expireLater(notif, 500);
             else
                 root.push(notif, true);
+        }
+    }
+
+    Component {
+        id: entryComp
+
+        QtObject {
+            property var notification
+            property string appName
+            property string summary
+            property string body
+            property int urgency
+            property int timeout
+            property var actions: []
+            property bool visible: true
+            // Playing its exit animation; removed from the list shortly after.
+            property bool leaving: false
+            property var timer: null
         }
     }
 

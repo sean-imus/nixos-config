@@ -16,12 +16,30 @@ Singleton {
     property int brightness: -1
     property int max: -1
 
+    // After a brightness key press the niri binding calls `ipc call brightness poke`,
+    // which polls fast for a moment so the OSD tracks the change immediately.
+    property bool fast: false
+
+    function poke(): void {
+        fast = true;
+        fastStop.restart();
+        currentView.reload();
+    }
+
     function parseBrightness(text: string): int {
         const n = parseInt(text, 10);
         return isNaN(n) || n < 0 ? brightness : n;
     }
 
     // inotify on sysfs is unreliable: poll with a Timer instead of trusting watchChanges
+    IpcHandler {
+        target: "brightness"
+
+        function poke(): void {
+            root.poke();
+        }
+    }
+
     FileView {
         id: maxView
 
@@ -36,12 +54,22 @@ Singleton {
 
         path: "/sys/class/backlight/intel_backlight/brightness"
         watchChanges: true
+        // Tiny sysfs file: read it synchronously instead of via a worker thread.
+        blockLoading: true
 
         onLoaded: root.brightness = root.parseBrightness(text())
     }
 
     Timer {
-        interval: 500
+        id: fastStop
+
+        interval: 1200
+
+        onTriggered: root.fast = false
+    }
+
+    Timer {
+        interval: root.fast ? 25 : 500
         running: true
         repeat: true
         triggeredOnStart: true
