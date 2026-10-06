@@ -14,7 +14,7 @@ in
         lines = 10000;
       };
       cursor = {
-        style = "block";
+        style = "beam";
       };
       colors-dark = {
         foreground = "${theme.fg}";
