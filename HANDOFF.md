@@ -26,12 +26,14 @@ caelestia QML into the new shell.
   shell dies, elevation prompts wedge until it is restarted.
 - **OSD** (`modules/osd/OsdPanel.qml`, `services/Osd.qml`, `Audio.qml`, `Brightness.qml`):
   volume/mic/brightness/power profile. Brightness is a sysfs poll (no inotify on sysfs).
-- **Lock** (`services/Lock.qml`): `WlSessionLock` + PAM service `quickshell-lock`
-  (declared in `modules/notebook.nix`), IPC target `lock`. It is instantiated in
-  `shell.qml` but **not wired in**: the niri lock bind (`niri/keybindings.nix`) and the
-  swayidle `lock` event (`lockscreen.nix`) still run **swaylock** (reverted in f52c25e,
-  reason not recorded).
-- IPC: `powerprofiles cycle` (`Mod+P`), `notifs ...`, `lock ...`.
+- **Lock** (`services/Lock.qml`, `components/SecretDots.qml`): `WlSessionLock` + PAM
+  service `quickshell-lock` (declared in `modules/notebook.nix`), IPC target `lock`.
+  Wired to `Super+Alt+L` and swayidle's `lock` event (with a swaylock fallback in
+  `lockscreen.nix`). Background is a blurred per-output `grim` screenshot taken before
+  the lock engages. Dev switches: `QS_LOCK_TEST=1` (auto-unlock after 30 s),
+  `QS_LOCK_CLOCK=seconds`.
+- IPC: `powerprofiles cycle` (`Mod+P`), `notifs ...`, `lock lock`. `Mod+Shift+R`
+  restarts the whole shell.
 
 Retired: waybar, caelestia-notifs, soteria. The launcher is still **fuzzel**
 (`features/launcher.nix`, `Mod+Space`).
@@ -101,12 +103,11 @@ nh os switch
 
 ## Next steps (in rough order)
 
-1. **Lock screen decision**: either wire `Lock.qml` in (niri bind and swayidle `lock`
-   event -> `quickshell -c qs-shell ipc call lock lock`, keep swaylock installed as
-   fallback) or delete `Lock.qml` and keep swaylock. Find out why f52c25e reverted it.
-2. **Launcher**: content-sized overlay (see landmines), namespace `qs-shell-launcher`,
+1. **Launcher**: content-sized overlay (see landmines), namespace `qs-shell-launcher`,
    then retire fuzzel.
-3. **Control center** (Networking/Bluetooth/audio), optionally.
+2. **Control center** (Networking/Bluetooth/audio), optionally.
+3. Optional lock polish: multi-monitor check of the per-output screenshots, a media/
+   battery strip on the lock screen.
 
 ## Landmines
 
@@ -115,7 +116,8 @@ nh os switch
 - **Fullscreen transparent surfaces + niri blur** = the whole screen blurs (anyrun was
   reverted for this). Size surfaces to their content, or use
   `BackgroundEffect.blurRegion` (niri 26.04+).
-- **Untracked files are invisible to Nix** - `git add` first.
+- **Untracked files are invisible to Nix** - `git add` first (a new `qml/` directory
+  that is not tracked makes the installed shell fail to start).
 - Lock screens are security-critical: use a dedicated PAM service (not `login`), keep a
   fallback, and test the dead-locker path (niri keeps the session locked if the client
   dies, which is the safe direction, but verify reattach).
