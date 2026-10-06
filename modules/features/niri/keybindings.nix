@@ -273,7 +273,15 @@ _: {
       "screenshot" = { };
     };
     "Super+Alt+L" = {
-      spawn = "swaylock";
+      spawn = [
+        "quickshell"
+        "-c"
+        "qs-shell"
+        "ipc"
+        "call"
+        "lock"
+        "lock"
+      ];
     };
     "Mod+Shift+C" = {
       "screenshot-window" = { };
