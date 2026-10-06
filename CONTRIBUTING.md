@@ -67,4 +67,4 @@ Run in the repo root.
 
 ## License
 
-GPL-3.0-or-later (see `LICENSE`). Contributions are accepted under the same license.
+PolyForm Noncommercial 1.0.0 (see `LICENSE`). Contributions are accepted under the same license.
