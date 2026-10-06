@@ -9,7 +9,6 @@ Rules for this repo. Personal NixOS flake: one host (`notebook`), one user (`sea
 - `modules/sean.nix` — the `sean` user and the home-manager import list.
 - `modules/features/<name>.nix` — one feature per file.
 - `modules/features/niri/` — `default.nix` is the NixOS side; `keybindings.nix`, `outputs.nix`, `utilities.nix` are the home-manager side.
-- `modules/features/secrets/` — sops config (`sops.nix`), age recipients (`sops.yaml`), the encrypted file (`secrets.yaml`).
 - `modules/lib/` — plain helper functions, no options.
 - `assets/` — static files referenced by features (wallpaper image).
 - `MEMORY.md` — decision log: dismissed ideas, open questions, backlog.
@@ -57,12 +56,6 @@ Run in the repo root.
 
 - Conventional Commits (<https://www.conventionalcommits.org>): `feat(scope): ...`, `fix(scope): ...`, `docs`, `chore`, `cleanup`.
 - Scope is the module/feature name, e.g. `feat(niri): ...`.
-
-## Secrets
-
-- `sops modules/features/secrets/secrets.yaml` — edit the encrypted secrets.
-- Age key: `/home/sean/.sops/age.key`.
-- Recipients: `modules/features/secrets/sops.yaml`.
 
 ## License
 

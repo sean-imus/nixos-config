@@ -9,13 +9,9 @@
 nix-shell -p disko
 sudo disko --mode disko --flake github:sean-imus/nixos-config#notebook
 
-# 2. Copy the age key from USB
+# 2. Mount the USB
 lsblk
 mount --mkdir /dev/mapper/sdX1 /usb
-mkdir -p /mnt/home/sean/.sops
-cp /usb/Privat/age.key /mnt/home/sean/.sops/age.key
-chmod 600 /mnt/home/sean/.sops/age.key
-chown -R 1000:1000 /mnt/home/sean/.sops
 
 # 3. Place the hashed password
 mkdir -p /mnt/home/sean/.secrets

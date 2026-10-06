@@ -25,7 +25,6 @@ in
   home-manager.users.sean = {
     imports = [
       inputs.nix-index-database.homeModules.default
-      inputs.sops-nix.homeManagerModules.sops
       ./features/browser.nix
       ./features/btop.nix
       ./features/editor.nix
@@ -40,7 +39,6 @@ in
       ./features/opencode.nix
       ./features/quickshell
       ./features/rebuild.nix
-      ./features/secrets/sops.nix
       ./features/shell.nix
       ./features/terminal.nix
       ./features/wallpaper.nix
