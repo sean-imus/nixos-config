@@ -84,15 +84,6 @@ in
           }
         ];
       }
-      {
-        layer-rule._children = [
-          {
-            match._props.namespace = "^qs-shell-polkit$";
-            "geometry-corner-radius" = 12;
-            background-effect.blur = true;
-          }
-        ];
-      }
     ];
 
     binds = {
