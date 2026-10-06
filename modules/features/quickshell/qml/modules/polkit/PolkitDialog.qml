@@ -6,6 +6,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Services.Polkit
+import qs.components
 import qs.config
 import qs.services
 
@@ -15,6 +16,8 @@ PanelWindow {
     id: root
 
     readonly property AuthFlow flow: Polkit.flow
+    // New symbol seed for each authentication request.
+    property int dotSalt: Math.floor(Math.random() * 1000)
 
     visible: root.flow !== null && !root.flow.isCompleted && !root.flow.isCancelled
     color: "transparent"
@@ -37,7 +40,10 @@ PanelWindow {
         }
     }
 
-    onFlowChanged: field.text = ""
+    onFlowChanged: {
+        field.text = "";
+        dotSalt = Math.floor(Math.random() * 1000);
+    }
 
     function submit() {
         if (!root.flow)
@@ -110,11 +116,28 @@ PanelWindow {
 
                 Layout.fillWidth: true
 
+                readonly property bool hidden: echoMode === TextInput.Password
+
+                // The symbols are drawn by SecretDots, so a caret would not follow
+                // them (and rendered black); hide it for hidden input.
+                cursorDelegate: hidden ? noCursor : null
+
+                Component {
+                    id: noCursor
+
+                    Item {}
+                }
+
                 echoMode: root.flow && root.flow.responseVisible ? TextInput.Normal : TextInput.Password
-                color: Theme.fg
+                // Hidden input is drawn by SecretDots; the field only takes the keys.
+                color: hidden ? "transparent" : Theme.fg
+                selectionColor: hidden ? "transparent" : palette.highlight
+                horizontalAlignment: TextInput.AlignHCenter
+                verticalAlignment: TextInput.AlignVCenter
 
                 font.family: Theme.fontFamily
-                font.pixelSize: 11
+                // Bigger, spaced dots for hidden input; normal size for visible text.
+                font.pixelSize: hidden ? 20 : 11
 
                 background: Rectangle {
                     radius: 6
@@ -122,6 +145,17 @@ PanelWindow {
                 }
 
                 onAccepted: root.submit()
+
+                SecretDots {
+                    anchors.fill: parent
+                    anchors.leftMargin: 8
+                    anchors.rightMargin: 8
+
+                    visible: field.hidden
+                    count: field.length
+                    salt: root.dotSalt
+                    pixelSize: 18
+                }
             }
 
             Text {
