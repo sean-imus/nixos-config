@@ -46,73 +46,160 @@ PanelWindow {
         }
     }
 
-    component NotifCard: Rectangle {
+    component NotifCard: Item {
         id: card
 
         required property var popup
 
-        width: 400
-        height: content.y + content.height + 10
-        radius: 12
-        color: Theme.bg0
-        border.width: popup.urgency === NotificationUrgency.Critical ? 1 : 0
-        border.color: Theme.red
-
-        // Fade in on appear; dismissal is immediate.
-        opacity: 0
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 150
-            }
+        readonly property bool critical: popup.urgency === NotificationUrgency.Critical
+        // Stable accent per app, red for critical.
+        readonly property color accent: {
+            if (critical)
+                return Theme.red;
+            const tints = [Theme.green, Theme.aqua, Theme.blue, Theme.purple, Theme.yellow, Theme.orange];
+            let hash = 0;
+            for (const ch of popup.appName)
+                hash = (hash * 31 + ch.charCodeAt(0)) % 997;
+            return tints[hash % tints.length];
         }
 
-        Component.onCompleted: card.opacity = 1
+        // 0 -> 1 on appear: slides in from the right while fading up.
+        property real enter: 0
+
+        width: 400
+        height: body.y + body.height + (bar.visible ? 22 : 16)
+        opacity: Math.min(1, enter * 1.6)
+        transform: Translate {
+            x: (1 - card.enter) * 70
+        }
+
+        NumberAnimation on enter {
+            from: 0
+            to: 1
+            duration: 420
+            easing.type: Easing.OutBack
+            easing.overshoot: 1.2
+        }
+
+        Rectangle {
+            id: surface
+
+            anchors.fill: parent
+            radius: 16
+            // Translucent so the compositor blur shows through.
+            color: Qt.alpha(Theme.bg0, 0.86)
+            border.width: 1
+            border.color: card.critical ? Theme.red : Qt.alpha(Theme.fg, 0.08)
+        }
+
+        // Accent stripe down the left edge.
+        Rectangle {
+            x: 0
+            y: 18
+            width: 3
+            height: card.height - 36
+            radius: 2
+            color: card.accent
+        }
 
         MouseArea {
+            id: hover
+
             anchors.fill: parent
+            hoverEnabled: true
 
             onClicked: Notifs.dismiss(card.popup)
         }
 
-        Column {
-            id: content
+        // Initial of the app in a tinted badge.
+        Rectangle {
+            id: badge
 
-            x: 10
-            y: 10
-            width: card.width - 20
-            spacing: 3
+            x: 16
+            y: 14
+            width: 36
+            height: 36
+            radius: 12
+            color: Qt.alpha(card.accent, 0.18)
 
             Text {
-                text: card.popup.appName
+                anchors.centerIn: parent
+                text: card.popup.appName.length > 0 ? card.popup.appName.charAt(0).toUpperCase() : "!"
+                color: card.accent
+                font.family: Theme.fontFamily
+                font.pixelSize: 16
+                font.bold: true
+            }
+        }
+
+        Column {
+            id: head
+
+            x: badge.x + badge.width + 12
+            y: 14
+            width: card.width - x - 40
+            spacing: 2
+
+            Text {
+                width: parent.width
+                text: card.popup.appName.toUpperCase()
                 color: Theme.grey0
                 font.family: Theme.fontFamily
-                font.pixelSize: 10
+                font.pixelSize: 9
+                font.letterSpacing: 1.2
                 elide: Text.ElideRight
-                width: parent.width
             }
 
             Text {
+                width: parent.width
                 text: card.popup.summary
                 color: Theme.fg
                 font.family: Theme.fontFamily
-                font.pixelSize: 12
+                font.pixelSize: 13
                 font.bold: true
                 elide: Text.ElideRight
-                width: parent.width
             }
+        }
+
+        // Close affordance, only while hovered.
+        Text {
+            x: card.width - width - 16
+            y: 16
+            text: "✕"
+            color: hover.containsMouse ? Theme.fg : Theme.grey0
+            opacity: hover.containsMouse ? 1 : 0
+            font.family: Theme.fontFamily
+            font.pixelSize: 11
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 150
+                }
+            }
+        }
+
+        Column {
+            id: body
+
+            x: head.x
+            y: Math.max(head.y + head.height, badge.y + badge.height) + 6
+            width: card.width - x - 16
+            spacing: 8
 
             Text {
+                visible: text.length > 0
+                width: parent.width
                 text: card.popup.body
-                color: Theme.grey1
+                color: Theme.grey2
                 font.family: Theme.fontFamily
                 font.pixelSize: 11
                 wrapMode: Text.Wrap
                 elide: Text.ElideRight
-                maximumLineCount: 5
-                width: parent.width
+                maximumLineCount: 4
             }
 
             Row {
+                visible: card.popup.actions.length > 0
                 spacing: 6
 
                 Repeater {
@@ -123,19 +210,26 @@ PanelWindow {
 
                         required property var modelData
 
-                        implicitWidth: actionText.implicitWidth + 16
-                        implicitHeight: actionText.implicitHeight + 8
-                        radius: 6
-                        color: actionArea.containsMouse ? Theme.bg3 : Theme.bg2
+                        implicitWidth: actionText.implicitWidth + 20
+                        implicitHeight: actionText.implicitHeight + 10
+                        radius: height / 2
+                        color: actionArea.containsMouse ? Qt.alpha(card.accent, 0.3) : Qt.alpha(card.accent, 0.14)
+
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 120
+                            }
+                        }
 
                         Text {
                             id: actionText
 
                             anchors.centerIn: parent
-                            text: actionButton.modelData.label
-                            color: Theme.fg
+                            text: actionButton.modelData ? actionButton.modelData.label : ""
+                            color: card.accent
                             font.family: Theme.fontFamily
                             font.pixelSize: 10
+                            font.bold: true
                         }
 
                         MouseArea {
@@ -149,6 +243,28 @@ PanelWindow {
                         }
                     }
                 }
+            }
+        }
+
+        // Countdown to auto-dismiss; absent for notifications that never expire.
+        Rectangle {
+            id: bar
+
+            property real remaining: 1
+
+            visible: card.popup.timeout > 0
+            x: 16
+            y: card.height - 10
+            width: (card.width - 32) * remaining
+            height: 2
+            radius: 1
+            color: Qt.alpha(card.accent, 0.55)
+
+            NumberAnimation on remaining {
+                from: 1
+                to: 0
+                duration: Math.max(1, card.popup.timeout)
+                running: card.popup.timeout > 0
             }
         }
     }

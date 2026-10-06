@@ -50,6 +50,11 @@ Singleton {
     }
 
     function push(notif, visible): void {
+        // -1 (never) or unset: critical notifications stay until dismissed,
+        // everything else gets the standard 6s timeout.
+        const timeout = notif.expireTimeout > 0 ? notif.expireTimeout
+            : (notif.urgency === NotificationUrgency.Critical ? 0 : 6000);
+
         const entry = {
             notification: notif,
             id: notif.id,
@@ -57,19 +62,15 @@ Singleton {
             summary: notif.summary,
             body: notif.body,
             urgency: notif.urgency,
+            timeout: visible ? timeout : 0,
             actions: notif.actions.map(action => ({
                     identifier: action.identifier,
-                    label: action.label
+                    label: action.text
                 })),
             visible: visible
         };
 
         notif.closed.connect(() => root.remove(entry));
-
-        // -1 (never) or unset: critical notifications stay until dismissed,
-        // everything else gets the standard 6s timeout.
-        const timeout = notif.expireTimeout > 0 ? notif.expireTimeout
-            : (notif.urgency === NotificationUrgency.Critical ? 0 : 6000);
 
         if (visible && timeout > 0) {
             const timer = timerComp.createObject(root, {
