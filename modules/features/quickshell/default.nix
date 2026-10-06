@@ -34,9 +34,12 @@ let
   restartShell = pkgs.writeShellScript "qs-shell-restart" ''
     export PATH=${pkgs.coreutils}/bin:$PATH
     log=''${XDG_CACHE_HOME:-$HOME/.cache}/qs-shell-restart.log
-    ${pkgs.procps}/bin/pkill -f "quickshell -c qs-shell" || true
+    # Anchored to the start of the command line: swayidle's own command line
+    # contains "quickshell -c qs-shell ipc call ..." and must not be killed.
+    pattern='^([^ ]*/)?quickshell -c qs-shell'
+    ${pkgs.procps}/bin/pkill -f "$pattern" || true
     for _ in $(seq 40); do
-      ${pkgs.procps}/bin/pgrep -f "quickshell -c qs-shell" >/dev/null || break
+      ${pkgs.procps}/bin/pgrep -f "$pattern" >/dev/null || break
       sleep 0.05
     done
     ${pkgs.util-linux}/bin/setsid ${pkgs.quickshell}/bin/quickshell -c qs-shell -n >"$log" 2>&1 &
