@@ -12,6 +12,8 @@ in
       };
     };
 
+    gh.enable = true;
+
     lazygit = {
       enable = true;
       settings.gui.theme = {

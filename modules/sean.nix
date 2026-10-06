@@ -42,7 +42,6 @@ in
       ./features/rebuild.nix
       ./features/secrets/sops.nix
       ./features/shell.nix
-      ./features/ssh.nix
       ./features/terminal.nix
       ./features/wallpaper.nix
     ];
