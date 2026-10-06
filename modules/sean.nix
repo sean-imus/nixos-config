@@ -38,7 +38,6 @@ in
       ./features/office.nix
       ./features/opencode.nix
       ./features/quickshell
-      ./features/rebuild.nix
       ./features/shell.nix
       ./features/terminal.nix
       ./features/wallpaper.nix

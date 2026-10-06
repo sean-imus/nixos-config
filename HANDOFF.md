@@ -90,7 +90,7 @@ Apply workflow (build is the gate, switching is the user's call):
 
 ```bash
 nh os build     # must be green before handing back
-nh os switch    # or Mod+U (builds in background, applies with one run0 prompt)
+nh os switch
 ```
 
 Then `quickshell -c qs-shell` runs the installed config; optionally `pkill waybar`

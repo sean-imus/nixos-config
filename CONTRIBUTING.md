@@ -24,7 +24,7 @@ Rules for this repo. Personal NixOS flake: one host (`notebook`), one user (`sea
 
 The only known exceptions to the rules above. Keep this list current.
 
-- Features add their own niri entries from their own module instead of editing `niri/keybindings.nix`: `rebuild.nix` extends `wayland.windowManager.niri.settings` with the `Mod+U` bind, `wallpaper.nix` adds a `spawn-at-startup` entry via `extraConfig`.
+- Features add their own niri entries from their own module instead of editing `niri/keybindings.nix`: `wallpaper.nix` adds a `spawn-at-startup` entry via `extraConfig`.
 - `niri/default.nix` attaches `keybindings.nix`, `outputs.nix` and `utilities.nix` via `home-manager.sharedModules`.
 - `printing.nix`, `rdp-work.nix` and `lockscreen.nix` attach their user-level parts the same way.
 - fish is split on purpose: `programs.fish.enable` and `users.users.sean.shell` live in `modules/sean.nix` (system side), the rest of `programs.fish` in `modules/features/shell.nix`.
