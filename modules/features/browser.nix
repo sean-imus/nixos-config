@@ -1,7 +1,11 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  theme,
+  shadowDesktopEntries,
+  ...
+}:
 let
-  shadowDesktopEntries = import ../lib/desktop-entries.nix { inherit pkgs; };
-
   # Chromium installs external extensions per user-data-dir, so every profile
   # is its own data dir. That is what keeps Claude out of all but Privat.
   profiles = {
@@ -21,6 +25,32 @@ let
   ];
   extensionsFor = key: commonExtensions ++ lib.optional (key == "privat") claude;
 
+  colour = c: builtins.fromJSON "[${c}]";
+
+  # Unpacked theme extension, loaded per launch with --load-extension.
+  everforestTheme = pkgs.writeTextDir "manifest.json" (
+    builtins.toJSON {
+      manifest_version = 3;
+      name = "Everforest";
+      version = "1.0";
+      theme.colors = {
+        frame = colour theme.rgb.bg0;
+        frame_inactive = colour theme.rgb.bg1;
+        toolbar = colour theme.rgb.bg1;
+        toolbar_text = colour theme.rgb.fg;
+        toolbar_button_icon = colour theme.rgb.fg;
+        tab_text = colour theme.rgb.fg;
+        tab_background_text = colour theme.rgb.grey1;
+        bookmark_text = colour theme.rgb.fg;
+        omnibox_background = colour theme.rgb.bg2;
+        omnibox_text = colour theme.rgb.fg;
+        ntp_background = colour theme.rgb.bg0;
+        ntp_text = colour theme.rgb.fg;
+        ntp_link = colour theme.rgb.green;
+      };
+    }
+  );
+
   updateUrl = builtins.toJSON {
     external_update_url = "https://clients2.google.com/service/update2/crx";
   };
@@ -33,7 +63,12 @@ in
   home.packages = lib.mapAttrsToList (
     key: _:
     pkgs.writeShellScriptBin "chromium-${key}" ''
-      exec chromium --password-store=basic --user-data-dir="$HOME/.config/chromium-${key}" "$@"
+      exec chromium \
+        --password-store=basic \
+        --force-dark-mode \
+        --enable-features=WebUIDarkMode \
+        --load-extension=${everforestTheme} \
+        --user-data-dir="$HOME/.config/chromium-${key}" "$@"
     ''
   ) profiles;
 

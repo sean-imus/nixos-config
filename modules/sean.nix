@@ -1,10 +1,5 @@
 { inputs, pkgs, ... }:
-let
-  theme = import ./lib/theme.nix;
-in
 {
-  imports = [ ./features/claude-code.nix ];
-
   users.users.sean = {
     isNormalUser = true;
     hashedPasswordFile = "/home/sean/.secrets/password.txt";
@@ -25,6 +20,7 @@ in
   home-manager.users.sean = {
     imports = [
       inputs.nix-index-database.homeModules.default
+      ./features/appearance.nix
       ./features/browser.nix
       ./features/btop.nix
       ./features/editor.nix
@@ -36,10 +32,10 @@ in
       ./features/mcp.nix
       ./features/mime.nix
       ./features/office.nix
-      ./features/opencode.nix
       ./features/quickshell
       ./features/shell.nix
       ./features/terminal.nix
+      ./features/theme.nix
       ./features/wallpaper.nix
     ];
 
@@ -51,29 +47,5 @@ in
 
     programs.nix-index-database.comma.enable = true;
     programs.nix-index.enableFishIntegration = false;
-
-    gtk = {
-      enable = true;
-      theme = {
-        name = "everforest-dark-medium";
-        package = pkgs.everforest-gtk-theme;
-      };
-      iconTheme = {
-        name = "Papirus-Dark";
-        package = pkgs.papirus-icon-theme;
-      };
-      font = {
-        name = theme.fontFamily;
-        size = 10;
-      };
-    };
-
-    home.pointerCursor = {
-      enable = true;
-      name = "everforest-cursors";
-      package = pkgs.everforest-cursors;
-      size = 24;
-      gtk.enable = true;
-    };
   };
 }

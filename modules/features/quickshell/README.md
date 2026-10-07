@@ -6,7 +6,7 @@ Installed as the Home Manager config `qs-shell` (`programs.quickshell.configs.qs
 
 ## What it owns
 
-- **Bar** (`qml/modules/bar/Bar.qml`): bottom 18px, one per screen. Clock, niri workspaces (`services/Niri.qml`, event-stream driven), battery/volume/mic/power profile with click/scroll actions.
+- **Bar** (`qml/modules/bar/Bar.qml`): bottom 18px, one per screen. Clock, niri workspaces (`services/Niri.qml`, event-stream driven), Claude plan usage `CC <n>%` (`services/ClaudeUsage.qml`, polls `$XDG_RUNTIME_DIR/claude-usage.json` written by the Claude Code statusLine; contract in `features/claude-code/README.md`), battery/volume/mic/power profile with click/scroll actions.
 - **Notifications** (`services/Notifs.qml`, `modules/notifs/NotifPopups.qml`): own `org.freedesktop.Notifications` server, in-memory only. Cards are translucent with an app-initial badge, accent stripe and countdown line. DND/clear via IPC (`notifs toggleDnd|clear`, niri binds `Mod+Shift+D` / `Mod+Shift+N`).
 - **Polkit agent** (`modules/polkit/PolkitDialog.qml`, `services/Polkit.qml`): uses polkit's own session/helper and the stock `polkit-1` PAM. If the shell dies, elevation prompts wedge until it is restarted.
 - **OSD** (`modules/osd/OsdPanel.qml`, `services/Osd.qml`, `Audio.qml`, `Brightness.qml`): volume/mic/brightness/power profile. Brightness is a sysfs poll (no inotify on sysfs): 500 ms idle, 25 ms for 1.2 s after the brightness keys call `ipc call brightness poke`.
@@ -25,10 +25,10 @@ Retired: waybar, caelestia-notifs, soteria. The launcher is still **fuzzel** (`f
 ## Conventions
 
 - The QML root is importable as `qs.*` (`import qs.modules.bar`, `import qs.config`, `import qs.services`). `Theme.qml` is a generated singleton with the everforest palette and `fontFamily`.
-- **Never hardcode colours or fonts in QML.** Use `Theme.*`; add palette entries to `modules/lib/theme.nix` (every string attribute is picked up).
-- Every layer surface gets its own `WlrLayershell.namespace` (`qs-shell-<surface>`). niri `layer-rule`s (blur, corner radius) live in `default.nix` and match the namespace; add one only for surfaces that should blur. niri-flake merges sibling `_children` with the same name, so each repeated `layer-rule` needs its own `_children` parent.
+- **Never hardcode colours or fonts in QML.** Use `Theme.*`; add palette entries to `modules/features/theme.nix` (every string attribute is picked up).
+- Every layer surface gets its own `WlrLayershell.namespace` (`qs-shell-<surface>`). No niri `layer-rule`s exist today (see below). To add one, put it in `default.nix`, match the namespace, and give each repeated `layer-rule` its own `_children` parent (Home Manager's niri module merges siblings with the same name).
 - Multi-monitor: `Variants { model: Quickshell.screens }` for per-screen surfaces; popups target the focused output (`services/Niri`).
-- The config name `qs-shell` appears in niri spawn commands, IPC calls (`quickshell -c qs-shell ipc call ...`) and layer-rule regexes. Renaming touches all of them.
+- The config name `qs-shell` appears in niri spawn commands, IPC calls (`quickshell -c qs-shell ipc call ...`) and any future layer-rule regexes. Renaming touches all of them.
 - Commits: `feat(quickshell): ...`. Format Nix with `nix fmt`.
 
 ## Gotchas

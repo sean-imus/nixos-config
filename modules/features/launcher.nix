@@ -1,7 +1,4 @@
-_:
-let
-  theme = import ../lib/theme.nix;
-in
+{ theme, ... }:
 {
   programs.fuzzel = {
     enable = true;

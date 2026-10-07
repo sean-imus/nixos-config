@@ -1,7 +1,4 @@
-{ pkgs, ... }:
-let
-  shadowDesktopEntries = import ../lib/desktop-entries.nix { inherit pkgs; };
-in
+{ pkgs, shadowDesktopEntries, ... }:
 {
   home.packages = [ pkgs.libreoffice-stable ];
 

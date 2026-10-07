@@ -94,8 +94,8 @@
               nixpkgs.expr = "import ${inputs.nixpkgs.outPath} { }";
               formatting.command = [ "nixfmt" ];
               options = {
-                nixos.expr = "(builtins.getFlake (toString ${inputs.self.outPath})).nixosConfigurations.notebook.options";
-                home-manager.expr = "(builtins.getFlake (toString ${inputs.self.outPath})).nixosConfigurations.notebook.options.home-manager.users.type.getSubOptions []";
+                nixos.expr = "(builtins.getFlake \"/home/sean/nixos-config\").nixosConfigurations.notebook.options";
+                home-manager.expr = "(builtins.getFlake \"/home/sean/nixos-config\").nixosConfigurations.notebook.options.home-manager.users.type.getSubOptions []";
               };
             };
           };

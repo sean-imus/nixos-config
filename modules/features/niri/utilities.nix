@@ -1,7 +1,10 @@
-{ config, pkgs, ... }:
-let
-  shadowDesktopEntries = import ../../lib/desktop-entries.nix { inherit pkgs; };
-in
+{
+  config,
+  pkgs,
+  theme,
+  shadowDesktopEntries,
+  ...
+}:
 {
   wayland.windowManager.niri.settings = {
     animations = {
@@ -58,7 +61,7 @@ in
         window-rule._children = [
           {
             match._props = {
-              app-id = "^(wiremix|bluetui|btop|fluxcast)$";
+              app-id = "^(wiremix|bluetui|btop)$";
             };
             "open-floating" = true;
           }
@@ -82,8 +85,8 @@ in
 
     cursor = {
       "hide-when-typing" = true;
-      "xcursor-theme" = "everforest-cursors";
-      "xcursor-size" = 24;
+      "xcursor-theme" = config.home.pointerCursor.name;
+      "xcursor-size" = config.home.pointerCursor.size;
     };
 
     layout = {
@@ -115,7 +118,7 @@ in
       };
       "focus-ring" = {
         width = 2;
-        "active-color" = "#a7c080";
+        "active-color" = theme.hex theme.green;
         "inactive-color" = "#00000000";
       };
       shadow = {

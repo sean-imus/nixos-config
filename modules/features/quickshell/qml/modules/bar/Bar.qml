@@ -44,6 +44,8 @@ PanelWindow {
 
     // Workspaces for this screen, left after the clock.
     Row {
+        id: wsRow
+
         anchors.left: clockText.right
         anchors.leftMargin: 6
         anchors.verticalCenter: parent.verticalCenter
@@ -82,7 +84,19 @@ PanelWindow {
         }
     }
 
-    // Status indicators, waybar order: profile, mic, vol, battery.
+    // Claude plan usage (5-hour window), after the workspaces.
+    Text {
+        anchors.left: wsRow.right
+        anchors.leftMargin: 10
+        anchors.verticalCenter: parent.verticalCenter
+
+        text: ClaudeUsage.percent < 0 ? "CC --" : "CC " + ClaudeUsage.percent + "%"
+        color: ClaudeUsage.percent < 0 ? Theme.grey0 : ClaudeUsage.percent >= 90 ? Theme.red : Theme.yellow
+        font.family: Theme.fontFamily
+        font.pixelSize: 11
+    }
+
+    // Status indicators: profile, mic, vol, battery.
     Row {
         anchors.right: parent.right
         anchors.rightMargin: 6

@@ -6,6 +6,7 @@
 {
   imports = [
     ./features/android.nix
+    ./features/claude-code
     ./features/disk.nix
     ./features/esp32.nix
     ./features/lockscreen.nix
@@ -18,7 +19,6 @@
   networking = {
     hostName = "notebook";
     networkmanager.enable = true;
-    firewall.enable = true;
   };
 
   services = {
@@ -47,6 +47,9 @@
     };
 
     fwupd.enable = true;
+
+    # Enabled by default through programs.niri; pulls ~650 MB of mbrola voices.
+    speechd.enable = false;
 
     getty = {
       autologinUser = "sean";
@@ -172,8 +175,6 @@
         "nix-command"
         "flakes"
       ];
-      keep-derivations = true;
-      keep-outputs = true;
     };
   };
 

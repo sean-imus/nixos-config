@@ -1,7 +1,4 @@
-{ pkgs, ... }:
-let
-  theme = import ../lib/theme.nix;
-in
+{ pkgs, theme, ... }:
 {
   manual.manpages.enable = false;
 
@@ -104,7 +101,7 @@ in
   };
 
   home = {
-    shellAliases.rbu = "nix flake update && git add flake.lock && git commit -m 'chore(inputs): updated hashes'";
+    shellAliases.rbu = "nix flake update && git commit flake.lock -m 'chore(inputs): updated hashes'";
     packages = with pkgs; [
       bat
       ncdu

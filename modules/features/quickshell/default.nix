@@ -1,8 +1,10 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  theme,
+  ...
+}:
 let
-  theme = import ../../lib/theme.nix;
-
-  # QML uses a slightly different name for the UI font than the rest of the repo.
   themeQml = pkgs.writeText "Theme.qml" ''
     pragma Singleton
 
@@ -21,7 +23,7 @@ let
     }
   '';
 
-  qml = pkgs.runCommand "qs-shell-qml" { } ''
+  qml = pkgs.runCommandLocal "qs-shell-qml" { } ''
     mkdir -p $out/config
     cp -r ${./qml}/. $out/
     chmod -R u+w $out
