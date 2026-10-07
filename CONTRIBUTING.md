@@ -7,11 +7,12 @@ Rules for this repo. Personal NixOS flake: one host (`notebook`), one user (`sea
 - `flake.nix` — inputs, one `nixosConfigurations.<host>` per machine, `formatter` (nixfmt-tree).
 - `modules/notebook.nix` — NixOS host module for `notebook`: boot, disk, hardware, locale, users, nix daemon. Imported by the flake.
 - `modules/sean.nix` — the `sean` user and the home-manager import list.
-- `modules/features/<name>.nix` — one feature per file.
+- `modules/features/<name>.nix` — one feature per file (or per directory when it ships assets, e.g. `opencode/` prompt files).
 - `modules/features/niri/` — `default.nix` is the NixOS side; `keybindings.nix`, `outputs.nix`, `utilities.nix` are the home-manager side.
+- `modules/features/quickshell/` — the personal shell (`qs-shell`), home-manager only. Its dev guide is `quickshell/README.md`.
 - `modules/lib/` — plain helper functions, no options.
 - `assets/` — static files referenced by features (wallpaper image).
-- `MEMORY.md` — decision log: dismissed ideas, open questions, backlog.
+- `DECISIONS.md` — dismissed ideas, open questions, backlog, durable notes.
 
 ## Module rules
 
@@ -24,7 +25,8 @@ Rules for this repo. Personal NixOS flake: one host (`notebook`), one user (`sea
 
 The only known exceptions to the rules above. Keep this list current.
 
-- Features add their own niri entries from their own module instead of editing `niri/keybindings.nix`: `wallpaper.nix` adds a `spawn-at-startup` entry via `extraConfig`.
+- Features add their own niri entries from their own module instead of editing `niri/keybindings.nix`: `wallpaper.nix` adds a `spawn-at-startup` entry via `extraConfig`, `quickshell/default.nix` its startup spawn, binds and `layer-rule`s.
+- `quickshell` needs a PAM service for the lock screen, declared in `notebook.nix` (`quickshell-lock`); `lockscreen.nix` keeps a swaylock fallback for it.
 - `niri/default.nix` attaches `keybindings.nix`, `outputs.nix` and `utilities.nix` via `home-manager.sharedModules`.
 - `printing.nix`, `rdp-work.nix` and `lockscreen.nix` attach their user-level parts the same way.
 - fish is split on purpose: `programs.fish.enable` and `users.users.sean.shell` live in `modules/sean.nix` (system side), the rest of `programs.fish` in `modules/features/shell.nix`.
@@ -48,7 +50,7 @@ Run in the repo root.
 - `nix fmt` — format (nixfmt-tree, RFC style). `nix fmt -- --ci` to check only.
 - `nix flake check` — quick test.
 - `nix build .#nixosConfigurations.notebook.config.system.build.toplevel --dry-run` — deep evaluation test.
-- `statix check .` and `deadnix .` — must report nothing.
+- `nix run nixpkgs#statix -- check .` and `nix run nixpkgs#deadnix -- .` — must report nothing (not installed permanently).
 - `nh os switch` — rebuild and switch now. `nh os boot` — rebuild, apply on next boot.
 - `rbu` — update flake inputs and commit `flake.lock`.
 
@@ -56,6 +58,11 @@ Run in the repo root.
 
 - Conventional Commits (<https://www.conventionalcommits.org>): `feat(scope): ...`, `fix(scope): ...`, `docs`, `chore`, `cleanup`.
 - Scope is the module/feature name, e.g. `feat(niri): ...`.
+
+## Docs
+
+- `DECISIONS.md` holds only what git can't tell you: dismissed or parked ideas and why, open questions, backlog, durable notes. No changelog entries; `git log` and conventional commits are the changelog.
+- A feature's dev guide lives next to the feature (`modules/features/<name>/README.md`). `README.md` stays install-only.
 
 ## License
 

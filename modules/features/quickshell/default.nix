@@ -55,7 +55,7 @@ let
 in
 {
   # Personal Quickshell shell: one process owning the bar, notifications,
-  # polkit agent and OSD. New surfaces grow here; see MEMORY.md for the plan.
+  # polkit agent and OSD. New surfaces grow here; see ./README.md for the plan.
   programs.quickshell = {
     enable = true;
     systemd.enable = false;

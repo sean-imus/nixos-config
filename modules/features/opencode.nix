@@ -7,7 +7,7 @@
       theme = "system";
     };
 
-    # Agent orchestration setup - see MEMORY.md. Prompts live in ./opencode/.
+    # Agent orchestration setup - see DECISIONS.md. Prompts live in ./opencode/.
     context = ./opencode/AGENTS.md;
     agents = {
       orchestrator = ./opencode/agents/orchestrator.md;
