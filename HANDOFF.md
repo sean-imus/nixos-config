@@ -1,4 +1,4 @@
-# Decisions
+# Handoff
 
 What git history can't tell you: dismissed ideas and why, open questions, the backlog and durable notes. No changelog entries, `git log` has those. Nothing here is active work unless an entry says so.
 

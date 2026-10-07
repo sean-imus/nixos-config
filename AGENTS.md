@@ -1,4 +1,4 @@
-# Contributing
+# Agents and contributors
 
 Rules for this repo. Personal NixOS flake: one host (`notebook`), one user (`sean`), nixos-unstable + home-manager. One formatter, one way of doing each thing, self-contained feature modules.
 
@@ -12,7 +12,7 @@ Rules for this repo. Personal NixOS flake: one host (`notebook`), one user (`sea
 - `modules/features/quickshell/` — the personal shell (`qs-shell`), home-manager only. Its dev guide is `quickshell/README.md`.
 - `modules/lib/` — plain helper functions, no options.
 - `assets/` — static files referenced by features (wallpaper image).
-- `DECISIONS.md` — dismissed ideas, open questions, backlog, durable notes.
+- `HANDOFF.md` — transit notes: dismissed ideas, open questions, backlog, durable notes. Temporary; fold anything lasting into the code, `AGENTS.md` or a feature README.
 
 ## Module rules
 
@@ -61,7 +61,7 @@ Run in the repo root.
 
 ## Docs
 
-- `DECISIONS.md` holds only what git can't tell you: dismissed or parked ideas and why, open questions, backlog, durable notes. No changelog entries; `git log` and conventional commits are the changelog.
+- `HANDOFF.md` is a temporary hand-off document and holds only what git can't tell you: dismissed or parked ideas and why, open questions, backlog, durable notes. No changelog entries; `git log` and conventional commits are the changelog.
 - A feature's dev guide lives next to the feature (`modules/features/<name>/README.md`). `README.md` stays install-only.
 
 ## License

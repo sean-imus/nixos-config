@@ -2,7 +2,7 @@
 
 A personal, from-scratch Quickshell config for the niri laptop (`notebook`, everforest theme). One process replaces the usual desktop-shell parts. It is deliberately *not* derived from caelestia-shell: write clean own QML and never copy caelestia QML into it.
 
-Installed as the Home Manager config `qs-shell` (`programs.quickshell.configs.qs-shell`) and spawned at niri startup as `quickshell -c qs-shell -n` (`default.nix`). Repo rules are in `CONTRIBUTING.md`; parked and dismissed ideas are in `DECISIONS.md`.
+Installed as the Home Manager config `qs-shell` (`programs.quickshell.configs.qs-shell`) and spawned at niri startup as `quickshell -c qs-shell -n` (`default.nix`). Repo rules are in `AGENTS.md`; parked and dismissed ideas are in `HANDOFF.md`.
 
 ## What it owns
 
