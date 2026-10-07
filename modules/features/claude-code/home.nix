@@ -1,7 +1,5 @@
 { lib, pkgs, ... }:
 let
-  # PostToolUse hook: keep edited Nix files in the repo's formatter style.
-  # Never fails: a syntax error mid-edit must not block Claude.
   formatHook = pkgs.writeShellApplication {
     name = "claude-format-hook";
     runtimeInputs = [
@@ -17,7 +15,6 @@ let
     '';
   };
 
-  # Notification and Stop hooks -> desktop notification (shown by qs-shell).
   notifyHook = pkgs.writeShellApplication {
     name = "claude-notify-hook";
     runtimeInputs = [
@@ -30,14 +27,10 @@ let
     '';
   };
 
-  # statusLine command: Claude Code pipes session JSON in. Plan usage
-  # (`rate_limits`, Pro/Max only, after the first response) is cached for the
-  # quickshell bar; see README.md for the file contract.
   usageStatusLine = pkgs.writeShellApplication {
     name = "claude-usage-statusline";
     runtimeInputs = [
       pkgs.jq
-      pkgs.coreutils
     ];
     text = ''
       input=$(cat)
@@ -52,57 +45,43 @@ let
       ] | join(" · ")' <<<"$input"
     '';
   };
+
+  cmd = pkg: {
+    type = "command";
+    command = lib.getExe pkg;
+  };
 in
 {
+  programs.mcp = {
+    enable = true;
+    servers.nixos.command = lib.getExe pkgs.mcp-nixos;
+  };
+
   programs.claude-code = {
     enable = true;
     enableMcpIntegration = true;
 
-    # ~/.claude/settings.json is also written by Claude Code itself (/model,
-    # /config, ...): declared keys are merged in, everything else is kept.
     mutableSettings = true;
 
     settings = {
       env.CLAUDE_CODE_SUBAGENT_MODEL = "haiku";
 
-      statusLine = {
-        type = "command";
-        command = lib.getExe usageStatusLine;
-      };
+      statusLine = cmd usageStatusLine;
 
       hooks = {
         PostToolUse = [
           {
             matcher = "Write|Edit|MultiEdit";
-            hooks = [
-              {
-                type = "command";
-                command = lib.getExe formatHook;
-              }
-            ];
+            hooks = [ (cmd formatHook) ];
           }
         ];
         Notification = [
           {
             matcher = "permission_prompt|idle_prompt|elicitation_dialog";
-            hooks = [
-              {
-                type = "command";
-                command = lib.getExe notifyHook;
-              }
-            ];
+            hooks = [ (cmd notifyHook) ];
           }
         ];
-        Stop = [
-          {
-            hooks = [
-              {
-                type = "command";
-                command = lib.getExe notifyHook;
-              }
-            ];
-          }
-        ];
+        Stop = [ { hooks = [ (cmd notifyHook) ]; } ];
       };
     };
 

@@ -1,76 +1,132 @@
 # Agents and contributors
 
-Rules for this repo. Personal NixOS flake: one host (`notebook`), one user (`sean`), nixos-unstable + home-manager. One formatter, one way of doing each thing, self-contained feature modules.
+Rules for this repo. Personal NixOS flake: one host (`notebook`), one user (`sean`), nixos-unstable + home-manager. One formatter, one way of doing each thing, self-contained feature modules. These rules are malleable: when the code is clearly better than a rule, change the rule.
 
 ## Layout
 
-- `flake.nix` — inputs, one `nixosConfigurations.<host>` per machine, `formatter` (nixfmt-tree).
-- `modules/notebook.nix` — NixOS host module for `notebook`: boot, disk, hardware, locale, users, nix daemon. Imported by the flake.
+- `flake.nix` — inputs, `nixosConfigurations.notebook`, `formatter` (nixfmt-tree).
+- `modules/notebook.nix` — NixOS host module: boot, hardware, locale, users, nix daemon, fonts. Imports the system-side features.
 - `modules/sean.nix` — the `sean` user and the home-manager import list.
-- `modules/features/appearance.nix` — GTK theme, icons, cursor.
-- `modules/features/theme.nix` — the palette and UI font, exposed to home-manager modules as the `theme` module argument.
-- `modules/features/<name>.nix` — one feature per file (or per directory when it ships assets or a dev guide, e.g. `claude-code/`).
-- `modules/features/claude-code/` — `default.nix` is the NixOS side (unfree allowance), `home.nix` the home-manager side (settings, hooks, statusLine, LSP). Its dev guide is `claude-code/README.md`.
-- `modules/features/niri/` — `default.nix` is the NixOS side; `keybindings.nix`, `outputs.nix`, `utilities.nix` are the home-manager side.
-- `modules/features/quickshell/` — the personal shell (`qs-shell`), home-manager only. Its dev guide is `quickshell/README.md`.
-- `assets/` — static files referenced by features (wallpaper image).
-- `HANDOFF.md` — transit notes: dismissed ideas, open questions, backlog, durable notes. Temporary; fold anything lasting into the code, `AGENTS.md` or a feature README.
+- `modules/features/<name>.nix` — one feature per file, or per directory when it ships assets or a dev guide (`claude-code/`, `niri/`, `quickshell/`). Small related features share a file (`apps.nix`, `hardware-dev.nix`).
+- `assets/` — static files referenced by features.
 
 ## Module rules
 
 - A feature that only configures the user is a home-manager module, registered in `modules/sean.nix`.
-- A feature that needs system options is a NixOS module imported by `modules/notebook.nix`, and attaches its user-level parts with `home-manager.sharedModules`. Never `home-manager.users.<name>.imports` (that hardcodes the user). A few lines of user config may sit inline in that `sharedModules` list; anything larger goes in its own file next to the feature.
+- A feature that needs system options is a NixOS module imported by `modules/notebook.nix`, and attaches its user-level parts with `home-manager.sharedModules` (never `home-manager.users.<name>.imports`, which hardcodes the user). A few lines of user config may sit inline there; anything larger goes in its own file next to the feature.
 - One owner per option: a feature owns the packages, shell aliases, keybinds and generated files it declares. No second module may set the same option for the same purpose.
 - Adding a feature = one file in `modules/features/` + one import line.
 
 ## Deliberate cross-module dependencies
 
-The only known exceptions to the rules above. Keep this list current.
-
-- Features add their own niri entries from their own module instead of editing `niri/keybindings.nix`: `wallpaper.nix` adds a `spawn-at-startup` entry via `extraConfig`, `quickshell/default.nix` its startup spawn, and binds.
-- `quickshell` needs a PAM service for the lock screen, declared in `notebook.nix` (`quickshell-lock`); `lockscreen.nix` keeps a swaylock fallback for it.
-- Niri binds and rules may call tools owned by other features (`qs-shell` IPC for lock and brightness, `fuzzel`, `foot`, `chromium-privat`); `mime.nix` also hardcodes `chromium-privat.desktop`. Renaming one of those means grepping `niri/` and `mime.nix`.
-- `niri/utilities.nix` reads `config.programs.nixvim` (shadowed `nvim` entry) and `config.home.pointerCursor` (set in `appearance.nix`).
-- `quickshell/default.nix` expects `nerd-fonts.symbols-only`, installed in `notebook.nix`.
-- `niri/default.nix` attaches `keybindings.nix`, `outputs.nix` and `utilities.nix` via `home-manager.sharedModules`.
-- `printing.nix`, `rdp-work.nix`, `lockscreen.nix` and `claude-code/default.nix` (imported by `notebook.nix`) attach their user-level parts the same way.
-- The `claude-code/home.nix` statusLine writes `$XDG_RUNTIME_DIR/claude-usage.json`, which `quickshell/qml/services/ClaudeUsage.qml` reads for the bar's `CC <n>%` item. The file format is documented in `claude-code/README.md`.
-- `theme` (`features/theme.nix`) and `shadowDesktopEntries` (`features/mime.nix`) are home-manager `_module.args` consumed by many features.
-- fish is split on purpose: `programs.fish.enable` and `users.users.sean.shell` live in `modules/sean.nix` (system side), the rest of `programs.fish` in `modules/features/shell.nix`.
+- Features add their own niri entries from their own module (`quickshell/default.nix`: startup spawn and its binds). The rest of the niri binds live in `niri/keybindings.nix` and call tools owned by other features (`qs-shell` IPC for brightness, `fuzzel`, `foot`, `chromium-privat`).
+- `lockscreen.nix` owns the `quickshell-lock` PAM service and the swaylock fallback for `quickshell`'s lock screen.
+- `claude-code/home.nix`'s statusLine writes `$XDG_RUNTIME_DIR/claude-usage.json`, read by `quickshell/qml/services/ClaudeUsage.qml`; the contract is in `claude-code/README.md`.
+- `theme` (`features/theme.nix`) and `shadowDesktopEntries` (`features/desktop-entries.nix`) are home-manager `_module.args`, not available to NixOS modules.
+- fish is split on purpose: `programs.fish.enable` and `users.users.sean.shell` live in `modules/sean.nix` (system side), the rest in `modules/features/shell.nix`.
 
 ## Style
 
-- All colours and the UI font come from `theme` (`modules/features/theme.nix`). Never inline a palette hex or a font family.
-- Pure black (`#000000`) is not a palette colour and may stay literal.
-- Take it as a module argument in any home-manager module: `{ theme, ... }:`. NixOS modules do not get it.
-  - `theme.<colour>` — bare hex, no `#` (`bg0` `bg1` `bg2` `bg3` `bg4` `grey0` `grey1` `grey2` `fg` `red` `orange` `yellow` `green` `aqua` `blue` `purple`).
-  - `theme.hex theme.green` -> `"#a7c080"`.
-  - `theme.rgba theme.green "44"` -> `"a7c08044"` (8-digit, no prefix: fuzzel's colour form).
-  - `theme.rgb.green` -> `"167, 192, 128"` (for CSS `rgb()`/`rgba()`).
-  - `theme.fontFamily` -> the UI font.
-- `modules/features/mime.nix` is the only place that builds `NoDisplay=true` desktop-entry shadows. It exposes `shadowDesktopEntries` as a home-manager module argument: `{ shadowDesktopEntries, pkgs, ... }:` then `xdg.dataFile = shadowDesktopEntries [ pkgs.libreoffice-stable ] [ "impress" ];`
+- No comments in code (Nix, QML, embedded scripts). Reasoning belongs in the `.md` files: the Notes section of this file, or the feature's README next to it.
+- All colours and the UI font come from `theme` (`features/theme.nix`); never inline a palette hex or a font family. Pure black (`#000000`) is not a palette colour.
+- Take it as a module argument: `{ theme, ... }:`. API: `theme.<colour>` (bare hex: `bg0`..`bg4`, `grey0`..`grey2`, `fg`, `red`, `orange`, `yellow`, `green`, `aqua`, `blue`, `purple`), `theme.hex c` -> `"#a7c080"`, `theme.rgba c "44"` -> `"a7c08044"` (fuzzel's 8-digit form), `theme.rgb.<colour>` -> `[ 167 192 128 ]`, `theme.palette` (colours only), `theme.fontFamily`.
+- `features/desktop-entries.nix` is the only place that builds `NoDisplay=true` desktop-entry shadows. Use `{ shadowDesktopEntries, pkgs, ... }:` then `xdg.dataFile = shadowDesktopEntries [ pkgs.libreoffice-stable ] [ "impress" ];`. Each feature shadows the entries of the packages it owns.
 
 ## Commands
 
 Run in the repo root.
 
-- `nix fmt` — format (nixfmt-tree, RFC style). `nix fmt -- --ci` to check only.
+- `nix fmt` — format (nixfmt-tree). `nix fmt -- --ci` to check only.
 - `nix flake check` — quick test.
 - `nix build .#nixosConfigurations.notebook.config.system.build.toplevel --dry-run` — deep evaluation test.
-- `nix run nixpkgs#statix -- check .` and `nix run nixpkgs#deadnix -- .` — must report nothing (not installed permanently).
-- `nh os switch` — rebuild and switch now. `nh os boot` — rebuild, apply on next boot.
+- `nix run nixpkgs#statix -- check .` and `nix run nixpkgs#deadnix -- .` — must report nothing.
+- `nh os switch` / `nh os boot` — rebuild and apply now / on next boot.
 - `rbu` — update flake inputs and commit `flake.lock`.
+- `git add` new files before building: untracked files are invisible to flakes.
 
 ## Commits
 
-- Conventional Commits (<https://www.conventionalcommits.org>): `feat(scope): ...`, `fix(scope): ...`, `docs`, `chore`, `cleanup`.
-- Scope is the module/feature name, e.g. `feat(niri): ...`.
+Conventional Commits with the feature as scope: `feat(niri): ...`, `fix(quickshell): ...`, `docs`, `chore`, `cleanup`.
 
 ## Docs
 
-- `HANDOFF.md` is a temporary hand-off document and holds only what git can't tell you: dismissed or parked ideas and why, open questions, backlog, durable notes. No changelog entries; `git log` and conventional commits are the changelog.
-- A feature's dev guide lives next to the feature (`modules/features/<name>/README.md`). `README.md` stays install-only.
+`README.md` stays install-only. A feature's dev guide lives next to the feature (`modules/features/<name>/README.md`). The sections below the license hold only what git can't tell you: dismissed ideas, open questions, backlog and durable notes. No changelog entries; fold anything lasting into the code or a feature README.
 
 ## License
 
 PolyForm Noncommercial 1.0.0 (see `LICENSE`). Contributions are accepted under the same license.
+
+# Handoff
+
+Nothing below is active work unless an entry says so.
+
+## Dismissed ideas
+
+- **Idle timeouts (auto lock/blank/suspend via swayidle)**: on purpose. Only the 5% hibernate safeguard and lid-close locking are wanted.
+- **Avahi/mDNS for printer/scanner discovery**: printing works without it.
+- **nixvim `inputs.nixpkgs.follows = "nixpkgs"`**: do not add. Upstream recommends against it; update nixvim and nixpkgs together.
+- **Dendritic pattern (flake-parts + import-tree)**: one host and one user, and every feature is already one file, so the migration (~25 files, two new inputs) buys no closure, speed or reuse gain. Revisit if a second host or user appears.
+- **Fingerprint reader (ELAN 04f3:0c4b)**: not supported by open-source libfprint; needs Lenovo's proprietary TOD blob.
+- **Separate image for the niri overview backdrop**: niri has no native wallpaper support; it would need a second layer-shell client plus a `layer-rule`.
+- **Animated launcher (anyrun)**: reverted. niri cannot animate layer surfaces, and anyrun's fullscreen transparent surface covered the screen under niri blur. Revisit only with a launcher that animates just its own box (planned in the Quickshell shell).
+- **Trimming `linux-firmware` (about 800 MB)**: would break new hardware. Not worth it.
+- **`services.udisks2` off**: loses USB automount.
+- **Swapping deno for nodejs in mpv's yt-dlp (-138 MB)**: needs yt-dlp config and a local rebuild.
+- **Deriving `XKB_DEFAULT_*` from `services.xserver.xkb`**: niri reads the environment variables, so they stay in `notebook.nix`.
+
+## Open questions
+
+- **`services.locate` (plocate)**: filename database so `locate foo` is instant. Needs a yes/no.
+
+## Backlog
+
+- **Shell**: atuin, direnv + nix-direnv, delta with git integration, television.
+- **Nvim**: luasnip + blink-cmp snippet preset, optionally snacks.nvim; extra LSPs only if new file types appear.
+- **Yazi**: plugin system (chmod, full-border, smart-enter).
+- **Desktop apps**: password manager (keepassxc/bitwarden), localsend, nvtop, gdu/duf, zellij, kdeconnect; stylix to consolidate everforest theming.
+- **Security**: Lanzaboote Secure Boot (firmware Secure Boot is off, test carefully); restic backups. TPM2 auto-unlock is blocked by firmware: enable Intel PTT in the BIOS first, then `boot.initrd.systemd.tpm2.enable` + `systemd-cryptenroll`.
+- **ESP32**: platformio and/or arduino-language-server for nvim `.ino` support.
+- **Gaming**: steam/proton, mangohud, gamemode if wanted.
+- **Nvim LSP workers**: nixd spawns several eval workers per instance (about 1.2 GB across nvim and Claude Code); check nixd's worker setting if memory matters.
+
+## Durable notes
+
+### Fresh install and leftovers
+
+- The password hash is a plain file placed at `/home/sean/.secrets/password.txt` (`hashedPasswordFile`), see `README.md`.
+- Git uses HTTPS via `programs.gh`: run `gh auth login` once. No keyring is configured, so the token likely lands in plaintext `~/.config/gh/hosts.yml`. The `origin` remote must be HTTPS: `git remote set-url origin https://github.com/sean-imus/nixos-config.git`.
+- sops was removed because nothing used it. Left on disk: `~/.sops`, `~/.config/sops-nix`.
+
+### Rebuild speed and closure size
+
+- `programs.nixvim.enableMan = false`: Home Manager's fish completion generator parses every man page, and nixvim's 7.3 MB `nixvim.5` cost 8.7 s per rebuild.
+- `programs.fish.generateCompletions = false` (NixOS in `sean.nix`, HM in `shell.nix`): the generator parsed about 76 MB of man pages on every nixpkgs update. Completions come from carapace-bin plus vendor files. Re-add `programs.man.generateCaches = true` if `man -k` for home packages is missed.
+- `services.speechd.enable = false`: `programs.niri` enables it through `graphical-desktop`, and it pulled in about 650 MB of mbrola voices.
+- GC deletes generations older than 3 days; with 35 generations the store had grown to 46 GB. `nh clean all --keep 3` frees space immediately.
+- nixd's flake path is the literal `/home/sean/nixos-config` (from `programs.nh.flake`), not `inputs.self`, so editing any tracked file does not rebuild nvim's init.lua.
+- zram: `vm.swappiness = 180`, `vm.page-cluster = 0`. Revisit if disk swap ever gets hammered.
+
+### MIME and desktop entries
+
+- Archives are deliberately unhandled; extract via yazi/7zz.
+- Associations live with the app that owns them: `browser.nix` (web, images, pdf, json -> `chromium-privat`), `apps.nix` (text and markdown -> Writer).
+- Shadows use `NoDisplay=true`, never `Hidden=true`: `Hidden` removes the entry from the desktop database and broke audio/video launching via `mpv.desktop`. A shadowed entry stays available for MIME handling but hidden from launchers.
+
+### Browser
+
+- Chromium has 4 profiles (Work-Admin, Work-Normal, School, Privat), each its own `--user-data-dir` (`~/.config/chromium-<key>`) with a `chromium-<key>` launcher. External extensions install per data dir, so this is the only declarative way to give Claude in Chrome to Privat alone. Privat is the default browser (`Mod+B`, MIME).
+- Extensions come from the Web Store on first launch and are not removed if dropped from the config. uBlock Origin Lite replaces uBlock Origin (Chromium dropped MV2).
+- Launchers pass `--password-store=basic`: autologin never hands PAM a password, so the gnome-keyring login keyring stays locked and Chromium would prompt on every launch. The Everforest theme is an unpacked extension loaded with `--load-extension`.
+- If `claude --chrome` is used, its native-messaging host belongs in `~/.config/chromium-privat/NativeMessagingHosts`.
+
+### Hardware
+
+- **Hibernation**: `boot.resumeDevice = "/dev/mapper/cryptswap"`. Lid close locks while undocked (logind `lock` + swayidle `lock` event); docked lid close is ignored.
+- **Serial and adb rules** (`hardware-dev.nix`): one generic ADB/Fastboot rule; serial rules for CP210x (10c4:ea60), CH340 (1a86:7523), FTDI (0403:6001) and ESP32-S3 native USB (303a:1001). If a phone is not detected, take its `vendor:product` from `lsusb` and add a rule.
+- **Lock fallback**: `lockscreen.nix` runs the `qs-shell` lock through IPC and falls back to `swaylock -f` when no shell instance answers (the IPC call exits non-zero).
+
+### Other
+
+- **fish**: command-not-found integration is disabled (slow); use `, tool` (comma + nix-index-database).
+- **tealdeer**: `enableAutoUpdates = false` disables the systemd update service; `settings.updates.auto_update = true` makes tldr refresh itself. Both are intended.
+- **License**: PolyForm Noncommercial 1.0.0. The vendored caelestia-shell code (GPL-3.0, `cde3534`, deleted in `adc18af`) stays in git history only; keep any future GPL-derived code under its own notice.

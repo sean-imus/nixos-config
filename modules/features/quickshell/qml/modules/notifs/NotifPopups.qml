@@ -36,8 +36,7 @@ PanelWindow {
         spacing: 8
 
         Repeater {
-            // ScriptModel keeps each card's delegate across list changes, so a new
-            // notification does not replay the other cards' animations.
+
             model: ScriptModel {
                 values: Notifs.popups
             }
@@ -56,7 +55,7 @@ PanelWindow {
         required property var popup
 
         readonly property bool critical: popup.urgency === NotificationUrgency.Critical
-        // Stable accent per app, red for critical.
+
         readonly property color accent: {
             if (critical)
                 return Theme.red;
@@ -67,10 +66,8 @@ PanelWindow {
             return tints[hash % tints.length];
         }
 
-        // 0 -> 1 on appear: slides in from the right while fading up.
         property real enter: 0
-        // 0 -> 1 when leaving: slides out to the right and fades, then the slot
-        // collapses (collapse 0 -> 1) so the cards below glide up.
+
         property real leave: 0
         property real collapse: 0
 
@@ -83,8 +80,6 @@ PanelWindow {
             x: (1 - card.enter) * 70 + card.leave * 90
         }
 
-        // Timed out or dismissed: Notifs flags the entry and removes it a moment
-        // later, after this has played.
         readonly property bool leaving: popup.leaving
         onLeavingChanged: {
             if (leaving)
@@ -128,7 +123,6 @@ PanelWindow {
             border.color: card.critical ? Theme.red : Qt.alpha(Theme.fg, 0.08)
         }
 
-        // Accent stripe down the left edge.
         Rectangle {
             x: 0
             y: 18
@@ -148,7 +142,6 @@ PanelWindow {
             onClicked: Notifs.dismiss(card.popup)
         }
 
-        // Initial of the app in a tinted badge.
         Rectangle {
             id: badge
 
@@ -198,7 +191,6 @@ PanelWindow {
             }
         }
 
-        // Close affordance, only while hovered.
         Text {
             x: card.width - width - 16
             y: 16
@@ -283,7 +275,6 @@ PanelWindow {
             }
         }
 
-        // Countdown to auto-dismiss; absent for notifications that never expire.
         Rectangle {
             id: bar
 

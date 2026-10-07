@@ -5,25 +5,23 @@
     useNautilus = false;
   };
 
-  environment.systemPackages = with pkgs; [
-    brightnessctl
-    wl-clipboard
-    cliphist
-    playerctl
-    xwayland-satellite
-    wiremix
-    bluetui
+  environment.systemPackages = [
+    pkgs.brightnessctl
+    pkgs.wl-clipboard
+    pkgs.cliphist
+    pkgs.playerctl
+    pkgs.wiremix
+    pkgs.bluetui
   ];
 
   home-manager.sharedModules = [
     ./keybindings.nix
     ./outputs.nix
-    ./utilities.nix
+    ./settings.nix
     {
       wayland.windowManager.niri = {
         enable = true;
         portalPackage = null;
-        xwaylandSatellitePackage = null;
         systemd.enable = false;
       };
     }

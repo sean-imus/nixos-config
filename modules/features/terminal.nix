@@ -1,4 +1,24 @@
-{ theme, ... }:
+{
+  lib,
+  pkgs,
+  theme,
+  shadowDesktopEntries,
+  ...
+}:
+let
+  ansi = map (name: theme.${name}) [
+    "bg4"
+    "red"
+    "green"
+    "yellow"
+    "blue"
+    "purple"
+    "aqua"
+    "fg"
+  ];
+  indexed =
+    prefix: lib.listToAttrs (lib.imap0 (i: c: lib.nameValuePair "${prefix}${toString i}" c) ansi);
+in
 {
   programs.foot = {
     enable = true;
@@ -7,32 +27,23 @@
         font = "${theme.fontFamily}:size=10";
         term = "xterm-256color";
       };
-      scrollback = {
-        lines = 10000;
-      };
-      cursor = {
-        style = "beam";
-      };
+      scrollback.lines = 10000;
+      cursor.style = "beam";
       colors-dark = {
         foreground = theme.fg;
         background = theme.bg0;
-        regular0 = theme.bg4;
-        regular1 = theme.red;
-        regular2 = theme.green;
-        regular3 = theme.yellow;
-        regular4 = theme.blue;
-        regular5 = theme.purple;
-        regular6 = theme.aqua;
-        regular7 = theme.fg;
-        bright0 = theme.bg4;
-        bright1 = theme.red;
-        bright2 = theme.green;
-        bright3 = theme.yellow;
-        bright4 = theme.blue;
-        bright5 = theme.purple;
-        bright6 = theme.aqua;
-        bright7 = theme.fg;
-      };
+      }
+      // indexed "regular"
+      // indexed "bright";
     };
   };
+
+  xdg.dataFile =
+    shadowDesktopEntries
+      [ pkgs.foot ]
+      [
+        "foot"
+        "footclient"
+        "foot-server"
+      ];
 }

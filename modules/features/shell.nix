@@ -1,4 +1,9 @@
-{ pkgs, theme, ... }:
+{
+  pkgs,
+  theme,
+  shadowDesktopEntries,
+  ...
+}:
 {
   manual.manpages.enable = false;
 
@@ -16,7 +21,6 @@
 
     starship = {
       enable = true;
-      enableFishIntegration = true;
       settings = {
         add_newline = false;
         format = "$cmd_duration$directory$git_branch$git_status$character";
@@ -52,7 +56,6 @@
 
     fzf = {
       enable = true;
-      enableFishIntegration = true;
       colors = {
         bg = theme.hex theme.bg0;
         "bg+" = theme.hex theme.bg1;
@@ -93,6 +96,16 @@
 
     carapace.enable = true;
 
+    btop = {
+      enable = true;
+      settings = {
+        update_ms = 1000;
+        color_theme = "everforest-dark-medium";
+      };
+    };
+
+    fastfetch.enable = true;
+
     tealdeer = {
       enable = true;
       enableAutoUpdates = false;
@@ -101,10 +114,15 @@
   };
 
   home = {
-    shellAliases.rbu = "nix flake update && git commit flake.lock -m 'chore(inputs): updated hashes'";
+    shellAliases = {
+      rbu = "nix flake update && git commit flake.lock -m 'chore(inputs): updated hashes'";
+      ff = "fastfetch";
+    };
     packages = with pkgs; [
       bat
       ncdu
     ];
   };
+
+  xdg.dataFile = shadowDesktopEntries [ pkgs.btop ] [ "btop" ];
 }

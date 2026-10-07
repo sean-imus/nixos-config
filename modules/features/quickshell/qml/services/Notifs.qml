@@ -10,7 +10,7 @@ Singleton {
     id: root
 
     property var list: []
-    readonly property var popups: root.list.filter(entry => entry.visible)
+    readonly property var popups: root.list
     property bool dnd
 
     function toggleDnd(): void {
@@ -36,7 +36,6 @@ Singleton {
         root.dismiss(entry);
     }
 
-    // Starts the leave animation; the entry is dropped once it has played out.
     function remove(entry): void {
         if (entry.leaving)
             return;
@@ -63,31 +62,27 @@ Singleton {
         timer.restart();
     }
 
-    function push(notif, visible): void {
-        // -1 (never) or unset: critical notifications stay until dismissed,
-        // everything else gets the standard 6s timeout.
+    function push(notif): void {
+
         const timeout = notif.expireTimeout > 0 ? notif.expireTimeout
             : (notif.urgency === NotificationUrgency.Critical ? 0 : 6000);
 
-        // A QtObject (not a plain object) so the cards can react to `leaving`,
-        // and so the popup model keeps delegate identity across list changes.
         const entry = entryComp.createObject(root, {
             notification: notif,
             appName: notif.appName,
             summary: notif.summary,
             body: notif.body,
             urgency: notif.urgency,
-            timeout: visible ? timeout : 0,
+            timeout: timeout,
             actions: notif.actions.map(action => ({
                     identifier: action.identifier,
                     label: action.text
-                })),
-            visible: visible
+                }))
         });
 
         notif.closed.connect(() => root.remove(entry));
 
-        if (visible && timeout > 0) {
+        if (timeout > 0) {
             const timer = timerComp.createObject(root, {
                 interval: timeout
             });
@@ -128,11 +123,10 @@ Singleton {
         onNotification: notif => {
             notif.tracked = true;
 
-            // Under DND: accepted, but never displayed and auto-expired quickly.
             if (root.dnd)
                 root.expireLater(notif, 500);
             else
-                root.push(notif, true);
+                root.push(notif);
         }
     }
 
@@ -147,8 +141,7 @@ Singleton {
             property int urgency
             property int timeout
             property var actions: []
-            property bool visible: true
-            // Playing its exit animation; removed from the list shortly after.
+
             property bool leaving: false
             property var timer: null
         }

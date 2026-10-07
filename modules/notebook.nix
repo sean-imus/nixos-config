@@ -5,10 +5,9 @@
 }:
 {
   imports = [
-    ./features/android.nix
     ./features/claude-code
     ./features/disk.nix
-    ./features/esp32.nix
+    ./features/hardware-dev.nix
     ./features/lockscreen.nix
     ./features/niri
     ./features/printing.nix
@@ -19,6 +18,7 @@
   networking = {
     hostName = "notebook";
     networkmanager.enable = true;
+    modemmanager.enable = false;
   };
 
   services = {
@@ -48,7 +48,6 @@
 
     fwupd.enable = true;
 
-    # Enabled by default through programs.niri; pulls ~650 MB of mbrola voices.
     speechd.enable = false;
 
     getty = {
@@ -66,15 +65,15 @@
     enableRedistributableFirmware = true;
     cpu.intel.updateMicrocode = true;
 
-    graphics = {
-      enable = true;
-      extraPackages = [ pkgs.intel-media-driver ];
-    };
+    graphics.extraPackages = [ pkgs.intel-media-driver ];
 
     bluetooth.enable = true;
   };
 
-  programs.solaar.enable = true;
+  programs = {
+    solaar.enable = true;
+    nano.enable = false;
+  };
 
   environment = {
     variables = {
@@ -84,19 +83,14 @@
       XKB_DEFAULT_VARIANT = "";
     };
 
-    systemPackages = with pkgs; [
-      lm_sensors
-      pciutils
-      usbutils
-      ntfs3g
-      e2fsprogs
+    systemPackages = [
+      pkgs.ntfs3g
+      pkgs.e2fsprogs
     ];
+    defaultPackages = [ ];
   };
 
-  security = {
-    rtkit.enable = true;
-    pam.services."quickshell-lock" = { };
-  };
+  security.rtkit.enable = true;
 
   boot = {
     initrd.availableKernelModules = [
@@ -160,10 +154,12 @@
 
   nix = {
     channel.enable = false;
+    daemonCPUSchedPolicy = "idle";
+    daemonIOSchedClass = "idle";
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 3d";
     };
     optimise = {
       automatic = true;
@@ -171,6 +167,13 @@
     };
     settings = {
       download-buffer-size = 134217728;
+      warn-dirty = false;
+      fallback = true;
+      connect-timeout = 5;
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
       experimental-features = [
         "nix-command"
         "flakes"

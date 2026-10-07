@@ -2,12 +2,7 @@
 
 Claude Code (Pro plan) for `sean`. Repo rules are in `AGENTS.md`.
 
-## Layout
-
-- `default.nix` — NixOS side: the unfree allowance for `claude-code`, and `home-manager.sharedModules = [ ./home.nix ]`.
-- `home.nix` — home-manager side: `programs.claude-code`, the hook/statusLine scripts, the `cc` alias.
-
-MCP servers are not declared here: `programs.claude-code.enableMcpIntegration` pulls them from `programs.mcp` (`features/mcp.nix`).
+`default.nix` is the NixOS side (unfree allowance, attaches `home.nix`); `home.nix` is the home-manager side. MCP servers are declared there in `programs.mcp` (the `nixos` server) and pulled in through `enableMcpIntegration`.
 
 ## Settings
 
@@ -17,7 +12,7 @@ Declared today:
 
 - `env.CLAUDE_CODE_SUBAGENT_MODEL = "haiku"` — subagents run on Haiku to stretch the Pro usage window.
 - `statusLine` — `claude-usage-statusline` (see below).
-- `hooks.PostToolUse` (`Write|Edit|MultiEdit`) — `claude-format-hook` runs `nixfmt` on edited `*.nix` files. Never fails the hook.
+- `hooks.PostToolUse` (`Write|Edit|MultiEdit`) — `claude-format-hook` runs `nixfmt` on edited `*.nix` files. Always exits 0: a syntax error mid-edit must not block Claude.
 - `hooks.Notification` (permission/idle/elicitation prompts) and `hooks.Stop` — `claude-notify-hook` sends `notify-send -a claude-code`, shown by the qs-shell notification server.
 - `lspServers.nix` — `nixd` for `.nix` files (shipped as a generated `hm` plugin).
 

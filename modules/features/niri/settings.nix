@@ -1,10 +1,13 @@
-{
-  config,
-  pkgs,
-  theme,
-  shadowDesktopEntries,
-  ...
-}:
+{ pkgs, theme, ... }:
+let
+  presets._children = map (proportion: { inherit proportion; }) [
+    0.25
+    0.33333
+    0.5
+    0.66667
+    0.75
+  ];
+in
 {
   wayland.windowManager.niri.settings = {
     animations = {
@@ -48,6 +51,15 @@
         ];
       }
       {
+        "spawn-at-startup"._args = [
+          "${pkgs.swaybg}/bin/swaybg"
+          "-i"
+          "${../../../assets/everforest.png}"
+          "-m"
+          "fill"
+        ];
+      }
+      {
         window-rule._children = [
           {
             "clip-to-geometry" = true;
@@ -83,11 +95,7 @@
       };
     };
 
-    cursor = {
-      "hide-when-typing" = true;
-      "xcursor-theme" = config.home.pointerCursor.name;
-      "xcursor-size" = config.home.pointerCursor.size;
-    };
+    cursor."hide-when-typing" = true;
 
     layout = {
       gaps = 6;
@@ -95,27 +103,8 @@
       "center-focused-column" = "on-overflow";
       "always-center-single-column" = { };
       "empty-workspace-above-first" = { };
-      "preset-column-widths" = {
-        _children = [
-          { proportion = 0.25; }
-          { proportion = 0.33333; }
-          { proportion = 0.5; }
-          { proportion = 0.66667; }
-          { proportion = 0.75; }
-        ];
-      };
-      "preset-window-heights" = {
-        _children = [
-          { proportion = 0.25; }
-          { proportion = 0.33333; }
-          { proportion = 0.5; }
-          { proportion = 0.66667; }
-          { proportion = 0.75; }
-        ];
-      };
-      "default-column-width" = {
-        proportion = 0.5;
-      };
+      "preset-column-widths" = presets;
+      "preset-window-heights" = presets;
       "focus-ring" = {
         width = 2;
         "active-color" = theme.hex theme.green;
@@ -141,33 +130,4 @@
 
     clipboard."disable-primary" = { };
   };
-
-  services.playerctld.enable = true;
-
-  programs.mpv = {
-    enable = true;
-    config = {
-      hwdec = "vaapi";
-      gpu-context = "wayland";
-    };
-  };
-
-  xdg.dataFile =
-    shadowDesktopEntries
-      [
-        config.programs.nixvim.build.packageUnchecked
-        pkgs.btop
-        pkgs.cups
-        pkgs.foot
-        pkgs.mpv
-      ]
-      [
-        "cups"
-        "btop"
-        "nvim"
-        "mpv"
-        "foot"
-        "footclient"
-        "foot-server"
-      ];
 }

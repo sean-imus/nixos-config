@@ -1,4 +1,17 @@
-{ inputs, pkgs, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  shadowDesktopEntries,
+  ...
+}:
+let
+  flake = ''(builtins.getFlake "${config.programs.nh.flake}").nixosConfigurations.notebook'';
+  map = key: action: desc: {
+    inherit key action;
+    options = { inherit desc; };
+  };
+in
 {
   imports = [ inputs.nixvim.homeModules.nixvim ];
 
@@ -18,13 +31,12 @@
     enable = true;
     enableMan = false;
     enablePrintInit = false;
-    waylandSupport = true;
+    withRuby = false;
     globals.mapleader = " ";
 
     opts = {
       number = true;
       relativenumber = true;
-      autoread = true;
       expandtab = true;
       ignorecase = true;
       smartcase = true;
@@ -91,11 +103,11 @@
           nixd = {
             enable = true;
             settings = {
-              nixpkgs.expr = "import ${inputs.nixpkgs.outPath} { }";
+              nixpkgs.expr = "import ${inputs.nixpkgs} { }";
               formatting.command = [ "nixfmt" ];
               options = {
-                nixos.expr = "(builtins.getFlake \"/home/sean/nixos-config\").nixosConfigurations.notebook.options";
-                home-manager.expr = "(builtins.getFlake \"/home/sean/nixos-config\").nixosConfigurations.notebook.options.home-manager.users.type.getSubOptions []";
+                nixos.expr = "${flake}.options";
+                home-manager.expr = "${flake}.options.home-manager.users.type.getSubOptions []";
               };
             };
           };
@@ -110,7 +122,6 @@
       };
 
       which-key.enable = true;
-      comment.enable = true;
 
       todo-comments = {
         enable = true;
@@ -154,7 +165,6 @@
           filesystem = {
             follow_current_file.enabled = true;
             use_libuv_file_watcher = true;
-            auto_reload = true;
           };
           window.mappings = {
             S = "open_vsplit";
@@ -175,66 +185,18 @@
     colorschemes.everforest.enable = true;
 
     keymaps = [
-      {
-        key = "<leader>e";
-        action = "<cmd>Neotree toggle<CR>";
-        options.desc = "Toggle file explorer";
-      }
-      {
-        key = "<leader>lg";
-        action = "<cmd>LazyGit<CR>";
-        options.desc = "Open lazygit";
-      }
-      {
-        key = "<leader>h";
-        action = "<cmd>nohlsearch<CR>";
-        options.desc = "Clear search highlights";
-      }
-      {
-        key = "<leader>q";
-        action = "<cmd>q<CR>";
-        options.desc = "Close window";
-      }
-      {
-        key = "<leader>w";
-        action = "<cmd>w<CR>";
-        options.desc = "Save file";
-      }
-      {
-        key = "s";
-        action = "<cmd>lua require('flash').jump()<CR>";
-        options.desc = "Flash jump";
-      }
-      {
-        key = "K";
-        action = "<cmd>lua vim.lsp.buf.hover()<CR>";
-        options.desc = "Show docs: option/value explanation (LSP hover)";
-      }
-      {
-        key = "gK";
-        action = "<cmd>lua vim.lsp.buf.signature_help()<CR>";
-        options.desc = "Show function signature";
-      }
-      {
-        key = "<leader>d";
-        action = "<cmd>lua vim.diagnostic.open_float()<CR>";
-        options.desc = "Show diagnostic details under cursor";
-      }
-      {
-        key = "<leader>r";
-        action = "<cmd>RunFile<CR>";
-        options.desc = "Run current file (per filetype)";
-      }
-      {
-        key = "<leader>sr";
-        action = "<cmd>GrugFar<CR>";
-        options.desc = "Search and replace (project)";
-      }
-      {
-        key = "<leader>tt";
-        action = "<cmd>ToggleTerm<CR>";
-        options.desc = "Toggle terminal";
-      }
+      (map "<leader>e" "<cmd>Neotree toggle<CR>" "Toggle file explorer")
+      (map "<leader>lg" "<cmd>LazyGit<CR>" "Open lazygit")
+      (map "<leader>h" "<cmd>nohlsearch<CR>" "Clear search highlights")
+      (map "<leader>q" "<cmd>q<CR>" "Close window")
+      (map "<leader>w" "<cmd>w<CR>" "Save file")
+      (map "s" "<cmd>lua require('flash').jump()<CR>" "Flash jump")
+      (map "K" "<cmd>lua vim.lsp.buf.hover()<CR>" "Show docs: option/value explanation (LSP hover)")
+      (map "gK" "<cmd>lua vim.lsp.buf.signature_help()<CR>" "Show function signature")
+      (map "<leader>d" "<cmd>lua vim.diagnostic.open_float()<CR>" "Show diagnostic details under cursor")
+      (map "<leader>r" "<cmd>RunFile<CR>" "Run current file (per filetype)")
+      (map "<leader>sr" "<cmd>GrugFar<CR>" "Search and replace (project)")
+      (map "<leader>tt" "<cmd>ToggleTerm<CR>" "Toggle terminal")
     ];
 
     userCommands.RunFile = {
@@ -259,4 +221,5 @@
       '';
     };
   };
+  xdg.dataFile = shadowDesktopEntries [ config.programs.nixvim.build.packageUnchecked ] [ "nvim" ];
 }

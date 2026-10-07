@@ -10,15 +10,11 @@ import qs.services
 PanelWindow {
     id: root
 
-    // Pill appears: drops in with a springy overshoot. Pill disappears: fades and
-    // drifts up (the same calm exit as the lock screen and polkit dialog).
     readonly property bool wanted: Osd.visible
     property real appear: 0
     property real outro: 0
     readonly property real outEase: outro < 0.5 ? 4 * outro * outro * outro : 1 - Math.pow(-2 * outro + 2, 3) / 2
 
-    // Osd clears its state the instant the timer fires; keep showing the last
-    // content while the exit plays instead of emptying a fading pill.
     property string shownKind
     property string shownIcon
     property string shownLabel
@@ -73,18 +69,15 @@ PanelWindow {
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "qs-shell-osd"
 
-    // Fixed-size surface with room around the pill: the pill's own width changes
-    // between kinds and animates, and the entrance/exit motion must not be clipped.
     implicitWidth: 360
     implicitHeight: 96
 
-    // The OSD never takes pointer input.
     mask: Region {}
 
     onWantedChanged: {
         if (root.wanted) {
             exit.stop();
-            // Re-shown during an exit: glide back instead of snapping.
+
             if (root.outro > 0)
                 back.restart();
             if (root.appear < 1)
@@ -133,7 +126,6 @@ PanelWindow {
         }
     }
 
-    // content-sized pill, centred in the surface
     Rectangle {
         id: pill
 
@@ -161,7 +153,6 @@ PanelWindow {
         implicitWidth: row.implicitWidth + 24
         implicitHeight: row.implicitHeight + 14
 
-        // Width follows the content (bar or no bar, label length) smoothly.
         width: implicitWidth
         height: implicitHeight
 
@@ -194,7 +185,6 @@ PanelWindow {
                     }
                 }
 
-                // A new glyph (volume to muted, a different kind) pops in.
                 onTextChanged: iconPop.restart()
 
                 SequentialAnimation {
@@ -234,7 +224,6 @@ PanelWindow {
                     radius: 3
                     color: root.accent
 
-                    // The bar glides to each new value.
                     Behavior on width {
                         NumberAnimation {
                             duration: 180

@@ -2,7 +2,6 @@
 {
   programs.yazi = {
     enable = true;
-    enableFishIntegration = true;
 
     flavors.everforest-medium-dark = "${inputs.yazi-everforest}/everforest-medium-dark.yazi";
 
@@ -10,24 +9,10 @@
 
     settings = {
       mgr = {
-        ratio = [
-          1
-          4
-          3
-        ];
         sort_by = "natural";
-        sort_sensitive = false;
-        sort_dir_first = true;
         linemode = "size";
-        show_hidden = false;
-        show_symlink = true;
-        scrolloff = 5;
       };
-
-      preview = {
-        wrap = "yes";
-        tab_size = 2;
-      };
+      preview.wrap = "yes";
     };
 
     keymap = {

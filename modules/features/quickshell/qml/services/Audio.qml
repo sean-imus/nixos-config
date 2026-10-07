@@ -8,15 +8,9 @@ import Quickshell.Services.Pipewire
 Singleton {
     id: root
 
-    // Pipewire.defaultAudioSink is briefly undefined during defaults-metadata
-    // updates, and untracked nodes have no audio data, so every access below
-    // is exception-safe: one throw kills the binding for good and every
-    // consumer permanently reads undefined.
     readonly property var sinkNode: Pipewire.ready ? Pipewire.defaultAudioSink : null
     readonly property var sourceNode: Pipewire.ready ? Pipewire.defaultAudioSource : null
 
-    // Untracked nodes never bind: audio stays null and volumes stay empty.
-    // The tracker follows the default nodes when they change.
     PwObjectTracker {
         objects: [root.sinkNode, root.sourceNode]
     }

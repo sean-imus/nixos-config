@@ -26,7 +26,7 @@ PanelWindow {
     SystemClock {
         id: clock
 
-        precision: SystemClock.Seconds
+        precision: SystemClock.Minutes
     }
 
     Text {
@@ -42,7 +42,6 @@ PanelWindow {
         font.pixelSize: 11
     }
 
-    // Workspaces for this screen, left after the clock.
     Row {
         id: wsRow
 
@@ -54,7 +53,7 @@ PanelWindow {
 
         Repeater {
             model: {
-                const list = Array.from(Niri.workspaces).filter(w => w.output === root.modelData.name);
+                const list = Array.from(Niri.workspaces).filter(w => w.output === root.modelData?.name);
                 list.sort((a, b) => a.idx - b.idx);
                 return list;
             }
@@ -84,7 +83,6 @@ PanelWindow {
         }
     }
 
-    // Claude plan usage (5-hour window), after the workspaces.
     Text {
         anchors.left: wsRow.right
         anchors.leftMargin: 10
@@ -96,7 +94,6 @@ PanelWindow {
         font.pixelSize: 11
     }
 
-    // Status indicators: profile, mic, vol, battery.
     Row {
         anchors.right: parent.right
         anchors.rightMargin: 6
@@ -107,35 +104,19 @@ PanelWindow {
         MouseArea {
             id: profileItem
 
-            readonly property var info: {
-                const hasPerf = PowerProfiles.hasPerformanceProfile;
-                const profile = PowerProfiles.profile;
-                if (profile === PowerProfile.Performance)
-                    return hasPerf ? ["PERF high", Theme.red] : ["PERF med", Theme.yellow];
-                if (profile === PowerProfile.Balanced)
-                    return ["PERF med", Theme.yellow];
-                return ["PERF low", Theme.green];
-            }
-
             implicitWidth: profileText.implicitWidth
             implicitHeight: profileText.implicitHeight
             cursorShape: Qt.PointingHandCursor
 
-            onClicked: {
-                const order = PowerProfiles.hasPerformanceProfile
-                        ? [PowerProfile.PowerSaver, PowerProfile.Balanced, PowerProfile.Performance]
-                        : [PowerProfile.PowerSaver, PowerProfile.Balanced];
-                const i = order.indexOf(PowerProfiles.profile);
-                PowerProfiles.profile = order[(i + 1) % order.length];
-            }
+            onClicked: Power.cycle()
 
             Text {
                 id: profileText
 
                 anchors.centerIn: parent
 
-                text: profileItem.info[0]
-                color: profileItem.info[1]
+                text: Power.current.label
+                color: Power.current.color
                 font.family: Theme.fontFamily
                 font.pixelSize: 11
             }

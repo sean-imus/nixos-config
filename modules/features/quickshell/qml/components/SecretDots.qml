@@ -1,12 +1,6 @@
 import QtQuick
 import qs.config
 
-// Hidden-input display. Every typed character is a dot; a new one first springs
-// in as a big random symbol (cycling glyphs and palette colours), holds a beat,
-// then morphs into a small dot. The strip is centred with an animated width, so
-// existing dots glide aside as characters are added or removed, and removed
-// dots shrink away. Symbols are a pure function of (index, salt, tick), so
-// several instances given the same salt (one per monitor) agree on the result.
 Item {
     id: root
 
@@ -16,13 +10,9 @@ Item {
     property int pixelSize: 20
 
     readonly property real dotSize: pixelSize * 0.6
-    // Wide enough that the big entrance symbols never touch their neighbours.
+
     readonly property real cellWidth: pixelSize * 1.15
 
-    // Nerd Font (Font Awesome range) codepoints: star, heart, leaf, bolt, sun, moon,
-    // bell, cog, cloud, paw, fire, wand, flag, bookmark, badge, tree, drop, bulb,
-    // gamepad, bomb, rocket, plane. Drawn with Theme.symbolFont so every glyph
-    // exists and has the same width.
     readonly property var glyphs: [0xf005, 0xf004, 0xf06c, 0xf0e7, 0xf185, 0xf186, 0xf0f3, 0xf013, 0xf0c2, 0xf1b0, 0xf06d, 0xf0d0, 0xf024, 0xf02e, 0xf0a3, 0xf1bb, 0xf043, 0xf0eb, 0xf11b, 0xf1e2, 0xf135, 0xf1d8]
     readonly property var tints: [Theme.green, Theme.aqua, Theme.blue, Theme.purple, Theme.yellow, Theme.orange, Theme.red]
 
@@ -40,8 +30,6 @@ Item {
 
     implicitHeight: pixelSize * 1.6
 
-    // A real model, not an integer: an integer model rebuilds every delegate when
-    // the count changes, which replayed every dot's animation on each keypress.
     ListModel {
         id: items
     }
@@ -69,7 +57,6 @@ Item {
         interactive: false
         model: items
 
-        // Shrink instead of overflowing when the password is long.
         scale: Math.min(1, root.width / Math.max(1, width))
 
         Behavior on width {
@@ -99,13 +86,10 @@ Item {
 
             required property int index
 
-            // symbol: 0..1 amount of the big random symbol; dot: 0..1 of the final dot.
             property real symbol: 0
             property real dot: 0
             property int tick: 0
 
-            // Only the newest character plays the full entrance; typing the next
-            // one fast-forwards this one to its final dot.
             readonly property bool newest: index === root.count - 1
 
             width: root.cellWidth
@@ -176,7 +160,6 @@ Item {
                 }
             }
 
-            // Cycle glyphs and colours while the symbol is on show: a few changes only.
             Timer {
                 interval: 420
                 repeat: true

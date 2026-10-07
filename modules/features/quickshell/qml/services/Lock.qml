@@ -10,40 +10,32 @@ import Quickshell.Services.Pam
 import qs.components
 import qs.config
 
-// Session lock: ext-session-lock via WlSessionLock, auth via PAM service
-// "quickshell-lock" (NixOS: security.pam.services."quickshell-lock").
-// Fallback if the shell dies while locked: run `swaylock` from a TTY.
-//
-// QS_LOCK_TEST=1 makes the lock release itself after 30 s, so a broken lock
-// screen cannot trap the session while developing. Unset in normal use.
 Singleton {
     id: root
 
     readonly property bool testMode: Quickshell.env("QS_LOCK_TEST") === "1"
-    // Dev only: show HH:ss on a per-second clock to see the digit roll quickly.
+
     readonly property bool fastClock: Quickshell.env("QS_LOCK_CLOCK") === "seconds"
     readonly property string timeFormat: fastClock ? "HH:ss" : "HH:mm"
-    // Fast mode also puts the seconds in the day slot so the date roll is visible.
+
     readonly property string dateFormat: fastClock ? "dddd, ss MMMM yyyy" : "dddd, dd MMMM yyyy"
 
-    // Shared state so every output's surface stays in sync.
     property string entry
-    // Password submitted, waiting for PAM's verdict (it delays after a failure).
+
     property bool checking
-    // Last attempt failed; cleared on the next keypress.
+
     property bool failed
-    // Bumped on every failure to trigger the shake animation.
+
     property int failures
-    // Seed for the per-character symbols; changes per lock and per failure.
+
     property int dotSalt
-    // 0..1 progress of the show/hide choreography; each element derives its own
-    // staggered slice from it via stage().
+
     property real reveal: 0
-    // Correct password accepted; playing the exit animation before releasing.
+
     property bool leaving
-    // 0..1 progress of the calm exit (fade and drift up, no spin).
+
     property real outro: 0
-    // Lock requested, waiting for the per-output screenshots to finish.
+
     property bool engaging
     property int pendingShots
 
@@ -57,7 +49,6 @@ Singleton {
         return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     }
 
-    // Exit slice for an element with the given start delay.
     function outStage(delay) {
         return inOutCubic(Math.min(1, Math.max(0, (outro - delay) / (1 - delay))));
     }
@@ -83,8 +74,6 @@ Singleton {
         return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2);
     }
 
-    // Grab each output before the lock surface covers it (screencopy would
-    // only see the lock afterwards); the background is a blurred copy of it.
     function lock() {
         if (sessionLock.locked || engaging)
             return;
@@ -94,7 +83,7 @@ Singleton {
             engage();
             return;
         }
-        // Never delay the lock for long if grim is slow or missing.
+
         lockFallback.restart();
         for (let i = 0; i < shots.instances.length; i++)
             shots.instances[i].capture();
@@ -119,21 +108,18 @@ Singleton {
         reveal = 0;
         enter.restart();
         sessionLock.locked = true;
-        // Not driven by lockStateChanged: that only fires once the compositor
-        // confirms the lock.
+
         pam.start();
         if (testMode)
             testUnlock.restart();
-        // Surfaces load the screenshots synchronously on creation; drop the
-        // files from the runtime dir right after.
+
         cleanup.restart();
     }
 
     function submit() {
         if (!pam.responseRequired || entry.length === 0)
             return;
-        // Keep the dots on screen until PAM answers: clearing them here made them
-        // shrink and drift while the pill was already animating away.
+
         checking = true;
         pam.respond(entry);
     }
@@ -192,7 +178,6 @@ Singleton {
 
         locked: false
 
-        // The NOTIFY signal of `locked` is lockStateChanged (no lockedChanged).
         onLockStateChanged: {
             if (!sessionLock.locked) {
                 pam.abort();
@@ -215,19 +200,17 @@ Singleton {
                 precision: root.fastClock ? SystemClock.Seconds : SystemClock.Minutes
             }
 
-            // Blurred copy of this output as it was when the lock was requested.
             Image {
                 id: shot
 
                 anchors.fill: parent
                 visible: false
-                source: "file://" + root.shotPath(surface.screen.name)
+                source: surface.screen ? "file://" + root.shotPath(surface.screen.name) : ""
                 asynchronous: false
                 cache: false
                 fillMode: Image.PreserveAspectCrop
                 smooth: true
-                // Decoding at a tiny size is most of the blur; the effect below
-                // removes the blockiness, so no readable detail survives.
+
                 sourceSize.width: 128
             }
 
@@ -244,14 +227,12 @@ Singleton {
                 opacity: root.stage(0, 0.8)
             }
 
-            // Tint towards the palette so the text stays readable.
             Rectangle {
                 anchors.fill: parent
                 color: Theme.bg0
                 opacity: shot.status === Image.Ready ? 0.45 * root.stage(0, 0.8) : 0
             }
 
-            // Pulse ring expanding from the centre as the lock lands.
             Rectangle {
                 readonly property real t: root.leaving ? 1 : root.outCubic(root.stage(0, 0.9))
 
@@ -267,8 +248,6 @@ Singleton {
                 opacity: 0.45 * (1 - t)
             }
 
-            // Clock colon breathing, one full cycle per second (2 x 500 ms); steady until
-            // the lock has settled.
             QtObject {
                 id: colonPulse
 
@@ -291,8 +270,6 @@ Singleton {
                 }
             }
 
-            // Raw key capture instead of a TextField: no enabled/focus states to
-            // get out of sync with PAM.
             Item {
                 id: keys
 
@@ -309,19 +286,15 @@ Singleton {
                 anchors.centerIn: parent
                 spacing: 10
 
-                // Time: every glyph flies in from its own edge, spinning into place.
                 Row {
                     id: timeRow
 
-                    // x, y offset and spin the glyph starts from.
                     readonly property var origins: [[0, -900, -270], [-1100, 0, 200], [0, 900, 360], [1100, 0, -200], [0, -900, 270]]
 
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     readonly property string str: Qt.formatDateTime(clock.date, root.timeFormat)
 
-                    // Persistent per-position delegates, so a changing digit can roll
-                    // instead of being recreated.
                     Repeater {
                         model: 5
 
@@ -335,7 +308,6 @@ Singleton {
                             readonly property string char: timeRow.str.charAt(index)
                             readonly property bool colon: char === ":"
 
-                            // Previous character and the 0..1 progress of its roll-out.
                             property string last: char
                             property string old
                             property real roll: 1
@@ -361,7 +333,6 @@ Singleton {
                                 easing.type: Easing.OutCubic
                             }
 
-                            // The colon breathes once settled.
                             opacity: Math.min(1, p * 2) * (colon ? colonPulse.level : 1) * root.fade(0.1)
                             rotation: o[2] * (1 - p)
                             transform: Translate {
@@ -369,7 +340,6 @@ Singleton {
                                 y: glyph.o[1] * (1 - glyph.p) + root.drift(0.1)
                             }
 
-                            // Outgoing digit: lifts away and fades.
                             Text {
                                 y: -glyph.roll * font.pixelSize * 0.55
                                 opacity: 1 - glyph.roll
@@ -381,7 +351,6 @@ Singleton {
                                 font.bold: true
                             }
 
-                            // Incoming digit: rises into place from below.
                             Text {
                                 id: cur
 
@@ -398,15 +367,11 @@ Singleton {
                     }
                 }
 
-                // Date: letters swarm in from all around the screen and assemble.
-                // When the date text changes (midnight) the whole line lifts away
-                // and the new one rises in, letter by letter.
                 Item {
                     id: dateBox
 
                     readonly property string str: Qt.formatDateTime(clock.date, root.dateFormat).replace(/ /g, "\u00a0")
 
-                    // Previous text and the 0..1 progress of the change.
                     property string last: str
                     property string old
                     property real roll: 1
@@ -433,7 +398,6 @@ Singleton {
                         easing.type: Easing.Linear
                     }
 
-                    // Outgoing line.
                     Row {
                         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -459,8 +423,6 @@ Singleton {
                         }
                     }
 
-                    // Current line. The model is the length, so letters persist
-                    // across ticks and only their text changes.
                     Row {
                         id: dateRow
 
@@ -474,7 +436,6 @@ Singleton {
 
                                 required property int index
 
-                                // Golden-angle spread so letters come from every direction.
                                 readonly property real angle: index * 2.399
                                 readonly property real dist: 500 + (index * 97 % 7) * 70
                                 readonly property real p: root.outBack(root.stage(0.12 + index * (0.35 / Math.max(1, dateBox.str.length)), 0.5))
@@ -505,7 +466,6 @@ Singleton {
 
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    // Compact around the hint until typing starts, then opens up.
                     width: root.entry.length > 0 ? 380 : hint.implicitWidth + 72
                     height: 56
                     radius: height / 2
@@ -582,7 +542,7 @@ Singleton {
 
                         count: root.entry.length
                         salt: root.dotSalt
-                        // Dimmed while PAM is checking.
+
                         opacity: root.checking ? 0.45 : 1
                         Behavior on opacity {
                             NumberAnimation {
@@ -592,7 +552,6 @@ Singleton {
                         pixelSize: 20
                     }
 
-                    // Hint while nothing is typed; fades out as the first dot lands.
                     Text {
                         id: hint
 
@@ -672,7 +631,7 @@ Singleton {
             }
 
             property Process grim: Process {
-                command: ["grim", "-o", shotEntry.modelData.name, root.shotPath(shotEntry.modelData.name)]
+                command: ["grim", "-o", shotEntry.modelData?.name, root.shotPath(shotEntry.modelData?.name)]
                 onExited: root.shotDone()
             }
         }

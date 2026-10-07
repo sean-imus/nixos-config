@@ -3,7 +3,7 @@
   gtk = {
     enable = true;
     theme = {
-      name = "everforest-dark-medium";
+      name = "Everforest-Dark";
       package = pkgs.everforest-gtk-theme;
     };
     iconTheme = {
@@ -16,7 +16,6 @@
     };
   };
 
-  # niri/utilities.nix reads its cursor theme and size from here.
   home.pointerCursor = {
     enable = true;
     name = "everforest-cursors";

@@ -11,27 +11,20 @@ import qs.components
 import qs.config
 import qs.services
 
-// Unanchored layer-shell surfaces are centered on both axes by the
-// compositor, keeping the window content-sized instead of fullscreen.
 PanelWindow {
     id: root
 
     readonly property AuthFlow flow: Polkit.flow
-    // New symbol seed for each authentication request.
+
     property int dotSalt: Math.floor(Math.random() * 1000)
 
-    // An authentication request is pending. The window itself stays mapped until
-    // the exit animation has played out.
     readonly property bool wanted: root.flow !== null && !root.flow.isCompleted && !root.flow.isCancelled
-    // 0..1 progress of the appear animation.
+
     property real appear: 0
-    // 0..1 progress of the exit: a calm fade and drift up, like the lock screen.
+
     property real outro: 0
     readonly property real outEase: outro < 0.5 ? 4 * outro * outro * outro : 1 - Math.pow(-2 * outro + 2, 3) / 2
 
-    // The flow becomes null the instant a request ends. These copies freeze at
-    // that moment so the card keeps its text through the exit animation instead
-    // of emptying while it is still fading.
     property string shownMessage
     property string shownIdentity
     property string shownPrompt
@@ -81,24 +74,20 @@ PanelWindow {
         when: root.wanted
     }
 
-    // Password sent, waiting for PAM's verdict (it delays after a failure).
     property bool checking
-    // Last attempt failed; cleared when typing resumes.
+
     property bool failed
-    // Bumped on every failure to trigger the shake.
+
     property int failures
 
     visible: wanted || appear > 0
     color: "transparent"
     screen: Niri.focusedScreen
 
-    // The surface is taller than the card so the rise on appear and the drift up
-    // on exit have room to play instead of being clipped by the window edge.
     readonly property int cardHeight: 196
     implicitWidth: 380
     implicitHeight: cardHeight + 112
 
-    // Only the card takes pointer input, not the transparent margin around it.
     mask: Region {
         item: card
     }
@@ -109,9 +98,8 @@ PanelWindow {
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "qs-shell-polkit"
 
-    // Scale of the card at the current animation progress.
     readonly property real cardScale: 0.88 + 0.12 * root.appear
-    // Let go of the keyboard as soon as the request is over, not after the fade.
+
     WlrLayershell.keyboardFocus: root.wanted ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
     onWantedChanged: {
@@ -161,7 +149,7 @@ PanelWindow {
     onFailuresChanged: shake.restart()
 
     onFlowChanged: {
-        // A null flow means the request just ended: leave the card as it is.
+
         if (root.flow === null)
             return;
         field.text = "";
@@ -173,7 +161,7 @@ PanelWindow {
     function submit() {
         if (!root.flow || root.checking || field.text.length === 0)
             return;
-        // Keep the dots on screen (dimmed) until PAM answers.
+
         root.checking = true;
         root.failed = false;
         root.flow.submit(field.text);
@@ -189,8 +177,7 @@ PanelWindow {
         target: root.flow
 
         function onAuthenticationFailed() {
-            // The flow stays alive with a fresh session; shake, flag the error,
-            // clear the stale password and keep the dialog open.
+
             root.checking = false;
             root.failed = true;
             root.failures++;
@@ -209,7 +196,6 @@ PanelWindow {
         radius: 12
         color: Theme.bg0
 
-        // Rises and grows into place on appear; fades and drifts up on exit.
         opacity: Math.min(1, root.appear * 1.8) * (1 - root.outEase)
         transform: [
             Translate {
@@ -265,8 +251,6 @@ PanelWindow {
 
                 readonly property bool hidden: echoMode === TextInput.Password
 
-                // The symbols are drawn by SecretDots, so a caret would not follow
-                // them (and rendered black); hide it for hidden input.
                 cursorDelegate: hidden ? noCursor : null
 
                 Component {
@@ -313,14 +297,14 @@ PanelWindow {
                 }
 
                 echoMode: root.shownVisibleInput ? TextInput.Normal : TextInput.Password
-                // Hidden input is drawn by SecretDots; the field only takes the keys.
+
                 color: hidden ? "transparent" : Theme.fg
                 selectionColor: hidden ? "transparent" : palette.highlight
                 horizontalAlignment: TextInput.AlignHCenter
                 verticalAlignment: TextInput.AlignVCenter
 
                 font.family: Theme.fontFamily
-                // Bigger, spaced dots for hidden input; normal size for visible text.
+
                 font.pixelSize: hidden ? 20 : 11
 
                 background: Rectangle {
@@ -347,7 +331,7 @@ PanelWindow {
                     count: field.length
                     salt: root.dotSalt
                     pixelSize: 18
-                    // Dimmed while PAM is checking.
+
                     opacity: root.checking ? 0.45 : 1
                     Behavior on opacity {
                         NumberAnimation {
@@ -357,7 +341,6 @@ PanelWindow {
                 }
             }
 
-            // Status slot, always present so the layout never jumps.
             Text {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 14

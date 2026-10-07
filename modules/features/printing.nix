@@ -4,9 +4,14 @@
 
   hardware.sane.enable = true;
 
+  environment.systemPackages = [ pkgs.simple-scan ];
+
   home-manager.sharedModules = [
-    {
-      home.packages = [ pkgs.simple-scan ];
-    }
+    (
+      { shadowDesktopEntries, ... }:
+      {
+        xdg.dataFile = shadowDesktopEntries [ pkgs.cups ] [ "cups" ];
+      }
+    )
   ];
 }

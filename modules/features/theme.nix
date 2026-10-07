@@ -1,11 +1,3 @@
-# Visual identity: the everforest "medium dark" palette and the UI font.
-#
-# Single source of truth for theming. Modules take `theme` as a module argument instead of
-# hardcoding hex literals or font names, so restyling is one edit.
-#
-#   theme.hex theme.green        -> "#a7c080"
-#   theme.rgba theme.green "44"  -> "a7c08044"  (8-digit, no prefix: fuzzel form)
-#   theme.rgb.green              -> "167, 192, 128" (CSS rgb()/rgba())
 {
   _module.args.theme =
     let
@@ -31,24 +23,21 @@
         purple = "d699b6";
       };
 
-      # "a7c080" -> "167, 192, 128"; TOML parses the 0x literals.
-      channel = hex: toString (builtins.fromTOML "n = 0x${hex}").n;
+      channel = hex: (builtins.fromTOML "n = 0x${hex}").n;
       toRgb =
         c:
-        builtins.concatStringsSep ", " [
-          (channel (builtins.substring 0 2 c))
-          (channel (builtins.substring 2 2 c))
-          (channel (builtins.substring 4 2 c))
+        map (i: channel (builtins.substring i 2 c)) [
+          0
+          2
+          4
         ];
     in
     colours
     // {
+      palette = colours;
       hex = colour: "#" + colour;
       rgba = colour: alpha: colour + alpha;
       rgb = builtins.mapAttrs (_: toRgb) colours;
-
-      # Font family used by the terminal, bar, notifications, Gtk and the greeter
-      # widgets. Point sizes stay at their call sites (they differ per surface).
       fontFamily = "JetBrainsMono Nerd Font";
     };
 }
