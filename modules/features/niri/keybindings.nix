@@ -305,7 +305,7 @@ _: {
     };
 
     "Mod+B" = {
-      spawn = "firefox";
+      spawn = "chromium-privat";
     };
 
     "Mod+Ctrl+B" = {

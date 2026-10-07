@@ -1,41 +1,72 @@
-_: {
-  programs.firefox = {
-    enable = true;
+{ lib, pkgs, ... }:
+let
+  shadowDesktopEntries = import ../lib/desktop-entries.nix { inherit pkgs; };
 
-    policies = {
-      DisableTelemetry = true;
-      DisablePocket = true;
-      DisableFirefoxAccounts = true;
-      OfferToSaveLogins = false;
-      PasswordManagerEnabled = false;
-      ExtensionSettings = {
-        "uBlock0@raymondhill.net" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-          installation_mode = "normal_installed";
-        };
-        "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi";
-          installation_mode = "normal_installed";
-        };
-      };
-    };
-
-    profiles.default = {
-      isDefault = true;
-
-      search.force = true;
-      containersForce = true;
-      extensions.force = true;
-      handlers.force = true;
-
-      settings = {
-        "browser.startup.homepage_override.once" = "about:home";
-        "browser.newtabpage.enabled" = true;
-        "browser.tabs.tabmanager.enabled" = true;
-        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-        "browser.compactmode.show" = true;
-        "general.smoothScroll" = true;
-      };
-    };
+  # Chromium installs external extensions per user-data-dir, so every profile
+  # is its own data dir. That is what keeps Claude out of all but Privat.
+  profiles = {
+    work-admin = "Work-Admin";
+    work-normal = "Work-Normal";
+    school = "School";
+    privat = "Privat";
   };
+
+  ublockLite = "ddkjiahejlhfcafbddmgiahcphecmpfh";
+  vimium = "dbepggeogbaibhgnhhndojpepiihcmeb";
+  claude = "fcoeoabgfenejglbffodgkkbkcdhcgfn";
+
+  commonExtensions = [
+    ublockLite
+    vimium
+  ];
+  extensionsFor = key: commonExtensions ++ lib.optional (key == "privat") claude;
+
+  updateUrl = builtins.toJSON {
+    external_update_url = "https://clients2.google.com/service/update2/crx";
+  };
+in
+{
+  programs.chromium.enable = true;
+
+  # --password-store=basic: autologin never hands PAM a password, so the
+  # gnome-keyring login keyring stays locked and Chromium would prompt on launch.
+  home.packages = lib.mapAttrsToList (
+    key: _:
+    pkgs.writeShellScriptBin "chromium-${key}" ''
+      exec chromium --password-store=basic --user-data-dir="$HOME/.config/chromium-${key}" "$@"
+    ''
+  ) profiles;
+
+  xdg.desktopEntries = lib.mapAttrs' (
+    key: name:
+    lib.nameValuePair "chromium-${key}" {
+      name = "Chromium (${name})";
+      genericName = "Web Browser";
+      exec = "chromium-${key} %U";
+      icon = "chromium";
+      categories = [
+        "Network"
+        "WebBrowser"
+      ];
+      mimeType = [
+        "text/html"
+        "x-scheme-handler/http"
+        "x-scheme-handler/https"
+      ];
+    }
+  ) profiles;
+
+  home.file = lib.listToAttrs (
+    lib.concatLists (
+      lib.mapAttrsToList (
+        key: _:
+        map (id: {
+          name = ".config/chromium-${key}/External Extensions/${id}.json";
+          value.text = updateUrl;
+        }) (extensionsFor key)
+      ) profiles
+    )
+  );
+
+  xdg.dataFile = shadowDesktopEntries [ pkgs.chromium ] [ "chromium-browser" ];
 }
