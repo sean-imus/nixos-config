@@ -33,9 +33,9 @@
       ./features/theme.nix
     ];
 
-    home.stateVersion = "26.11";
-
-    programs.nix-index-database.comma.enable = true;
     programs.nix-index.enableFishIntegration = false;
+    programs.nix-index-database.comma.enable = true;
+
+    home.stateVersion = "26.11";
   };
 }
