@@ -7,7 +7,7 @@ Rules for this repo. Personal NixOS flake: one host (`notebook`), one user (`sea
 - `flake.nix` — inputs, `nixosConfigurations.notebook`, `formatter` (nixfmt-tree).
 - `modules/notebook.nix` — NixOS host module: boot, hardware, locale, users, nix daemon, fonts. Imports the system-side features.
 - `modules/sean.nix` — the `sean` user and the home-manager import list.
-- `modules/features/<name>.nix` — one feature per file, or per directory when it ships assets or a dev guide (`claude-code/`, `niri/`, `quickshell/`). Small related features share a file (`apps.nix`, `hardware-dev.nix`).
+- `modules/features/<name>.nix` — one feature per file, or per directory when it ships assets or a dev guide (`claude-code/`, `niri/`, `quickshell/`). Small related features share a file (`extra-apps.nix`, `hardware-dev.nix`).
 - `assets/` — static files referenced by features.
 
 ## Module rules
@@ -109,7 +109,7 @@ Nothing below is active work unless an entry says so.
 ### MIME and desktop entries
 
 - Archives are deliberately unhandled; extract via yazi/7zz.
-- Associations live with the app that owns them: `browser.nix` (web, images, pdf, json -> `chromium-privat`), `apps.nix` (text and markdown -> Writer).
+- Associations live with the app that owns them: `browser.nix` (web, images, pdf, json -> `chromium-privat`), `extra-apps.nix` (text and markdown -> Writer).
 - Shadows use `NoDisplay=true`, never `Hidden=true`: `Hidden` removes the entry from the desktop database and broke audio/video launching via `mpv.desktop`. A shadowed entry stays available for MIME handling but hidden from launchers.
 
 ### Browser
