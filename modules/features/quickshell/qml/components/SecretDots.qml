@@ -88,7 +88,6 @@ Item {
 
             property real symbol: 0
             property real dot: 0
-            property int tick: 0
 
             readonly property bool newest: index === root.count - 1
 
@@ -160,18 +159,11 @@ Item {
                 }
             }
 
-            Timer {
-                interval: 420
-                repeat: true
-                running: cell.symbol > 0 && cell.dot < 0.05
-                onTriggered: cell.tick++
-            }
-
             Text {
                 anchors.centerIn: parent
 
-                text: root.symbolAt(cell.index + cell.tick * 7, root.salt + cell.tick * 3)
-                color: root.tintAt(cell.index + cell.tick * 5, root.salt + cell.tick)
+                text: root.symbolAt(cell.index, root.salt)
+                color: root.tintAt(cell.index, root.salt)
                 opacity: Math.min(1, cell.symbol * 3)
                 scale: cell.symbol
                 font.family: Theme.symbolFont
