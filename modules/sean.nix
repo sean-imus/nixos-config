@@ -20,7 +20,6 @@
   home-manager.users.sean = {
     imports = [
       inputs.nix-index-database.homeModules.default
-      ./features/appearance.nix
       ./features/apps.nix
       ./features/browser.nix
       ./features/desktop-entries.nix
