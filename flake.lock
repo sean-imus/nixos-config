@@ -139,8 +139,7 @@
         "home-manager": "home-manager",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
-        "nixvim": "nixvim",
-        "yazi-everforest": "yazi-everforest"
+        "nixvim": "nixvim"
       }
     },
     "systems": {
@@ -157,22 +156,6 @@
         "owner": "nix-systems",
         "ref": "future-26.11",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "yazi-everforest": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1788121331,
-        "narHash": "sha256-rk1ejvxRvOeC66jXe/QW7iaRWPrMqmyRo2+aDQXokrQ=",
-        "owner": "jcarter",
-        "repo": "everforest-yazi",
-        "rev": "4d437806f55d8798d82901360f51339bce2fab09",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jcarter",
-        "repo": "everforest-yazi",
         "type": "github"
       }
     }
