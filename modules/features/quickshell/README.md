@@ -6,14 +6,24 @@ Installed as the Home Manager config `qs-shell` (`programs.quickshell.configs.qs
 
 ## What it owns
 
-- **Bar** (`qml/modules/bar/Bar.qml`): bottom 18px, one per screen. Clock, niri workspaces (`services/Niri.qml`, event-stream driven), Claude plan usage `CC <n>%` (`services/ClaudeUsage.qml`, polls `$XDG_RUNTIME_DIR/claude-usage.json` written by the Claude Code statusLine; contract in `features/claude-code/README.md`), battery/volume/mic/power profile with click/scroll actions.
+- **Bar** (`qml/modules/bar/Bar.qml`): bottom 18px, one per screen. Clock, niri workspaces (`services/Niri.qml`, event-stream driven), Claude plan usage `CC <n>%` (`services/ClaudeUsage.qml`, polls `$XDG_RUNTIME_DIR/claude-usage.json` written by the Claude Code statusLine; contract below), battery/volume/mic/power profile with click/scroll actions.
 - **Notifications** (`services/Notifs.qml`, `modules/notifs/NotifPopups.qml`): own `org.freedesktop.Notifications` server, in-memory only. Cards are translucent with an app-initial badge, accent stripe and countdown line. DND/clear via IPC (`notifs toggleDnd|clear`, niri binds `Mod+Shift+D` / `Mod+Shift+N`).
 - **Polkit agent** (`modules/polkit/PolkitDialog.qml`, `services/Polkit.qml`): uses polkit's own session/helper and the stock `polkit-1` PAM. If the shell dies, elevation prompts wedge until it is restarted.
 - **OSD** (`modules/osd/OsdPanel.qml`, `services/Osd.qml`, `Audio.qml`, `Brightness.qml`): volume/mic/brightness/power profile. Brightness is read from sysfs (inotify is unreliable there) and only polled, every 25 ms for 1.2 s, after the brightness keys call `ipc call brightness poke`; external brightness changes do not show the OSD. The bar clock ticks per minute; `ClaudeUsage` polls every 30 s.
-- **Lock** (`services/Lock.qml`, `components/SecretDots.qml`): `WlSessionLock` + PAM service `quickshell-lock` (declared in `lockscreen.nix`), IPC target `lock`. Wired to `Super+Alt+L` (bind in `default.nix`) and swayidle's `lock` event, with a swaylock fallback, both in `lockscreen.nix`. If the shell dies while locked, run `swaylock` from a TTY. The background is a blurred per-output `grim` screenshot taken *before* the lock engages. `SecretDots` is also used by the polkit dialog.
-- **IPC**: `powerprofiles cycle` (`Mod+P`), `notifs ...`, `lock lock`, `brightness poke`. `Mod+Shift+R` restarts the whole shell (script in `default.nix`, log `~/.cache/qs-shell-restart.log`; it toasts "Shell restarted" once the new instance answers IPC and gives up early if the process dies during startup). `grim` and `libnotify` are installed for the lock screenshots and that toast; the generated `Theme.qml` also declares `symbolFont` (Symbols Nerd Font Mono, from `nerd-fonts.symbols-only` in `notebook.nix`).
+- **Lock** (`services/Lock.qml`, `components/SecretDots.qml`): `WlSessionLock` + PAM service `quickshell-lock` (declared in `default.nix`), IPC target `lock`. Wired to `Super+Alt+L` (bind in `default.nix`) and swayidle's `lock` event with a swaylock fallback (`lockscreen.nix`). If the shell dies while locked, run `swaylock` from a TTY. The background is a blurred per-output `grim` screenshot taken *before* the lock engages. `SecretDots` is also used by the polkit dialog.
+- **IPC**: `powerprofiles cycle` (`Mod+P`), `notifs ...`, `lock lock`, `brightness poke`. `Mod+Shift+R` restarts the whole shell (script in `default.nix`, log `~/.cache/qs-shell-restart.log`; it toasts "Shell restarted" once the new instance answers IPC and gives up early if the process dies during startup). `grim` and `libnotify` are installed for the lock screenshots and that toast, `brightnessctl` for the brightness keys (bound in `default.nix`); the generated `Theme.qml` also declares `symbolFont` (Symbols Nerd Font Mono, from `nerd-fonts.symbols-only` in `theme.nix`).
 
 The launcher is still **fuzzel** (`features/launcher.nix`, `Mod+Space`).
+
+## Usage file (contract with claude-code)
+
+Claude Code pipes session JSON to the `statusLine` command (`claude-usage-statusline` in `features/claude-code.nix`). When it contains `rate_limits.five_hour` (Pro/Max only, and only after the session's first API response), the script writes
+
+```json
+{"five_hour":{"used_percentage":23.5,"resets_at":1738425600},"seven_day":{"used_percentage":41.2,"resets_at":1738857600},"updated":1738420000}
+```
+
+atomically (`tmp` + `mv`) to `$XDG_RUNTIME_DIR/claude-usage.json`. `services/ClaudeUsage.qml` polls it and the bar shows `CC <n>%` next to the workspaces (yellow, red from 90, grey `CC --` before the first session after boot). If the field names in the statusLine JSON change, fix the `jq` in `claude-code.nix` and the parser in `ClaudeUsage.qml` together.
 
 ## Environment facts
 

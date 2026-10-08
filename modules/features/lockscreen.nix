@@ -1,8 +1,6 @@
-{ pkgs, ... }:
 {
-  security.pam.services.quickshell-lock = { };
-
-  home-manager.sharedModules = [
+  flake.modules.homeManager.lockscreen =
+    { pkgs, ... }:
     {
       programs.swaylock = {
         enable = true;
@@ -13,6 +11,5 @@
         enable = true;
         events.lock = "${pkgs.quickshell}/bin/quickshell -c qs-shell ipc call lock lock || ${pkgs.swaylock}/bin/swaylock -f";
       };
-    }
-  ];
+    };
 }

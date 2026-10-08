@@ -1,195 +1,171 @@
+{ config, inputs, ... }:
+let
+  inherit (config.flake.modules) nixos;
+in
 {
-  pkgs,
-  inputs,
-  ...
-}:
-{
-  imports = [
-    ./features/claude-code
-    ./features/disk.nix
-    ./features/hardware-dev.nix
-    ./features/lockscreen.nix
-    ./features/niri
-    ./features/printing.nix
-    ./features/rdp-work.nix
-    ./sean.nix
-  ];
-
-  networking = {
-    hostName = "notebook";
-    networkmanager.enable = true;
-    modemmanager.enable = false;
+  flake.nixosConfigurations.notebook = inputs.nixpkgs.lib.nixosSystem {
+    modules = [ nixos.notebook ];
   };
 
-  services = {
-    power-profiles-daemon.enable = true;
-    thermald.enable = true;
+  flake.modules.nixos.notebook =
+    { pkgs, ... }:
+    {
+      imports = [
+        inputs.disko.nixosModules.disko
+      ]
+      ++ (with nixos; [
+        sean
 
-    logind.settings.Login = {
-      HandleLidSwitch = "lock";
-      HandleLidSwitchExternalPower = "lock";
-      HandleLidSwitchDocked = "ignore";
-    };
+        audio
+        bluetooth
+        boot
+        browser
+        claude-code
+        clipboard
+        debloat
+        editor
+        file-manager
+        filesystems
+        firmware
+        games
+        git
+        hardware-dev
+        laptop
+        launcher
+        locale
+        lockscreen
+        logitech
+        media
+        network
+        niri
+        nix
+        office
+        printing
+        quickshell
+        rdp-work
+        shell
+        terminal
+        theme
+        zram
+      ]);
 
-    pipewire = {
-      enable = true;
-      pulse.enable = true;
-      alsa.enable = true;
-    };
+      networking.hostName = "notebook";
+      nixpkgs.hostPlatform = "x86_64-linux";
+      system.stateVersion = "26.11";
 
-    upower = {
-      enable = true;
-      usePercentageForPolicy = true;
-      percentageLow = 20;
-      percentageCritical = 10;
-      percentageAction = 5;
-      criticalPowerAction = "Hibernate";
-    };
-
-    fwupd.enable = true;
-
-    speechd.enable = false;
-
-    getty = {
-      autologinUser = "sean";
-      autologinOnce = true;
-    };
-
-    xserver.xkb = {
-      layout = "de";
-      options = "caps:escape";
-    };
-  };
-
-  hardware = {
-    enableRedistributableFirmware = true;
-    cpu.intel.updateMicrocode = true;
-
-    graphics.extraPackages = [ pkgs.intel-media-driver ];
-
-    bluetooth.enable = true;
-  };
-
-  programs = {
-    solaar.enable = true;
-    nano.enable = false;
-  };
-
-  environment = {
-    variables = {
-      LIBVA_DRIVER_NAME = "iHD";
-      XKB_DEFAULT_LAYOUT = "de";
-      XKB_DEFAULT_OPTIONS = "caps:escape";
-      XKB_DEFAULT_VARIANT = "";
-    };
-
-    systemPackages = [
-      pkgs.ntfs3g
-      pkgs.e2fsprogs
-    ];
-    defaultPackages = [ ];
-  };
-
-  security.rtkit.enable = true;
-
-  boot = {
-    initrd.availableKernelModules = [
-      "nvme"
-      "thunderbolt"
-      "xhci_pci"
-      "usbhid"
-    ];
-
-    kernelModules = [ "kvm-intel" ];
-    resumeDevice = "/dev/mapper/cryptswap";
-    tmp.cleanOnBoot = true;
-
-    loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 5;
-        editor = false;
+      boot = {
+        initrd.availableKernelModules = [
+          "nvme"
+          "thunderbolt"
+          "xhci_pci"
+          "usbhid"
+        ];
+        kernelModules = [ "kvm-intel" ];
+        resumeDevice = "/dev/mapper/cryptswap";
       };
-      efi.canTouchEfiVariables = true;
-      timeout = 0;
-    };
 
-    kernel.sysctl = {
-      "vm.page-cluster" = 0;
-      "vm.swappiness" = 180;
-    };
-  };
+      hardware = {
+        cpu.intel.updateMicrocode = true;
+        graphics.extraPackages = [ pkgs.intel-media-driver ];
+      };
 
-  time.timeZone = "Europe/Berlin";
+      environment.variables.LIBVA_DRIVER_NAME = "iHD";
 
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "de_DE.UTF-8";
-      LC_IDENTIFICATION = "de_DE.UTF-8";
-      LC_MEASUREMENT = "de_DE.UTF-8";
-      LC_MONETARY = "de_DE.UTF-8";
-      LC_NAME = "de_DE.UTF-8";
-      LC_NUMERIC = "de_DE.UTF-8";
-      LC_PAPER = "de_DE.UTF-8";
-      LC_TELEPHONE = "de_DE.UTF-8";
-      LC_TIME = "de_DE.UTF-8";
-    };
-  };
+      services = {
+        thermald.enable = true;
 
-  console.keyMap = "de-latin1";
+        getty = {
+          autologinUser = "sean";
+          autologinOnce = true;
+        };
+      };
 
-  documentation = {
-    doc.enable = false;
-    info.enable = false;
-    nixos.enable = false;
-  };
+      networking.networkmanager.ensureProfiles.profiles.rdp-static-eth.connection.interface-name =
+        "enp44s0";
 
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    backupFileExtension = "bak";
-    extraSpecialArgs = { inherit inputs; };
-  };
-
-  nix = {
-    channel.enable = false;
-    daemonCPUSchedPolicy = "idle";
-    daemonIOSchedClass = "idle";
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 3d";
-    };
-    optimise = {
-      automatic = true;
-      dates = "weekly";
-    };
-    settings = {
-      download-buffer-size = 134217728;
-      warn-dirty = false;
-      fallback = true;
-      connect-timeout = 5;
-      trusted-users = [
-        "root"
-        "@wheel"
+      home-manager.sharedModules = [
+        {
+          wayland.windowManager.niri.settings._children = [
+            {
+              output = {
+                _args = [ "eDP-1" ];
+                position._props = {
+                  x = 0;
+                  y = 0;
+                };
+              };
+            }
+            {
+              output = {
+                _args = [ "iiyama Corporation PL2770H 0x0000011F" ];
+                mode._args = [ "1920x1080" ];
+                position._props = {
+                  x = -1920;
+                  y = 0;
+                };
+              };
+            }
+            {
+              output = {
+                _args = [ "iiyama Corporation PL2770H 0x00000124" ];
+                mode._args = [ "1920x1080" ];
+                position._props = {
+                  x = -3840;
+                  y = 0;
+                };
+                "focus-at-startup" = { };
+              };
+            }
+          ];
+        }
       ];
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
+
+      disko.devices.disk.main = {
+        type = "disk";
+        device = "/dev/disk/by-id/nvme-SAMSUNG_MZALQ512HALU-000L2_S4UKNF0R457642";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              size = "1G";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
+              };
+            };
+            luks = {
+              end = "-26G";
+              content = {
+                type = "luks";
+                name = "cryptroot";
+                settings.allowDiscards = true;
+                content = {
+                  type = "btrfs";
+                  extraArgs = [ "-f" ];
+                  mountpoint = "/";
+                  mountOptions = [
+                    "compress=zstd"
+                    "noatime"
+                  ];
+                };
+              };
+            };
+            cryptswap = {
+              size = "26G";
+              content = {
+                type = "luks";
+                name = "cryptswap";
+                settings.allowDiscards = true;
+                content = {
+                  type = "swap";
+                };
+              };
+            };
+          };
+        };
+      };
     };
-  };
-
-  users.mutableUsers = false;
-
-  zramSwap.enable = true;
-
-  fonts.packages = [
-    pkgs.nerd-fonts.jetbrains-mono
-    pkgs.nerd-fonts.symbols-only
-    pkgs.noto-fonts-color-emoji
-  ];
-
-  system.stateVersion = "26.11";
 }

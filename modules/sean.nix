@@ -1,42 +1,35 @@
-{ inputs, pkgs, ... }:
+{ inputs, ... }:
 {
-  users.users.sean = {
-    isNormalUser = true;
-    hashedPasswordFile = "/home/sean/.secrets/password.txt";
-    extraGroups = [
-      "wheel"
-      "video"
-      "audio"
-      "networkmanager"
-    ];
-    shell = pkgs.fish;
-  };
+  flake.modules.nixos.sean =
+    { pkgs, ... }:
+    {
+      imports = [ inputs.home-manager.nixosModules.home-manager ];
 
-  programs.fish = {
-    enable = true;
-    generateCompletions = false;
-  };
+      users = {
+        mutableUsers = false;
 
-  home-manager.users.sean = {
-    imports = [
-      inputs.nix-index-database.homeModules.default
-      ./features/appearance.nix
-      ./features/apps.nix
-      ./features/browser.nix
-      ./features/desktop-entries.nix
-      ./features/editor.nix
-      ./features/file-manager.nix
-      ./features/git.nix
-      ./features/launcher.nix
-      ./features/quickshell
-      ./features/shell.nix
-      ./features/terminal.nix
-      ./features/theme.nix
-    ];
+        users.sean = {
+          isNormalUser = true;
+          hashedPasswordFile = "/home/sean/.secrets/password.txt";
+          extraGroups = [
+            "wheel"
+            "video"
+            "audio"
+            "networkmanager"
+            "dialout"
+          ];
+          shell = pkgs.fish;
+        };
+      };
 
-    home.stateVersion = "26.11";
+      programs.fish.enable = true;
 
-    programs.nix-index-database.comma.enable = true;
-    programs.nix-index.enableFishIntegration = false;
-  };
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        backupFileExtension = "bak";
+
+        users.sean.home.stateVersion = "26.11";
+      };
+    };
 }
