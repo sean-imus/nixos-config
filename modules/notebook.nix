@@ -5,7 +5,7 @@
 }:
 {
   imports = [
-    ./features/claude-code
+    ./features/claude-code.nix
     ./features/disk.nix
     ./features/hardware-dev.nix
     ./features/lockscreen.nix

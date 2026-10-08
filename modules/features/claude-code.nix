@@ -64,46 +64,52 @@ let
   };
 in
 {
-  programs.mcp = {
-    enable = true;
-    servers.nixos.command = lib.getExe pkgs.mcp-nixos;
-  };
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "claude-code" ];
 
-  programs.claude-code = {
-    enable = true;
-    enableMcpIntegration = true;
-
-    mutableSettings = true;
-
-    settings = {
-      env.CLAUDE_CODE_SUBAGENT_MODEL = "haiku";
-
-      permissions.allow = [ "mcp__plugin_hm_nixos" ];
-
-      statusLine = cmd usageStatusLine;
-
-      hooks = {
-        PostToolUse = [
-          {
-            matcher = "Write|Edit|MultiEdit";
-            hooks = [ (cmd nixHook) ];
-          }
-        ];
-        Notification = [
-          {
-            matcher = "permission_prompt|idle_prompt|elicitation_dialog";
-            hooks = [ (cmd notifyHook) ];
-          }
-        ];
-        Stop = [ { hooks = [ (cmd notifyHook) ]; } ];
+  home-manager.sharedModules = [
+    {
+      programs.mcp = {
+        enable = true;
+        servers.nixos.command = lib.getExe pkgs.mcp-nixos;
       };
-    };
 
-    lspServers.nix = {
-      command = lib.getExe pkgs.nixd;
-      extensionToLanguage.".nix" = "nix";
-    };
-  };
+      programs.claude-code = {
+        enable = true;
+        enableMcpIntegration = true;
 
-  home.shellAliases.cc = "claude";
+        mutableSettings = true;
+
+        settings = {
+          env.CLAUDE_CODE_SUBAGENT_MODEL = "haiku";
+
+          permissions.allow = [ "mcp__plugin_hm_nixos" ];
+
+          statusLine = cmd usageStatusLine;
+
+          hooks = {
+            PostToolUse = [
+              {
+                matcher = "Write|Edit|MultiEdit";
+                hooks = [ (cmd nixHook) ];
+              }
+            ];
+            Notification = [
+              {
+                matcher = "permission_prompt|idle_prompt|elicitation_dialog";
+                hooks = [ (cmd notifyHook) ];
+              }
+            ];
+            Stop = [ { hooks = [ (cmd notifyHook) ]; } ];
+          };
+        };
+
+        lspServers.nix = {
+          command = lib.getExe pkgs.nixd;
+          extensionToLanguage.".nix" = "nix";
+        };
+      };
+
+      home.shellAliases.cc = "claude";
+    }
+  ];
 }
