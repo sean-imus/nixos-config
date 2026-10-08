@@ -11,10 +11,11 @@ Claude Code (Pro plan) for `sean`. Repo rules are in `AGENTS.md`.
 Declared today:
 
 - `env.CLAUDE_CODE_SUBAGENT_MODEL = "haiku"` — subagents run on Haiku to stretch the Pro usage window.
+- `permissions.allow = [ "mcp__plugin_hm_nixos" ]` — every tool of the `nixos` MCP server runs without a prompt. home-manager ships MCP servers inside its generated plugin named `hm`, so tool names are `mcp__plugin_hm_<server>__<tool>`. A new `programs.mcp.servers` entry needs its own rule. Arrays are replaced on merge, so this list overwrites a hand-added `permissions.allow`.
 - `statusLine` — `claude-usage-statusline` (see below).
-- `hooks.PostToolUse` (`Write|Edit|MultiEdit`) — `claude-format-hook` runs `nixfmt` on edited `*.nix` files. Always exits 0: a syntax error mid-edit must not block Claude.
+- `hooks.PostToolUse` (`Write|Edit|MultiEdit`) — `claude-nix-hook` runs `nixfmt` on edited `*.nix` files, then `deadnix` and `statix`. Findings go to stderr with exit 2, which Claude Code feeds back to Claude. Non-Nix files and `nixfmt` failures (syntax error mid-edit) exit 0 silently.
 - `hooks.Notification` (permission/idle/elicitation prompts) and `hooks.Stop` — `claude-notify-hook` sends `notify-send -a claude-code`, shown by the qs-shell notification server.
-- `lspServers.nix` — `nixd` for `.nix` files (shipped as a generated `hm` plugin).
+- `lspServers.nix` — `nixd` for `.nix` files (shipped as a generated `hm` plugin). Its unused-definition diagnostics reach Claude only asynchronously and for touched files, so the hook is the reliable check.
 
 ## Usage file (contract with quickshell)
 

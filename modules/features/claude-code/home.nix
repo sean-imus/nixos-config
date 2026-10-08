@@ -1,17 +1,29 @@
 { lib, pkgs, ... }:
 let
-  formatHook = pkgs.writeShellApplication {
-    name = "claude-format-hook";
+  nixHook = pkgs.writeShellApplication {
+    name = "claude-nix-hook";
     runtimeInputs = [
       pkgs.jq
       pkgs.nixfmt
+      pkgs.deadnix
+      pkgs.statix
     ];
     text = ''
       file=$(jq -r '.tool_input.file_path // empty')
       case "$file" in
-        *.nix) [ -f "$file" ] && nixfmt "$file" >/dev/null 2>&1 ;;
+        *.nix) ;;
+        *) exit 0 ;;
       esac
-      exit 0
+      [ -f "$file" ] || exit 0
+      nixfmt "$file" >/dev/null 2>&1 || exit 0
+      report=$(
+        deadnix -o json "$file" | jq -r '.file as $f | .results[] | "\($f):\(.line):\(.column): deadnix: \(.message)"'
+        statix check -o errfmt "$file" || true
+      )
+      if [ -n "$report" ]; then
+        printf '%s\n' "$report" >&2
+        exit 2
+      fi
     '';
   };
 
@@ -66,13 +78,15 @@ in
     settings = {
       env.CLAUDE_CODE_SUBAGENT_MODEL = "haiku";
 
+      permissions.allow = [ "mcp__plugin_hm_nixos" ];
+
       statusLine = cmd usageStatusLine;
 
       hooks = {
         PostToolUse = [
           {
             matcher = "Write|Edit|MultiEdit";
-            hooks = [ (cmd formatHook) ];
+            hooks = [ (cmd nixHook) ];
           }
         ];
         Notification = [
