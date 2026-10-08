@@ -12,6 +12,7 @@
     ./features/niri
     ./features/printing.nix
     ./features/rdp-work.nix
+    ./features/virtualisation.nix
     ./sean.nix
   ];
 

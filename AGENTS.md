@@ -134,6 +134,10 @@ Nothing below is active work unless an entry says so.
 - **Serial and adb rules** (`hardware-dev.nix`): one generic ADB/Fastboot rule; serial rules for CP210x (10c4:ea60), CH340 (1a86:7523), FTDI (0403:6001) and ESP32-S3 native USB (303a:1001). If a phone is not detected, take its `vendor:product` from `lsusb` and add a rule.
 - **Lock fallback**: `lockscreen.nix` runs the `qs-shell` lock through IPC and falls back to `swaylock -f` when no shell instance answers (the IPC call exits non-zero).
 
+### Virtualisation
+
+- `virtualisation.nix` uses the system connection `qemu:///system` (virt-manager autoconnects via dconf). libvirt's `default` NAT network (`default.xml`, copied into `/var/lib/libvirt` by `libvirtd-config`) is autostarted through a tmpfiles symlink in `networks/autostart/`, the file `virsh net-autostart` would create; libvirtd starts every network linked there when it starts. Disabling autostart with `virsh` only lasts until the next boot. OVMF (UEFI) ships with QEMU, so no `qemu.ovmf` option is set; `swtpm` gives guests a TPM (Windows 11).
+
 ### Other
 
 - **fish**: command-not-found integration is disabled (slow); use `, tool` (comma + nix-index-database).
