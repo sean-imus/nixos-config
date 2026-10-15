@@ -6,8 +6,6 @@
 {
   home.packages = [
     pkgs.libreoffice-stable
-    pkgs.the-powder-toy
-    pkgs.ddnet
   ];
 
   services.playerctld.enable = true;
