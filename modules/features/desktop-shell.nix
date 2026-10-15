@@ -11,10 +11,7 @@ in
       position = "bottom";
       height = 18;
       spacing = 6;
-      modules-left = [
-        "clock"
-        "niri/workspaces"
-      ];
+      modules-left = [ "clock" ];
       modules-right = [
         "power-profiles-daemon"
         "pulseaudio#source"
@@ -25,9 +22,13 @@ in
         format = "{:%H:%M %d.%m.%Y}";
         tooltip = false;
       };
-      "niri/workspaces".format = "{index}";
       power-profiles-daemon = {
-        format = "{profile}";
+        format = "PERF {icon}";
+        format-icons = {
+          performance = "high";
+          balanced = "med";
+          power-saver = "low";
+        };
         tooltip = false;
       };
       "pulseaudio#source" = {
@@ -69,13 +70,6 @@ in
       }
       .modules-left { margin-left: 6px; }
       .modules-right { margin-right: 6px; }
-      #workspaces button {
-        color: ${c "grey1"};
-        padding: 0 2px;
-        background: transparent;
-      }
-      #workspaces button.active { color: ${c "fg"}; }
-      #workspaces button.urgent { color: ${c "red"}; }
       #power-profiles-daemon.performance { color: ${c "red"}; }
       #power-profiles-daemon.balanced { color: ${c "yellow"}; }
       #power-profiles-daemon.power-saver { color: ${c "green"}; }
