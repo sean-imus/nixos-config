@@ -188,7 +188,6 @@
 
   fonts.packages = [
     pkgs.nerd-fonts.jetbrains-mono
-    pkgs.nerd-fonts.symbols-only
     pkgs.noto-fonts-color-emoji
   ];
 

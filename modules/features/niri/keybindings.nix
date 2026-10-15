@@ -32,20 +32,18 @@ in
     };
 
     binds = workspaceBinds // {
-      "XF86AudioRaiseVolume" = locked { spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; };
-      "XF86AudioLowerVolume" = locked { spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; };
-      "XF86AudioMute" = locked { spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; };
-      "XF86AudioMicMute" = locked { spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; };
+      "XF86AudioRaiseVolume" = locked {
+        spawn-sh = "swayosd-client --output-volume +10 --max-volume 100";
+      };
+      "XF86AudioLowerVolume" = locked { spawn-sh = "swayosd-client --output-volume -10"; };
+      "XF86AudioMute" = locked { spawn-sh = "swayosd-client --output-volume mute-toggle"; };
+      "XF86AudioMicMute" = locked { spawn-sh = "swayosd-client --input-volume mute-toggle"; };
       "XF86AudioPlay" = locked { spawn-sh = "playerctl play-pause"; };
       "XF86AudioStop" = locked { spawn-sh = "playerctl stop"; };
       "XF86AudioPrev" = locked { spawn-sh = "playerctl previous"; };
       "XF86AudioNext" = locked { spawn-sh = "playerctl next"; };
-      "XF86MonBrightnessUp" = locked {
-        spawn-sh = "quickshell -c qs-shell ipc call brightness poke & brightnessctl --class=backlight set +10%; wait";
-      };
-      "XF86MonBrightnessDown" = locked {
-        spawn-sh = "quickshell -c qs-shell ipc call brightness poke & brightnessctl --class=backlight set 10%-; wait";
-      };
+      "XF86MonBrightnessUp" = locked { spawn-sh = "swayosd-client --brightness +10"; };
+      "XF86MonBrightnessDown" = locked { spawn-sh = "swayosd-client --brightness -10"; };
 
       "Mod+O" = {
         _props.repeat = false;

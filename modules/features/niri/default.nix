@@ -6,7 +6,6 @@
   };
 
   environment.systemPackages = [
-    pkgs.brightnessctl
     pkgs.wl-clipboard
     pkgs.cliphist
     pkgs.playerctl

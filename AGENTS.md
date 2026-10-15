@@ -7,7 +7,7 @@ Rules for this repo. Personal NixOS flake: one host (`notebook`), one user (`sea
 - `flake.nix` — inputs, `nixosConfigurations.notebook`, `formatter` (nixfmt-tree).
 - `modules/notebook.nix` — NixOS host module: boot, hardware, locale, users, nix daemon, fonts. Imports the system-side features.
 - `modules/sean.nix` — the `sean` user and the home-manager import list.
-- `modules/features/<name>.nix` — one feature per file, or per directory when it ships assets or a dev guide (`niri/`, `quickshell/`). Small related features share a file (`extra-apps.nix`, `hardware-dev.nix`).
+- `modules/features/<name>.nix` — one feature per file, or per directory when it ships assets or a dev guide (`niri/`). Small related features share a file (`extra-apps.nix`, `hardware-dev.nix`).
 - `assets/` — static files referenced by features.
 
 ## Module rules
@@ -19,8 +19,8 @@ Rules for this repo. Personal NixOS flake: one host (`notebook`), one user (`sea
 
 ## Deliberate cross-module dependencies
 
-- Features add their own niri entries from their own module (`quickshell/default.nix`: startup spawn and its binds). The rest of the niri binds live in `niri/keybindings.nix` and call tools owned by other features (`qs-shell` IPC for brightness, `fuzzel`, `foot`, `chromium-privat`).
-- `lockscreen.nix` owns the `quickshell-lock` PAM service and the swaylock fallback for `quickshell`'s lock screen.
+- Features add their own niri binds from their own module (`desktop-shell.nix`: mako DND/clear; `lockscreen.nix`: lock). The rest of the niri binds live in `niri/keybindings.nix` and call tools owned by other features (`swayosd-client`, `fuzzel`, `foot`, `chromium-privat`).
+- `lockscreen.nix` owns the `swaylock` PAM service, swaylock, swayidle and the lock bind.
 - `theme` (`features/theme.nix`) and `shadowDesktopEntries` (`features/desktop-entries.nix`) are home-manager `_module.args`, not available to NixOS modules.
 - fish is split on purpose: `programs.fish.enable` and `users.users.sean.shell` live in `modules/sean.nix` (system side), the rest in `modules/features/shell.nix`.
 
@@ -45,7 +45,7 @@ Run in the repo root.
 
 ## Commits
 
-Conventional Commits with the feature as scope: `feat(niri): ...`, `fix(quickshell): ...`, `docs`, `chore`, `cleanup`.
+Conventional Commits with the feature as scope: `feat(niri): ...`, `fix(desktop-shell): ...`, `docs`, `chore`, `cleanup`.
 
 ## Docs
 
@@ -67,7 +67,7 @@ Nothing below is active work unless an entry says so.
 - **Dendritic pattern (flake-parts + import-tree)**: one host and one user, and every feature is already one file, so the migration (~25 files, two new inputs) buys no closure, speed or reuse gain. Revisit if a second host or user appears.
 - **Fingerprint reader (ELAN 04f3:0c4b)**: not supported by open-source libfprint; needs Lenovo's proprietary TOD blob.
 - **Separate image for the niri overview backdrop**: niri has no native wallpaper support; it would need a second layer-shell client plus a `layer-rule`.
-- **Animated launcher (anyrun)**: reverted. niri cannot animate layer surfaces, and anyrun's fullscreen transparent surface covered the screen under niri blur. Revisit only with a launcher that animates just its own box (planned in the Quickshell shell).
+- **Animated launcher (anyrun)**: reverted. niri cannot animate layer surfaces, and anyrun's fullscreen transparent surface covered the screen under niri blur. Revisit only with a launcher that animates just its own box.
 - **Trimming `linux-firmware` (about 800 MB)**: would break new hardware. Not worth it.
 - **`services.udisks2` off**: loses USB automount.
 - **Swapping deno for nodejs in mpv's yt-dlp (-138 MB)**: needs yt-dlp config and a local rebuild.
@@ -129,7 +129,7 @@ Nothing below is active work unless an entry says so.
 
 - **Hibernation**: `boot.resumeDevice = "/dev/mapper/cryptswap"`. Lid close locks while undocked (logind `lock` + swayidle `lock` event); docked lid close is ignored.
 - **Serial and adb rules** (`hardware-dev.nix`): one generic ADB/Fastboot rule; serial rules for CP210x (10c4:ea60), CH340 (1a86:7523), FTDI (0403:6001) and ESP32-S3 native USB (303a:1001). If a phone is not detected, take its `vendor:product` from `lsusb` and add a rule.
-- **Lock fallback**: `lockscreen.nix` runs the `qs-shell` lock through IPC and falls back to `swaylock -f` when no shell instance answers (the IPC call exits non-zero).
+- **Lock**: one path. `Super+Alt+L` runs `loginctl lock-session`; swayidle's `lock` event (also fired by logind on lid close) runs `swaylock -f`.
 
 ### Virtualisation
 

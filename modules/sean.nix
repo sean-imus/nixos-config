@@ -21,12 +21,12 @@
     imports = [
       inputs.nix-index-database.homeModules.default
       ./features/browser.nix
+      ./features/desktop-shell.nix
       ./features/desktop-entries.nix
       ./features/editor.nix
       ./features/extra-apps.nix
       ./features/git.nix
       ./features/launcher.nix
-      ./features/quickshell
       ./features/shell.nix
       ./features/terminal.nix
       ./features/theme.nix
