@@ -82,7 +82,6 @@ Nothing below is active work unless an entry says so.
 
 - **Shell**: atuin, direnv + nix-direnv, delta with git integration, television.
 - **Nvim**: luasnip + blink-cmp snippet preset, optionally snacks.nvim; extra LSPs only if new file types appear.
-- **Yazi**: plugin system (chmod, full-border, smart-enter).
 - **Desktop apps**: password manager (keepassxc/bitwarden), localsend, nvtop, gdu/duf, zellij, kdeconnect; stylix to consolidate everforest theming.
 - **Security**: Lanzaboote Secure Boot (firmware Secure Boot is off, test carefully); restic backups. TPM2 auto-unlock is blocked by firmware: enable Intel PTT in the BIOS first, then `boot.initrd.systemd.tpm2.enable` + `systemd-cryptenroll`.
 - **ESP32**: platformio and/or arduino-language-server for nvim `.ino` support.
@@ -108,7 +107,7 @@ Nothing below is active work unless an entry says so.
 
 ### MIME and desktop entries
 
-- Archives are deliberately unhandled; extract via yazi/7zz.
+- Archives are deliberately unhandled.
 - Associations live with the app that owns them: `browser.nix` (web, images, pdf, json -> `chromium-privat`), `extra-apps.nix` (text and markdown -> Writer).
 - Shadows use `NoDisplay=true`, never `Hidden=true`: `Hidden` removes the entry from the desktop database and broke audio/video launching via `mpv.desktop`. A shadowed entry stays available for MIME handling but hidden from launchers.
 

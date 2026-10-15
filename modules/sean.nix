@@ -24,7 +24,6 @@
       ./features/desktop-entries.nix
       ./features/editor.nix
       ./features/extra-apps.nix
-      ./features/file-manager.nix
       ./features/git.nix
       ./features/launcher.nix
       ./features/quickshell
