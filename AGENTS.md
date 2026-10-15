@@ -21,7 +21,6 @@ Rules for this repo. Personal NixOS flake: one host (`notebook`), one user (`sea
 
 - Features add their own niri entries from their own module (`quickshell/default.nix`: startup spawn and its binds). The rest of the niri binds live in `niri/keybindings.nix` and call tools owned by other features (`qs-shell` IPC for brightness, `fuzzel`, `foot`, `chromium-privat`).
 - `lockscreen.nix` owns the `quickshell-lock` PAM service and the swaylock fallback for `quickshell`'s lock screen.
-- `claude-code.nix`'s statusLine writes `$XDG_RUNTIME_DIR/claude-usage.json`, read by `quickshell/qml/services/ClaudeUsage.qml`; the contract is under Durable notes > Claude Code.
 - `theme` (`features/theme.nix`) and `shadowDesktopEntries` (`features/desktop-entries.nix`) are home-manager `_module.args`, not available to NixOS modules.
 - fish is split on purpose: `programs.fish.enable` and `users.users.sean.shell` live in `modules/sean.nix` (system side), the rest in `modules/features/shell.nix`.
 
@@ -118,7 +117,6 @@ Nothing below is active work unless an entry says so.
 - **MCP permissions**: home-manager ships MCP and LSP servers inside a generated plugin named `hm`, so tool names are `mcp__plugin_hm_<server>__<tool>`. `permissions.allow` needs one `mcp__plugin_hm_<server>` rule per `programs.mcp.servers` entry, or every call prompts.
 - **Nix hook**: `claude-nix-hook` (PostToolUse on `Write|Edit|MultiEdit`) runs `nixfmt`, then `deadnix` and `statix` on the edited `.nix` file. Findings go to stderr with exit 2, which Claude Code feeds back to Claude, so unused arguments and bindings get fixed in the same turn. Non-Nix files and `nixfmt` failures (syntax error mid-edit) exit 0 silently.
 - **nixd LSP** (`lspServers.nix`): gives Claude the `LSP` tool and passive diagnostics, including its own unused-definition warnings. Those arrive asynchronously and only for touched files, so the hook is the reliable check.
-- **Usage file (contract with quickshell)**: the `statusLine` command gets session JSON on stdin. When it has `rate_limits.five_hour` (Pro/Max only, after the session's first API response), it writes `{"five_hour":{"used_percentage":23.5,"resets_at":1738425600},"seven_day":{...},"updated":1738420000}` atomically (`tmp` + `mv`) to `$XDG_RUNTIME_DIR/claude-usage.json`. `ClaudeUsage.qml` polls it; the bar shows `CC <n>%` (yellow, red from 90, grey `CC --` before the first session after boot, 0% once `resets_at` has passed). The file only updates while a session runs. If the field names change, fix the `jq` and `ClaudeUsage.qml` together.
 
 ### Browser
 

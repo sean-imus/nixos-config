@@ -6,16 +6,10 @@ let
   };
 
   statusLine = script "claude-usage-statusline" [ pkgs.jq ] ''
-    input=$(cat)
-    file="''${XDG_RUNTIME_DIR:-/tmp}/claude-usage.json"
-    if jq -e '.rate_limits.five_hour' <<<"$input" >/dev/null 2>&1; then
-      jq -c '{five_hour: .rate_limits.five_hour, seven_day: .rate_limits.seven_day, updated: (now | floor)}' \
-        <<<"$input" >"$file.tmp" && mv "$file.tmp" "$file"
-    fi
     jq -r '[
       (.rate_limits.five_hour.used_percentage // empty | "5h \(round)%"),
       (.rate_limits.seven_day.used_percentage // empty | "7d \(round)%")
-    ] | join(" · ")' <<<"$input"
+    ] | join(" · ")'
   '';
 
   nixHook =
