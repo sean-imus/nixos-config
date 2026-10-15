@@ -49,7 +49,7 @@ Conventional Commits with the feature as scope: `feat(niri): ...`, `fix(desktop-
 
 ## Docs
 
-`README.md` stays install-only. A feature's dev guide lives next to the feature (`modules/features/<name>/README.md`). The sections below the license hold only what git can't tell you: dismissed ideas, open questions, backlog and durable notes. No changelog entries; fold anything lasting into the code or a feature README.
+`README.md` stays install-only. Open to-dos that need a discussion first live in `TODO.md`. A feature's dev guide lives next to the feature (`modules/features/<name>/README.md`). The sections below the license hold only what git can't tell you: dismissed ideas, open questions, backlog and durable notes. No changelog entries; fold anything lasting into the code or a feature README.
 
 ## License
 
