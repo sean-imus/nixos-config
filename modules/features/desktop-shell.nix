@@ -26,7 +26,7 @@ in
         format = "PERF {icon}";
         format-icons = {
           performance = "high";
-          balanced = "med";
+          balanced = "mid";
           power-saver = "low";
         };
         tooltip = false;
