@@ -29,6 +29,7 @@ in
 
   programs.nixvim = {
     enable = true;
+    nixpkgs.useGlobalPackages = true;
     enableMan = false;
     enablePrintInit = false;
     withRuby = false;
@@ -61,10 +62,7 @@ in
       }
     ];
 
-    performance.byteCompileLua = {
-      enable = true;
-      plugins = true;
-    };
+    performance.byteCompileLua.enable = true;
 
     plugins = {
       web-devicons.enable = true;

@@ -97,6 +97,7 @@ Nothing below is active work unless an entry says so.
 
 ### Rebuild speed and closure size
 
+- `programs.nixvim.nixpkgs.useGlobalPackages = true`: otherwise nixvim builds against its own pinned nixpkgs, so neovim and every plugin's check hooks differ from the system's and nothing is substitutable. This is not the dismissed `follows`: the nixvim input stays pinned, only the package set is shared. `byteCompileLua.plugins` stays off for the same reason (it rewrites every plugin); only init.lua is compiled.
 - `programs.nixvim.enableMan = false`: Home Manager's fish completion generator parses every man page, and nixvim's 7.3 MB `nixvim.5` cost 8.7 s per rebuild.
 - `programs.fish.generateCompletions = false` (NixOS in `sean.nix`, HM in `shell.nix`): the generator parsed about 76 MB of man pages on every nixpkgs update. Completions come from carapace-bin plus vendor files. Re-add `programs.man.generateCaches = true` if `man -k` for home packages is missed.
 - `services.speechd.enable = false`: `programs.niri` enables it through `graphical-desktop`, and it pulled in about 650 MB of mbrola voices.
