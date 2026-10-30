@@ -5,8 +5,6 @@
     hashedPasswordFile = "/home/sean/.secrets/password.txt";
     extraGroups = [
       "wheel"
-      "video"
-      "audio"
       "networkmanager"
     ];
     shell = pkgs.fish;
