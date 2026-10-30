@@ -24,7 +24,7 @@ step "Partitioning, encrypting and formatting the disk"
 nix run "$repo#nixosConfigurations.notebook.config.system.build.destroyFormatMount"
 
 step "Placing the password hash"
-install -Dm600 "$password"/mnt/home/sean/.secrets/password.txt
+install -Dm600 "$password" /mnt/home/sean/.secrets/password.txt
 
 step "Installing NixOS"
 nixos-install --no-channel-copy --no-root-password --flake "$repo#notebook"
