@@ -2,6 +2,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    den.url = "github:denful/den";
+    import-tree.url = "github:vic/import-tree";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,18 +24,9 @@
   };
 
   outputs =
-    { nixpkgs, ... }@inputs:
-    {
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
-
-      nixosConfigurations.notebook = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          inputs.disko.nixosModules.disko
-          inputs.home-manager.nixosModules.home-manager
-          ./modules/notebook.nix
-        ];
-      };
-    };
+    inputs:
+    (inputs.nixpkgs.lib.evalModules {
+      modules = [ (inputs.import-tree ./modules) ];
+      specialArgs = { inherit inputs; };
+    }).config.flake;
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, ... }:
 let
   theme =
     let
@@ -43,29 +43,49 @@ let
     };
 in
 {
-  _module.args.theme = theme;
-
-  gtk = {
-    enable = true;
-    theme = {
-      name = "Everforest-Dark";
-      package = pkgs.everforest-gtk-theme;
-    };
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
-    };
-    font = {
-      name = theme.fontFamily;
-      size = 10;
-    };
+  options.theme = lib.mkOption {
+    description = "Colour palette and font shared by every themed feature.";
+    type = lib.types.raw;
+    readOnly = true;
+    default = theme;
   };
 
-  home.pointerCursor = {
-    enable = true;
-    name = "everforest-cursors";
-    package = pkgs.everforest-cursors;
-    size = 24;
-    gtk.enable = true;
+  config.den.aspects.theme = {
+    nixos =
+      { pkgs, ... }:
+      {
+        fonts.packages = [
+          pkgs.nerd-fonts.jetbrains-mono
+          pkgs.noto-fonts-color-emoji
+        ];
+      };
+
+    homeManager =
+      { pkgs, ... }:
+      {
+        gtk = {
+          enable = true;
+          theme = {
+            name = "Everforest-Dark";
+            package = pkgs.everforest-gtk-theme;
+          };
+          iconTheme = {
+            name = "Papirus-Dark";
+            package = pkgs.papirus-icon-theme;
+          };
+          font = {
+            name = theme.fontFamily;
+            size = 10;
+          };
+        };
+
+        home.pointerCursor = {
+          enable = true;
+          name = "everforest-cursors";
+          package = pkgs.everforest-cursors;
+          size = 24;
+          gtk.enable = true;
+        };
+      };
   };
 }

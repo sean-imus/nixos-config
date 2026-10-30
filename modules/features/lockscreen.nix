@@ -1,10 +1,13 @@
-{ pkgs, ... }:
+{ config, ... }:
+let
+  inherit (config) theme;
+in
 {
-  security.pam.services.swaylock = { };
+  den.aspects.lockscreen = {
+    nixos.security.pam.services.swaylock = { };
 
-  home-manager.sharedModules = [
-    (
-      { theme, ... }:
+    homeManager =
+      { pkgs, ... }:
       {
         programs.swaylock = {
           enable = true;
@@ -24,7 +27,6 @@
         };
 
         wayland.windowManager.niri.settings.binds."Super+Alt+L".spawn-sh = "loginctl lock-session";
-      }
-    )
-  ];
+      };
+  };
 }
