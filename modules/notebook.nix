@@ -160,17 +160,9 @@
 
   nix = {
     channel.enable = false;
-    daemonCPUSchedPolicy = "idle";
-    daemonIOSchedClass = "idle";
     settings = {
       download-buffer-size = 134217728;
       warn-dirty = false;
-      fallback = true;
-      connect-timeout = 5;
-      trusted-users = [
-        "root"
-        "@wheel"
-      ];
       experimental-features = [
         "nix-command"
         "flakes"
