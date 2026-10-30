@@ -17,6 +17,10 @@ step() {
   banner "[$n/$total] $1"
 }
 
+swapoff /mnt/swapfile 2> /dev/null || true
+umount -R /mnt 2> /dev/null || true
+cryptsetup close cryptroot 2> /dev/null || true
+
 step "Partitioning, encrypting and formatting the disk"
 nix run "$repo#nixosConfigurations.notebook.config.system.build.destroyFormatMount"
 
@@ -30,4 +34,9 @@ step "Moving the config into the home directory"
 mv "$repo" /mnt/home/sean/
 chown -R 1000:100 /mnt/home/sean
 
-banner "Done. Unplug the USB and reboot."
+banner "Installation finished"
+printf '  Reboot now? [Y/n] '
+read -r answer
+case $answer in
+  ''|y|Y) reboot ;;
+esac
