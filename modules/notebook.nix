@@ -72,6 +72,11 @@
   };
 
   programs = {
+    nh.clean = {
+      enable = true;
+      dates = "weekly";
+      extraArgs = "--keep 5 --optimise";
+    };
     solaar.enable = true;
     nano.enable = false;
   };
@@ -149,6 +154,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "bak";
+    overwriteBackup = true;
     extraSpecialArgs = { inherit inputs; };
   };
 
@@ -156,15 +162,6 @@
     channel.enable = false;
     daemonCPUSchedPolicy = "idle";
     daemonIOSchedClass = "idle";
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 3d";
-    };
-    optimise = {
-      automatic = true;
-      dates = "weekly";
-    };
     settings = {
       download-buffer-size = 134217728;
       warn-dirty = false;
