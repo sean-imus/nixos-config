@@ -23,6 +23,13 @@ step() {
 step "Partitioning, encrypting and formatting the disk"
 nix run "$repo#nixosConfigurations.notebook.config.system.build.destroyFormatMount"
 
+step "Creating the swapfile"
+swap=$(nix eval --raw "$repo#nixosConfigurations.notebook.config.swapDevices" \
+  --apply 'd: let s = builtins.head d; in "${s.device} ${toString s.size}"')
+fallocate -l "${swap#* }M" "/mnt${swap% *}"
+chmod 600 "/mnt${swap% *}"
+mkswap "/mnt${swap% *}"
+
 step "Placing the password hash"
 install -Dm600 "$password" /mnt/home/sean/.secrets/password.txt
 
