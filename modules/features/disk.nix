@@ -17,30 +17,19 @@ _: {
             };
           };
           luks = {
-            end = "-26G";
+            size = "100%";
             content = {
               type = "luks";
               name = "cryptroot";
-              settings.allowDiscards = true;
-              content = {
-                type = "btrfs";
-                extraArgs = [ "-f" ];
-                mountpoint = "/";
-                mountOptions = [
-                  "compress=zstd"
-                  "noatime"
-                ];
+              settings = {
+                allowDiscards = true;
+                bypassWorkqueues = true;
               };
-            };
-          };
-          cryptswap = {
-            size = "26G";
-            content = {
-              type = "luks";
-              name = "cryptswap";
-              settings.allowDiscards = true;
               content = {
-                type = "swap";
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/";
+                mountOptions = [ "noatime" ];
               };
             };
           };
@@ -48,4 +37,11 @@ _: {
       };
     };
   };
+
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 24 * 1024;
+    }
+  ];
 }

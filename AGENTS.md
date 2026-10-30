@@ -128,7 +128,7 @@ Nothing below is active work unless an entry says so.
 
 ### Hardware
 
-- **Hibernation**: `boot.resumeDevice = "/dev/mapper/cryptswap"`. Lid close locks while undocked (logind `lock` + swayidle `lock` event); docked lid close is ignored.
+- **Hibernation**: 24 GiB `/swapfile` on the ext4 root (`swapDevices`, created by NixOS on first boot). No `resume=`/`resume_offset`: `systemd-sleep` writes the `HibernateLocation` EFI variable and the initrd reads it, so it needs an EFI boot and intact NVRAM; test one hibernate cycle after a reinstall. Root is ext4 on LUKS on purpose (no snapshots or backups wanted, so btrfs buys nothing). Lid close locks while undocked (logind `lock` + swayidle `lock` event); docked lid close is ignored.
 - **Serial and adb rules** (`hardware-dev.nix`): one generic ADB/Fastboot rule; serial rules for CP210x (10c4:ea60), CH340 (1a86:7523), FTDI (0403:6001) and ESP32-S3 native USB (303a:1001). If a phone is not detected, take its `vendor:product` from `lsusb` and add a rule.
 - **Lock**: one path. `Super+Alt+L` runs `loginctl lock-session`; swayidle's `lock` event (also fired by logind on lid close) runs `swaylock -f`.
 

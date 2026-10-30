@@ -102,7 +102,6 @@
     ];
 
     kernelModules = [ "kvm-intel" ];
-    resumeDevice = "/dev/mapper/cryptswap";
     tmp.cleanOnBoot = true;
 
     loader = {
